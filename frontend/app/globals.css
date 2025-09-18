@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+.btn-color{
+  background: linear-gradient(96.76deg, #FFFFFF -19.08%, #1FB5DD 48.57%, #FFFFFF 116.22%);
+}
+.state-box{
+  background: linear-gradient(209.88deg, rgba(0, 0, 0, 0.28) 23.29%, rgba(49, 95, 172, 0.28) 214.87%);
+  border: 2px solid;
+  backdrop-filter: blur(12px);
+   box-shadow: 0px -7px 24px 0px #5E8EF399 inset;
+  border-image-source: linear-gradient(133.91deg, rgba(31, 181, 221, 0.35) 0%, rgba(31, 181, 221, 0) 100%);
+  border-radius: 24px;
+  padding: 16px 20px;
+}
