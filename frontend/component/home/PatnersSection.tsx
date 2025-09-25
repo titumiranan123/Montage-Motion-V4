@@ -47,7 +47,7 @@ const PatnersSection = () => {
   ];
 
   return (
-    <div className="flex size-full items-center justify-center bg-background py-6 mt-10">
+    <div className="flex size-full items-center justify-center bg-background py-6 mt-10 container">
       <Marquee pauseOnHover={true} gradient={false} speed={50}>
         {data.map((patner, index) => (
           <div key={index} className="mx-8 flex items-center justify-center">
