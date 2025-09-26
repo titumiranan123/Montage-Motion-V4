@@ -1,51 +1,103 @@
 @import "tailwindcss";
-
-
-.btn-color{
-  background: linear-gradient(96.76deg, #FFFFFF -19.08%, #1FB5DD 48.57%, #FFFFFF 116.22%);
+body {
+  scroll-behavior: smooth;
 }
-.state-box{
-  background: linear-gradient(209.88deg, rgba(0, 0, 0, 0.28) 23.29%, rgba(49, 95, 172, 0.28) 214.87%);
+
+.btn-color {
+  background: linear-gradient(
+    96.76deg,
+    #ffffff -19.08%,
+    #1fb5dd 48.57%,
+    #ffffff 116.22%
+  );
+}
+
+.state-box {
+  background: linear-gradient(
+    209.88deg,
+    rgba(0, 0, 0, 0.28) 23.29%,
+    rgba(49, 95, 172, 0.28) 214.87%
+  );
   border: 2px solid;
   backdrop-filter: blur(12px);
-   box-shadow: 0px -7px 24px 0px #5E8EF399 inset;
-  border-image-source: linear-gradient(133.91deg, rgba(31, 181, 221, 0.35) 0%, rgba(31, 181, 221, 0) 100%);
+  box-shadow: 0px -7px 24px 0px #5e8ef399 inset;
+  border-image-source: linear-gradient(
+    133.91deg,
+    rgba(31, 181, 221, 0.35) 0%,
+    rgba(31, 181, 221, 0) 100%
+  );
   border-radius: 24px;
   padding: 16px 20px;
 }
 .processboxborder {
   border: 2px solid;
-    border-image-source: linear-gradient(242.39deg, #3357A3 -5.78%, rgba(51, 87, 163, 0) 38.74%);
+  border-image-source: linear-gradient(
+    242.39deg,
+    #3357a3 -5.78%,
+    rgba(51, 87, 163, 0) 38.74%
+  );
 }
 .processglow-1 {
   backdrop-filter: blur(98.15442657470703px);
-  background: #5586ED;
+  background: #5586ed;
   width: 360px;
-    height: 44;
-    angle: 0 deg;
-    opacity: 1;
-    top: 137px;
-    left: 119px;
-    mix-blend-mode: Plus lighter;
+  height: 44;
+  angle: 0 deg;
+  opacity: 1;
+  top: 137px;
+  left: 119px;
+  mix-blend-mode: Plus lighter;
 }
 .processglow-2 {
   backdrop-filter: blur(46.81248474121094px);
-  background: #FFFFFFC2;
+  background: #ffffffc2;
   width: 120;
-    height: 44;
-    angle: 0 deg;
-    opacity: 1;
-    top: 137px;
-    left: 119px;
-    mix-blend-mode: Plus lighter;
+  height: 44;
+  angle: 0 deg;
+  opacity: 1;
+  top: 137px;
+  left: 119px;
+  mix-blend-mode: Plus lighter;
+}
+.footer-nav-bg {
+  background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
+  border: 2px solid;
+
+  border-image-source: linear-gradient(
+    242.39deg,
+    #3357a3 -5.78%,
+    rgba(51, 87, 163, 0) 38.74%
+  );
 }
 
-@layer{
+/*home page  contact  */
+.contact-form {
+  border: 2px solid;
+
+  border-image-source: linear-gradient(
+    242.39deg,
+    #3357a3 -5.78%,
+    rgba(51, 87, 163, 0) 38.74%
+  );
+  background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
+}
+.contact-info {
+  background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
+  border: 2px solid;
+
+  border-image-source: linear-gradient(
+    242.39deg,
+    #3357a3 -5.78%,
+    rgba(51, 87, 163, 0) 38.74%
+  );
+}
+
+@layer {
   .container {
-    @apply max-w-[1440px] lg:px-[120px] md:px-[60px] px-4 mx-auto 
+    @apply max-w-[1440px] lg:px-[120px] md:px-[60px] px-4 mx-auto;
   }
   .sectionGap {
-    @apply lg:mt-[120px] md:mt-20 mt-16
+    @apply lg:mt-[120px] md:mt-20 mt-16;
   }
 }
 

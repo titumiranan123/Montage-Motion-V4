@@ -1,0 +1,52 @@
+/* Default height for larger screens */
+.mySwiper {
+  height: 560px !important;
+}
+
+/* Media query for tablets and desktops */
+@media only screen and (min-width: 768px) and (max-width: 1240px) {
+  .mySwiper {
+    height: 550px !important; /* Adjust height for tablets and desktops */
+  }
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 767px) {
+  .mySwiper {
+    height: 300px !important; /* Adjust height for mobile devices */
+  }
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 480px) {
+  .mySwiper {
+    height: 500px !important; /* Adjust height for mobile devices */
+  }
+}
+.swiper-button-prev,
+.swiper-button-next {
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Optional: Hover effects */
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background-color: #555 !important;
+}
+
+/* Optional: Adjust position */
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
