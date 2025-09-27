@@ -91,7 +91,17 @@ body {
     rgba(51, 87, 163, 0) 38.74%
   );
 }
+/* why chosse us card  */
+.choose-us-card {
+  background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
+  border: 2px solid;
 
+  border-image-source: linear-gradient(
+    242.39deg,
+    #3357a3 -5.78%,
+    rgba(51, 87, 163, 0) 38.74%
+  );
+}
 @layer {
   .container {
     @apply max-w-[1440px] lg:px-[120px] md:px-[60px] px-4 mx-auto;

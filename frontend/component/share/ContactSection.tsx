@@ -47,13 +47,13 @@ const ContactSection = () => {
         </div>
       </div>
 
-      <form className="contact-form max-w-[582px] w-full h-[604px] rounded-[24px] flex flex-col gap-7 justify-center items-center p-6 ">
+      <form className="contact-form max-w-[582px] w-full h-[604px] rounded-[24px] flex flex-col gap-2 justify-center items-center p-6 ">
         <div className="text-white w-full flex flex-col gap-3 h-full">
           <label htmlFor="name">Full Name</label>
           <input
             type="text"
             placeholder="John Doe"
-            className="max-w-[542px] w-full max-h-[56px] h-full rounded-[16px] border border-white/20"
+            className="max-w-[542px] w-full max-h-[56px] h-full rounded-[16px] p-4 border border-white/20 focus:outline-none"
           />
         </div>
         <div className="text-white w-full flex flex-col gap-3 h-full">
@@ -61,27 +61,33 @@ const ContactSection = () => {
           <input
             type="email"
             placeholder="jhon48@gmail.com"
-            className="max-w-[542px] w-full max-h-[56px] h-full rounded-[16px] border border-white/20"
+            className="max-w-[542px] w-full max-h-[56px] h-full rounded-[16px] p-4 border border-white/20 focus:outline-none"
           />
         </div>
         <div className="text-white w-full flex flex-col gap-3 h-full">
           <label htmlFor="name">Interested In</label>
-          <select className="max-w-[542px] w-full max-h-[56px] h-full rounded-[16px] border border-white/20">
-            <option value="talking-head">Talking Head Video Editing</option>
-            <option value="podcast">Podcast Video Editing</option>
-            <option value="shorts">Shorts/Reel Video Editing</option>
+          <select className="max-w-[542px] w-full max-h-[56px] h-full rounded-[16px] border border-white/20  p-3 focus:outline-none">
+            <option className="text-black" value="talking-head">
+              Talking Head Video Editing
+            </option>
+            <option className="text-black" value="podcast">
+              Podcast Video Editing
+            </option>
+            <option className="text-black" value="shorts">
+              Shorts/Reel Video Editing
+            </option>
           </select>
         </div>
         <div className="text-white w-full flex flex-col gap-3 h-full">
           <label htmlFor="name">Your Message</label>
           <textarea
             placeholder="I would like to know more about your service"
-            className="max-w-[542px] w-full max-h-[120px] h-full rounded-[16px] border border-white/20"
+            className="max-w-[542px] w-full h-[120px]  p-4 rounded-[16px] focus:outline-none border border-white/20"
           />
         </div>
         <button
           type="submit"
-          className="btn-color mt-8  max-w-[348px] w-full h-[56px] rounded-[16px] py-[16px] px-[16px] font-[500] "
+          className="btn-color   max-w-[100%] w-full h-[56px] rounded-[16px] py-[16px] px-[16px] font-[500] "
         >
           Send Message
         </button>

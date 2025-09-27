@@ -72,37 +72,37 @@
 
 // export default Testimonila;
 
-// // const testimonialData = [
-// //   {
-// //     id: 1,
-// //     img: grau,
-// //     name: "Gaurav Valani",
-// //     title: "Founder at CareerSprout",
-// //     description:
-// //       "I cannot say enough about Samiul's professionalism, timeliness, and his desire/interest in going above and beyond for his clients. newline  I have worked with many editors in the past and not always had the best experience. From the first call that I had with Samiul, it was all positive and it hasn't been any other way since then. newline If you're in need than his own, I'd recommend working with Samiul. newline I expect us to be working with him for a very long time!",
-// //   },
-// //   {
-// //     id: 2,
-// //     img: anita,
-// //     name: "Anita Sharifi",
-// //     title: "Co-Founder at DONO",
-// //     description:
-// //       "I wholeheartedly endorse Samiul Arafat for extraordinary video editing skills. His blend of creativity, technical fitness, and commitment to delivering high-quality work is truly impressive. newline For top-notch video editing, Samiul is highly recommended! Feel free to connect for more details.",
-// //   },
-// //   {
-// //     id: 3,
-// //     img: butch,
-// //     name: "Butch Zemar",
-// //     title: "Podcast Host at The Zemar Podcast",
-// //     description:
-// //       "Samiul produces great video content for businesses. Turnaround time is quick and very responsive to any corrections/adds that may be needed. If you are looking for quality videos for your business content marketing, Samiul does great work.",
-// //   },
-// //   {
-// //     id: 4,
-// //     img: pawet,
-// //     name: "Pawet Huryn",
-// //     title: "Author, Product Coach",
-// //     description:
-// //       "Samiul went above and beyond in elevating the quality of my video podcast. Not only did he expertly edit the footage, but he also incorporated an engaging intro, outro, dynamic animations, and eye-catching graphics. To top it off, he fine-tuned the audio to perfection.newline His work exceeded my expectations, transforming my raw footage into a polished, professional product. I can confidently recommend Samiul as an exceptionally skilled, responsive, and dependable collaborator. newline I highly recommend him for any video editing needs",
-// //   },
-// // ];
+// const testimonialData = [
+//   {
+//     id: 1,
+//     img: grau,
+//     name: "Gaurav Valani",
+//     title: "Founder at CareerSprout",
+//     description:
+//       "I cannot say enough about Samiul's professionalism, timeliness, and his desire/interest in going above and beyond for his clients. newline  I have worked with many editors in the past and not always had the best experience. From the first call that I had with Samiul, it was all positive and it hasn't been any other way since then. newline If you're in need than his own, I'd recommend working with Samiul. newline I expect us to be working with him for a very long time!",
+//   },
+//   {
+//     id: 2,
+//     img: anita,
+//     name: "Anita Sharifi",
+//     title: "Co-Founder at DONO",
+//     description:
+//       "I wholeheartedly endorse Samiul Arafat for extraordinary video editing skills. His blend of creativity, technical fitness, and commitment to delivering high-quality work is truly impressive. newline For top-notch video editing, Samiul is highly recommended! Feel free to connect for more details.",
+//   },
+//   {
+//     id: 3,
+//     img: butch,
+//     name: "Butch Zemar",
+//     title: "Podcast Host at The Zemar Podcast",
+//     description:
+//       "Samiul produces great video content for businesses. Turnaround time is quick and very responsive to any corrections/adds that may be needed. If you are looking for quality videos for your business content marketing, Samiul does great work.",
+//   },
+//   {
+//     id: 4,
+//     img: pawet,
+//     name: "Pawet Huryn",
+//     title: "Author, Product Coach",
+//     description:
+//       "Samiul went above and beyond in elevating the quality of my video podcast. Not only did he expertly edit the footage, but he also incorporated an engaging intro, outro, dynamic animations, and eye-catching graphics. To top it off, he fine-tuned the audio to perfection.newline His work exceeded my expectations, transforming my raw footage into a polished, professional product. I can confidently recommend Samiul as an exceptionally skilled, responsive, and dependable collaborator. newline I highly recommend him for any video editing needs",
+//   },
+// ];
