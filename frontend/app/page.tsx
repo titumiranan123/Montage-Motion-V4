@@ -15,8 +15,8 @@ const HomePage = () => {
       <PatnersSection />
       <OurWorkSection />
       <OurProcess />
-      <WhyChooseUs />
       <ServiceSections />
+      <WhyChooseUs />
       <FaqSection />
       <ContactSection />
     </div>

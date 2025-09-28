@@ -11,10 +11,6 @@ export default {
       colors: {
         primary: "#1FB5DD",
       },
-      fontFamily: {
-        popins: ["var(--font-poppins)"],
-        opensans: ["var( --font-open-sans)"],
-      },
     },
   },
   plugins: [],

@@ -145,7 +145,11 @@ const Footer = () => {
         />
         <CustomLink className="text-white" href="/recourse" title="Recourses" />
         <CustomLink className="text-white" href="/about" title="About" />
-        <CustomLink className="text-white" href="/contact" title="Contact" />
+        <CustomLink
+          className="text-white"
+          href="/get-in-touch"
+          title="Contact"
+        />
       </div>
     </div>
   );

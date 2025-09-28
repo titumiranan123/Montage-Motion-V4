@@ -17,7 +17,7 @@ const Navbar = () => {
         <CustomLink className="" href="/portfolio" title="Portfolio" />
         <CustomLink className="" href="/recourses" title="Recourses" />
         <CustomLink className="" href="/about" title="About" />
-        <CustomLink className="" href="/contact" title="contact" />
+        <CustomLink className="" href="/get-in-touch" title="contact" />
       </div>
       <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center font-popins font-[400]">
         Start a project
