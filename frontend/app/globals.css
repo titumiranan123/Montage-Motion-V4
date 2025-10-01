@@ -18,7 +18,12 @@ body {
     #ffffff 116.22%
   );
 }
-
+.btn-secondary {
+  border: 1px solid #ffffff33;
+  background: #ffffff33;
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 25px 0px #ffffff40 inset;
+}
 .state-box {
   background: linear-gradient(
     209.88deg,

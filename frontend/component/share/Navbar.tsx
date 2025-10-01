@@ -12,7 +12,7 @@ const Navbar = () => {
         width={120}
         height={80}
       />
-      <div className="flex gap-2">
+      <div className=" gap-2 hidden">
         <CustomLink className="" href="/" title="Home" />
         <CustomLink className="" href="/portfolio" title="Portfolio" />
         <CustomLink className="" href="/recourses" title="Recourses" />
