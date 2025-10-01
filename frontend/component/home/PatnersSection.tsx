@@ -47,8 +47,13 @@ const PatnersSection = () => {
   ];
 
   return (
-    <div className="flex size-full items-center justify-center bg-background py-6 mt-10 container">
-      <Marquee pauseOnHover={true} gradient={false} speed={50}>
+    <div className="flex size-full items-center justify-center z-20 bg-black  py-10  container">
+      <Marquee
+        pauseOnHover={true}
+        gradient={true}
+        gradientColor="#000"
+        speed={50}
+      >
         {data.map((patner, index) => (
           <div key={index} className="mx-8 flex items-center justify-center">
             <img

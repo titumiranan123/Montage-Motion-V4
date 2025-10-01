@@ -1,0 +1,158 @@
+.container {
+  max-width: 970px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    margin-top: 4rem;
+  }
+}
+
+.videoSection {
+  margin-bottom: 3rem;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .videoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .videoGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.videoCard {
+  background-color: #1f2937;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  width: 321.11px;
+  height: 575.59px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  justify-content: space-between;
+}
+
+.videoPlaceholder {
+  aspect-ratio: 16 / 9;
+  background-color: #374151;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+.videoText {
+  padding: 1rem;
+}
+
+.videoTitle {
+  height: 1rem;
+  background-color: #374151;
+  border-radius: 0.25rem;
+  width: 75%;
+  margin-bottom: 0.75rem;
+}
+
+.videoSubtitle {
+  height: 0.75rem;
+  background-color: #374151;
+  border-radius: 0.25rem;
+  width: 50%;
+}
+
+.textGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .textGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.textCard {
+  background-color: #1f2937;
+  padding: 3.5rem 1.5rem;
+  border-radius: 0.5rem;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.textHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #374151;
+}
+
+.name {
+  height: 1rem;
+  background-color: #374151;
+  border-radius: 0.25rem;
+  width: 8rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtext {
+  height: 0.75rem;
+  background-color: #374151;
+  border-radius: 0.25rem;
+  width: 6rem;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lineFull {
+  height: 0.75rem;
+  background-color: #374151;
+  border-radius: 0.25rem;
+  width: 100%;
+}
+
+.lineFiveSixth {
+  height: 0.75rem;
+  background-color: #374151;
+  border-radius: 0.25rem;
+  width: 83.33%;
+}
+
+.lineFourSixth {
+  height: 0.75rem;
+  background-color: #374151;
+  border-radius: 0.25rem;
+  width: 66.67%;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

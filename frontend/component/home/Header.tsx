@@ -43,8 +43,11 @@ const Header = () => {
   //   });
   // }, []);
   return (
-    <div className="flex justify-between items-center mt-20 max-w-[1440px] mx-auto lg:px-[120px] px-[60px]">
-      <div className="flex justify-center items-start gap-4 flex-col w-[50%]">
+    <div className="flex justify-between items-center  max-w-[1440px] mx-auto lg:px-[120px] px-[60px] overflow-hidden relative h-[564px] ">
+      <div className="absolute top-1/3 right-1/4 w-[689px] h-[689px] bg-[#5586ED] blur-[125px] rounded-full  z-10">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[321px] h-[321px] bg-white rounded-full  blur-[10px] "></div>
+      </div>
+      <div className="flex z-20 justify-center items-start gap-4 flex-col w-[50%]">
         <h1 className="text-[72px] font-[500] text-white">
           Scaling Your Online Growth
         </h1>
@@ -59,7 +62,7 @@ const Header = () => {
       </div>
       <div
         ref={sectionRef}
-        className="relative w-[50%] p-5 flex justify-center items-center"
+        className="relative z-20  w-[50%] p-5 flex justify-center items-center"
       >
         <div
           ref={smalButton}
