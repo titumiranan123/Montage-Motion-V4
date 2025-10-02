@@ -9,7 +9,11 @@ body {
 .opensans {
   font-family: var(--font-open-sans);
 }
-
+[data-aos] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
 .btn-color {
   background: linear-gradient(
     96.76deg,

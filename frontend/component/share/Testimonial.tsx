@@ -39,6 +39,10 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
   data,
   isLoading,
 }) => {
+  if (isLoading) {
+    return <SkeletonLoader />;
+  }
+
   const video_message =
     data?.filter((item: any) => item.category !== "message") || [];
   const messageTesti =
@@ -66,9 +70,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
       videoSwiperRef.current.swiper.autoplay.stop();
     }
   };
-  return isLoading ? (
-    <SkeletonLoader />
-  ) : (
+  return (
     <div className="container section px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col text-white mx-auto gap-3 md:gap-4">
         <h2

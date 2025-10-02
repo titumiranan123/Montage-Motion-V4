@@ -1,9 +1,6 @@
-"use client";
 import React from "react";
-import ReactPlayer from "react-player";
-
 import Link from "next/link";
-import Image from "next/image";
+import { Videoplayer } from "./Reactplayer";
 
 interface HeaderServiceProps {
   mainIntro: {
@@ -17,16 +14,10 @@ interface HeaderServiceProps {
     created_at?: string;
     updated_at?: string;
   };
-  isLoading: boolean;
 }
 
-const HeaderService: React.FC<HeaderServiceProps> = ({
-  mainIntro,
-  isLoading,
-}) => {
-  return isLoading ? (
-    <SkeletonLoader />
-  ) : (
+const HeaderService: React.FC<HeaderServiceProps> = ({ mainIntro }) => {
+  return (
     <section>
       <div className="relative w-full ">
         <div className="max-w-[800px]  pt-16 lg:pt-[138px] mx-auto text-center md:text-left">
@@ -75,59 +66,10 @@ const HeaderService: React.FC<HeaderServiceProps> = ({
           data-aos-delay="500"
           className="relative lg:w-[794px] mx-auto lg:h-[444px] w-full h-full aspect-video bg-black overhidden rounded-[39px] mt-7 lg:mt-16"
         >
-          <ReactPlayer
-            src={mainIntro?.video_link}
-            playing={false}
-            light={mainIntro?.thumbnail}
-            playIcon={
-              <Image
-                src="/assets/playbutton.png"
-                width={80}
-                height={80}
-                alt="Play"
-                className="z-10"
-                priority
-              />
-            }
-            width="100%"
-            height="100%"
-            controls
+          <Videoplayer
+            thumbnail={mainIntro.thumbnail}
+            video_link={mainIntro.video_link}
           />
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const SkeletonLoader = () => {
-  return (
-    <section className="">
-      <div className="relative w-full">
-        <div className="max-w-[800px] pt-16 lg:pt-[138px] mx-auto text-center md:text-left ">
-          {/* Title Skeleton */}
-          <div className="flex flex-col items-center">
-            <div className="h-8 sm:h-10 md:h-12 lg:h-16 w-3/4 mx-auto md:mx-0 bg-gray-800 dark:bg-gray-700 rounded animate-pulse"></div>
-          </div>
-
-          {/* Description Skeleton */}
-          <div className="mt-6 space-y-2 flex flex-col ">
-            <div className="h-4 w-full bg-gray-800 dark:bg-gray-700 rounded animate-pulse"></div>
-            <div className="h-4 w-5/6 bg-gray-800 dark:bg-gray-700 rounded animate-pulse"></div>
-            <div className="h-4 w-4/6 bg-gray-800 dark:bg-gray-700 rounded animate-pulse"></div>
-          </div>
-
-          {/* Buttons Skeleton */}
-          <div className="flex flex-col md:flex-row justify-center md:justify-center items-center gap-4 mt-10 md:mt-16">
-            <div className="h-12 w-full sm:w-[246px] md:w-[200px] bg-gray-800 dark:bg-gray-700 rounded-[30px] animate-pulse"></div>
-            <div className="h-12 w-full sm:w-[246px] md:w-[200px] bg-gray-800 dark:bg-gray-700 rounded-[30px] animate-pulse"></div>
-          </div>
-        </div>
-
-        {/* Video Section Skeleton */}
-        <div className="lg:w-[794px] mx-auto lg:h-[444px] w-full h-full aspect-video bg-gray-800 dark:bg-gray-700 rounded-[39px] mt-24 animate-pulse">
-          <div className="flex items-center justify-center h-full">
-            <div className="w-20 h-20 bg-gray-400 dark:bg-gray-600 rounded-full animate-pulse"></div>
-          </div>
         </div>
       </div>
     </section>
