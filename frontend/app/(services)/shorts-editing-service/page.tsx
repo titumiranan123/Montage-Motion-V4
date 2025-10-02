@@ -3,11 +3,13 @@ import WhyChooseUs from "@/component/home/WhyChooseUs";
 import ContactSection from "@/component/share/ContactSection";
 import React from "react";
 import ShortsHeader from "./ShortsHeader";
+import ShortsWorks from "./ShortsWorks";
 
 const ShortsEditing = () => {
   return (
     <div>
       <ShortsHeader />
+      <ShortsWorks />
       <WhyChooseUs />
       <FaqSection />
       <ContactSection />

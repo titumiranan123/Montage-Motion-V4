@@ -1,0 +1,12 @@
+CREATE TABLE about (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  image TEXT NOT NULL,
+  alt TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+

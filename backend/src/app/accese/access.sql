@@ -1,0 +1,18 @@
+CREATE TABLE visitors (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  visitor_id VARCHAR(32) NOT NULL,
+  ip VARCHAR(45) NOT NULL,
+  country VARCHAR(100),
+  region VARCHAR(100),
+  city VARCHAR(100),
+  provider VARCHAR(100),
+  device VARCHAR(100),
+  os VARCHAR(100),
+  browser VARCHAR(100),
+  visit_count INTEGER DEFAULT 1,
+  first_visit TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  last_visit TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  is_duplicate BOOLEAN DEFAULT FALSE,
+  user_agent TEXT
+);
+

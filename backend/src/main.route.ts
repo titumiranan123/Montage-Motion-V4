@@ -1,0 +1,42 @@
+import { Router } from "express";
+import dashboardRoute from "./app/website/web.route";
+import seoRoute from "./app/seo/seo.route";
+import campaignRoutes from "./app/campaign-aplication/campaign.route";
+
+import faqRoute from "./app/faq/faq.routes";
+import headerRoute from "./app/header/header.routes";
+import pricingRoute from "./app/pricing/pricing.route";
+import testimonialRoute from "./app/testimonial/testimonial.route";
+import recentRoute from "./app/work/work.route";
+import contactRoute from "./app/contact/conatct.routes";
+import AuthRoute from "./app/auth/auth.routes";
+import faqRouter from "./app/faq/faq.routes";
+import stateRouter from "./app/state/state.routes";
+import serviceRoute from "./app/services/service.route";
+import uploadRoute from "./app/upload/upload.route";
+import aboutRoute from "./app/about/about.route";
+import blogRoute from "./app/blogs/blog.route";
+import webRoute from "./app/homeapis/homeapi.routes";
+import memberRoute from "./app/member/member.route";
+
+const mainRoute = Router();
+
+mainRoute.use("/api", faqRoute);
+mainRoute.use("/api", headerRoute);
+mainRoute.use("/api", pricingRoute);
+mainRoute.use("/api/", testimonialRoute);
+mainRoute.use("/api", recentRoute);
+mainRoute.use("/api", AuthRoute);
+mainRoute.use("/api", contactRoute);
+mainRoute.use("/api", faqRouter);
+mainRoute.use("/api", stateRouter);
+mainRoute.use("/api", serviceRoute);
+mainRoute.use("/api", aboutRoute);
+mainRoute.use("/api", blogRoute);
+mainRoute.use("/api", webRoute);
+mainRoute.use("/api", memberRoute);
+mainRoute.use("/api", uploadRoute);
+mainRoute.use("/api", campaignRoutes);
+mainRoute.use("/api", seoRoute);
+mainRoute.use("/api", dashboardRoute);
+export default mainRoute;

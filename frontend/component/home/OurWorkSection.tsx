@@ -1,33 +1,49 @@
+"use client";
 import React from "react";
 import Heading from "../share/Headering";
-import { Tabs } from "@radix-ui/react-tabs";
-import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import DynamicWorkContent from "./DynamicWorkContent";
 const OurWorkSection = () => {
   const workSection = {
     title: "Our Featured Projects",
     subtitle:
       "Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing",
     tag: "Our Works",
-    data: [{}],
   };
+
+  // tab configuration (id + label + hook param)
+  const tabConfig = [
+    { id: "main", label: "Full-form Video Editing" },
+    { id: "shorts", label: "Shorts/Reel Editing" },
+    { id: "graphic", label: "Thumbnail Design" },
+  ];
+
+  // load default tab data
+
   return (
-    <div className="container">
+    <div className="container sectionGap">
       <Heading
         subtitle={workSection.subtitle}
         title={workSection.title}
         tag={workSection.tag}
       />
-      <div>
-        <Tabs defaultValue="account">
-          <TabsList>
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="password">Password</TabsTrigger>
-          </TabsList>
-          <TabsContent value="account">account</TabsContent>
-          <TabsContent value="password">password</TabsContent>
-        </Tabs>
-      </div>
+
+      <Tabs defaultValue="main" className="mt-8">
+        <TabsList className="flex gap-4 border-b pb-2">
+          {tabConfig.map((tab) => (
+            <TabsTrigger key={tab.id} value={tab.id}>
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
+        {tabConfig.map((tab) => (
+          <TabsContent key={tab.id} value={tab.id} className="pt-6">
+            {/* You can fetch tab-specific data dynamically like this: */}
+            <DynamicWorkContent tabKey={tab.id} />
+          </TabsContent>
+        ))}
+      </Tabs>
     </div>
   );
 };
