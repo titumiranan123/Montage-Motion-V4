@@ -61,11 +61,7 @@ const HeaderService: React.FC<HeaderServiceProps> = ({ mainIntro }) => {
 
         {/* Responsive Video Section */}
 
-        <div
-          data-aos="fade-up"
-          data-aos-delay="500"
-          className="relative lg:w-[794px] mx-auto lg:h-[444px] w-full h-full aspect-video bg-black overhidden rounded-[39px] mt-7 lg:mt-16"
-        >
+        <div data-aos="fade-up" data-aos-delay="500">
           <Videoplayer
             thumbnail={mainIntro.thumbnail}
             video_link={mainIntro.video_link}

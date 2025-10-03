@@ -1,45 +1,37 @@
-// app/whoweare/page.tsx
-import AboutUs from "./ClientWrapper";
+import Brand from "@/component/about/Brand";
+import HeaderService from "@/component/about/Header";
+import TestimonialSection from "@/component/share/Testimonial";
+import React from "react";
+import OurLocation from "./OurLocation";
+import OurMission from "./OurMission";
 
-// export async function generateMetadata(): Promise<Metadata> {
-//   const seoData = await fetch("https://api.yoursite.com/seo/whoweare").then(
-//     (res) => res.json()
-//   );
+const AboutUs = async () => {
+  const res = await fetch(
+    "https://api-v2.montagemotion.com/api/website/data?type=main",
+    { cache: "no-store" } // ensures fresh data on every request
+  );
 
-//   return {
-//     title: seoData.title,
-//     description: seoData.description,
-//     alternates: {
-//       canonical: seoData.canonical,
-//     },
-//     robots: {
-//       index: true,
-//       follow: true,
-//     },
-//     openGraph: {
-//       title: seoData.ogTitle,
-//       description: seoData.ogDescription,
-//       url: seoData.url,
-//       siteName: seoData.siteName,
-//       images: seoData.ogImages,
-//       locale: "en_US",
-//       type: "website",
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title: seoData.twitterTitle,
-//       description: seoData.twitterDescription,
-//       images: seoData.twitterImages,
-//     },
-//   };
-// }
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
 
-const Whoweare = () => {
+  const data = await res.json();
+
   return (
     <div>
-      <AboutUs />
+      <HeaderService mainIntro={data?.data?.header} />
+      <Brand />
+      <OurMission />
+      {data?.data?.testimonial.length > 0 && (
+        <TestimonialSection
+          title="What Our Clients Say"
+          description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
+          data={data?.data?.testimonial}
+        />
+      )}
+      <OurLocation />
     </div>
   );
 };
 
-export default Whoweare;
+export default AboutUs;

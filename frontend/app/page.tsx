@@ -8,10 +8,20 @@ import ContactSection from "@/component/share/ContactSection";
 import FaqSection from "@/component/share/FaqSection";
 import React from "react";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const res = await fetch(
+    "https://api-v2.montagemotion.com/api/website/data?type=main",
+    { cache: "no-store" } // ensures fresh data on every request
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  const data = await res.json();
   return (
     <div className="">
-      <Header />
+      <Header data={data?.data?.header} />
       <PatnersSection />
       <OurWorkSection />
       <OurProcess />

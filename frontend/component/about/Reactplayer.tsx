@@ -11,7 +11,7 @@ interface Props {
 
 export const Videoplayer: React.FC<Props> = ({ video_link, thumbnail }) => {
   return (
-    <div className="relative w-full h-full">
+    <div className="relative lg:w-[794px] mx-auto lg:h-[444px] w-full h-full aspect-video bg-black overhidden rounded-[39px] mt-7 lg:mt-16">
       <ReactPlayer
         src={video_link}
         playing={false}
