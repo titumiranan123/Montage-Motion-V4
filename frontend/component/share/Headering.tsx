@@ -16,13 +16,13 @@ const Heading: React.FC<headerProp> = ({
       <p className="bg-[#1D2122] text-[#E4E8F7] min-w-[122px] h-[38px] rounded-[24px] py-2 px-5 text-center opensans">
         {tag}
       </p>
-      <p className="poppins text-[56px] leading-[120%] font-semibold text-center text-white">
+      <p className="poppins md:text-[56px] md:leading-[120%] font-semibold text-center text-white text-[32px]">
         {title}
       </p>
-      <p className="poppins text-[56px] leading-[120%] font-semibold text-center text-white">
+      <p className="poppins md:text-[56px] text-[32px] md:leading-[120%] font-semibold text-center text-white">
         {extratitle}
       </p>
-      <p className="opensans font-[400] text-[16px] leading-[150%] text-[#E4E8F7] text-center">
+      <p className="opensans font-[400] md:text-[16px] text-[14px] md:leading-[150%] text-[#E4E8F7] text-center">
         {subtitle}
       </p>
     </div>

@@ -61,7 +61,6 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
       {data.map((dt: Work, index: number) => {
         const videoId = dt.id || `work-${index}`;
         const isPlaying = playingStates[videoId] || false;
-        const currentProgress = progress[videoId] || 0;
 
         return (
           <div
@@ -80,46 +79,6 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
                 width="100%"
                 height="100%"
               />
-            </div>
-
-            {/* Custom Controls */}
-            <div className="p-4 bg-gray-900">
-              {/* Title */}
-              {dt.title && (
-                <h3 className="text-sm font-semibold mb-2 truncate">
-                  {dt.title}
-                </h3>
-              )}
-
-              {/* Play/Pause Button */}
-              <button
-                onClick={() => handlePlayPause(videoId)}
-                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors duration-200 flex items-center justify-center gap-2"
-              >
-                {isPlaying ? (
-                  <>
-                    <svg
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z" />
-                    </svg>
-                    Pause
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                    </svg>
-                    Play
-                  </>
-                )}
-              </button>
             </div>
           </div>
         );

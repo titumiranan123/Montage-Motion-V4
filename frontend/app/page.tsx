@@ -1,12 +1,14 @@
 import Header from "@/component/home/Header";
 import OurProcess from "@/component/home/OurProcess";
-import OurWorkSection from "@/component/home/OurWorkSection";
 import PatnersSection from "@/component/home/PatnersSection";
 import ServiceSections from "@/component/home/ServiceSections";
 import WhyChooseUs from "@/component/home/WhyChooseUs";
 import ContactSection from "@/component/share/ContactSection";
 import FaqSection from "@/component/share/FaqSection";
+import TestimonialSection from "@/component/share/Testimonial";
 import React from "react";
+import OurFeatureProject from "@/component/home/OurFeatureProject";
+import OurWorkSection from "@/component/home/OurWorkSection";
 
 const HomePage = async () => {
   const res = await fetch(
@@ -23,9 +25,17 @@ const HomePage = async () => {
     <div className="">
       <Header data={data?.data?.header} />
       <PatnersSection />
-      <OurWorkSection />
-      <OurProcess />
+      <OurFeatureProject />
       <ServiceSections />
+      {data?.data?.testimonial.length > 0 && (
+        <TestimonialSection
+          title="What Our Clients Say"
+          description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
+          data={data?.data?.testimonial}
+        />
+      )}
+      <OurProcess />
+      <OurWorkSection />
       <WhyChooseUs />
       <FaqSection />
       <ContactSection />

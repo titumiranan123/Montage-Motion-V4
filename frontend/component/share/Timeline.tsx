@@ -55,7 +55,7 @@ const AIProcess = () => {
     <div className="bg-black text-white py-16 px-4 font-sans">
       <div className="relative max-w-5xl mx-auto">
         {/* মাঝখানে উল্লম্ব রেখা */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-700 hidden md:block"></div>
+        <div className="absolute top-[7%] left-1/2 transform -translate-x-1/2 h-[86%] w-2 bg-gray-700 hidden md:block"></div>
 
         {steps.map((step, index) => (
           <div
@@ -79,11 +79,11 @@ const AIProcess = () => {
               }`}
             >
               <div
-                className={`w-16 h-16 rounded-full flex items-center justify-center z-10 
+                className={` rounded-full flex items-center justify-center z-10 
                                  ${
-                                   index % 2 === 0
+                                   index === 0
                                      ? "bg-blue-500"
-                                     : "bg-green-500"
+                                     : "bg-white text-black w-7 h-7 text-[16px] poppins "
                                  }
                                  ${
                                    index % 2 === 0

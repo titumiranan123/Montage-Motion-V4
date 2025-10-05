@@ -94,6 +94,7 @@ body {
   gap: 16px;
   position: relative;
 }
+/* gadient card */
 .bg-gradient {
   background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
 }
@@ -104,8 +105,20 @@ body {
     rgba(51, 87, 163, 0) 38.74%
   );
 }
-/*home page  contact  */
+/* gardient box */
 
+/*home page   */
+.tabBorder {
+  border: 1px solid;
+  border-image-source: linear-gradient(
+    250.64deg,
+    rgba(51, 87, 163, 0.5) 0%,
+    rgba(51, 87, 163, 0) 50%,
+    rgba(51, 87, 163, 0.5) 100%
+  );
+
+  backdrop-filter: blur(16px);
+}
 .contact-info {
   background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
   border: 2px solid;
@@ -116,7 +129,7 @@ body {
   );
 }
 /* why chosse us card  */
-.choose-us-card {
+/* .choose-us-card {
   background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
   border: 2px solid;
   border-image-source: linear-gradient(
@@ -124,7 +137,7 @@ body {
     #3357a3 -5.78%,
     rgba(51, 87, 163, 0) 38.74%
   );
-}
+} */
 @layer {
   .container {
     @apply max-w-[1440px] lg:px-[120px] md:px-[60px] px-4 mx-auto;

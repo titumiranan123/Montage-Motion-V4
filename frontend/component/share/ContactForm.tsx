@@ -2,10 +2,6 @@
 
 import React, { useState } from "react";
 
-interface ContactFormProps {
-  onSubmit: (data: FormDataType) => void;
-}
-
 export interface FormDataType {
   fullName: string;
   email: string;
@@ -13,7 +9,7 @@ export interface FormDataType {
   message: string;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
+const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormDataType>({
     fullName: "",
     email: "",
@@ -32,7 +28,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+
     // Reset form if needed
     setFormData({
       fullName: "",

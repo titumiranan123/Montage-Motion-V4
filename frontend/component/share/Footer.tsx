@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import CustomLink from "./CustomLink";
+import Gradientcard from "./Gradientcard";
 
 const Footer = () => {
   return (
@@ -9,7 +10,7 @@ const Footer = () => {
       <div className="flex justify-between items-center">
         <Image
           src={"/assets/icon/logo.png"}
-          className="w-[235px] h-[92px]"
+          className="md:w-[235px] md:h-[92px] w-[143px] h-[56px]"
           alt="logo"
           priority
           title="logo"
@@ -51,17 +52,27 @@ const Footer = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-white lg:mt-12 md:gap-16">
-        <div>
-          <p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9 text-white lg:mt-12 mt-9 md:gap-16 gap-8 md:mb-8 mb-6">
+        <div className="col-span-3">
+          <p className="text-[16px] opensans font-[400]">
             Subscribe our newsletter to stay updated and get special offers.
           </p>
+          <div className="max-w-[305px] lg:mt-10 mt-6 max-h-[52px]  h-full rounded-[16px] border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2 flex items-center justify-around">
+            <input
+              type="text"
+              placeholder="Enter your email"
+              className="border-none focus:outline-none outline-none py-2 px-3 max-w-[100%] w-full opensans"
+            />
+            <button className="py-2 px-3 bg-[#25AAE1] max-w-[112px] max-h-[36px] text-nowrap rounded-[8px] flex justify-center items-center font-[500] poppins me-2">
+              Subscribe
+            </button>
+          </div>
         </div>
-        <div>
-          <h2 className="font-[600] text-[24px] leading-[30px]">
+        <div className="w-full mx-auto col-span-2">
+          <h2 className="font-[600] poppins text-[24px] leading-[30px]">
             Important Links{" "}
           </h2>
-          <div className="flex flex-col gap-1 mt-4">
+          <div className="flex flex-col gap-1 mt-4 opensans">
             <a className="text-[16px] font-[400]" href={"#faq"}>
               FAQ
             </a>
@@ -79,9 +90,11 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <div>
-          <h2 className="font-[600] text-[24px] leading-[30px]">Services</h2>
-          <div className="flex flex-col gap-1 mt-4">
+        <div className=" col-span-2">
+          <h2 className="font-[600] poppins text-[24px] leading-[30px]">
+            Services
+          </h2>
+          <div className="flex flex-col gap-1 mt-4 opensans">
             <Link className="text-[16px] font-[400]" href={"/advertising"}>
               Advertising
             </Link>
@@ -114,11 +127,11 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <div>
-          <h2 className="font-[600] text-[24px] leading-[30px]">
+        <div className=" col-span-2">
+          <h2 className="font-[600] text-[24px] leading-[30px] poppins">
             Contact Info
           </h2>
-          <div className="flex flex-col gap-1 mt-4">
+          <div className="flex flex-col gap-1 mt-4 opensans">
             <a
               className="text-[16px] font-[400]"
               href={"mailto:hello@montagemotion.com"}
@@ -135,7 +148,10 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="footer-nav-bg flex justify-between py-5 px-9 rounded-[16px] max-w-[768px] ms-auto w-full mt-9">
+      <Gradientcard
+        className="  justify-between py-5 px-9 rounded-[16px] max-w-[768px] ms-auto w-full lg:flex hidden"
+        borderClassName="p-[1px] rounded-[16px] "
+      >
         <CustomLink className=" text-white" href="/" title="Home" />
         <CustomLink className="text-white" href="/services" title="Services" />
         <CustomLink
@@ -150,7 +166,7 @@ const Footer = () => {
           href="/get-in-touch"
           title="Contact"
         />
-      </div>
+      </Gradientcard>
     </div>
   );
 };

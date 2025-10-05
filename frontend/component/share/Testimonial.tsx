@@ -260,4 +260,4 @@ const SkeletonLoader = () => (
 );
 
 // export default React.memo(TestimonialSection);
-export default React.memo(TestimonialSection);
+export default TestimonialSection;

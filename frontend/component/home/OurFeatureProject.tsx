@@ -1,8 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Heading from "../share/Headering";
+import DynamicWorkContent from "./DynamicWorkContent";
 
-const OurWorkSection = () => {
+const OurFeatureProject = () => {
+  const workSection = {
+    title: "Our Featured Projects",
+    subtitle:
+      "Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing",
+    tag: "Our Works",
+  };
+
   // tab configuration
   const tabConfig = [
     { id: "main", label: "Full-form Video Editing" },
@@ -12,13 +20,15 @@ const OurWorkSection = () => {
 
   // active tab state
   const [activeTab, setActiveTab] = useState("main");
+
   return (
-    <div>
+    <div className="container sectionGap">
       <Heading
-        subtitle="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing ."
-        tag="Our Works"
-        title="Industries We Work With"
+        subtitle={workSection.subtitle}
+        title={workSection.title}
+        tag={workSection.tag}
       />
+
       {/* Tabs Header */}
       <div className="flex gap-6  pb-2 mt-8 max-w-[582px] max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto tabBorder">
         {tabConfig.map((tab) => (
@@ -33,8 +43,20 @@ const OurWorkSection = () => {
           </button>
         ))}
       </div>
+
+      {/* Tabs Content */}
+      <div className="pt-6">
+        {tabConfig.map(
+          (tab) =>
+            activeTab === tab.id && (
+              <div key={tab.id}>
+                <DynamicWorkContent tabKey={tab.id} />
+              </div>
+            )
+        )}
+      </div>
     </div>
   );
 };
 
-export default OurWorkSection;
+export default OurFeatureProject;

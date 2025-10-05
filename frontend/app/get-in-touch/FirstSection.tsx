@@ -7,11 +7,6 @@ import Image from "next/image";
 import React from "react";
 
 const FirstSection = () => {
-  const handleFormSubmit = (data: any) => {
-    console.log("Form submitted:", data);
-    // You can integrate your API call here
-  };
-
   return (
     <div>
       <Heading
@@ -48,7 +43,7 @@ const FirstSection = () => {
             className="contact-card flex justify-between items-center text-white max-w-[582px] w-full h-auto rounded-[24px]"
             borderClassName="max-w-[582px] w-full h-auto rounded-[24px] p-[1px]"
           >
-            <ContactForm onSubmit={handleFormSubmit} />
+            <ContactForm />
           </Gradientcard>
         </div>
       </div>
