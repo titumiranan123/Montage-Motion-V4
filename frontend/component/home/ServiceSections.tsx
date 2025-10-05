@@ -1,6 +1,7 @@
 import React from "react";
 import Heading from "../share/Headering";
 import Image from "next/image";
+import Gradientcard from "../share/Gradientcard";
 
 const ServiceSections = () => {
   const data = [
@@ -45,28 +46,34 @@ const ServiceSections = () => {
     <div className="container sectionGap">
       <Heading
         subtitle="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-        title="Cat't Standout ? Let Us Help You"
+        title="Cat't Standout ?"
+        extratitle="Let Us Help You."
         tag="Our Services"
       />
       <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {data?.map((dt, idx) => (
-          <div
-            key={idx}
-            className="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] choose-us-card text-white flex justify-center items-start flex-col p-4"
+          <Gradientcard
+            className="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] "
+            borderClassName="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px]  p-[1px]"
           >
-            <h2 className="text-[24px] font-[600]">{dt.title}</h2>
-            <p className="text-[16px] font-[400] leading--[140%] text-[#e4e8e7]">
-              {dt.description}
-            </p>
-            <Image
-              src={dt.image}
-              alt={dt.title}
-              width={344}
-              height={276}
-              priority
-              className="max-w-[344px] w-full max-h-[276px] h-full"
-            />
-          </div>
+            <div
+              key={idx}
+              className=" text-white flex justify-center items-start flex-col p-4"
+            >
+              <h2 className="text-[24px] font-[600]">{dt.title}</h2>
+              <p className="text-[16px] font-[400] leading--[140%] text-[#e4e8e7]">
+                {dt.description}
+              </p>
+              <Image
+                src={dt.image}
+                alt={dt.title}
+                width={344}
+                height={276}
+                priority
+                className="max-w-[344px] w-full max-h-[276px] h-full"
+              />
+            </div>
+          </Gradientcard>
         ))}
       </div>
     </div>

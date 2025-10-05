@@ -79,20 +79,26 @@ const AIProcess = () => {
               }`}
             >
               <div
-                className={` rounded-full flex items-center justify-center z-10 
-                                 ${
-                                   index === 0
-                                     ? "bg-blue-500"
-                                     : "bg-white text-black w-7 h-7 text-[16px] poppins "
-                                 }
-                                 ${
-                                   index % 2 === 0
-                                     ? "md:left-1/2 md:transform md:-translate-x-1/2"
-                                     : ""
-                                 }
-                                 `}
+                className={`relative flex items-center justify-center z-10
+    ${
+      index === 0
+        ? "w-[84px] h-[84px]  text-white "
+        : "w-8 h-8 bg-white text-black "
+    }
+    rounded-full border border-white/20 transition-all duration-300 hover:scale-105
+    md:absolute md:top-1/2 md:-translate-y-1/2
+    ${index % 2 === 0 ? "md:left-1/2 md:-translate-x-1/2" : ""}
+  `}
               >
-                <span className="text-3xl font-bold">{step.id}</span>
+                <span
+                  className={`font-bold ${
+                    index === 0 ? "text-xl" : "text-sm"
+                  } ${
+                    index === 0 && "bg-black w-[84px] h-[84px] border"
+                  } leading-none poppins`}
+                >
+                  {step.id}
+                </span>
               </div>
             </div>
 

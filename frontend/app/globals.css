@@ -105,6 +105,11 @@ body {
     rgba(51, 87, 163, 0) 38.74%
   );
 }
+.bg-border:hover {
+  background: linear-gradient(208.39deg, #3357a3 100%, rgba(51, 87, 163, 0) 0%);
+  transition: all 0.3s ease-in-out;
+}
+
 /* gardient box */
 
 /*home page   */

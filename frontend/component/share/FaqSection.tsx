@@ -45,7 +45,7 @@ const FaqSection = () => {
         tag="FAQ"
         title="Have Questions ?"
       />
-      <div className="grid grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
         <Gradientcard
           className="max-w-[420px] max-h-[749px] h-full rounded-[24px]"
           borderClassName="p-[1px] max-w-[420px] max-h-[749px] h-full rounded-[24px] "
