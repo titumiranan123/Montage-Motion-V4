@@ -10,6 +10,7 @@ import React from "react";
 import OurFeatureProject from "@/component/home/OurFeatureProject";
 import OurWorkSection from "@/component/home/OurWorkSection";
 import ComparisonCards from "@/component/home/PriceComparison";
+import TabbedShowcase from "@/component/share/IndustryWork";
 
 const HomePage = async () => {
   const res = await fetch(
@@ -37,6 +38,7 @@ const HomePage = async () => {
       )}
       <OurProcess />
       <ComparisonCards />
+      {/* <TabbedShowcase />*/}
       <OurWorkSection />
       <WhyChooseUs />
       <FaqSection />

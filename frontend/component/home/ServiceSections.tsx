@@ -53,13 +53,11 @@ const ServiceSections = () => {
       <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {data?.map((dt, idx) => (
           <Gradientcard
+            key={idx}
             className="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] "
             borderClassName="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px]  p-[1px]"
           >
-            <div
-              key={idx}
-              className=" text-white flex justify-center items-start flex-col p-4"
-            >
+            <div className=" text-white flex justify-center items-start flex-col p-4">
               <h2 className="text-[24px] font-[600]">{dt.title}</h2>
               <p className="text-[16px] font-[400] leading--[140%] text-[#e4e8e7]">
                 {dt.description}

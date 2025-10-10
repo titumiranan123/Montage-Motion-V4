@@ -53,20 +53,20 @@ const steps = [
 const AIProcess = () => {
   return (
     <div className="bg-black text-white py-16 px-4 font-sans">
-      <div className="relative max-w-5xl mx-auto">
+      <div className="relative max-w-6xl mx-auto">
         {/* মাঝখানে উল্লম্ব রেখা */}
-        <div className="absolute top-[7%] left-1/2 transform -translate-x-1/2 h-[86%] w-2 bg-gray-700 hidden md:block"></div>
+        <div className="absolute top-[7%] left-1/2 transform -translate-x-1/2 h-[86%] w-[10px] verticalLine-bg hidden md:block"></div>
 
         {steps.map((step, index) => (
           <div
             key={step.id}
-            className={`flex flex-col md:flex-row items-start md:items-center my-12 ${
+            className={`flex flex-col md:flex-row items-start md:items-center my-12 justify-between ${
               index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
             }`}
           >
             {/* স্টেপের বিবরণ */}
-            <div className="w-full md:w-1/2 p-4 md:p-8">
-              <div className="bg-gray-900 p-6 rounded-lg processboxborder">
+            <div className="w-full max-w-[460px] min-h-[196px] h-full p-[1px] rounded-[24px] processboxborder">
+              <div className="bg-black p-6  w-full max-w-[460px] min-h-[196px] h-full rounded-[24px]">
                 <h3 className="text-2xl font-bold mb-2">{step.title}</h3>
                 <p className="text-gray-400">{step.description}</p>
               </div>
@@ -82,19 +82,51 @@ const AIProcess = () => {
                 className={`relative flex items-center justify-center z-10
     ${
       index === 0
-        ? "w-[84px] h-[84px]  text-white "
-        : "w-8 h-8 bg-white text-black "
+        ? "w-[84px] h-[84px] border-none   text-white "
+        : "w-7 h-7 bg-white text-black "
     }
     rounded-full border border-white/20 transition-all duration-300 hover:scale-105
     md:absolute md:top-1/2 md:-translate-y-1/2
-    ${index % 2 === 0 ? "md:left-1/2 md:-translate-x-1/2" : ""}
+    ${index % 2 === 0 ? "-left-8 md:-translate-x-1/2" : ""}
   `}
               >
+                <style>
+                  {`
+    .firstNumber-bg::before {
+      content: "1";
+      display:flex;
+      justify-content:center;
+      align-items: center;
+      position: absolute;
+      left: 2px;
+      top:2px;
+      background: black;
+      z-index: 0;
+      padding:2px;
+      width:80px;
+      height:80px;
+      border-radius: 24px;
+    }
+    .firstNumber-bg{
+      background: linear-gradient(
+        250.64deg,
+        rgba(51, 87, 163, 0.5) 0%,
+        rgba(51, 87, 163, 0) 50%,
+        rgba(51, 87, 163, 0.5) 100%
+      );
+    }
+      .verticalLine-bg{
+        background: linear-gradient(180deg, rgba(49, 95, 172, 0.2) 0.02%, #315FAC 21.38%, rgba(49, 95, 172, 0.2) 100%);
+
+      }
+  `}
+                </style>
                 <span
                   className={`font-bold ${
-                    index === 0 ? "text-xl" : "text-sm"
+                    index === 0 ? "text-xl " : "text-sm"
                   } ${
-                    index === 0 && "bg-black w-[84px] h-[84px] border"
+                    index === 0 &&
+                    "rounded-[24px] w-[84px] h-[84px] z-10 flex justify-center items-center firstNumber-bg relative !border-none"
                   } leading-none poppins`}
                 >
                   {step.id}

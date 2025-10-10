@@ -46,10 +46,19 @@ body {
   padding: 16px 20px;
 }
 .processboxborder {
-  border: 2px solid;
   border-image-source: linear-gradient(
     242.39deg,
     #3357a3 -5.78%,
+    rgba(51, 87, 163, 0) 38.74%
+  );
+}
+.process-gradient {
+  background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
+}
+.processboxborder {
+  background: linear-gradient(
+    208.39deg,
+    #3357a3 -1.78%,
     rgba(51, 87, 163, 0) 38.74%
   );
 }

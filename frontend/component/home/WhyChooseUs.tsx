@@ -52,13 +52,11 @@ const WhyChooseUs = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mt-20 mt-10 gap-10 ">
         {datas?.map((dt, idx) => (
           <Gradientcard
+            key={idx}
             className="max-w-[384px] w-full h-full max-h-[214px] rounded-[24px] md:py-6 py-3 md:px-5 px-2"
             borderClassName="p-[1px] rounded-[24px]"
           >
-            <div
-              key={idx}
-              className="flex justify-center items-start flex-col text-white  gap-2  "
-            >
+            <div className="flex justify-center items-start flex-col text-white  gap-2  ">
               <Image
                 src={dt?.image}
                 alt={dt?.title}

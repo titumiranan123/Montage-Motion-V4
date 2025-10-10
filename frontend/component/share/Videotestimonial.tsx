@@ -51,7 +51,7 @@ const TestimonialVideocard = ({
           playIcon={
             <div className="flex items-center justify-center w-[68px] h-[48px]">
               <Image
-                src="/small.png"
+                src="/assets/icon/playsmall.png"
                 width={68}
                 height={48}
                 alt="Play"

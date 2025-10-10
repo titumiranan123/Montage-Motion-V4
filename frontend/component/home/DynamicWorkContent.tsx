@@ -64,7 +64,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
 
         return (
           <div
-            key={videoId}
+            key={index}
             className="relative w-full bg-black rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             {/* Video Player */}

@@ -25,6 +25,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
         <Gradientcard
           className="lg:max-w-[996px] min-h-[68px] w-full h-full rounded-[18px]"
           borderClassName="lg:max-w-[996px] min-h-[68px] w-full h-full rounded-[18px] p-[1px]"
+          key={index}
         >
           <div
             data-aos="fade-up"

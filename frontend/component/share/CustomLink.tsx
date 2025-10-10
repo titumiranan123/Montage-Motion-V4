@@ -12,9 +12,9 @@ const CustomLink: React.FC<Prop> = ({ className, href, title }) => {
 
   return (
     <Link
-      href={`${href}`}
-      className={`${className} ${
-        pathName === href ? "font-bold" : "font-normal"
+      href={`${href} `}
+      className={`text-[16px] poppins ${className} ${
+        pathName === href ? "font-[600] " : "font-[500]"
       } text-white`}
     >
       {title}

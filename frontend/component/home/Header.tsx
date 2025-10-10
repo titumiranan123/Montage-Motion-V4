@@ -1,6 +1,7 @@
 import React from "react";
 import TurstedBy from "./TurstedBy";
 import Headervideopop from "./Headervideopop";
+import CounterNumber from "../share/CounterNumber";
 const Header: React.FC<{ data: any }> = ({ data }) => {
   return (
     <div className="flex lg:flex-row flex-col lg:justify-between items-center   container px-[60px] overflow-hidden relative lg:h-[564px] h-[780px] lg:gap-4 gap-4 ">
@@ -9,32 +10,38 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
       </div>
       <div className="flex z-20 justify-center items-start  flex-col lg:w-[50%] lg:mt-0 mt-10">
         <TurstedBy />
-        <h1 className="lg:text-[72px] lg:leading-[90px] text-[48px] leading-[56px] font-[500] text-white poppins md:text-left text-center lg:mt-4 mt-3">
+        <h1 className="lg:text-[72px] lg:leading-[90px] text-[48px] leading-[111%] font-[500] text-white poppins md:text-left text-center lg:mt-5 mt-4">
           Scaling Your Online Growth
         </h1>
-        <p className="text-white text-[14px] font-[400] md:text-[16px] opensans text-center md:text-left lg:mt-6 mt-6 mb-10">
+        <p className="text-white text-[14px] font-[400] md:text-[16px] opensans text-center md:text-left leading-[150% ]  mt-6 ">
           Montage Motion is a creative ad agency specializing in influencer
           marketing, video editing , thumbnails, content strategy, visual
           design, web design, and content marketing.
         </p>
-        <div className="w-full flex md:flex-row flex-col gap-3">
-          <button className="md:w-[155px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center font-popins font-[400]">
+        <div className="w-full flex md:flex-row flex-col gap-3 mt-10">
+          <button className="md:w-[155px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]">
             Start a project
           </button>
           <button
             style={{}}
-            className="md:w-[155px] w-full h-[48px] btn-secondary text-white py-4 px-5 rounded-[16px] flex justify-center items-center font-popins font-[400]"
+            className="md:w-[155px] w-full h-[48px] btn-secondary text-white py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]"
           >
             Book a Call
           </button>
         </div>
       </div>
       <div className="relative  z-20  lg:w-[50%] p-5 flex justify-center items-center">
-        <div className="state-box w-[142px] h-[104px] absolute left-5 top-[88px] z-10"></div>
+        <div className="state-box w-[142px] h-[104px] absolute left-5 top-[88px] z-10">
+          <CounterNumber number={8} title="Years of Experience" />
+        </div>
         <Headervideopop thumbnail={data?.thumbnail} link={data?.video_link} />
-        <div className="state-box w-[114px] h-[104px] absolute -bottom-4 left-7 "></div>
+        <div className="state-box w-[114px] h-[104px] absolute -bottom-4 left-7 ">
+          <CounterNumber number={1000} title="Succesfull Projects" />
+        </div>
 
-        <div className="state-box w-[112px] h-[104px] absolute top-32 right-10"></div>
+        <div className="state-box w-[112px] h-[104px] absolute top-32 right-10">
+          <CounterNumber number={10} title="Team Members" />
+        </div>
       </div>
     </div>
   );
