@@ -11,42 +11,35 @@ const steps = [
     title: "Discover & Align",
     description:
       "We start with a quick brief or call to lock in goals, messaging, audience and key performance metrics. No guesswork, just clarity from day one.",
-    icon: discover, // আইকন হিসেবে এখানে SVG বা React Icon ব্যবহার করতে পারেন
+    icon: "/assets/discover.png",
   },
   {
     id: 2,
     title: "Strategy & Creative Direction",
     description:
       "We set up the project: a brand strategy, storyboards, script framework, and a content plan. We define the creative direction for the project.",
-    icon: target,
+    icon: "/assets/strategy.png",
   },
   {
     id: 3,
     title: "Produce & Gather Assets",
     description:
       "We organize your product, service, team, location, and brand assets. We gather all the elements needed to tell your story, including footage, photos, and messaging.",
-    icon: file_video,
+    icon: "/assets/edit.png",
   },
   {
     id: 4,
     title: "Build & Edit",
     description:
       "This is the craft phase: editing and motion graphics, sound design, and color grading. We build the final product, ensuring it meets your expectations.",
-    icon: file_video,
+    icon: "/assets/review.png",
   },
   {
     id: 5,
     title: "Review & Refine",
     description:
       "You get a first cut to give us feedback. We make all the changes and revisions to ensure the project is perfect before it goes live.",
-    icon: file_video,
-  },
-  {
-    id: 6,
-    title: "Package & Launch",
-    description:
-      "We prepare the final assets for delivery and distribution. This includes optimizing for various platforms and ensuring everything is ready for launch.",
-    icon: file_video,
+    icon: "/assets/file-video.png",
   },
 ];
 
@@ -139,13 +132,12 @@ const AIProcess = () => {
                 <span className="w-24 h-12 backdrop-blur-2xl blur-[48px]  processglow-2  rounded-full flex items-center justify-centertext-white font-bold"></span>
               </span> */}
 
-              <Image src={background} width={560} height={180} alt="" />
+              {/* <Image src={background} width={560} height={180} alt="" /> */}
               <Image
-                className="absolute left-[35%]
-                -top-5"
+                className=""
                 src={step.icon}
-                width={150}
-                height={150}
+                width={460}
+                height={194}
                 alt=""
               />
             </div>
