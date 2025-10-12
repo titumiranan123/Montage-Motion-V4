@@ -34,7 +34,7 @@ const TurstedBy = () => {
           height={24}
         />
       </div>
-      <p className="opensans text-[14px] font-[400]">
+      <p className="opensans text-[12px] font-[400]">
         Trusted by 1000+ clients
       </p>
     </div>

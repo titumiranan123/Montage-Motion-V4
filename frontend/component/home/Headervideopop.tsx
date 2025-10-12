@@ -10,7 +10,7 @@ const Headervideopop: React.FC<{ thumbnail: string; link: string }> = ({
 
   return (
     <>
-      <div className="max-w-[465px] max-h-[340px] w-full h-full state-box">
+      <div className="md:max-w-[465px] max-w-[311px] max-h-[227px]  md:max-h-[340px] w-full h-full state-box">
         {/* Thumbnail */}
         <Image src={thumbnail} alt="hero thumbnail" width={435} height={260} />
 
@@ -19,7 +19,9 @@ const Headervideopop: React.FC<{ thumbnail: string; link: string }> = ({
           onClick={() => setIsOpen(true)}
           className="flex justify-center items-center w-full mt-4"
         >
-          <p className="text-[#1FB5DD]">Watch The Video</p>
+          <p className="text-[#1FB5DD] text-[14px] md:text-[16px] font-[600] ">
+            Watch The Video
+          </p>
           <Image
             alt="right-arrow"
             src="/assets/icon/arrow-right-01.png"

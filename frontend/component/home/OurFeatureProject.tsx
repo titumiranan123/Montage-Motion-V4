@@ -13,8 +13,8 @@ const OurFeatureProject = () => {
 
   // tab configuration
   const tabConfig = [
-    { id: "main", label: "Full-form Video Editing" },
-    { id: "shorts", label: "Shorts/Reel Editing" },
+    { id: "main", label: "Full-form Video " },
+    { id: "shorts", label: "Shorts/Reel " },
     { id: "graphic", label: "Thumbnail Design" },
   ];
 
@@ -22,7 +22,7 @@ const OurFeatureProject = () => {
   const [activeTab, setActiveTab] = useState("main");
 
   return (
-    <div className="container sectionGap">
+    <div className="container lg:mt-[60px] md:mt-[40px] mt-[24px]">
       <Heading
         subtitle={workSection.subtitle}
         title={workSection.title}
@@ -30,12 +30,12 @@ const OurFeatureProject = () => {
       />
 
       {/* Tabs Header */}
-      <div className="flex gap-6  pb-2 mt-8 max-w-[582px] max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto tabBorder">
+      <div className="flex lg:gap-6  pb-2 mt-8 max-w-[582px]  max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto tabBorder">
         {tabConfig.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors ${
+            className={`py-2 px-2 md:px-4 text-white opensans font-[400] md:text-[14px] text-[13px]  rounded-[36px] transition-colors ${
               activeTab === tab.id ? " bg-[#2B6AB2] font-semibold" : ""
             }`}
           >

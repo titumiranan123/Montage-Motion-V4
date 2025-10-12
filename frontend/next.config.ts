@@ -1,6 +1,23 @@
 // next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // async redirects() {
+  //   try {
+  //     const res = await fetch("https://your-api.com/api/services");
+  //     const services = await res.json();
+
+  //     const redirects = services.map((service:any) => ({
+  //       source: `/${service.slug}-service`,
+  //       destination: `/${service.slug}`,
+  //       permanent: true,
+  //     }));
+
+  //     return redirects;
+  //   } catch (error) {
+  //     console.error("Redirect fetch failed:", error);
+  //     return [];
+  //   }
+  // },
   images: {
     // Option A: recommended (Next.js 12.3+ / 13+) — allow via remotePatterns
     remotePatterns: [

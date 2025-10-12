@@ -3,7 +3,7 @@ import useService from "@/hook/useService";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 
 const ServiceDropdown = () => {
   const path = usePathname();
@@ -14,10 +14,10 @@ const ServiceDropdown = () => {
   return (
     <>
       {/* Services Dropdown */}
-      <div className="group relative cursor-pointer">
+      <div className="group relative cursor-pointer poppins ">
         <span
           className={`flex text-white items-center gap-2 ${
-            isServicesActive ? "font-bold " : ""
+            isServicesActive ? "font-[600] " : "font-[400]"
           }`}
         >
           Services

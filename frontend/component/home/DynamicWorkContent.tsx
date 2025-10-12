@@ -2,6 +2,7 @@
 import useWorks from "@/hook/useWorks";
 import React, { useRef, useState } from "react";
 import ReactPlayer from "react-player";
+import VideoPlayer from "./PrettyPlayer";
 
 interface Work {
   id: string;
@@ -69,7 +70,8 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
           >
             {/* Video Player */}
             <div className="aspect-video">
-              <ReactPlayer
+              <VideoPlayer youtubeUrl={dt.video_link} />
+              {/* <ReactPlayer
                 ref={(ref) => {
                   playerRefs.current[videoId] = ref;
                 }}
@@ -78,7 +80,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
                 controls={false}
                 width="100%"
                 height="100%"
-              />
+              /> */}
             </div>
           </div>
         );

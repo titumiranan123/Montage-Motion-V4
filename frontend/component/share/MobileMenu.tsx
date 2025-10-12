@@ -67,7 +67,9 @@ const MobileMenu = () => {
             href="/"
             onClick={toggleMobileMenu}
             className={`poppins text-[24px] border-white/10 ${
-              path === "/" ? "text-white font-bold" : "text-gray-200"
+              path === "/"
+                ? "text-white font-[600]"
+                : "text-gray-200 font-[400]"
             }`}
           >
             Home
@@ -81,7 +83,9 @@ const MobileMenu = () => {
             >
               <span
                 className={
-                  isServicesActive ? "font-bold text-white" : "text-gray-200"
+                  isServicesActive
+                    ? "font-[600] text-white"
+                    : "text-gray-200 font-[500]"
                 }
               >
                 Services

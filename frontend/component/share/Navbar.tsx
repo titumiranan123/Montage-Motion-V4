@@ -6,7 +6,7 @@ import MobileMenu from "./MobileMenu";
 
 const Navbar = () => {
   return (
-    <div className="py-6 container  flex justify-between items-center">
+    <div className="py-2 mt-6 md:mt-8 bg-[#080B0C63]/39 rounded-[24px] container  flex justify-between items-center">
       <Image
         src={"/assets/montagelogo.png"}
         alt="logo"
@@ -22,10 +22,10 @@ const Navbar = () => {
         <CustomLink className="" href="/about" title="About" />
         <CustomLink className="" href="/get-in-touch" title="contact" />
       </div>
-      <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] lg:flex hidden justify-center items-center font-popins font-[400]">
+      <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] lg:flex hidden justify-center items-center text-[16px] font-[500] poppins cursor-pointer">
         Start a project
       </button>
-      <button>
+      <button className="flex lg:hidden">
         <MobileMenu />
       </button>
     </div>

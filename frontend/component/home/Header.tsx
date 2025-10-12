@@ -31,15 +31,15 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
         </div>
       </div>
       <div className="relative  z-20  lg:w-[50%] p-5 flex justify-center items-center">
-        <div className="state-box w-[142px] h-[104px] absolute left-5 top-[88px] z-10">
+        <div className="state-box md:w-[142px] w-[94px] h-[80px] md:h-[104px] absolute lg:left-5 lg:top-[88px] md:top-[80px] md:-left-11 z-10 top-[60px] -left-3 flex justify-center items-center">
           <CounterNumber number={8} title="Years of Experience" />
         </div>
         <Headervideopop thumbnail={data?.thumbnail} link={data?.video_link} />
-        <div className="state-box w-[114px] h-[104px] absolute -bottom-4 left-7 ">
+        <div className="state-box md:w-[114px] md:h-[104px] w-[90px] h-[80px] absolute lg:-bottom-4 lg:left-7 -bottom-3 md:-left-4 -left-1 flex justify-center items-center ">
           <CounterNumber number={1000} title="Succesfull Projects" />
         </div>
 
-        <div className="state-box w-[112px] h-[104px] absolute top-32 right-10">
+        <div className="state-box md:w-[112px] md:h-[104px] w-[84px] h-[80px]  absolute md:top-32 top-16 md:-right-8 -right-5 lg:right-10 flex justify-center items-center">
           <CounterNumber number={10} title="Team Members" />
         </div>
       </div>

@@ -2,9 +2,9 @@
 import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Blogtab = () => {
+const Portfoliotab = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentTab = searchParams.get("cat") || "all";
@@ -14,34 +14,38 @@ const Blogtab = () => {
     const newUrl = `?cat=${href}`;
     router.replace(newUrl);
   };
+  useEffect(() => {
+    router.replace(`?cat=${activeTab}`);
+  }, [activeTab]);
+
   const tabConfig = [
     {
       title: "All",
-      href: "all",
+      href: "main",
     },
     {
-      title: "Video Editing",
-      href: "video-editing",
+      title: "Video Editing Tips",
+      href: "shorts",
     },
     {
       title: "Content Marketing",
-      href: "content-marketing",
+      href: "talking",
     },
     {
       title: "Design & Branding",
-      href: "design-branding",
+      href: "graphic",
     },
     {
       title: "Social Media Trends",
-      href: "social-media-trends",
+      href: "advertising",
     },
     {
       title: "Podcasting Tips",
-      href: "podcasting-tips",
+      href: "podcast",
     },
     {
       title: "Case Studies",
-      href: "case-studies",
+      href: "website",
     },
   ];
 
@@ -91,4 +95,4 @@ const Blogtab = () => {
   );
 };
 
-export default Blogtab;
+export default Portfoliotab;

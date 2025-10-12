@@ -15,12 +15,14 @@ const CounterNumber = ({
         <CountingNumber
           number={number}
           inView={true}
-          className="text-[20px] font-[600] poppins text-center "
+          className="md:text-[20px] text-[16px] font-[600] poppins text-center "
           transition={{ stiffness: 100, damping: 30 }}
         />
-        <Plus className="w-[20px] h-[20px] poppins" />
+        <Plus className="md:w-[20px] md:h-[20px] w-[16px] h-[16px] poppins" />
       </div>
-      <p className="text-[16px] font-[400] opensans text-center">{title}</p>
+      <p className="md:text-[16px] text-[12px]  font-[400] opensans text-center">
+        {title}
+      </p>
     </div>
   );
 };
