@@ -23,13 +23,13 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
     <div className="space-y-2">
       {items?.map((item, index) => (
         <Gradientcard
+          data-aos="fade-up"
+          data-aos-delay={100 + index * 100}
           className="lg:max-w-[996px] min-h-[68px] w-full h-full rounded-[18px]"
           borderClassName="lg:max-w-[996px] min-h-[68px] w-full h-full rounded-[18px] p-[1px]"
           key={index}
         >
           <div
-            data-aos="fade-up"
-            data-aos-delay={100 + index * 100}
             // style={{ boxShadow: "0px 4px 60px 0px #1FB5DD29 inset" }}
             key={index}
             className={`text-white ${

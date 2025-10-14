@@ -146,7 +146,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
               reverseDirection: true,
               pauseOnMouseEnter: true,
             }}
-            className="testimonial-swiper-text"
+            className="testimonial-swiper-text mt-4"
             breakpoints={{
               640: {
                 slidesPerView: 1,

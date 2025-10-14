@@ -75,7 +75,7 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
         {/* Content Card */}
         <div className="relative">
           <Gradientcard
-            className="rounded-[16px] bg-gradient-to-b from-white/5 to-white/0 p-3   md:p-6 flex justify-between items-center gap-4 max-w-[900px] mx-auto w-full relative "
+            className="rounded-[16px] bg-gradient-to-b from-white/5 to-white/0 p-3   md:p-6 flex justify-between items-center lg:flex-row flex-col-reverse gap-4 max-w-[900px] mx-auto w-full relative "
             borderClassName="p-[1px] max-w-[900px] rounded-[16px] mx-auto  w-full h-full"
           >
             <div className="text-white  w-full lg:w-1/2">
@@ -104,7 +104,7 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
               </a>
             </div>
             {/* Image Card */}
-            <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/10 w-full lg:w-1/2">
+            <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/10 w-full lg:w-1/2 ">
               <Image
                 src={activeTabData.image}
                 alt={activeTabData.title}
@@ -116,11 +116,11 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0" />
             </div>
           </Gradientcard>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
+          <div className="lg:absolute hidden left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
             <Image
               src="/assets/industriesworok.png"
               alt="backend"
-              className="max-w-[1435px] mx-auto"
+              className="max-w-[1435px] w-full mx-auto"
               width={1435}
               height={10}
             />

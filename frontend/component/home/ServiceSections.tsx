@@ -57,9 +57,11 @@ const ServiceSections = () => {
             className="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] "
             borderClassName="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px]  p-[1px]"
           >
-            <div className=" text-white flex justify-center items-start flex-col p-4">
-              <h2 className="text-[24px] font-[600]">{dt.title}</h2>
-              <p className="text-[16px] font-[400] leading--[140%] text-[#e4e8e7]">
+            <div className=" text-[#E4E8F7] flex justify-center items-start flex-col p-4">
+              <h2 className="md:text-[24px] text-[20px] poppins font-[600]">
+                {dt.title}
+              </h2>
+              <p className="md:text-[16px] text-[14px] font-[400] leading-[140%] text-[#E4E8F7] mt-2 opensans">
                 {dt.description}
               </p>
               <Image
@@ -68,7 +70,7 @@ const ServiceSections = () => {
                 width={344}
                 height={276}
                 priority
-                className="max-w-[344px] w-full max-h-[276px] h-full"
+                className="max-w-[344px] w-full max-h-[276px] h-full md:mt-8 mt-4"
               />
             </div>
           </Gradientcard>

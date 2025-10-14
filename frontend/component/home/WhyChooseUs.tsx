@@ -53,7 +53,7 @@ const WhyChooseUs = () => {
         {datas?.map((dt, idx) => (
           <Gradientcard
             key={idx}
-            className="max-w-[384px] w-full h-full max-h-[214px] rounded-[24px] md:py-6 py-3 md:px-5 px-2"
+            className="max-w-[384px] w-full h-full md:max-h-[214px] max-h-[230px] rounded-[24px] md:py-6 py-4 md:px-5 px-4"
             borderClassName="p-[1px] rounded-[24px]"
           >
             <div className="flex justify-center items-start flex-col text-white  gap-2  ">

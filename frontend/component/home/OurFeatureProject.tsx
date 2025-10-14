@@ -22,7 +22,7 @@ const OurFeatureProject = () => {
   const [activeTab, setActiveTab] = useState("main");
 
   return (
-    <div className="container lg:mt-[60px] md:mt-[40px] mt-[24px]">
+    <div className="container lg:mt-[50px] md:mt-[40px] mt-[24px]">
       <Heading
         subtitle={workSection.subtitle}
         title={workSection.title}

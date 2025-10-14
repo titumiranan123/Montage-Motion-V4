@@ -80,7 +80,7 @@ const DEFAULT_DATA: TabsData = {
   ],
 };
 
-export default function TabbedShowcase({ data }: { data?: TabsData }) {
+export default function IndustryWeWork({ data }: { data?: TabsData }) {
   const tabs = data?.tabs ?? DEFAULT_DATA.tabs;
   return (
     <section className="w-full  mx-auto px-4 py-10">
@@ -93,5 +93,3 @@ export default function TabbedShowcase({ data }: { data?: TabsData }) {
     </section>
   );
 }
-
-// ---------- Client Component (interactivity) ----------

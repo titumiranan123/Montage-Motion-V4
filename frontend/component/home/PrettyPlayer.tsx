@@ -8,50 +8,55 @@ const Plyr = dynamic(() => import("plyr-react"), { ssr: false });
 
 interface Props {
   youtubeUrl: string;
+  thumbnail?: string;
 }
 
-export default function VideoPlayer({ youtubeUrl }: Props) {
+export default function VideoPlayer({ youtubeUrl, thumbnail }: Props) {
+  console.log(thumbnail);
   const source: SourceInfo = {
     type: "video",
     sources: [
       {
-        src: youtubeUrl,
-        provider: "youtube",
+        src: "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/full%20length.mp4",
+        provider: "html5",
       },
     ],
+    poster:
+      "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/montagemotion-thumx.jpg",
   };
 
   const options: PlyrOptions = {
     controls: [
       "play-large",
-      "progress",
       "current-time",
+      "progress",
+      "duration",
       "mute",
       "volume",
-      "play",
+      // "play",
       // "duration"
       //   "fullscreen",
     ],
   };
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+    <div>
       <Plyr source={source} options={options} />
       <style jsx global>{`
         :root {
-          --plyr-color-main: #7c3aed; /* Purple progress bar */
+          --plyr-color-main: #2b6ab2; /* Purple progress bar */
         }
 
         /* ✅ Keep the big play button perfectly centered */
         .plyr--video .plyr__control--overlaid {
           position: absolute !important;
-          top: 50% !important;
+          top: 44% !important;
           left: 50% !important;
           transform: translate(-50%, -50%) !important;
           background: #00000033 !important;
           backdrop-filter: blur(8px);
-          width: 68px !important;
-          height: 48px !important;
+          width: 60px !important;
+          height: 40px !important;
           border-radius: 12px !important;
           display: flex !important;
           align-items: center !important;
@@ -70,8 +75,8 @@ export default function VideoPlayer({ youtubeUrl }: Props) {
         .plyr__control--overlaid svg {
           display: block !important;
           margin: 0 auto !important;
-          width: 24px !important;
-          height: 24px !important;
+          width: 20px !important;
+          height: 20px !important;
           fill: white !important;
         }
 
