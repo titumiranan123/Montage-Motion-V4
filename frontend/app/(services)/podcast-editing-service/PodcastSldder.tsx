@@ -4,8 +4,8 @@ import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 import ReactPlayer from "react-player";
 import Image from "next/image";
+import VideoPlayer from "@/component/home/PrettyPlayer";
 
-// Register GSAP plugin
 if (typeof window !== "undefined") {
   gsap.registerPlugin(Draggable);
 }
@@ -19,10 +19,13 @@ export default function PodcastSldder() {
   const isDraggingRef = useRef<any>(false);
   const draggableRef = useRef<any>(null);
 
+  // ✨ Smooth timing constants
+  const TWEEN_EASE = "power3.out";
+  const TWEEN_DUR = 0.7; // short + snappy; finishes before 3s autoplay step
+
   const data = [
     {
       image: "/assets/podcast/header-1.png",
-
       title: "Tech Talk",
       link: "https://youtu.be/RfO0RvZgzfc?si=XmMBkM50G0z0-oPN",
     },
@@ -53,46 +56,60 @@ export default function PodcastSldder() {
       const absPos = ((diff % data.length) + data.length) % data.length;
 
       let x = 0;
-      let scale = 0.5;
+      let y = 0;
       let opacity = 0.4;
       let zIndex = 1;
-      let y = 0;
       let rotateY = 0;
+      let width = 688;
+      let height = 387;
+      let borderRadius = 31;
 
       if (absPos === 0) {
+        // Center slide
         x = 0;
-        scale = 1;
+        y = 0;
         opacity = 1;
         zIndex = 30;
-        y = 0;
         rotateY = 0;
+        width = 688;
+        height = 387;
+        borderRadius = 31;
       } else if (absPos === 1 || absPos === data.length - 1) {
+        // Left and right slides
         const direction = absPos === 1 ? 1 : -1;
         x = direction * 500;
-        scale = 0.4;
-        opacity = 0.5;
+        y = direction === 1 ? -60 : 60;
+        opacity = 0.8;
         zIndex = 20;
-        y = direction === 1 ? -120 : 120;
         rotateY = direction * -20;
+        width = 211;
+        height = 185;
+        borderRadius = 31;
       } else {
+        // Hidden slides
         const direction = diff > 0 ? 1 : -1;
         x = direction * 1500;
-        scale = 0;
         opacity = 0;
         zIndex = 0;
-        y = 0;
-        rotateY = 0;
+        width = 0;
+        height = 0;
       }
 
+      // 💫 Smooth, conflict-free tween
+      gsap.killTweensOf(slide);
       gsap.to(slide, {
-        x: x,
-        y: y,
-        scale: scale,
-        opacity: opacity,
-        zIndex: zIndex,
-        rotateY: rotateY,
-        duration: 0.8,
-        ease: "power2.out",
+        x,
+        y,
+        opacity,
+        zIndex,
+        rotateY,
+        width,
+        height,
+        borderRadius,
+        duration: TWEEN_DUR,
+        ease: TWEEN_EASE,
+        overwrite: "auto",
+        // no delay → immediate, fluid response
       });
     });
   };
@@ -119,13 +136,8 @@ export default function PodcastSldder() {
     startAutoplay();
   };
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => prev + 1);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => prev - 1);
-  };
+  const nextSlide = () => setCurrentIndex((prev) => prev + 1);
+  const prevSlide = () => setCurrentIndex((prev) => prev - 1);
 
   const handleSlideClick = (index: number) => {
     const originalIndex = index % data.length;
@@ -137,11 +149,6 @@ export default function PodcastSldder() {
     } else {
       goToSlide(originalIndex);
     }
-  };
-
-  const handleVideoEnd = () => {
-    setIsPlaying(false);
-    startAutoplay();
   };
 
   useEffect(() => {
@@ -175,12 +182,11 @@ export default function PodcastSldder() {
 
         gsap.to(containerRef.current, {
           x: 0,
-          duration: 0.3,
+          duration: 0.35,
+          ease: TWEEN_EASE,
           onComplete: () => {
             isDraggingRef.current = false;
-            if (!isPlaying) {
-              startAutoplay();
-            }
+            if (!isPlaying) startAutoplay();
           },
         });
       },
@@ -189,9 +195,7 @@ export default function PodcastSldder() {
     startAutoplay();
 
     return () => {
-      if (draggableRef.current) {
-        draggableRef.current.kill();
-      }
+      if (draggableRef.current) draggableRef.current.kill();
       stopAutoplay();
     };
   }, []);
@@ -199,10 +203,11 @@ export default function PodcastSldder() {
   useEffect(() => {
     positionSlides(currentIndex);
 
+    // Keep your wrap logic, but sync with tween duration for seamless jump
     if (currentIndex < 0) {
-      setTimeout(() => setCurrentIndex(data.length - 1), 800);
+      setTimeout(() => setCurrentIndex(data.length - 1), TWEEN_DUR * 1000);
     } else if (currentIndex >= data.length * 2) {
-      setTimeout(() => setCurrentIndex(data.length), 800);
+      setTimeout(() => setCurrentIndex(data.length), TWEEN_DUR * 1000);
     }
   }, [currentIndex]);
 
@@ -215,64 +220,35 @@ export default function PodcastSldder() {
           style={{ perspective: "2000px" }}
         >
           <div className="relative h-full flex items-center justify-center">
-            {infiniteData.map((item, index) => {
+            {infiniteData?.map((item, index) => {
               const isCenterSlide =
-                currentIndex % data.length === index % data.length;
+                currentIndex % data?.length === index % data?.length;
 
               return (
                 <div
                   key={index}
                   ref={(el) => {
                     slidesRef.current[index] = el;
+                    if (el) {
+                      // tiny perf hint for smoother transforms
+                      (el.style as any).willChange =
+                        "transform, opacity, width, height";
+                    }
                   }}
                   onClick={() => handleSlideClick(index)}
-                  className="absolute w-[688px] h-[412px] bg-black rounded-2xl overflow-hidden shadow-2xl cursor-pointer select-none"
+                  className="absolute cursor-pointer select-none"
                   style={{
                     transformStyle: "preserve-3d",
                     backfaceVisibility: "hidden",
                   }}
                 >
                   {isCenterSlide && isPlaying ? (
-                    <ReactPlayer
-                      src={item.link}
-                      light={
-                        <Image
-                          src={item.image}
-                          alt=""
-                          width={688}
-                          height={411}
-                        />
-                      }
-                      playing={false}
-                      controls={true}
-                      width="100%"
-                      height="100%"
-                      onEnded={handleVideoEnd}
-                      onPause={() => {
-                        setIsPlaying(false);
-                        startAutoplay();
-                      }}
-                    />
+                    <div className="w-[688px] h-[387px] rounded-[31.63px] overflow-hidden bg-red-500">
+                      <VideoPlayer youtubeUrl="" />
+                    </div>
                   ) : (
                     <div className="relative w-full h-full">
-                      <ReactPlayer
-                        src={item.link}
-                        playing={false}
-                        light={
-                          <Image
-                            src={item.image}
-                            alt=""
-                            width={688}
-                            height={411}
-                          />
-                        }
-                        width="100%"
-                        height="100%"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
-                      <div className="absolute bottom-4 left-4 text-white font-bold text-xl pointer-events-none">
-                        {item.title}
-                      </div>
+                      <VideoPlayer youtubeUrl="" />
                     </div>
                   )}
                 </div>
@@ -281,7 +257,7 @@ export default function PodcastSldder() {
           </div>
         </div>
 
-        <div className=" justify-center gap-3 mt-12 hidden">
+        <div className="justify-center gap-3 mt-12 hidden">
           {data.map((_, index) => (
             <button
               key={index}
@@ -295,7 +271,7 @@ export default function PodcastSldder() {
           ))}
         </div>
 
-        <div className="hidden justify-center  gap-4 mt-8">
+        <div className="hidden justify-center gap-4 mt-8">
           <button
             onClick={prevSlide}
             className="bg-white/10 hover:bg-white/20 text-white p-4 rounded-full backdrop-blur-sm transition-all"

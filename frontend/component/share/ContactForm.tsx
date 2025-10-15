@@ -40,7 +40,7 @@ const ContactForm: React.FC = () => {
 
   return (
     <form
-      className="w-full flex flex-col gap-4 justify-center items-center p-6"
+      className="w-full flex flex-col gap-4 justify-center items-center md:p-6 p-4 "
       onSubmit={handleSubmit}
     >
       <div className="text-white w-full flex flex-col gap-2">
@@ -51,7 +51,7 @@ const ContactForm: React.FC = () => {
           value={formData.fullName}
           onChange={handleChange}
           placeholder="John Doe"
-          className="max-w-[542px] w-full h-[56px] rounded-[16px] p-4 border border-white/20 focus:outline-none"
+          className="max-w-[542px] w-full h-[56px] rounded-[16px] md:p-4 p-3 border border-white/20 focus:outline-none"
         />
       </div>
 
@@ -63,7 +63,7 @@ const ContactForm: React.FC = () => {
           value={formData.email}
           onChange={handleChange}
           placeholder="john48@gmail.com"
-          className="max-w-[542px] w-full h-[56px] rounded-[16px] p-4 border border-white/20 focus:outline-none"
+          className="max-w-[542px] w-full h-[56px] rounded-[16px] md:p-4 p-3 border border-white/20 focus:outline-none"
         />
       </div>
 
@@ -88,7 +88,7 @@ const ContactForm: React.FC = () => {
           value={formData.message}
           onChange={handleChange}
           placeholder="I would like to know more about your service"
-          className="max-w-[542px] w-full h-[120px] p-4 rounded-[16px] border border-white/20 focus:outline-none"
+          className="max-w-[542px] w-full h-[120px] md:p-4 p-3 rounded-[16px] border border-white/20 focus:outline-none"
         />
       </div>
 

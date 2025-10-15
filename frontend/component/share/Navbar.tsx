@@ -19,8 +19,8 @@ const Navbar = () => {
         <ServiceDropdown />
         <CustomLink className="" href="/portfolio" title="Portfolio" />
         <CustomLink className="" href="/recourses" title="Recourses" />
-        <CustomLink className="" href="/about" title="About" />
-        <CustomLink className="" href="/get-in-touch" title="contact" />
+        <CustomLink className="" href="/about-us" title="About" />
+        <CustomLink className="" href="/contact-us" title="contact" />
       </div>
       <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] lg:flex hidden justify-center items-center text-[16px] font-[500] poppins cursor-pointer">
         Start a project

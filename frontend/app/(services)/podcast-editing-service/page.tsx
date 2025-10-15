@@ -7,6 +7,10 @@ import PodacstHeader from "./PodacstHeader";
 import OurWork from "./OurWork";
 import PodcastService from "./PodcastService";
 import PodcastProcess from "./PodcastProcess";
+import PodcastWhychooseus from "./PodcastWhychooseus";
+import PodcastPricing from "./PodcastPricing";
+import PodcastPlanwithpurpose from "./PodcastPlanwithpurpose";
+import GsapImageSlide from "./VerticalSlide";
 
 const PodcastEditing = () => {
   return (
@@ -16,8 +20,13 @@ const PodcastEditing = () => {
       <OurWork />
       <PodcastService />
       <PodcastProcess />
+      <PodcastPricing />
+      <PodcastPlanwithpurpose />
+      <GsapImageSlide />
       {/* common */}
-      <WhyChooseUs />
+
+      <PodcastWhychooseus />
+      {/* <WhyChooseUs /> */}
       <FaqSection />
       <ContactSection />
     </div>

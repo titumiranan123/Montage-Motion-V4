@@ -1,9 +1,15 @@
 import Image from "next/image";
 import React from "react";
 
-const TurstedBy = () => {
+const TurstedBy = ({ isCenter }: { isCenter?: boolean }) => {
   return (
-    <div className="flex items-center justify-center md:justify-start w-full text-white gap-5">
+    <div
+      className={`flex items-center ${
+        isCenter
+          ? "justify-center md:justify-center"
+          : "justify-center md:justify-start"
+      }  w-full text-white gap-5`}
+    >
       <div className="flex w-[70px] h-[20px] items-center  -space-x-[6px]">
         <Image
           src={"/assets/hero_client-1.png"}
