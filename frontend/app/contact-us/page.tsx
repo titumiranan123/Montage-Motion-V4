@@ -5,7 +5,7 @@ import Locationsection from "./Locationsection";
 import CalendlyContact from "./CalendlyContact";
 const ContactPage = () => {
   return (
-    <div className="container">
+    <div className="">
       <FirstSection />
       <Locationsection />
       <CalendlyContact />

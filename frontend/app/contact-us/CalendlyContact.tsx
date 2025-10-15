@@ -5,7 +5,7 @@ import { InlineWidget } from "react-calendly";
 
 const CalendlyContact = () => {
   return (
-    <div className="sectionGap ">
+    <div className="sectionGap container">
       <Heading
         subtitle="Prefer virtual? Let's hop on a quick call and bring your ideas to life."
         tag="Book a Call"

@@ -6,7 +6,7 @@ import React from "react";
 
 const Locationsection = () => {
   return (
-    <div className="relative sectionGap">
+    <div className="relative sectionGap container">
       <Heading
         tag="Our Location"
         title="Visit Our Office"
