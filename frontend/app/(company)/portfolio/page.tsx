@@ -1,25 +1,34 @@
 import Heading from "@/component/share/Headering";
 import React from "react";
 import Portfoliotab from "./Portfoliotab";
-import axios from "axios";
+import VideoPlayer from "@/component/home/PrettyPlayer";
 
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
   const { search, cat } = await searchParams;
-  const res = await axios.get(
-    `https://api-v2.montagemotion.com/api/website/data?type=${
-      cat ? cat : "main"
+  const res = await fetch(
+    `https://api-v2.montagemotion.com/api/works/website?type=${
+      cat ? cat : "shorts"
     }&search=${search}`
   );
-  const data = res.data;
-  console.log(data);
+  const data = await res.json();
   return (
-    <div>
+    <div className="container sectionGap">
       <Heading
-        title="Blogs"
-        subtitle="Explore tips, trends, and strategies from the world of video editing, content creation, and digital marketing."
-        tag="Blogs"
+        subtitle="Turning raw footage and ideas into content that captures attention."
+        title="Creativity That Converts"
+        tag="Our Portfolio"
       />
       <Portfoliotab />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sectionGap">
+        {data?.data?.map((work: any) => (
+          <div className="">
+            <VideoPlayer
+              thumbnail={work?.thumbnail}
+              youtubeUrl={work?.video_link}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ import React from "react";
 
 const FirstSection = () => {
   return (
-    <div>
+    <div className="container">
       <Heading
         subtitle="See how design meets function. Real results, clean code, and user-first experiences."
         tag="Contact Us"

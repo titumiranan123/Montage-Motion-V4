@@ -2,8 +2,11 @@ import Brand from "@/component/about/Brand";
 import HeaderService from "@/component/about/Header";
 import TestimonialSection from "@/component/share/Testimonial";
 import React from "react";
-import OurLocation from "./OurLocation";
+import InsideMontage from "./InsideMontage";
 import OurMission from "./OurMission";
+import FirstSection from "../contact-us/FirstSection";
+import OurTeam from "./OurTeam";
+import OurStory from "./OurStory";
 
 const AboutUs = async () => {
   const res = await fetch(
@@ -18,7 +21,7 @@ const AboutUs = async () => {
   const data = await res.json();
 
   return (
-    <div>
+    <div className="">
       <HeaderService mainIntro={data?.data?.header} />
       <Brand />
       <OurMission />
@@ -29,7 +32,10 @@ const AboutUs = async () => {
           data={data?.data?.testimonial}
         />
       )}
-      <OurLocation />
+      <OurStory />
+      <OurTeam />
+      <InsideMontage />
+      <FirstSection />
     </div>
   );
 };

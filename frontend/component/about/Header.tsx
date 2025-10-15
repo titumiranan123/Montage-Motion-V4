@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Videoplayer } from "./Reactplayer";
+import TurstedBy from "../home/TurstedBy";
 
 interface HeaderServiceProps {
   mainIntro: {
@@ -18,49 +19,35 @@ interface HeaderServiceProps {
 
 const HeaderService: React.FC<HeaderServiceProps> = ({ mainIntro }) => {
   return (
-    <section>
+    <section className="px-2 lg:px-0">
       <div className="relative w-full ">
-        <div className="max-w-[800px]  pt-16 lg:pt-[138px] mx-auto text-center md:text-left">
-          <h1
-            data-aos="fade-up"
-            data-aos-delay="100"
-            className="text-white  capitalize   text-[36px] leading-[45px] md:text-[45px] md:leading-[60px] lg:text-[64px] font-[700] lg:leading-[76px] text-center satoshi"
+        <div className="max-w-[900px] w-full  pt-16 lg:pt-[138px] mx-auto text-center md:text-left">
+          <div
+            // data-aos="fade-up"
+            // data-aos-delay="100"
+            className="max-w-[254px] rounded-[24px] w-full mx-auto bg-[#5586ED]/39 backdrop-blur-[22px] h-[36px] p-2"
           >
-            {mainIntro?.title}
-          </h1>
+            <TurstedBy isCenter={true} />
+          </div>
+          <h2
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="text-white  tracking-[-4%]   text-[36px] leading-[45px] md:text-[45px] md:leading-[60px] lg:text-[64px] font-[500] lg:leading-[76px] text-center  poppins"
+          >
+            Discover Our Story and Are and How We Help Creators
+          </h2>
 
           <p
             data-aos="fade-up"
-            data-aos-delay="200"
-            className="text-[#E4E8F7] text-[14px] md:text-[16px] font-[400] mt-6"
+            data-aos-delay="300"
+            className="text-[#E4E8F7] text-[14px] md:text-[16px] font-[400] opensans mt-6 text-center lg:px-2"
           >
-            {mainIntro?.description}
+            Montage Motion is a creative ad agency specializing in influencer
+            marketing, video editing, thumbnails, content strategy, visual
+            design, web design, and content marketing.
           </p>
-
-          <div className="flex flex-row justify-center md:justify-center items-center gap-4  md:mt-10 mt-6">
-            <Link
-              data-aos="fade-up"
-              data-aos-delay="300"
-              href="https://calendly.com/imonofficial2/30min?month=2024-07"
-              className="flex justify-center items-center gap-3 font-bold text-[16px] p-4 text-white hover:border-none headerbutton rounded-[16px]"
-            >
-              Book a Call
-            </Link>
-            <Link
-              data-aos="fade-up"
-              data-aos-delay="400"
-              href="https://calendly.com/imonofficial2/30min?month=2024-07"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex justify-center items-center gap-3 font-bold text-[16px] p-4 w-[126px] rounded-[16px] border border-white text-white hover:border-none headersecond"
-            >
-              Our Works
-            </Link>
-          </div>
         </div>
-
         {/* Responsive Video Section */}
-
         <div data-aos="fade-up" data-aos-delay="500">
           <Videoplayer
             thumbnail={mainIntro.thumbnail}

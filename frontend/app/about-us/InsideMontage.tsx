@@ -2,7 +2,7 @@ import Heading from "@/component/share/Headering";
 import Image from "next/image";
 import React from "react";
 
-const OurLocation = () => {
+const InsideMontage = () => {
   return (
     <div className="sectionGap container">
       <Heading
@@ -71,4 +71,4 @@ const OurLocation = () => {
   );
 };
 
-export default OurLocation;
+export default InsideMontage;

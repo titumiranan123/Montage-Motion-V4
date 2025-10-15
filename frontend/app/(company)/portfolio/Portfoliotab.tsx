@@ -2,7 +2,7 @@
 import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const Portfoliotab = () => {
   const router = useRouter();
@@ -14,38 +14,36 @@ const Portfoliotab = () => {
     const newUrl = `?cat=${href}`;
     router.replace(newUrl);
   };
-  useEffect(() => {
-    router.replace(`?cat=${activeTab}`);
-  }, [activeTab]);
-
+  // useEffect(() => {
+  //   router.replace(`?cat=${activeTab}`);
+  // }, [activeTab]);
+  // | "main"
+  //     | "shorts"
+  //     | "talking"
+  //     | "podcast"
+  //     | "graphic"
+  //     | "advertising"
+  //     | "website";
   const tabConfig = [
     {
-      title: "All",
-      href: "main",
-    },
-    {
-      title: "Video Editing Tips",
-      href: "shorts",
-    },
-    {
-      title: "Content Marketing",
+      title: "Talking Video Editing",
       href: "talking",
     },
     {
-      title: "Design & Branding",
-      href: "graphic",
-    },
-    {
-      title: "Social Media Trends",
-      href: "advertising",
-    },
-    {
-      title: "Podcasting Tips",
+      title: "Podcast Video Editing ",
       href: "podcast",
     },
     {
-      title: "Case Studies",
-      href: "website",
+      title: "Shorts Video Editing",
+      href: "shorts",
+    },
+    {
+      title: "Thumbnail Design",
+      href: "graphic",
+    },
+    {
+      title: "SaaS Video Editing",
+      href: "advertising",
     },
   ];
 
@@ -77,20 +75,25 @@ const Portfoliotab = () => {
           />
         </button>
       </div>
-
-      <div className="flex justify-center items-center gap-6  pb-2 mt-8 min-w-[582px]  max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto ">
-        {tabConfig.map((tab) => (
-          <button
-            key={tab.href}
-            onClick={() => handleTabClick(tab.href)}
-            className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors ${
-              activeTab === tab.href ? " bg-[#2B6AB2] font-semibold" : ""
-            }`}
-          >
-            {tab.title}
-          </button>
-        ))}
+      <div className="searchbg group max-w-[814px] w-full h-full flex justify-center items-center mx-auto  rounded-[57px] p-[1px] mt-5 transition-all duration-300">
+        <div className="bg-black max-w-[814px] w-full rounded-[57px] h-full py-2 px-4">
+          {tabConfig.map((tab) => (
+            <button
+              key={tab.href}
+              onClick={() => handleTabClick(tab.href)}
+              className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors ${
+                activeTab === tab.href ? " bg-[#2B6AB2] font-semibold" : ""
+              }`}
+            >
+              {tab.title}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* <div className="flex justify-center items-center gap-6  pb-2 mt-8 min-w-[582px]  max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto ">
+        
+      </div> */}
     </div>
   );
 };

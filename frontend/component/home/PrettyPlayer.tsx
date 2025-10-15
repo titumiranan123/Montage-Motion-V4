@@ -20,8 +20,7 @@ export default function VideoPlayer({ youtubeUrl, thumbnail }: Props) {
         provider: "html5",
       },
     ],
-    poster:
-      "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/montagemotion-thumx.jpg",
+    poster: thumbnail,
   };
 
   const options: PlyrOptions = {

@@ -11,10 +11,10 @@ interface Props {
 
 export const Videoplayer: React.FC<Props> = ({ video_link, thumbnail }) => {
   return (
-    <div className="relative lg:w-[794px] mx-auto lg:h-[444px] w-full h-full aspect-video bg-black overhidden rounded-[39px] mt-7 lg:mt-16">
+    <div className="relative lg:max-w-[1143px] mx-auto lg:h-[643px] rounded-[31px] w-full h-full aspect-video bg-black overhidden  mt-7 lg:mt-16">
       <ReactPlayer
         src={video_link}
-        playing={false}
+        playing={true}
         light={thumbnail}
         playIcon={
           <Image
