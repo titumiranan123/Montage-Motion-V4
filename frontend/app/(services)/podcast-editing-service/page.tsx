@@ -11,8 +11,18 @@ import PodcastWhychooseus from "./PodcastWhychooseus";
 import PodcastPricing from "./PodcastPricing";
 import PodcastPlanwithpurpose from "./PodcastPlanwithpurpose";
 import GsapImageSlide from "./VerticalSlide";
+import TestimonialSection from "@/component/share/Testimonial";
 
-const PodcastEditing = () => {
+const PodcastEditing = async () => {
+  const res = await fetch(
+    "https://api-v2.montagemotion.com/api/website/data?type=main",
+    { cache: "no-store" } // ensures fresh data on every request
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  const data = await res.json();
   return (
     <div className="lg:mt-20 mt-10">
       <PodacstHeader />
@@ -24,7 +34,13 @@ const PodcastEditing = () => {
       <PodcastPlanwithpurpose />
       <GsapImageSlide />
       {/* common */}
-
+      {data?.data?.testimonial.length > 0 && (
+        <TestimonialSection
+          title="What Our Clients Say"
+          description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
+          data={data?.data?.testimonial}
+        />
+      )}
       <PodcastWhychooseus />
       {/* <WhyChooseUs /> */}
       <FaqSection />

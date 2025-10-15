@@ -80,7 +80,8 @@ const TestimonialVideocard = ({
               alt={`${testimonial.name}'s profile`}
               fill
               className="object-cover"
-              quality={85}
+              width={64}
+              height={64}
               priority
             />
           </div>
