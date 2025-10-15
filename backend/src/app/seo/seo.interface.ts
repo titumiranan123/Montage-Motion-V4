@@ -17,7 +17,6 @@ export interface SeoMeta {
   metaTitle: string;
   metaDescription: string;
   metaKeywords?: string;
-
   canonicalUrl?: string;
   robots?:
     | "index, follow"
@@ -25,12 +24,7 @@ export interface SeoMeta {
     | "index, nofollow"
     | "noindex, follow";
 
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
   schema?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  structuredData?: Record<string, any>;
   createdAt?: Date;
   updatedAt?: Date;
 }

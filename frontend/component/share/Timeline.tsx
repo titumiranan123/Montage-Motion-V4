@@ -53,19 +53,10 @@ const AIProcess = () => {
         {steps.map((step, index) => (
           <div
             key={step.id}
-            className={`flex flex-col md:flex-row items-start md:items-center my-12 justify-between ${
+            className={`flex flex-col lg:gap-0 gap-8 md:flex-row items-start md:items-center my-12 justify-between ${
               index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
             }`}
           >
-            {/* স্টেপের বিবরণ */}
-            <div className="w-full max-w-[460px] min-h-[196px] h-full p-[1px] rounded-[24px] processboxborder">
-              <div className="bg-black p-6  w-full max-w-[460px] min-h-[196px] h-full rounded-[24px]">
-                <h3 className="text-2xl font-bold mb-2">{step.title}</h3>
-                <p className="text-gray-400">{step.description}</p>
-              </div>
-            </div>
-
-            {/* আইকন এবং নম্বর */}
             <div
               className={`relative w-full md:w-auto flex items-center justify-center -mt-8 md:mt-0 md:absolute  md:transform md:-translate-x-1/2 ${
                 index % 2 === 0 ? "md:left-[53%]" : "md:left-[50%]"
@@ -80,7 +71,7 @@ const AIProcess = () => {
     }
     rounded-full border border-white/20 transition-all duration-300 hover:scale-105
     md:absolute md:top-1/2 md:-translate-y-1/2
-    ${index % 2 === 0 ? "-left-8 md:-translate-x-1/2" : ""}
+    ${index % 2 === 0 ? "md:-left-8 md:-translate-x-1/2" : ""}
   `}
               >
                 <style>
@@ -124,6 +115,13 @@ const AIProcess = () => {
                 >
                   {step.id}
                 </span>
+              </div>
+            </div>
+            {/* স্টেপের বিবরণ */}
+            <div className="w-full max-w-[460px] min-h-[196px] h-full p-[1px] rounded-[24px] processboxborder">
+              <div className="bg-black p-6  w-full max-w-[460px] min-h-[196px] h-full rounded-[24px]">
+                <h3 className="text-2xl font-bold mb-2">{step.title}</h3>
+                <p className="text-gray-400">{step.description}</p>
               </div>
             </div>
 

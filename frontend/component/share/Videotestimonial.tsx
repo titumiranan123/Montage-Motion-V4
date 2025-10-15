@@ -78,7 +78,6 @@ const TestimonialVideocard = ({
             <Image
               src={testimonial.image}
               alt={`${testimonial.name}'s profile`}
-              fill
               className="object-cover"
               width={64}
               height={64}

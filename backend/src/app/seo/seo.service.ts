@@ -36,12 +36,8 @@ export const seoMetaService = {
         data.metaKeywords,
         data.canonicalUrl,
         data.robots,
-        data.ogTitle,
-        data.ogDescription,
-        data.ogImage,
         data.schema,
-        JSON.stringify(data.structuredData || {}),
-      ],
+      ]
     );
 
     return result.rows[0];
@@ -50,7 +46,7 @@ export const seoMetaService = {
   async getSeoMetaByPage(pageName: string) {
     const result = await db.query(
       `SELECT * FROM seo_meta WHERE page_name = $1 LIMIT 1`,
-      [pageName],
+      [pageName]
     );
     return result.rows[0] || null;
   },
@@ -63,7 +59,7 @@ export const seoMetaService = {
   async deleteSeoMetaByPage(pageName: string) {
     const result = await db.query(
       `DELETE FROM seo_meta WHERE page_name = $1 RETURNING *`,
-      [pageName],
+      [pageName]
     );
     return result.rows[0] || null;
   },

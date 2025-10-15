@@ -26,8 +26,8 @@ const TestimonialMessagecard = ({
 }) => {
   return (
     <Gradientcard
-      className="md:w-[475px] w-[340px]  md:h-[248px]  h-full  p-[1px] rounded-[18px] "
-      borderClassName="md:w-[477px] md:h-[250px] w-[342px] h-full w-full h-full rounded-[18px] flex justify-center items-center"
+      className="md:max-w-[475px] max-w-[340px]  w-full md:max-h-[248px]  h-full max-h-full  p-[1px] rounded-[18px] "
+      borderClassName="md:max-w-[477px] max-w-[342px]  w-full md:max-h-[250px] max-h-full  h-full rounded-[18px] flex justify-center items-center"
     >
       <div
         // style={{ boxShadow: "0px 4px 60px 0px #1FB5DD29 inset" }}
@@ -48,7 +48,7 @@ const TestimonialMessagecard = ({
             height={64}
             priority
           />
-          <div className=" text-white flex flex-col gap-4">
+          <div className=" text-white flex flex-col md:gap-4 gap-2">
             <h2 className="font-bold text-[20px]">{testimonial.name}</h2>
             <p className="text-[14px] font-[400] md:-mt-5">
               {testimonial.designation}

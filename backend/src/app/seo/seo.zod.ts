@@ -33,7 +33,6 @@ export const seoMetaSchema = z.object({
   ogDescription: z.string().optional(),
   ogImage: z.string().url().optional(),
   schema: z.string().optional(),
-  structuredData: z.record(z.any()).optional(),
 });
 
 // For PUT or PATCH (optional fields)

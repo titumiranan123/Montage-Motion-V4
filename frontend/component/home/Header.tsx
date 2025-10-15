@@ -2,6 +2,7 @@ import React from "react";
 import TurstedBy from "./TurstedBy";
 import Headervideopop from "./Headervideopop";
 import CounterNumber from "../share/CounterNumber";
+import Link from "next/link";
 const Header: React.FC<{ data: any }> = ({ data }) => {
   return (
     <div className="flex lg:flex-row flex-col lg:justify-between items-center   container px-[60px] overflow-hidden relative lg:h-[564px] h-[780px] lg:gap-4 gap-4 ">
@@ -19,15 +20,20 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           design, web design, and content marketing.
         </p>
         <div className="w-full flex md:flex-row flex-col gap-3 mt-10">
-          <button className="md:w-[155px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]">
+          <Link
+            target="_blank"
+            href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
+            className="md:w-[155px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]"
+          >
             Start a project
-          </button>
-          <button
-            style={{}}
+          </Link>
+          <Link
+            target="_blank"
+            href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
             className="md:w-[155px] w-full h-[48px] btn-secondary text-white py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]"
           >
             Book a Call
-          </button>
+          </Link>
         </div>
       </div>
       <div className="relative  z-20  lg:w-[50%] p-5 flex justify-center items-center">

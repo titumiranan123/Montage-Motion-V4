@@ -47,8 +47,8 @@ const FaqSection = () => {
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
         <Gradientcard
-          className="max-w-[420px] max-h-[749px] h-full rounded-[24px]"
-          borderClassName="p-[1px] max-w-[420px] max-h-[749px] h-full rounded-[24px] "
+          className="max-w-[420px] max-h-[749px] h-full w-full rounded-[24px]"
+          borderClassName="p-[1px] max-w-[420px] max-h-[749px] h-full rounded-[24px] flex justify-center items-center w-full "
         >
           <div className="flex justify-center items-center flex-col h-full py-10 px-9">
             <Image

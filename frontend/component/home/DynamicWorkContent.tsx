@@ -1,14 +1,16 @@
 "use client";
+
 import useWorks from "@/hook/useWorks";
-import React, { useRef, useState } from "react";
-import ReactPlayer from "react-player";
+import React from "react";
+import Image from "next/image";
 import VideoPlayer from "./PrettyPlayer";
 
 interface Work {
   id: string;
-  video_link: string;
+  video_link?: string;
   thumbnail?: string;
   title?: string;
+  type?: string;
 }
 
 interface DynamicWorkContentProps {
@@ -17,6 +19,8 @@ interface DynamicWorkContentProps {
 
 const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
   const { data, isLoading } = useWorks(tabKey);
+
+  // Handle loading state
   if (isLoading) {
     return (
       <div className="p-6 text-white flex items-center justify-center">
@@ -25,6 +29,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
     );
   }
 
+  // Handle no data state
   if (!data || data.length === 0) {
     return (
       <div className="p-6 text-white flex items-center justify-center">
@@ -32,40 +37,72 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
       </div>
     );
   }
-  function normalizeYouTubeUrl(url: string) {
-    return url.replace("youtube.com/shorts/", "youtube.com/watch?v=");
-  }
+
+  // Helper: Convert Shorts URL to standard YouTube watch URL
+  const normalizeYouTubeUrl = (url: string) =>
+    url.replace("youtube.com/shorts/", "youtube.com/watch?v=");
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 text-white">
-      {data?.map((dt: any, index: number) => {
-        if (dt?.type === "main") {
+      {data.map((dt: Work, index: number) => {
+        if (dt.type === "graphic") {
           return (
             <div
-              key={index}
-              className="relative  overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px] border-none"
+              key={dt.id || index}
+              className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px]"
             >
-              <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-1 top-1 text-white bg-[#00000066]">
-                {dt.title}
-              </p>
-              {/* Video Player */}
-              <VideoPlayer
-                youtubeUrl={
-                  "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/shortmotionge.mp4"
-                }
-                thumbnail={data?.thumbnail}
-              />
+              {/* Title */}
+              {dt.title && (
+                <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2 text-white bg-[#00000066]">
+                  {dt.title}
+                </p>
+              )}
+
+              {/* Thumbnail */}
+              {dt.thumbnail ? (
+                <Image
+                  src={dt.thumbnail}
+                  alt={dt.title || "Graphic work"}
+                  width={348}
+                  height={216}
+                  className="rounded-[13px] object-cover w-full h-full"
+                />
+              ) : (
+                <div className="flex items-center justify-center bg-gray-700 w-full h-full rounded-[13px]">
+                  <p>No thumbnail</p>
+                </div>
+              )}
             </div>
           );
-        } else if (dt?.type === "shorts") {
-          const url = normalizeYouTubeUrl(
-            "https://youtube.com/shorts/fVOfNKN1Azw?si=2NGGZegcgOrkIi_D"
-          );
+        } else {
+          // Handle video type
+          const normalizedUrl = dt.video_link
+            ? normalizeYouTubeUrl(dt.video_link)
+            : "";
+
           return (
-            <div className="">
-              <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-1 top-1 text-white bg-[#00000066]">
-                {dt.type}
-              </p>
-              <VideoPlayer youtubeUrl={url} thumbnail={data?.thumbnail} />
+            <div
+              key={dt.id || index}
+              className="relative aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px] overflow-hidden"
+            >
+              {/* Type Label */}
+              {dt.type && (
+                <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2 text-white bg-[#00000066]">
+                  {dt.title}
+                </p>
+              )}
+
+              {/* Video Player */}
+              {normalizedUrl ? (
+                <VideoPlayer
+                  youtubeUrl={normalizedUrl}
+                  thumbnail={dt.thumbnail}
+                />
+              ) : (
+                <div className="flex items-center justify-center bg-gray-700 w-full h-full rounded-[13px]">
+                  <p>No video link</p>
+                </div>
+              )}
             </div>
           );
         }

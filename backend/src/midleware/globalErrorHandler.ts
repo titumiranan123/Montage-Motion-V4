@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
-import { ZodError } from "zod";
 import ApiError from "../utils/ApiError";
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err: any,
   _req: Request,
   res: Response,
-  _next: NextFunction,
+  _next: NextFunction
 ) => {
-  let statusCode = 500;
+  const statusCode = 500;
   let message = "Something went wrong!";
   let errorMessages: { path: string | number; message: string }[] = [];
   const stack = err.stack;
@@ -27,14 +26,14 @@ export const globalErrorHandler: ErrorRequestHandler = (
   }
 
   // Handle ZodError
-  else if (err instanceof ZodError) {
-    statusCode = 400;
-    message = "Validation error";
-    errorMessages = err.errors.map((e) => ({
-      path: e.path.join("."),
-      message: e.message,
-    }));
-  }
+  // else if (err instanceof ZodError) {
+  //   statusCode = 400;
+  //   message = "Validation error";
+  //   errorMessages = err.errors.map((e) => ({
+  //     path: e.path.join("."),
+  //     message: e.message,
+  //   }));
+  // }
 
   // Handle generic Error
   else if (err instanceof Error) {
