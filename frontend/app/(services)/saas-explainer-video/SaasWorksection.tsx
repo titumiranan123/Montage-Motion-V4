@@ -1,8 +1,7 @@
 import VideoPlayer from "@/component/home/PrettyPlayer";
 import Heading from "@/component/share/Headering";
-import Image from "next/image";
 import React from "react";
-import ReactPlayer from "react-player";
+
 const SaasWork = () => {
   const data = [
     {
@@ -53,7 +52,7 @@ const SaasWork = () => {
         {data?.map((item, idx) => (
           <div
             key={idx}
-            className="max-w-[316px] w-full h-[216px] rounded-[13px]"
+            className="max-w-[316px] w-full h-[216px] mx-auto rounded-[13px]"
           >
             <VideoPlayer youtubeUrl="" thumbnail={item?.image} />
           </div>

@@ -183,7 +183,7 @@ function StorySlider() {
       </div>
 
       {/* MIDDLE: “beam” slider with discrete points (TOP → BOTTOM) */}
-      <div className="relative w-[24px] lg:mx-4 flex items-center justify-center select-none">
+      <div className="relative w-[24px] lg:flex hidden  lg:mx-4  items-center justify-center select-none">
         <div
           ref={trackRef}
           className="relative h-full w-[24px] rounded-full  overflow-visible cursor-pointer"

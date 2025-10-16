@@ -139,7 +139,19 @@ const JobPost = () => {
                 </p>{" "}
                 <p className="text-[16px] font-[400] mt-9 opensans">/Month</p>
               </div>
-              <button className="max-w-[348px]   w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]">
+              <style>
+                {`
+          .btn-colors:hover{
+            background: linear-gradient(96.76deg, #FFFFFF -19.08%, #1FB5DD 48.57%, #FFFFFF 116.22%);
+
+          }
+          
+          `}
+              </style>
+              <button
+                style={{ boxShadow: "0px 0px 25px 0px #FFFFFF40 inset" }}
+                className="max-w-[348px] bg-white/20 backdrop-blur-[20px] text-white    w-full  h-[48px] btn-colors hover:text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]"
+              >
                 Apply Now
               </button>
             </div>

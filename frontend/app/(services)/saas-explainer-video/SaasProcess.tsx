@@ -24,7 +24,7 @@ const SaasProcess = () => {
         <div className="col-span-2 flex flex-col  gap-2">
           <Gradientcard
             className="contact-card flex justify-between items-center text-white max-w-[700px] w-full h-[170px] rounded-[24px]"
-            borderClassName="max-w-[698px] w-full h-[168px] rounded-[24px] p-[1px]"
+            borderClassName="max-w-[698px] w-full h-[172px] rounded-[24px] p-[1px]"
           >
             <div className="w-full">
               <h3 className="font-[600] poppins text-[24px] text-white">
@@ -45,7 +45,7 @@ const SaasProcess = () => {
           </Gradientcard>
           <Gradientcard
             className="contact-card flex justify-between items-center text-white max-w-[700px] w-full h-[170px] rounded-[24px]"
-            borderClassName="max-w-[698px] w-full h-[168px] rounded-[24px] p-[1px]"
+            borderClassName="max-w-[698px] w-full h-[172px] rounded-[24px] p-[1px]"
           >
             <div className="w-full">
               <h3 className="font-[600] poppins text-[24px] text-white">
@@ -66,7 +66,7 @@ const SaasProcess = () => {
           </Gradientcard>
           <Gradientcard
             className="contact-card flex justify-between items-center text-white max-w-[700px] w-full h-[170px] rounded-[24px]"
-            borderClassName="max-w-[698px] w-full h-[168px] rounded-[24px] p-[1px]"
+            borderClassName="max-w-[698px] w-full h-[172px] rounded-[24px] p-[1px]"
           >
             <div className="w-full">
               <h3 className="font-[600] poppins text-[24px] text-white">

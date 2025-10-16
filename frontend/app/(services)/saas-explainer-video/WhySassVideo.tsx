@@ -40,8 +40,8 @@ const WhySassVideo = () => {
     <div className="container sectionGap">
       <Heading
         subtitle="Montage Motion is an Avertising and Digital Agency specializing in Influencer Marketing "
-        title="Why Explainer Videos Are "
-        extratitle="Essential for Saas Growth"
+        title="Why Explainer Videos  "
+        extratitle="For Essential for Saas Growth"
         tag="Why SaaS Videos?"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mt-20 mt-10 gap-10">

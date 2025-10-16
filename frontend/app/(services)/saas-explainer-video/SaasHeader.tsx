@@ -4,7 +4,7 @@ import Headerpopup from "./Headerpopup";
 
 const SaasHeader: React.FC = () => {
   return (
-    <div className="flex lg:flex-row flex-col lg:justify-between items-center   container  overflow-hidden relative  lg:gap-4 gap-4 lg:pt-[72px] pt-10 ">
+    <div className="flex lg:flex-row flex-col lg:justify-between items-center   container  overflow-hidden relative  lg:gap-4 gap-10 lg:pt-[72px] pt-10 ">
       {/* <div className="absolute lg:top-1/3 md:top-[60%] top-[76%] lg:right-1/4 right-[20%]  lg:w-[689px] md:w-[500px] w-[250px] h-[400px] md:h-[900px] lg:h-[689px] bg-[#5586ED] lg:blur-[125px] md:blur-[80px] blur-[50px] rounded-full  z-10 ">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:w-[321px] md:h-[321px] w-[150px] h-[150px] bg-white rounded-full   "></div>
       </div> */}

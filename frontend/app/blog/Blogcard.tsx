@@ -23,7 +23,14 @@ const Blogcard = ({
         className=" p-4  overflow-hidden block cursor-pointer"
       >
         <div className="max-w-[344px] max-h-[276px] w-full h-full overflow-hidden">
-          <Image src={image} alt={title} width={456} height={242} priority />
+          <Image
+            className="max-w-[344px] max-h-[276px] w-full h-full object-cover"
+            src={image}
+            alt={title}
+            width={344}
+            height={276}
+            priority
+          />
         </div>
 
         <div className="mt-8 text-[#E4E8F7]">

@@ -25,9 +25,9 @@ const ServiceDropdown = () => {
       </span>
 
       {/* Dropdown Panel */}
-      <div className="absolute top-6 -left-[310px] w-[1000px] transform translate-y-5 group-hover:translate-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
+      <div className="absolute top-6 -left-[330px] w-[1000px] transform translate-y-5 group-hover:translate-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
         <div className="absolute top-full lg:left-8 lg:right-8 transition-all duration-200 ease-in-out z-50 rounded-3xl bg-black backdrop-blur-[50px] shadow-lg">
-          <div className="grid grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-3 lg:grid-cols-3 border rounded-2xl border-[#2B6AB2]/60">
             {/* Design Section */}
             <ServiceColumn
               title="Video Editing"
@@ -78,15 +78,16 @@ const ServiceDropdown = () => {
                 { href: "/thumbnail-design", label: "Branding" },
                 { href: "/thumbnail-design", label: "UI/UX" },
               ]}
+              borderNone={true}
             />
 
             {/* Content Section */}
-            <ServiceColumn
+            {/* <ServiceColumn
               title="Advertising"
               iconColor="text-primary-40"
               links={[]}
               borderNone
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -110,11 +111,11 @@ const ServiceColumn: React.FC<ServiceColumnProps> = ({
 }) => {
   return (
     <div
-      className={`space-y-4 py-8 px-6 ${
-        borderNone ? "" : "border-r border-primary/8"
+      className={`space-y-4  ${
+        borderNone ? "" : "border-r border-[#2B6AB2]/60"
       }`}
     >
-      <div className="flex items-center justify-between gap-2 text-lg font-medium text-primary">
+      <div className="flex items-center justify-between gap-2 text-lg font-medium text-primary py-4 px-6">
         <span className="text-white">{title}</span>
         <div className="size-9 rounded-full bg-white flex items-center justify-center">
           <svg
@@ -130,14 +131,14 @@ const ServiceColumn: React.FC<ServiceColumnProps> = ({
         </div>
       </div>
 
-      <div className="h-[1px] bg-primary/8 my-3" />
+      <div className="h-[1px] bg-[#2B6AB2]/60 my-3" />
 
-      <ul className="space-y-4">
+      <ul className="space-y-4 py-8 px-6">
         {links.map((link, index) => (
           <li key={index}>
             <Link
               href={link.href}
-              className="text-base text-white hover:text-primary-600 transition-colors"
+              className="text-base text-white hover:text-primary-600 transition-colors hover:text-[#2B6AB2]"
             >
               {link.label}
             </Link>

@@ -48,7 +48,7 @@ const AIProcess = () => {
     <div className="bg-black text-white py-16 px-4 font-sans">
       <div className="relative max-w-6xl mx-auto">
         {/* মাঝখানে উল্লম্ব রেখা */}
-        <div className="absolute top-[7%] left-1/2 transform -translate-x-1/2 h-[86%] w-[10px] verticalLine-bg hidden md:block"></div>
+        <div className="absolute top-[9%] left-1/2 transform -translate-x-1/2 h-[82%] w-[10px] verticalLine-bg hidden md:block"></div>
 
         {steps.map((step, index) => (
           <div
@@ -66,8 +66,8 @@ const AIProcess = () => {
                 className={`relative flex items-center justify-center z-10
     ${
       index === 0
-        ? "w-[84px] h-[84px] border-none   text-white "
-        : "w-7 h-7 bg-white text-black "
+        ? "w-[84px] h-[84px] border-none lg:-mt-6  text-white "
+        : "w-7 h-7 bg-white lg:-mt-7 text-black "
     }
     rounded-full border border-white/20 transition-all duration-300 hover:scale-105
     md:absolute md:top-1/2 md:-translate-y-1/2

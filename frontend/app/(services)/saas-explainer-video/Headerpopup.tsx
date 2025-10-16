@@ -7,14 +7,14 @@ const Headerpopup = () => {
   return (
     <>
       <div>
-        <div className="relative max-w-[560px] mx-auto max-h-[334px] rounded-[31px] w-full h-full aspect-video bg-black overhidden">
+        <div className="relative max-w-[560px] mx-auto max-h-[315px] rounded-[31px] w-full h-full aspect-video bg-black overflow-hidden">
           <ReactPlayer
             src={"https://youtu.be/0andrjUqeQk?si=7M59WgGye8hjOQQz"}
             playing={true}
             light={"/assets/herothumbnail.png"}
             playIcon={
               <Image
-                src="/assets/playbutton.png"
+                src="/assets/icon/playsmall.png"
                 width={80}
                 height={80}
                 alt="Play"
