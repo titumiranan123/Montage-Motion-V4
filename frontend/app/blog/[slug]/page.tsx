@@ -1,7 +1,10 @@
+import Gradientcard from "@/component/share/Gradientcard";
 import { fetchSingleBlog } from "@/hook/functions/fetchsingleBlog";
 import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
+import ShareButtons from "./ShareButtons";
+import BlogHeader from "./BlogHeader";
 
 export async function generateMetadata({
   params,
@@ -49,83 +52,104 @@ export async function generateMetadata({
 
 const SingleBlog = async ({ params }: { params: any }) => {
   const { slug } = await params;
-  // const data = {
-  //   title: "Cut the Fluff: Make Your Videos Shine",
-  //   slug: "cut-the-fluff-make-your-videos-shine",
-  //   meta: {
-  //     description:
-  //       "Learn how to make engaging videos by improving pacing, jump cuts, and captions.",
-  //     tags: ["video editing", "capcut", "youtube growth", "content creation"],
-  //     author: "ICT Bangla Team",
-  //     date: "2025-10-11",
-  //   },
-  //   hero: {
-  //     headline: "Cut the Fluff and Keep Viewers Hooked!",
-  //     subheadline:
-  //       "Discover how to hook viewers within the first 3 seconds and make them stay till the end.",
-  //     coverImage: "/images/video-editing-tips.webp",
-  //   },
-  //   outline: {
-  //     title: "In This Article, You'll Learn",
-  //     points: [
-  //       "How to use jump cuts wisely",
-  //       "Why captions increase retention",
-  //       "Balancing pacing and pauses effectively",
-  //       "How to make your videos shine",
-  //     ],
-  //   },
-  //   sections: [
-  //     {
-  //       id: "cut-the-fluff",
-  //       title: "Cut the Fluff",
-  //       content:
-  //         "One of the most important aspects of editing is pacing. Long pauses, repeated lines, or unnecessary details can make your audience lose interest.",
-  //       tip: "Pro Tip: Review your video with fresh eyes and ask yourself, 'Would I stay if I saw this as a viewer?'",
-  //       image: "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/montagemotion-content.png",
-  //     },
-  //     {
-  //       id: "use-jump-cuts",
-  //       title: "Use Jump Cuts Wisely",
-  //       content:
-  //         "Jump cuts can make your video more dynamic and fast-paced. But overusing them can make it feel unnatural.",
-  //       tip: "Pro Tip: Only use jump cuts when they improve flow or humor.",
-  //       image:
-  //         "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/montagemotion-content.png",
-  //     },
-  //     {
-  //       id: "add-text-captions",
-  //       title: "Add Text & Captions",
-  //       content:
-  //         "Captions not only make your videos accessible but also help with retention, especially when viewers are watching on mute.",
-  //       tip: "Pro Tip: Highlight key phrases with colors that contrast your background.",
-  //     },
-  //   ],
-  //   cta: {
-  //     headline: "Let’s Make Your Videos Shine",
-  //     subtext: "Get started shaping stories that engage and convert.",
-  //     buttonText: "Book a Call",
-  //     buttonLink: "/contact",
-  //   },
-  // };
-
+  const whatWill = {
+    article_topics: [
+      "How to cut fluff and keep your video tight and engaging",
+      "The smart way to use jump cuts without overwhelming viewers",
+      "Why captions and on-screen text boost watch time and accessibility",
+      "Simple audio tricks to balance music, voice, and effects",
+      "How color grading adds mood and polish to your video",
+      "The importance of consistent branding across all your content",
+      "Best export practices for YouTube, Instagram, TikTok, and more",
+    ],
+  };
   const data = await fetchSingleBlog(slug);
   return (
-    <div className="max-w-[964px] min-h-screen mx-auto flex flex-col pagelogo  mt-16 lg:mt-30 px-2">
-      <div>
-        <Image
-          src={data?.image}
-          alt={data?.title}
-          width={900}
-          height={500}
-          priority
-        />
+    <div className=" container  flex flex-col   mt-16 lg:mt-30 px-2">
+      <div className="w-full">
+        <h3 className="text-white lg:text-[56px] md:text-[48px] text-[30px] md:leading-[64px] leading-[46px] poppins font-[500]">
+          {data?.title}
+        </h3>
+        <BlogHeader />
       </div>
-      <div className="mt-5 max-w-[764px]  mx-auto ">
-        <h3 className="text-white">{data?.title}</h3>
-        <div
-          className="text-white mt-10"
-          dangerouslySetInnerHTML={{ __html: data?.description }}
-        ></div>
+      <div className="flex justify-between lg:flex-row flex-col gap-16 lg:mt-16 mt-10">
+        <div className="lg:max-w-[89px] lg:max-h-[210px] max-h-[87px] max-w-[280px] w-full">
+          <Gradientcard
+            className="lg:max-w-[87px] lg:max-h-[208px] max-h-[85px] max-w-[278px] w-full h-full py-6 px-5 rounded-[24px]"
+            borderClassName="lg:max-w-[89px] lg:max-h-[210px] max-h-[87px] max-w-[280px] w-full h-full rounded-[24px] p-[1px]"
+          >
+            <ShareButtons
+              data={{
+                title: data?.title,
+                url: `https://montagemotion.com/blog/${slug}`, // current page url,
+                description: data?.description,
+              }}
+            />
+          </Gradientcard>
+        </div>
+        <div className="">
+          <div>
+            <Image
+              src={data?.image}
+              alt={data?.title}
+              width={900}
+              height={500}
+              priority
+            />
+          </div>
+          <div className="mt-5 max-w-[764px]  mx-auto ">
+            <div
+              className="text-white mt-10"
+              dangerouslySetInnerHTML={{ __html: data?.description }}
+            ></div>
+          </div>
+        </div>
+        {/* what you will learn  */}
+
+        <Gradientcard
+          className="max-w-[319px] w-full max-h-[580px] h-full rounded-[24px] py-5 px-4 flex justify-center items-center flex-col gap-2 bgperfect"
+          borderClassName="max-w-[319px] w-full max-h-[580px] h-full rounded-[24px] p-[1px]"
+        >
+          <h2 className="text-[24px] poppins font-[500] text-white">
+            In This Article, You’ll Learn
+          </h2>
+          <style>
+            {`
+    
+    .willCard {
+
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .willCard:hover {
+      background: linear-gradient(
+        258.1deg,
+        rgba(51, 87, 163, 0.6) 17.41%,
+        #3357A3 50%,
+        rgba(51, 87, 163, 0.6) 82.59%
+      );
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px rgba(51, 87, 163, 0.4);
+    }
+  `}
+          </style>
+
+          <div className="flex flex-wrap gap-3">
+            {whatWill.article_topics?.map((article, idx) => (
+              <div
+                key={idx}
+                className="willCard max-w-[299px] w-full max-h-[59px] h-full p-[1px] flex justify-center items-center"
+              >
+                <div className="hover:bg-black max-w-[299px] w-full max-h-[59px] h-full rounded-[8px] py-2 px-4   overflow-hidden">
+                  <p className="text-white text-[14px] poppins text-center">
+                    {article}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Gradientcard>
       </div>
     </div>
   );

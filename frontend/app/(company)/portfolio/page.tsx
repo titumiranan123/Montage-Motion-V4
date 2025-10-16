@@ -2,6 +2,7 @@ import Heading from "@/component/share/Headering";
 import React from "react";
 import Portfoliotab from "./Portfoliotab";
 import VideoPlayer from "@/component/home/PrettyPlayer";
+import FirstSection from "@/app/contact-us/FirstSection";
 
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
   const { search, cat } = await searchParams;
@@ -12,14 +13,14 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
   );
   const data = await res.json();
   return (
-    <div className="container sectionGap">
+    <div className=" lg:mt-16 mt-10">
       <Heading
         subtitle="Turning raw footage and ideas into content that captures attention."
         title="Creativity That Converts"
         tag="Our Portfolio"
       />
       <Portfoliotab />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sectionGap">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sectionGap container">
         {data?.data?.map((work: any) => (
           <div className="">
             <VideoPlayer
@@ -29,6 +30,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
           </div>
         ))}
       </div>
+      <FirstSection />
     </div>
   );
 };
