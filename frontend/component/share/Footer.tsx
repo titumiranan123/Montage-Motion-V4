@@ -8,48 +8,67 @@ const Footer = () => {
   return (
     <div className="container lg:mb-[104px] sectionGap">
       <div className="flex justify-between items-center">
-        <Image
-          src={"/assets/icon/logo.png"}
-          className="md:w-[235px] md:h-[92px] w-[143px] h-[56px]"
-          alt="logo"
-          priority
-          title="logo"
-          width={235}
-          height={92}
-        />
+        <Link href={"/"} className="block ">
+          <Image
+            src={"/assets/icon/logo.png"}
+            className="md:w-[235px] md:h-[92px] w-[143px] h-[56px]"
+            alt="logo"
+            priority
+            title="logo"
+            width={235}
+            height={92}
+          />
+        </Link>
         <div className="flex gap-2 items-center">
-          <Image
-            src={"/assets/icon/fb.png"}
-            alt="facebook"
-            title="facebook"
-            priority
-            width={24}
-            height={24}
-          />
-          <Image
-            src={"/assets/icon/insta.png"}
-            alt="Instagram"
-            title="Instagram"
-            priority
-            width={24}
-            height={24}
-          />
-          <Image
-            src={"/assets/icon/link.png"}
-            alt="linkdin"
-            title="Linkdin"
-            priority
-            width={24}
-            height={24}
-          />
-          <Image
-            src={"/assets/icon/yt.png"}
-            alt="youtube"
-            title="youtube"
-            priority
-            width={24}
-            height={24}
-          />
+          <Link
+            href={"https://www.facebook.com/MontageMotion"}
+            className="block "
+          >
+            <Image
+              src={"/assets/icon/fb.png"}
+              alt="facebook"
+              title="facebook"
+              priority
+              width={24}
+              height={24}
+            />
+          </Link>
+          <Link href={"/"} className="block ">
+            <Image
+              src={"/assets/icon/insta.png"}
+              alt="Instagram"
+              title="Instagram"
+              priority
+              width={24}
+              height={24}
+            />
+          </Link>
+          <Link
+            href={"https://www.linkedin.com/company/montagemotion"}
+            className="block "
+          >
+            <Image
+              src={"/assets/icon/link.png"}
+              alt="linkdin"
+              title="Linkdin"
+              priority
+              width={24}
+              height={24}
+            />
+          </Link>
+          <Link
+            href={"https://www.youtube.com/@montagemotion77"}
+            className="block "
+          >
+            <Image
+              src={"/assets/icon/yt.png"}
+              alt="youtube"
+              title="youtube"
+              priority
+              width={24}
+              height={24}
+            />
+          </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9 text-white lg:mt-12 mt-9 md:gap-16 gap-8 md:mb-8 mb-6">
@@ -150,7 +169,7 @@ const Footer = () => {
       </div>
       <Gradientcard
         className="  justify-between py-5 px-9 rounded-[16px] max-w-[768px] ms-auto w-full lg:flex hidden"
-        borderClassName="p-[1px] rounded-[16px] "
+        borderClassName="p-[1px] max-w-[770px] rounded-[16px] ms-auto"
       >
         <CustomLink className=" text-white" href="/" title="Home" />
         <CustomLink className="text-white" href="/services" title="Services" />

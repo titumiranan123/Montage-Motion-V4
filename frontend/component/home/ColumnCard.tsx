@@ -11,7 +11,7 @@ export function ColumnCard({ column }: { column: any }) {
         .comparison-border{
             background: linear-gradient(-419.36deg, #000000 43.7%, #315FAC 110.87%);
         }
-.comparison:hover {
+.comparisonHover {
     background: linear-gradient(189.36deg, #000000 13.7%, #315FAC 85.87%);
     transition: all 300 ease-in-out;
 }
@@ -21,7 +21,9 @@ export function ColumnCard({ column }: { column: any }) {
             `}
       </style>
       <div
-        className={`relative rounded-[24px] text-[#E4E8F7] p-6 sm:p-8 bg-black h-full comparison `}
+        className={`relative rounded-[24px] text-[#E4E8F7] p-6 sm:p-8 bg-black h-full comparison ${
+          column.title === null ? "comparisonHover" : ""
+        }`}
       >
         {/* Header */}
         <div className="mb-6 flex items-center gap-3">

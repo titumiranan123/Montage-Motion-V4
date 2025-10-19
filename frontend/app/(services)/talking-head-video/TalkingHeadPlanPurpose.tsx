@@ -2,9 +2,9 @@ import { Bullet } from "@/component/home/BulletPoint";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import StepperDemo from "./PodcastPurposestep";
+import StepperDemo from "../podcast-editing-service/PodcastPurposestep";
 
-const PodcastPlanwithpurpose = () => {
+const TalkingHeadPlanPurpose = () => {
   return (
     <div className="flex justify-between lg:flex-row flex-col gap-8 container sectionGap">
       <div className="max-w-[499px] w-full max-h-[688px]">
@@ -77,4 +77,4 @@ const PodcastPlanwithpurpose = () => {
   );
 };
 
-export default PodcastPlanwithpurpose;
+export default TalkingHeadPlanPurpose;

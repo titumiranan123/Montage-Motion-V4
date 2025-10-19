@@ -4,7 +4,7 @@ import TurstedBy from "@/component/home/TurstedBy";
 
 const PodacstHeader = () => {
   return (
-    <div className="container">
+    <div className="container lg:mt-24 mt-10">
       <div className="flex justify-center items-center flex-col  max-w-[928px] w-full mx-auto lg:mb-20">
         <TurstedBy isCenter={true} />
         <h1 className="poppins lg:leading-[81px] font-[500] lg:text-[64px] text-[48px] leading-[56px]  text-center text-white mt-4 mb-6">

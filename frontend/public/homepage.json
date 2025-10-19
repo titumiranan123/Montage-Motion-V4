@@ -1,0 +1,31 @@
+{
+
+      "title": "MontageMotion – Creative Video Editing & Motion Design Studio",
+      "description": "MontageMotion helps brands, creators, and businesses craft stunning motion graphics, cinematic video edits, and social media visuals that drive engagement and growth.",
+      "keywords": "MontageMotion, video editing, motion design, visual storytelling, video production, content creation, post production, animation, branding videos, reels editing, short video production",
+      "author": "MontageMotion Team",
+      "robots": "index, follow"
+    ,
+
+    "twitter": {
+      "card": "summary_large_image",
+      "title": "MontageMotion – Creative Video Editing Studio",
+      "description": "Bring your ideas to life with MontageMotion. Stunning visuals, storytelling, and animation that capture attention.",
+      "image": "https://montagemotion.com/og-image.jpg",
+      "creator": "@montagemotion"
+    },
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "MontageMotion",
+      "url": "https://montagemotion.com",
+      "logo": "https://montagemotion.com/logo.png",
+      "sameAs": [
+        "https://www.facebook.com/montagemotion",
+        "https://www.instagram.com/montagemotion",
+        "https://www.youtube.com/@montagemotion",
+        "https://www.linkedin.com/company/montagemotion"
+      ]
+    }
+  }
+  

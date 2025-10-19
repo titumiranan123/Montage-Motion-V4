@@ -52,7 +52,7 @@ const TalkingHeadWork = () => {
         {data?.map((item, idx) => (
           <div
             key={idx}
-            className="max-w-[316px] w-full h-[216px] rounded-[13px]"
+            className="max-w-[316px] mx-auto w-full  h-[216px] rounded-[13px]"
           >
             <ReactPlayer
               src={item.link}

@@ -18,20 +18,53 @@ const Dot: React.FC<{ index: number; isActive: boolean }> = ({
   // Active (first) node is a rounded square per the reference image; others are small white circles with numbers.
   if (isActive) {
     return (
-      <div className="relative z-10 flex h-11 w-9 items-center justify-center rounded-2xl bg-zinc-900 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.18)]">
-        <span className="text-base font-semibold leading-none">
+      <div className="relative z-10 text-[25px] poppins text-white firstNumber-bg ">
+        <style>
+          {`
+            .firstNumber-bg::before {
+              content: "1";
+              display:flex;
+              font-size:"24px";
+              justify-content:center;
+              align-items: center;
+              position: absolute;
+              left: 1px;
+              top:1px;
+              background: black;
+              z-index: 0;
+              padding:2px;
+              width:84px;
+              height:84px;
+              border-radius: 24px;
+            }
+            .firstNumber-bg{
+              background: linear-gradient(
+                250.64deg,
+                rgba(51, 87, 163, 0.5) 0%,
+                rgba(51, 87, 163, 0) 50%,
+                rgba(51, 87, 163, 0.5) 100%
+              );
+              width:86px;
+              height:86px;
+              border-radius: 24px;
+            }
+            `}
+        </style>
+        {/* <span className="text-base font-semibold leading-none">
           {index + 1}
-        </span>
+        </span> */}
       </div>
     );
   }
 
   return (
     <div
-      className="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white text-zinc-900 shadow"
+      className="relative w-[84px] h-[84px] z-10 flex  items-center justify-center  text-zinc-900 "
       aria-hidden
     >
-      <span className="text-xs font-semibold leading-none">{index + 1}</span>
+      <span className="text-xs font-semibold leading-none flex justify-center items-center h-7 w-7 rounded-full  bg-white">
+        {index + 1}
+      </span>
     </div>
   );
 };
@@ -43,7 +76,13 @@ const VerticalStepper: React.FC<VerticalStepperProps> = ({
   return (
     <div className="relative grid w-full max-w-[340px] grid-cols-[auto_1fr] gap-x-4">
       {/* Vertical line */}
-      <div className="pointer-events-none absolute left-[14px] top-0 h-full w-[2px] bg-gradient-to-b from-blue-900 via-blue-700 to-blue-400" />
+      <div
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(49, 95, 172, 0.2) 0.02%, #315FAC 21.38%, rgba(49, 95, 172, 0.2) 100%)",
+        }}
+        className="pointer-events-none absolute left-[39px] top-1 h-[90%] w-[8px] "
+      />
 
       {/* Steps */}
       {steps.map((step, i) => {
@@ -56,7 +95,7 @@ const VerticalStepper: React.FC<VerticalStepperProps> = ({
             </div>
 
             {/* Text column */}
-            <div className="col-start-2 -mt-0.5 mb-6 flex min-h-[44px] items-center">
+            <div className="col-start-2  flex  opensans items-center">
               <p
                 className={[
                   "select-none text-[17px] font-medium",
@@ -76,7 +115,7 @@ const VerticalStepper: React.FC<VerticalStepperProps> = ({
 // --- Demo wrapper as default export (ready to paste into a Next.js page) ---
 export default function StepperDemo() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black p-6">
+    <main className="flex items-center justify-center bg-black mt-6 ">
       <VerticalStepper
         activeIndex={0}
         steps={[

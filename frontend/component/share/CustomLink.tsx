@@ -15,7 +15,7 @@ const CustomLink: React.FC<Prop> = ({ className, href, title }) => {
       href={`${href} `}
       className={`text-[16px] poppins ${className} ${
         pathName === href ? "font-[600] " : "font-[400]"
-      } text-white`}
+      } text-white hover:scale-105 transition-all duration-300 hover:font-[600]`}
     >
       {title}
     </Link>

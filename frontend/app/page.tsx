@@ -10,6 +10,40 @@ import React from "react";
 import OurFeatureProject from "@/component/home/OurFeatureProject";
 import ComparisonCards from "@/component/home/PriceComparison";
 import IndustryWeWork from "@/component/share/IndustryWork";
+import { Metadata } from "next";
+import homeseo from "@/public/homepage.json";
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = homeseo; // already an object, no need to fetch
+
+  return {
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      url: "https://montagemotion.com",
+      images: [
+        {
+          url: "",
+          width: 1200,
+          height: 630,
+          alt: seo.title,
+        },
+      ],
+      type: "website",
+    },
+    // twitter: {
+    //   card: seo.twitter?.card,
+    //   title: seo.twitter?.title,
+    //   description: seo.twitter?.description,
+    //   images: [seo.twitter?.image],
+    // },
+    alternates: {
+      canonical: "https://montagemotion.com",
+    },
+  };
+}
 
 const HomePage = async () => {
   const res = await fetch(

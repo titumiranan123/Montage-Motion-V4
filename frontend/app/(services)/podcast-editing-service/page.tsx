@@ -29,10 +29,8 @@ const PodcastEditing = async () => {
       <PodacastMarquee />
       <OurWork />
       <PodcastService />
-      <PodcastProcess />
       <PodcastPricing />
-      <PodcastPlanwithpurpose />
-      <GsapImageSlide />
+
       {/* common */}
       {data?.data?.testimonial.length > 0 && (
         <TestimonialSection
@@ -41,6 +39,8 @@ const PodcastEditing = async () => {
           data={data?.data?.testimonial}
         />
       )}
+      <PodcastProcess />
+      <PodcastPlanwithpurpose />
       <PodcastWhychooseus />
       {/* <WhyChooseUs /> */}
       <FaqSection />

@@ -4,7 +4,7 @@ import PodcastSldder from "../podcast-editing-service/PodcastSldder";
 const TalkingHeader = () => {
   return (
     <div>
-      <div className="container">
+      <div className="container  lg:mt-24 mt-10">
         <div className="flex justify-center items-center flex-col gap-[14px] max-w-[928px] w-full mx-auto lg:mb-20">
           <p className="text-[#c0c9ea] font-[400] text-[16px] text-center">
             Trusted by 1000+ clients

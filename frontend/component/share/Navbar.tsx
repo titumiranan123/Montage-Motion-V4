@@ -3,18 +3,24 @@ import React from "react";
 import CustomLink from "./CustomLink";
 import ServiceDropdown from "./ServiceDropdown";
 import MobileMenu from "./MobileMenu";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
     <div className="py-2 mt-6 md:mt-8 bg-[#080B0C63]/39 rounded-[24px] container  flex justify-between items-center">
-      <Image
-        src={"/assets/montagelogo.png"}
-        alt="logo"
-        priority
-        width={120}
-        height={80}
-      />
-      <div className=" lg:flex hidden gap-4">
+      <Link
+        className="block hover:scale-105 transition-all duration-300"
+        href={"/"}
+      >
+        <Image
+          src={"/assets/montagelogo.png"}
+          alt="logo"
+          priority
+          width={120}
+          height={80}
+        />
+      </Link>
+      <div className=" lg:flex hidden gap-6">
         <CustomLink className="" href="/" title="Home" />
         <ServiceDropdown />
         <CustomLink className="" href="/portfolio" title="Portfolio" />

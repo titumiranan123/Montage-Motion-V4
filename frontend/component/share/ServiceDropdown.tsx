@@ -1,6 +1,7 @@
 "use client";
 
 import useService from "@/hook/useService";
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -17,11 +18,11 @@ const ServiceDropdown = () => {
     <div className="group relative cursor-pointer poppins">
       {/* Trigger */}
       <span
-        className={`flex text-white items-center gap-2 transition-all duration-200 ${
+        className={`flex text-white items-center gap-1 transition-all duration-200 hover:scale-105 hover:font-[600] ${
           isServicesActive ? "font-semibold" : "font-normal"
         }`}
       >
-        Services
+        Services <ChevronDown />
       </span>
 
       {/* Dropdown Panel */}

@@ -48,11 +48,11 @@ const OurWork = () => {
         title="Our Works"
         subtitle="From podcasts with intimate conversations to shows with high-energy stroytelling, we've hellped creators and brands produce episodes that sound professional, engaging , and ready for any platform."
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 lg:mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 lg:mt-16 ">
         {data?.map((item, idx) => (
           <div
             key={idx}
-            className="max-w-[316px] w-full h-[216px] rounded-[13px]"
+            className="max-w-[316px] mx-auto w-full h-[216px] rounded-[13px]"
           >
             <ReactPlayer
               src={item.link}
