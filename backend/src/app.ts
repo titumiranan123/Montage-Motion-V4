@@ -21,16 +21,17 @@ app.use(
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
-  }),
+  })
 );
 
 app.use(cookieParser());
 app.use(express.json({ limit: "500mb" }));
+app.use(express.text({ type: "application/xml" }));
 app.use(express.urlencoded({ extended: true, limit: "500mb" }));
 
 app.use(mainRoute);
 app.get("/", (_req, res) => {
-  res.send("connected ");
+  res.send("connected heloss asdf ");
 });
 
 app.use(invalidateRoute);
@@ -43,6 +44,6 @@ app.use(globalErrorHandler);
 
 app.listen(config.port, () => {
   logger.info(
-    `Server connect on ${config.port} this port: url : ${`http://localhost:${config.port}`}`,
+    `Server connect on ${config.port} this port: url : ${`http://localhost:${config.port}`}`
   );
 });

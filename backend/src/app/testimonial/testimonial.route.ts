@@ -10,25 +10,25 @@ router.post(
   "/testimonials/",
   auth("ADMIN", "MODARATOR"),
   validate(testimonialSchema),
-  testimonialController.create,
+  testimonialController.create
 );
 router.get("/testimonials", testimonialController.getAll);
 router.get("/testimonials/:id", testimonialController.getById);
 router.patch(
   "/testimonials/update-positions",
   auth("ADMIN", "MODARATOR"),
-  testimonialController.updatePositions,
+  testimonialController.updatePositions
 );
 router.delete(
   "/testimonials/:id",
   auth("ADMIN", "MODARATOR"),
-  testimonialController.remove,
+  testimonialController.remove
 );
 router.put(
   "/testimonials/:id",
   auth("ADMIN", "MODARATOR"),
   validate(testimonialSchema.partial()),
-  testimonialController.update,
+  testimonialController.update
 );
 
 export default router;

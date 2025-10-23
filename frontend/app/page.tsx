@@ -11,61 +11,96 @@ import OurFeatureProject from "@/component/home/OurFeatureProject";
 import ComparisonCards from "@/component/home/PriceComparison";
 import IndustryWeWork from "@/component/share/IndustryWork";
 import { Metadata } from "next";
-import homeseo from "@/public/homepage.json";
-export async function generateMetadata(): Promise<Metadata> {
-  const seo = homeseo; // already an object, no need to fetch
+const getPageData = async () => {
+  const [seoRes, mainRes] = await Promise.all([
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/home`, {
+      cache: "no-store",
+    }),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=main`, {
+      cache: "no-store",
+    }),
+  ]);
+  const seoData = await seoRes.json();
+  const data = await mainRes.json();
+  return { seo: seoData.data, main: data.data };
+};
 
-  return {
-    title: seo.title,
-    description: seo.description,
-    keywords: seo.keywords,
-    openGraph: {
-      title: seo.title,
-      description: seo.description,
-      url: "https://montagemotion.com",
-      images: [
-        {
-          url: "",
-          width: 1200,
-          height: 630,
-          alt: seo.title,
-        },
-      ],
-      type: "website",
-    },
-    // twitter: {
-    //   card: seo.twitter?.card,
-    //   title: seo.twitter?.title,
-    //   description: seo.twitter?.description,
-    //   images: [seo.twitter?.image],
-    // },
-    alternates: {
-      canonical: "https://montagemotion.com",
-    },
-  };
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const { seo } = await getPageData();
+    if (!seo) {
+      return {
+        title: "MontageMotion",
+        description: "Professional video editing and creative agency.",
+      };
+    }
+    return {
+      title: seo.meta_title || "MontageMotion",
+      description: seo.meta_description || "",
+      keywords: seo.meta_keywords || "",
+      openGraph: {
+        title: seo.meta_title || "",
+        description: seo.meta_description || "",
+        url: seo.canonical_url || "https://montagemotion.com",
+        images: seo.ogImage
+          ? [
+              {
+                url: seo.ogImage,
+                width: 1200,
+                height: 630,
+                alt: seo.meta_title || "MontageMotion",
+              },
+            ]
+          : [],
+        type: "website",
+      },
+      twitter: {
+        card: seo.twitter_card_type || "summary_large_image",
+        title: seo.meta_title || "",
+        description: seo.meta_description || "",
+        images: seo.twitter?.image ? [seo.twitter.image] : [],
+      },
+      alternates: {
+        canonical: seo.canonical_url || "https://montagemotion.com",
+      },
+      robots: seo.meta_robots || "index, follow",
+    };
+  } catch (error) {
+    console.error("Failed to generate metadata:", error);
+    return {
+      title: "MontageMotion",
+      description: "Professional video editing and creative agency.",
+    };
+  }
 }
 
 const HomePage = async () => {
-  const res = await fetch(
-    "https://api-v2.montagemotion.com/api/website/data?type=main",
-    { cache: "no-store" } // ensures fresh data on every request
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+  const { seo, main: data } = await getPageData();
+  // Parse JSON schema safely
+  let schema = null;
+  try {
+    schema = seo?.schema ? JSON.parse(seo?.schema) : null;
+  } catch (err) {
+    console.warn("Invalid schema JSON:", err);
   }
-  const data = await res.json();
+  console.log("home =========>", data.header);
   return (
     <div className="">
-      <Header data={data?.data?.header} />
+      {schema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      )}
+      <Header data={data.header} />
       <PatnersSection />
       <OurFeatureProject />
       <ServiceSections />
-      {data?.data?.testimonial.length > 0 && (
+      {data?.testimonial.length > 0 && (
         <TestimonialSection
           title="What Our Clients Say"
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-          data={data?.data?.testimonial}
+          data={data?.testimonial}
         />
       )}
       <OurProcess />

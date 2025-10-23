@@ -5,37 +5,33 @@ export const seoMetaService = {
   async upsertSeoMeta(data: SeoMeta) {
     const result = await db.query(
       `
-      INSERT INTO seo_meta (
+      INSERT INTO page_seo (
         page_name, meta_title, meta_description, meta_keywords,
-        canonical_url, robots, og_title, og_description,
-        og_image, schema, structured_data, updated_at
+        canonical_url, twitter_card_type, meta_robots, "schema"
       )
       VALUES (
         $1, $2, $3, $4,
-        $5, $6, $7, $8,
-        $9, $10, $11, NOW()
+        $5, $6, $7, $8
       )
       ON CONFLICT (page_name) DO UPDATE SET
         meta_title = EXCLUDED.meta_title,
         meta_description = EXCLUDED.meta_description,
         meta_keywords = EXCLUDED.meta_keywords,
         canonical_url = EXCLUDED.canonical_url,
-        robots = EXCLUDED.robots,
-        og_title = EXCLUDED.og_title,
-        og_description = EXCLUDED.og_description,
-        og_image = EXCLUDED.og_image,
-        schema = EXCLUDED.schema,
-        structured_data = EXCLUDED.structured_data,
+        twitter_card_type = EXCLUDED.twitter_card_type,
+        meta_robots = EXCLUDED.meta_robots,
+        "schema" = EXCLUDED."schema",
         updated_at = NOW()
       RETURNING *;
       `,
       [
         data.page_name,
-        data.metaTitle,
-        data.metaDescription,
-        data.metaKeywords,
-        data.canonicalUrl,
-        data.robots,
+        data.meta_title,
+        data.meta_description,
+        data.meta_keywords,
+        data.canonical_url,
+        data.twitter_card_type,
+        data.meta_robots,
         data.schema,
       ]
     );
@@ -44,21 +40,30 @@ export const seoMetaService = {
   },
 
   async getSeoMetaByPage(pageName: string) {
+    const workResult = await db.query(
+      `SELECT thumbnail FROM works WHERE type = $1 LIMIT 1 `,
+      ["main"]
+    );
+    console.log(workResult.rows[0]);
     const result = await db.query(
-      `SELECT * FROM seo_meta WHERE page_name = $1 LIMIT 1`,
+      `SELECT * FROM page_seo WHERE page_name = $1 LIMIT 1`,
       [pageName]
     );
-    return result.rows[0] || null;
+    const mergeData = {
+      ...result.rows[0],
+      ogImage: workResult?.rows[0]?.thumbnail,
+    };
+    return mergeData || null;
   },
 
   async getAllSeoMeta() {
-    const result = await db.query(`SELECT * FROM seo_meta`);
+    const result = await db.query(`SELECT * FROM page_seo`);
     return result.rows;
   },
 
   async deleteSeoMetaByPage(pageName: string) {
     const result = await db.query(
-      `DELETE FROM seo_meta WHERE page_name = $1 RETURNING *`,
+      `DELETE FROM page_seo WHERE page_name = $1 RETURNING *`,
       [pageName]
     );
     return result.rows[0] || null;

@@ -8,16 +8,18 @@ export const upsertSeoMeta = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     if (!req.body || Object.keys(req.body).length === 0) {
       responseHandler(res, 400, false, "SEO meta data is required");
+      return;
     }
 
     const result = await seoMetaService.upsertSeoMeta(req.body);
 
     if (!result) {
       responseHandler(res, 500, false, "Failed to save SEO meta data");
+      return;
     }
 
     responseHandler(res, 200, true, "SEO meta data saved", result);
-  },
+  }
 );
 
 export const getSeoMetaByPage = asyncHandler(
@@ -35,7 +37,7 @@ export const getSeoMetaByPage = asyncHandler(
     }
 
     responseHandler(res, 200, true, "SEO meta data fetched", result);
-  },
+  }
 );
 
 export const getAllSeoMeta = asyncHandler(
@@ -47,7 +49,7 @@ export const getAllSeoMeta = asyncHandler(
     }
 
     responseHandler(res, 200, true, "All SEO meta data fetched", result);
-  },
+  }
 );
 
 export const deleteSeoMetaByPage = asyncHandler(
@@ -65,5 +67,5 @@ export const deleteSeoMetaByPage = asyncHandler(
     }
 
     responseHandler(res, 200, true, "SEO meta data deleted", result);
-  },
+  }
 );

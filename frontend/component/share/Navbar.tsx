@@ -33,9 +33,9 @@ const Navbar = () => {
       <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] lg:flex hidden justify-center items-center text-[16px] font-[500] poppins cursor-pointer">
         Start a project
       </button>
-      <button className="flex lg:hidden">
+      <div className="flex lg:hidden">
         <MobileMenu />
-      </button>
+      </div>
     </div>
   );
 };

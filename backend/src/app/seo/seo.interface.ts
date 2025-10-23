@@ -1,29 +1,32 @@
 export interface SeoMeta {
   id: number;
   page_name:
-    | "main"
+    | "home"
+    | "podcast"
     | "shorts"
     | "talking"
-    | "podcast"
-    | "graphic"
-    | "advertising"
-    | "website"
+    | "saas"
+    | "thumbnail"
+    | "portfolio"
+    | "career"
+    | "contact"
     | "about"
+    | "blog"
     | "terms"
     | "privacy"
     | "contact"
-    | "blog";
+    | "refund";
 
-  metaTitle: string;
-  metaDescription: string;
-  metaKeywords?: string;
-  canonicalUrl?: string;
-  robots?:
+  meta_title: string;
+  meta_description: string;
+  meta_keywords?: string;
+  canonical_url?: string;
+  meta_robots?:
     | "index, follow"
     | "noindex, nofollow"
     | "index, nofollow"
     | "noindex, follow";
-
+  twitter_card_type: string;
   schema?: string;
   createdAt?: Date;
   updatedAt?: Date;

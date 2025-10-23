@@ -32,14 +32,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-black `}
       >
-        <noscript>
-          <style>{`
-          [data-aos] {
-            opacity: 1 !important;
-            transform: none !important;
-          }
-        `}</style>
-        </noscript>
         <Provider>
           <Navbar />
           {children}

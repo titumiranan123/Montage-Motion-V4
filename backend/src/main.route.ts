@@ -18,6 +18,8 @@ import aboutRoute from "./app/about/about.route";
 import blogRoute from "./app/blogs/blog.route";
 import webRoute from "./app/homeapis/homeapi.routes";
 import memberRoute from "./app/member/member.route";
+import robotsRoute from "./app/robots/robots.routes";
+import siteMap from "./app/sitemap/sitemap.routes";
 
 const mainRoute = Router();
 
@@ -38,5 +40,7 @@ mainRoute.use("/api", memberRoute);
 mainRoute.use("/api", uploadRoute);
 mainRoute.use("/api", campaignRoutes);
 mainRoute.use("/api", seoRoute);
+mainRoute.use("/api", robotsRoute);
+mainRoute.use("/api", siteMap);
 mainRoute.use("/api", dashboardRoute);
 export default mainRoute;
