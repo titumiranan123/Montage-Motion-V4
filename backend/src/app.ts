@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import config from "./config";
 import { logger } from "./logger/logger";
-import redisClient from "./db/redis";
+
 import { globalErrorHandler } from "./midleware/globalErrorHandler";
 import cookieParser from "cookie-parser";
 import { invalidateRoute } from "./midleware/invalideroute";
@@ -36,11 +36,6 @@ app.get("/", (_req, res) => {
 
 app.use(invalidateRoute);
 app.use(globalErrorHandler);
-(async () => {
-  await redisClient.set("test-key", "Hello Redis Cloud!");
-  const value = await redisClient.get("test-key");
-  logger.info("Redis Test Value:", value);
-})();
 
 app.listen(config.port, () => {
   logger.info(
