@@ -20,6 +20,9 @@ import webRoute from "./app/homeapis/homeapi.routes";
 import memberRoute from "./app/member/member.route";
 import robotsRoute from "./app/robots/robots.routes";
 import siteMap from "./app/sitemap/sitemap.routes";
+import workingProcess from "./app/working_process/process.route";
+import pageServiceRoute from "./app/pageservice/page_service.route";
+import videoRoute from "./app/video-upload/video.routes";
 
 const mainRoute = Router();
 
@@ -43,4 +46,8 @@ mainRoute.use("/api", seoRoute);
 mainRoute.use("/api", robotsRoute);
 mainRoute.use("/api", siteMap);
 mainRoute.use("/api", dashboardRoute);
+// new routes
+mainRoute.use("/api/our-service", pageServiceRoute);
+mainRoute.use("/api/process", workingProcess);
+mainRoute.use("/api", videoRoute);
 export default mainRoute;
