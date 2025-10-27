@@ -2,6 +2,7 @@
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
 import { IFaq } from "./faq.interfac";
+
 import { faqItemService } from "./faqitem.service";
 
 const checkFaqExists = async (id: string) => {
@@ -10,6 +11,7 @@ const checkFaqExists = async (id: string) => {
 };
 
 export const faqService = {
+  /** ✅ Create or update FAQ with info_section support */
   async createOrUpdateFaq(data: IFaq) {
     const client = await db.connect();
     try {
@@ -18,7 +20,7 @@ export const faqService = {
       // Check if FAQ with the same type exists
       const existingFaqResult = await client.query(
         `SELECT * FROM faqs WHERE type = $1`,
-        [data.type],
+        [data.type]
       );
 
       let faqId: string;
@@ -28,8 +30,21 @@ export const faqService = {
         // Update existing FAQ
         faqId = existingFaqResult.rows[0].id;
         faqResult = await client.query(
-          `UPDATE faqs SET title = $1, sub_title = $2, is_visible = $3 WHERE id = $4 RETURNING *`,
-          [data.title, data.sub_title, data.is_visible, faqId],
+          `UPDATE faqs 
+           SET title = $1, 
+               sub_title = $2, 
+               is_visible = $3, 
+               info_section = $4::jsonb,
+               updated_at = NOW()
+           WHERE id = $5 
+           RETURNING *`,
+          [
+            data.title,
+            data.sub_title,
+            data.is_visible,
+            data.info_section ? JSON.stringify(data.info_section) : null,
+            faqId,
+          ]
         );
 
         // Delete old faq_items before adding new ones
@@ -37,15 +52,26 @@ export const faqService = {
       } else {
         // Insert new FAQ
         faqResult = await client.query(
-          `INSERT INTO faqs (title, sub_title, is_visible, type) VALUES ($1, $2, $3, $4) RETURNING *`,
-          [data.title, data.sub_title, data.is_visible, data.type],
+          `INSERT INTO faqs 
+           (title, sub_title, is_visible, type, info_section) 
+           VALUES ($1, $2, $3, $4, $5::jsonb)
+           RETURNING *`,
+          [
+            data.title,
+            data.sub_title,
+            data.is_visible,
+            data.type,
+            data.info_section ? JSON.stringify(data.info_section) : null,
+          ]
         );
         faqId = faqResult.rows[0].id;
       }
 
       // Insert all faq_items again
-      for (const item of data.faqs) {
-        await faqItemService.createFaqItem(client, faqId, item);
+      if (data.faqs?.length) {
+        for (const item of data.faqs) {
+          await faqItemService.createFaqItem(client, faqId, item);
+        }
       }
 
       await client.query("COMMIT");
@@ -58,6 +84,8 @@ export const faqService = {
       client.release();
     }
   },
+
+  /** ✅ Update FAQ and optionally its info_section */
   async updateFaq(id: string, data: Partial<IFaq>) {
     await checkFaqExists(id);
     const client = await db.connect();
@@ -66,24 +94,31 @@ export const faqService = {
 
       await client.query(
         `UPDATE faqs 
-         SET title = COALESCE($1, title), 
-             sub_title = COALESCE($2, sub_title), 
-             is_visible = COALESCE($3, is_visible), 
+         SET title = COALESCE($1, title),
+             sub_title = COALESCE($2, sub_title),
+             is_visible = COALESCE($3, is_visible),
              type = COALESCE($4, type),
+             info_section = COALESCE($5::jsonb, info_section),
              updated_at = NOW()
-         WHERE id = $5`,
-        [data.title, data.sub_title, data.is_visible, data.type, id],
+         WHERE id = $6`,
+        [
+          data.title,
+          data.sub_title,
+          data.is_visible,
+          data.type,
+          data.info_section ? JSON.stringify(data.info_section) : null,
+          id,
+        ]
       );
 
-      if (data.faqs && data.faqs.length > 0) {
-        // First, delete old faq_items
+      // Update FAQ items if provided
+      if (data.faqs?.length) {
         await client.query(`DELETE FROM faq_items WHERE faq_id = $1`, [id]);
-
-        // Insert new faq_items
         for (const item of data.faqs) {
           await client.query(
-            `INSERT INTO faq_items (faq_id, question, answer, is_visible, position) VALUES ($1, $2, $3, $4, $5)`,
-            [id, item.question, item.answer, item.is_visible, item.position],
+            `INSERT INTO faq_items (faq_id, question, answer, is_visible, position)
+             VALUES ($1, $2, $3, $4, $5)`,
+            [id, item.question, item.answer, item.is_visible, item.position]
           );
         }
       }
@@ -99,6 +134,7 @@ export const faqService = {
     }
   },
 
+  /** ✅ Get FAQs filtered by ID or type, including items and info_section */
   async getFilteredFaqs(filter: { id?: string; type?: string }) {
     let query = `SELECT * FROM faqs`;
     const conditions: string[] = [];
@@ -122,26 +158,32 @@ export const faqService = {
 
     for (const faq of result.rows) {
       faq.faqs = await faqItemService.getFaqItemsByFaqId(faq.id);
+      if (faq.info_section) {
+        faq.info_section = JSON.parse(faq.info_section);
+      }
     }
 
     return result.rows || [];
   },
 
+  /** ✅ Get FAQ by ID (includes info_section and items) */
   async getFaqById(id: string) {
     const faqResult = await db.query(`SELECT * FROM faqs WHERE id = $1`, [id]);
     if (faqResult.rowCount === 0) return null;
 
     const faq = faqResult.rows[0];
+    faq.info_section = faq.info_section ? JSON.parse(faq.info_section) : null;
 
     const itemsResult = await db.query(
       `SELECT * FROM faq_items WHERE faq_id = $1 ORDER BY position ASC`,
-      [id],
+      [id]
     );
     faq.faqs = itemsResult.rows;
 
     return faq;
   },
 
+  /** ✅ Get FAQ by type (with reusable info_section) */
   async getFaqByType(type: string) {
     const faqResult = await db.query(`SELECT * FROM faqs WHERE type = $1`, [
       type,
@@ -149,9 +191,11 @@ export const faqService = {
     const faqs = faqResult.rows;
 
     for (const faq of faqs) {
+      faq.info_section = faq.info_section ? JSON.parse(faq.info_section) : null;
+
       const itemsResult = await db.query(
         `SELECT * FROM faq_items WHERE faq_id = $1 ORDER BY position ASC`,
-        [faq.id],
+        [faq.id]
       );
       faq.faqs = itemsResult.rows;
     }
@@ -159,11 +203,12 @@ export const faqService = {
     return faqs;
   },
 
+  /** ✅ Delete FAQ and its items */
   async deleteFaq(id: string) {
     await checkFaqExists(id);
     const result = await db.query(
       `DELETE FROM faqs WHERE id = $1 RETURNING *`,
-      [id],
+      [id]
     );
     return result.rows[0];
   },

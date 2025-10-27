@@ -31,9 +31,11 @@ const OurFeatureProject = () => {
 
       {/* Tabs Header */}
       <div className="flex lg:gap-6  pb-2 mt-8 max-w-[582px]  max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto tabBorder">
-        {tabConfig.map((tab) => (
+        {tabConfig.map((tab, idx) => (
           <button
             key={tab.id}
+            data-aos="fade-up"
+            data-aos-delay={100 + idx * 100}
             onClick={() => setActiveTab(tab.id)}
             className={`py-2 px-2 md:px-4 text-white opensans font-[400] md:text-[14px] text-[13px]  rounded-[36px] transition-colors ${
               activeTab === tab.id ? " bg-[#2B6AB2] font-semibold" : ""
@@ -47,9 +49,13 @@ const OurFeatureProject = () => {
       {/* Tabs Content */}
       <div className="pt-6">
         {tabConfig.map(
-          (tab) =>
+          (tab, idx) =>
             activeTab === tab.id && (
-              <div key={tab.id}>
+              <div
+                key={tab.id}
+                data-aos="fade-up"
+                data-aos-delay={100 + idx * 100}
+              >
                 <DynamicWorkContent tabKey={tab.id} />
               </div>
             )

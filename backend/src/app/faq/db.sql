@@ -26,4 +26,5 @@ CREATE TABLE faq_items (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   FOREIGN KEY (faq_id) REFERENCES faqs(id) ON DELETE CASCADE
 );
+ALTER TABLE faqs ADD COLUMN info_section JSONB;
 

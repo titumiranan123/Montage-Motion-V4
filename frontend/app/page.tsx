@@ -83,7 +83,6 @@ const HomePage = async () => {
   } catch (err) {
     console.warn("Invalid schema JSON:", err);
   }
-  console.log("home =========>", data.header);
   return (
     <div className="">
       {schema && (

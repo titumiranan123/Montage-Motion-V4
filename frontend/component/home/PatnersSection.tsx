@@ -15,7 +15,11 @@ const PatnersSection = () => {
   ];
 
   return (
-    <section className="relative w-full bg-black py-10 overflow-hidden">
+    <section
+      data-aos="fade-up"
+      data-aos-delay={500}
+      className="relative w-full bg-black py-10 overflow-hidden"
+    >
       <div className="container mx-auto flex flex-col items-center justify-center">
         {/* Animated Marquee */}
         <Marquee pauseOnHover speed={50} gradient gradientColor={"#000"}>

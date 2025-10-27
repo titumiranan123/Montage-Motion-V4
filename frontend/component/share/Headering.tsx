@@ -13,16 +13,32 @@ const Heading: React.FC<headerProp> = ({
 }) => {
   return (
     <div className="flex flex-col gap-1 justify-center items-center sectionGap max-w-[668px] w-full mx-auto">
-      <p className="bg-[#1D2122] text-[#E4E8F7] min-w-[122px] h-[38px] rounded-[24px] py-2 px-5 text-center opensans">
+      <p
+        data-aos="fade-up"
+        data-aos-delay={100}
+        className="bg-[#1D2122] text-[#E4E8F7] min-w-[122px] h-[38px] rounded-[24px] py-2 px-5 text-center opensans"
+      >
         {tag}
       </p>
-      <p className="poppins md:text-[56px] md:leading-[120%] font-semibold text-center text-white text-[32px]">
+      <p
+        data-aos="fade-up"
+        data-aos-delay={200}
+        className="poppins md:text-[56px] md:leading-[120%] font-semibold text-center text-white text-[32px]"
+      >
         {title}
       </p>
-      <p className="poppins md:text-[56px] text-[32px] md:leading-[120%] font-semibold text-center text-white">
+      <p
+        data-aos="fade-up"
+        data-aos-delay={200}
+        className="poppins md:text-[56px] text-[32px] md:leading-[120%] font-semibold text-center text-white"
+      >
         {extratitle}
       </p>
-      <p className="opensans font-[400] md:text-[16px] text-[14px] md:leading-[150%] text-[#E4E8F7] text-center">
+      <p
+        data-aos="fade-up"
+        data-aos-delay={200}
+        className="opensans font-[400] md:text-[16px] text-[14px] md:leading-[150%] text-[#E4E8F7] text-center"
+      >
         {subtitle}
       </p>
     </div>

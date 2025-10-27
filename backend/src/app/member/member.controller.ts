@@ -6,14 +6,14 @@ import { MemberProfile } from "./member.interface";
 
 export const MemberController = {
   create: asyncHandler(async (req: Request, res: Response) => {
-    const { name, role, photourl }: Partial<MemberProfile> = req.body;
+    const { name, photourl }: Partial<MemberProfile> = req.body;
 
-    if (!name || !role || !photourl) {
+    if (!name || !photourl) {
       return responseHandler(
         res,
         400,
         false,
-        "Name, role, and photo URL are required",
+        "Name and photo URL are required"
       );
     }
 

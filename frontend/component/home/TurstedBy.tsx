@@ -4,6 +4,8 @@ import React from "react";
 const TurstedBy = ({ isCenter }: { isCenter?: boolean }) => {
   return (
     <div
+      data-aos="fade-up"
+      data-aos-delay={100}
       className={`flex items-center ${
         isCenter
           ? "justify-center md:justify-center"

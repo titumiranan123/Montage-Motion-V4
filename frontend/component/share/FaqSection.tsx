@@ -46,40 +46,42 @@ const FaqSection = () => {
         title="Have Questions ?"
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
-        <Gradientcard
-          className="max-w-[420px] max-h-[749px] h-full w-full rounded-[24px]"
-          borderClassName="p-[1px] max-w-[420px] max-h-[749px] h-full rounded-[24px] flex justify-center items-center w-full "
-        >
-          <div className="flex justify-center items-center flex-col h-full py-10 px-9">
-            <Image
-              src={"/assets/faq.png"}
-              alt="faq"
-              title="faqimage"
-              width={135}
-              height={135}
-              priority
-            />
-            <h2 className="md:mt-4 mt-2 mb-2 font-[600] poppins text-white text-[24px]">
-              Have more questions ?
-            </h2>
-            <p className="font-[400] text-[16px] opensans leading-[140%] text-white text-center">
-              Still curious? Let’s talk it out. Book a quick call. We’ll walk
-              you through everything and help you figure out the best move for
-              your brand.
-            </p>
-            <div className="flex justify-between items-center flex-col text-white mt-12 mb-9 gap-2">
-              <h2 className="text-[24px] font-[600] leading-[100%] poppins">
-                Safwan Waffif
+        <div data-aos="fade-up" data-aos-delay={400}>
+          <Gradientcard
+            className="max-w-[420px] max-h-[749px] h-full w-full rounded-[24px]"
+            borderClassName="p-[1px] max-w-[420px] max-h-[749px] h-full rounded-[24px] flex justify-center items-center w-full "
+          >
+            <div className="flex justify-center items-center flex-col h-full py-10 px-9">
+              <Image
+                src={"/assets/faq.png"}
+                alt="faq"
+                title="faqimage"
+                width={135}
+                height={135}
+                priority
+              />
+              <h2 className="md:mt-4 mt-2 mb-2 font-[600] poppins text-white text-[24px]">
+                Have more questions ?
               </h2>
-              <p className="text-[16px] font-[400] leading-[140%] opensans">
-                Project Co-ordinator
+              <p className="font-[400] text-[16px] opensans leading-[140%] text-white text-center">
+                Still curious? Let’s talk it out. Book a quick call. We’ll walk
+                you through everything and help you figure out the best move for
+                your brand.
               </p>
+              <div className="flex justify-between items-center flex-col text-white mt-12 mb-9 gap-2">
+                <h2 className="text-[24px] font-[600] leading-[100%] poppins">
+                  Safwan Waffif
+                </h2>
+                <p className="text-[16px] font-[400] leading-[140%] opensans">
+                  Project Co-ordinator
+                </p>
+              </div>
+              <button className="btn-color max-w-[348px] w-full h-[56px] rounded-[16px] py-[16px] px-[16px] font-[500]  opensans">
+                Book a Call
+              </button>
             </div>
-            <button className="btn-color max-w-[348px] w-full h-[56px] rounded-[16px] py-[16px] px-[16px] font-[500]  opensans">
-              Book a Call
-            </button>
-          </div>
-        </Gradientcard>
+          </Gradientcard>
+        </div>
         <div className=" col-span-2 ">
           <Accordion items={items} />
         </div>

@@ -52,28 +52,29 @@ const ServiceSections = () => {
       />
       <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {data?.map((dt, idx) => (
-          <Gradientcard
-            key={idx}
-            className="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] "
-            borderClassName="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px]  p-[1px]"
-          >
-            <div className=" text-[#E4E8F7] flex justify-center items-start flex-col p-4">
-              <h2 className="md:text-[24px] text-[20px] poppins font-[600]">
-                {dt.title}
-              </h2>
-              <p className="md:text-[16px] text-[14px] font-[400] leading-[140%] text-[#E4E8F7] mt-2 opensans">
-                {dt.description}
-              </p>
-              <Image
-                src={dt.image}
-                alt={dt.title}
-                width={344}
-                height={276}
-                priority
-                className="max-w-[344px] w-full max-h-[276px] h-full md:mt-8 mt-4"
-              />
-            </div>
-          </Gradientcard>
+          <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
+            <Gradientcard
+              className="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] "
+              borderClassName="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px]  p-[1px]"
+            >
+              <div className=" text-[#E4E8F7] flex justify-center items-start flex-col p-4">
+                <h2 className="md:text-[24px] text-[20px] poppins font-[600]">
+                  {dt.title}
+                </h2>
+                <p className="md:text-[16px] text-[14px] font-[400] leading-[140%] text-[#E4E8F7] mt-2 opensans">
+                  {dt.description}
+                </p>
+                <Image
+                  src={dt.image}
+                  alt={dt.title}
+                  width={344}
+                  height={276}
+                  priority
+                  className="max-w-[344px] w-full max-h-[276px] h-full md:mt-8 mt-4"
+                />
+              </div>
+            </Gradientcard>
+          </div>
         ))}
       </div>
     </div>

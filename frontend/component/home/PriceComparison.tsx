@@ -69,8 +69,10 @@ export default function ComparisonCards() {
         extratitle="Online Growth"
       />
       <div className="grid gap-5 sm:gap-6 md:gap-8  grid-cols-1 md:grid-cols-3 lg:mt-16 mt-9">
-        {comparisonData.columns.map((col) => (
-          <ColumnCard key={col.id} column={col} />
+        {comparisonData.columns.map((col, idx) => (
+          <div key={col.id} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
+            <ColumnCard key={col.id} column={col} />
+          </div>
         ))}
       </div>
     </div>

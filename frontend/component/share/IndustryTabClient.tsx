@@ -54,6 +54,8 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
           <button
             key={tab.id}
             role="tab"
+            data-aos="fade-up"
+            data-aos-delay={100 + index * 100}
             aria-selected={activeTab === index}
             aria-controls={`${labelId}-${tab.id}-panel`}
             onClick={() => setActiveTab(index)}
@@ -71,6 +73,8 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
         role="tabpanel"
         aria-labelledby={`${labelId}-${activeTabData.id}`}
         className=""
+        data-aos="fade-up"
+        data-aos-delay={300}
       >
         {/* Content Card */}
         <div className="relative">
