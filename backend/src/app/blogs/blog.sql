@@ -12,3 +12,12 @@ CREATE TABLE blogs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE blogs
+ADD COLUMN meta_title VARCHAR(255);
+
+ALTER TABLE blogs
+ADD COLUMN meta_description TEXT;
+
+ALTER TABLE blogs
+ADD COLUMN keywords TEXT[];  -- Array of strings

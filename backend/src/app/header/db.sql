@@ -1,24 +1,23 @@
+CREATE TABLE header_media (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  header_id UUID REFERENCES page_headers(id) ON DELETE CASCADE,
+  image_url TEXT NOT NULL,
+  alt TEXT NOT NULL,
+  video_url TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE TABLE headers (
+CREATE TABLE page_headers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title TEXT NOT NULL,
-  description TEXT NOT NULL,
-  book_link TEXT NOT NULL,
-  thumbnail TEXT NOT NULL,
-  alt TEXT NOT NULL,
-  video_link TEXT NOT NULL,
-  type TEXT NOT NULL CHECK (
-    type IN (
-      'main',
-      'shorts',
-      'talking',
-      'podcast',
-      'graphic',
-      'advertising',
-      'website'
-    )
-  ),
+  type VARCHAR(50) CHECK (
+    type IN ('home', 'shorts', 'talkinghead', 'podcast', 'saas', 'thumbnail')
+  ) NOT NULL,
+  page_subtitle VARCHAR(255) NOT NULL,
+  page_title VARCHAR(255),
+  description TEXT,
+  cta_primary_link TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );

@@ -1,19 +1,21 @@
-export interface IHeader {
+export interface IHeaderMedia {
   id?: string;
-  title: string;
-  description: string;
-  book_link: string;
-  thumbnail: string;
+  header_id?: string;
+  image_url: string;
   alt: string;
-  video_link: string;
-  type:
-    | "main"
-    | "shorts"
-    | "talking"
-    | "podcast"
-    | "graphic"
-    | "advertising"
-    | "website";
+  video_url: string;
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+export interface IPageHeader {
+  id?: string;
+  type: "home" | "shorts" | "talkinghead" | "podcast" | "saas" | "thumbnail";
+  page_subtitle: string;
+  page_title?: string;
+  description?: string;
+  cta_primary_link?: string;
+  media?: IHeaderMedia[];
   created_at?: Date;
   updated_at?: Date;
 }

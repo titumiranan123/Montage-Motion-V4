@@ -8,7 +8,6 @@ export const validate =
   (schema: ZodSchema<any>) =>
   (req: Request, _res: Response, next: NextFunction) => {
     try {
-      // console.log(req.body);
       schema.parse(req.body);
       next();
     } catch (error: any) {
