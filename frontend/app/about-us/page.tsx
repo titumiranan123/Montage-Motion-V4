@@ -7,7 +7,10 @@ import OurMission from "./OurMission";
 import FirstSection from "../contact-us/FirstSection";
 import OurTeam from "./OurTeam";
 import OurStory from "./OurStory";
-
+import { getPageSEO } from "@/component/share/getPageSEO";
+export async function generateMetadata() {
+  return await getPageSEO("about");
+}
 const AboutUs = async () => {
   const res = await fetch(
     "https://api-v2.montagemotion.com/api/website/data?type=main",

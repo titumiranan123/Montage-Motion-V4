@@ -1,69 +1,49 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 import Marquee from "react-fast-marquee";
 
-const PatnersSection = () => {
-  const partners = [
-    { image: "/assets/patner/amzon.png", width: 95, height: 29, bg: "" },
-    { image: "/assets/patner/guci.png", width: 33, height: 33, bg: "#ffffff" },
-    { image: "/assets/patner/honor.png", width: 155, height: 32, bg: "" },
-    { image: "/assets/patner/oppo.png", width: 151, height: 36, bg: "" },
-    { image: "/assets/patner/rfl.png", width: 36, height: 36, bg: "" },
-    { image: "/assets/patner/parn.png", width: 58, height: 36, bg: "" },
-    { image: "/assets/patner/airtel.png", width: 108, height: 36, bg: "" },
-    { image: "/assets/patner/nogad.png", width: 82, height: 36, bg: "" },
-  ];
-
+const PartnersSection = ({ data }: { data: any[] }) => {
   return (
     <section
       data-aos="fade-up"
       data-aos-delay={500}
-      className="relative w-full bg-black py-10 overflow-hidden"
+      className="relative w-full bg-black py-6 overflow-hidden"
     >
       <div className="container mx-auto flex flex-col items-center justify-center">
-        {/* Animated Marquee */}
-        <Marquee pauseOnHover speed={50} gradient gradientColor={"#000"}>
-          {partners.map((partner, index) => (
+        <Marquee
+          pauseOnHover
+          speed={50}
+          gradient
+          gradientColor="black"
+          gradientWidth={100}
+          className="flex items-center"
+        >
+          {data.map((partner, index) => (
             <div
-              key={index}
-              className="mx-[30px] flex items-center justify-center"
+              key={partner.id || index}
+              className="mx-[40px] flex items-center justify-center h-[40px]"
             >
               <img
                 src={partner.image}
-                alt={`Partner logo ${index + 1}`}
-                width={partner.width}
-                height={partner.height}
+                alt={partner.alt || `Partner logo ${index + 1}`}
                 style={{
                   backgroundColor: partner.bg || "transparent",
+                  width: partner.width || "auto",
+                  height: partner.height || "40px",
+                  maxWidth: "140px",
+                  maxHeight: "40px",
+                  objectFit: "contain",
                 }}
-                className="object-contain max-h-20 rounded-lg"
+                className="rounded-lg"
                 loading="lazy"
               />
             </div>
           ))}
         </Marquee>
-
-        {/* Fallback for JS-disabled browsers */}
-        <noscript>
-          <div className="flex flex-wrap justify-center items-center gap-10 mt-6">
-            {partners.map((partner, index) => (
-              <img
-                key={index}
-                src={partner.image}
-                alt={`Partner logo ${index + 1}`}
-                width={partner.width}
-                height={partner.height}
-                style={{
-                  backgroundColor: partner.bg || "transparent",
-                }}
-                className="object-contain max-h-10"
-              />
-            ))}
-          </div>
-        </noscript>
       </div>
     </section>
   );
 };
 
-export default PatnersSection;
+export default PartnersSection;

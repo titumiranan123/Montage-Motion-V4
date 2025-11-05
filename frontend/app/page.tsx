@@ -13,12 +13,15 @@ import IndustryWeWork from "@/component/share/IndustryWork";
 import { Metadata } from "next";
 const getPageData = async () => {
   const [seoRes, mainRes] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/home`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/`, {
       cache: "no-store",
     }),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=main`, {
-      cache: "no-store",
-    }),
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=home&&table=brand,service`,
+      {
+        cache: "no-store",
+      }
+    ),
   ]);
   const seoData = await seoRes.json();
   const data = await mainRes.json();
@@ -74,7 +77,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const HomePage = async () => {
+const HomePage = async ({ searchParams }: { searchParams: any }) => {
+  const { tab } = await searchParams;
   const { seo, main: data } = await getPageData();
   // Parse JSON schema safely
   let schema = null;
@@ -83,6 +87,7 @@ const HomePage = async () => {
   } catch (err) {
     console.warn("Invalid schema JSON:", err);
   }
+
   return (
     <div className="">
       {schema && (
@@ -91,9 +96,9 @@ const HomePage = async () => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       )}
-      <Header data={data.header} />
-      <PatnersSection />
-      <OurFeatureProject />
+      <Header data={data?.header} />
+      <PatnersSection data={data?.brand} />
+      <OurFeatureProject tab={tab} />
       <ServiceSections />
       {data?.testimonial.length > 0 && (
         <TestimonialSection

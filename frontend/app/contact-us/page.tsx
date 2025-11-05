@@ -3,7 +3,12 @@ import FirstSection from "./FirstSection";
 import "./contact.css";
 import Locationsection from "./Locationsection";
 import CalendlyContact from "./CalendlyContact";
-const ContactPage = () => {
+import { getPageSEO } from "@/component/share/getPageSEO";
+
+export async function generateMetadata() {
+  return await getPageSEO("contact");
+}
+const ContactPage = async () => {
   return (
     <div className="">
       <FirstSection />

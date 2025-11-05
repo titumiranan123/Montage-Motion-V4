@@ -13,7 +13,11 @@ const CalendlyContact = () => {
         extratitle="Starts Here"
       />
 
-      <div className="max-w-[1200px] w-full md:h-[761px] min-h-screen overflow-hidden  bg-cover bg-center lg:mt-20 mt-10">
+      <div
+        data-aos="fade-up"
+        data-aos-delay={400}
+        className="max-w-[1200px] w-full md:h-[761px] min-h-screen overflow-hidden  bg-cover bg-center lg:mt-20 mt-10"
+      >
         {/* JS Disabled Fallback */}
         <noscript>
           <div className="flex flex-col items-center justify-center text-center bg-black/60 text-white p-10 h-full">

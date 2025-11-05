@@ -20,12 +20,12 @@ const FirstSection = () => {
           {[
             {
               title: "Email Us",
-              value: "Hello@montagemotion.com",
+              value: "hello@montagemotion.com",
               icon: "/assets/icon/gmail.png",
             },
             {
               title: "Call Us",
-              value: "+880 1862938306",
+              value: "+880 1786-546949",
               icon: "/assets/icon/whatsapp.png",
             },
             {
@@ -34,36 +34,43 @@ const FirstSection = () => {
               icon: "/assets/icon/users.png",
             },
           ].map((item, idx) => (
-            <Gradientcard
+            <div
+              className="w-full"
               key={idx}
-              className="contact-card flex justify-between items-center text-white max-w-[582px] w-full h-[190px] rounded-[24px]"
-              borderClassName="max-w-[582px] w-full h-[192px] rounded-[24px] p-[1px]"
+              data-aos="fade-up"
+              data-aos-delay={600 + idx * 100}
             >
-              <div>
-                <h3 className="text-[20px] md:text-[24px] font-[600] poppins">
-                  {item.title}
-                </h3>
-                <p className="text-[14px] md:text-[16px] font-[400] opensans">
-                  {item.value}
-                </p>
-              </div>
-              <Image
-                src={item.icon}
-                alt={item.title}
-                className="w-[56px] h-[56px] bg-white rounded-[12px] p-[10px]"
-                width={36}
-                height={36}
-              />
-            </Gradientcard>
+              <Gradientcard
+                className="contact-card flex justify-between items-center text-white max-w-[582px] w-full h-[190px] rounded-[24px] "
+                borderClassName="max-w-[582px] w-full h-[192px] rounded-[24px] p-[1px] translate-all duration-300 ease-in-out hover:scale-105"
+              >
+                <div>
+                  <h3 className="text-[20px] md:text-[24px] md:leading-[30px] font-[600] poppins">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] md:text-[16px] md:leading-[140%] font-[400] opensans">
+                    {item.value}
+                  </p>
+                </div>
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  className="w-[56px] h-[56px] bg-white rounded-[12px] p-[10px]"
+                  width={36}
+                  height={36}
+                />
+              </Gradientcard>
+            </div>
           ))}
         </div>
-
-        <Gradientcard
-          className="contact-card flex justify-center mx-auto items-center text-white max-w-[582px] w-full h-auto rounded-[24px]"
-          borderClassName="max-w-[582px] mx-auto w-full h-auto rounded-[24px] p-[1px]"
-        >
-          <ContactForm />
-        </Gradientcard>
+        <div data-aos="fade-up" data-aos-delay={600}>
+          <Gradientcard
+            className="contact-card flex justify-center mx-auto items-center text-white max-w-[582px] w-full h-auto rounded-[24px]"
+            borderClassName="max-w-[582px] mx-auto w-full h-auto rounded-[24px] p-[1px]"
+          >
+            <ContactForm />
+          </Gradientcard>
+        </div>
       </div>
     </div>
   );

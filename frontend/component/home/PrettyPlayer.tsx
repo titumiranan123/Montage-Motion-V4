@@ -12,7 +12,6 @@ interface Props {
 }
 
 export default function VideoPlayer({ youtubeUrl, thumbnail }: Props) {
-  console.log(thumbnail);
   const source: SourceInfo = {
     type: "video",
     sources: [
@@ -34,7 +33,7 @@ export default function VideoPlayer({ youtubeUrl, thumbnail }: Props) {
       "volume",
       "play",
       // "duration"
-      //   "fullscreen",
+      "fullscreen",
     ],
   };
 

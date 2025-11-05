@@ -1,6 +1,3 @@
-"use client";
-
-import useWorks from "@/hook/useWorks";
 import React from "react";
 import Image from "next/image";
 import VideoPlayer from "./PrettyPlayer";
@@ -14,21 +11,13 @@ interface Work {
 }
 
 interface DynamicWorkContentProps {
-  tabKey: string;
+  data: any;
 }
 
-const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
-  const { data, isLoading } = useWorks(tabKey);
-
-  // Handle loading state
-  if (isLoading) {
-    return (
-      <div className="p-6 text-white flex items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
+const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
+  data,
+}) => {
+  console.log("data", data);
   // Handle no data state
   if (!data || data.length === 0) {
     return (
@@ -45,7 +34,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ tabKey }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 text-white">
       {data.map((dt: Work, index: number) => {
-        if (dt.type === "graphic") {
+        if (dt.type === "thumbnail") {
           return (
             <div
               key={dt.id || index}

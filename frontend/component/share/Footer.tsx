@@ -19,7 +19,7 @@ const Footer = () => {
             height={92}
           />
         </Link>
-        <div className="flex gap-2 items-center">
+        <div className="hidden gap-2 items-center">
           <Link
             href={"https://www.facebook.com/MontageMotion"}
             className="block "
@@ -76,7 +76,7 @@ const Footer = () => {
           <p className="text-[16px] opensans font-[400]">
             Subscribe our newsletter to stay updated and get special offers.
           </p>
-          <div className="max-w-[305px] lg:mt-10 mt-6 max-h-[52px]  h-full rounded-[16px] border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2 flex items-center justify-around">
+          <div className="max-w-[305px] lg:mt-10 mt-6 max-h-[52px]  h-full rounded-[16px] border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2 hidden items-center justify-around">
             <input
               type="text"
               placeholder="Enter your email"
@@ -172,19 +172,11 @@ const Footer = () => {
         borderClassName="p-[1px] max-w-[770px] rounded-[16px] ms-auto"
       >
         <CustomLink className=" text-white" href="/" title="Home" />
-        <CustomLink className="text-white" href="/services" title="Services" />
-        <CustomLink
-          className="text-white"
-          href="/portfolio"
-          title="Portfolio"
-        />
-        <CustomLink className="text-white" href="/recourse" title="Recourses" />
-        <CustomLink className="text-white" href="/about" title="About" />
-        <CustomLink
-          className="text-white"
-          href="/get-in-touch"
-          title="Contact"
-        />
+        <CustomLink className="" href="/portfolio" title="Portfolio" />
+        <CustomLink className="" href="/careers" title="Careers" />
+        <CustomLink className="" href="/blog" title="Blogs" />
+        <CustomLink className="" href="/about-us" title="About" />
+        <CustomLink className="" href="/contact-us" title="contact" />
       </Gradientcard>
     </div>
   );
