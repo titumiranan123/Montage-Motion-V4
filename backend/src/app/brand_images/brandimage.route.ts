@@ -11,18 +11,18 @@ import {
   updateBrandImage,
 } from "./brandimage.controller";
 
-const router = express.Router();
+const bradImageRoute = express.Router();
 
-router.post(
-  "/brand/image",
+bradImageRoute.post(
+  "/",
   auth("ADMIN", "MODARATOR"),
   validate(BrandImageSchema),
   createBrandImage
 );
-router.get("/brand/image", getAllBrandImages);
-router.get("/brand/image/:id", getBrandImageById);
-router.patch("/brand/image/:id", auth("ADMIN", "MODARATOR"), getBrandImageById);
-router.put("/brand/image", auth("ADMIN", "MODARATOR"), updateBrandImage);
-router.delete("/brand/image/:id", auth("ADMIN", "MODARATOR"), deleteBrandImage);
+bradImageRoute.get("/", getAllBrandImages);
+bradImageRoute.get("/:id", getBrandImageById);
+bradImageRoute.patch("/:id", auth("ADMIN", "MODARATOR"), getBrandImageById);
+bradImageRoute.put("/", auth("ADMIN", "MODARATOR"), updateBrandImage);
+bradImageRoute.delete("/:id", auth("ADMIN", "MODARATOR"), deleteBrandImage);
 
-export default router;
+export default bradImageRoute;

@@ -10,27 +10,14 @@ export const VideoSchema = z.object({
   isFeature: z.boolean().optional(),
   position: z.number().optional(),
   type: z.enum([
-    "main",
+    "home",
     "shorts",
-    "talking",
+    "talkinghead",
     "podcast",
-    "graphic",
-    "advertising",
-    "website",
+    "thumbnail",
+    "saas",
+    "about",
   ]),
-  subType: z
-    .enum([
-      "full",
-      "short",
-      "hook",
-      "thumbnail",
-      "poster",
-      "uiux_design",
-      "web_development",
-      "ovc",
-      "reels",
-    ])
-    .optional(),
 });
 
 // export Type from Schema

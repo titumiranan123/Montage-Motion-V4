@@ -11,12 +11,12 @@ export const testimonialSchema = z.object({
   position: z.number().optional(),
   category: z.enum(["message", "video_message"]),
   type: z.enum([
-    "main",
+    "home",
     "shorts",
-    "talking",
+    "talkinghead",
     "podcast",
-    "graphic",
-    "advertising",
-    "website",
+    "saas",
+    "thumbnail",
+    "about",
   ]),
 });

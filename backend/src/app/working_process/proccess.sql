@@ -6,7 +6,7 @@ CREATE TABLE processes (
   heading_part1 TEXT NOT NULL,
   heading_part2 TEXT ,
   paragraph TEXT,
-  image TEXT NOT NULL,
+  image TEXT,
   alt TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
@@ -17,7 +17,9 @@ CREATE TABLE process_steps (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   process_id UUID REFERENCES processes(id) ON DELETE CASCADE,
   icon TEXT,
+  alt TEXT,
   title TEXT NOT NULL,
   description TEXT,
   isHiden BOOLEAN DEFAULT FALSE
 );
+

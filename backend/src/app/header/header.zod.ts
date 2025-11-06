@@ -20,7 +20,16 @@ export const PageHeaderSchema = z.object({
   id: z.string().uuid().optional(),
 
   type: z
-    .enum(["home", "shorts", "talkinghead", "podcast", "saas", "thumbnail"])
+    .enum([
+      "home",
+      "shorts",
+      "talkinghead",
+      "podcast",
+      "saas",
+      "thumbnail",
+      "about",
+      "carrer",
+    ])
     .refine((val) => !!val, { message: "Type is required" }),
 
   page_title: z.string().optional(),

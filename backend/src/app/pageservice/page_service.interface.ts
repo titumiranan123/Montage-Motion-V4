@@ -16,7 +16,8 @@ export interface ServiceItem {
 export interface ServiceSection {
   type: SectionType;
   tag: string;
-  heading: [string, string];
+  heading_part1: string;
+  heading_part2: string;
   paragraph: string;
   services: ServiceItem[];
 }

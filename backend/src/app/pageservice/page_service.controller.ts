@@ -9,7 +9,7 @@ import { serviceSectionService } from "./page_service.service";
 export const createServiceSection = asyncHandler(
   async (req: Request, res: Response) => {
     const parsed = ServiceSectionSchema.parse(req.body);
-    const result = await serviceSectionService.createSection(parsed);
+    const result = await serviceSectionService.createOrUpdateSection(parsed);
     return responseHandler(
       res,
       201,
@@ -22,8 +22,8 @@ export const createServiceSection = asyncHandler(
 
 // Get All
 export const getAllServiceSections = asyncHandler(
-  async (_req: Request, res: Response) => {
-    const result = await serviceSectionService.getAllSections();
+  async (req: Request, res: Response) => {
+    const result = await serviceSectionService.getAllSections(req.query);
     return responseHandler(
       res,
       200,

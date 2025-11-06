@@ -18,7 +18,8 @@ export const ServiceSectionSchema = z.object({
     "home",
   ]),
   tag: z.string().min(1, "Tag is required"),
-  heading: z.tuple([z.string(), z.string()]),
+  heading_part1: z.string().min(1, "Heading  is required"),
+  heading_part2: z.string().optional(),
   paragraph: z.string().optional(),
   services: z
     .array(ServiceItemSchema)

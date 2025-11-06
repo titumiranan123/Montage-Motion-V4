@@ -3,6 +3,7 @@ export interface ProcessStep {
   title: string;
   description: string;
   isHiden: boolean;
+  alt: string;
 }
 
 export type ProcessType =
@@ -18,13 +19,8 @@ export interface ProcessSchema {
   heading_part1: string;
   heading_part2: string;
   paragraph: string;
-  type: ProcessType;
   image: string;
   alt: string;
+  type: ProcessType;
   process_steps: ProcessStep[];
-}
-
-export interface IWorkingProcess {
-  tag: string;
-  heading: string;
 }

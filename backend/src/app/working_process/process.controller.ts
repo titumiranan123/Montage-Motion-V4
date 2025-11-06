@@ -20,8 +20,8 @@ export const createProcess = asyncHandler(
 
 // Get All Processes
 export const getAllProcesses = asyncHandler(
-  async (_req: Request, res: Response) => {
-    const result = await processService.getAllProcesses();
+  async (req: Request, res: Response) => {
+    const result = await processService.getAllProcesses(req.query);
     return responseHandler(res, 200, true, "All processes fetched", result);
   }
 );

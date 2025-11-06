@@ -7,7 +7,7 @@ import { responseHandler } from "../../utils/responseHandler";
 // Create Brand Image
 export const createBrandImage = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await BrandImageService.createBaranImage(req.body);
+    const result = await BrandImageService.createBrandImage(req.body);
     return responseHandler(
       res,
       201,

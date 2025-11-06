@@ -10,11 +10,11 @@ export interface ITestimonial {
   category: "message" | "video_message";
 
   type:
-    | "main"
+    | "home"
     | "shorts"
-    | "talking"
+    | "talkinghead"
     | "podcast"
-    | "graphic"
-    | "advertising"
-    | "website";
+    | "saas"
+    | "thumbnail"
+    | "about";
 }

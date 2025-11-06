@@ -9,13 +9,13 @@ export const VideosService = {
     try {
       const last = await db.query(
         `SELECT position FROM works WHERE type = $1 ORDER BY position DESC LIMIT 1`,
-        [data.type],
+        [data.type]
       );
       const newPosition = last.rows.length > 0 ? last.rows[0].position + 1 : 1;
 
       const result = await db.query(
-        `INSERT INTO works (title, description, thumbnail, video_link, is_visible, is_feature, position, type, sub_type)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        `INSERT INTO works (title, description, thumbnail, video_link, is_visible, is_feature, position, type)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
          RETURNING *`,
         [
           data.title,
@@ -26,8 +26,7 @@ export const VideosService = {
           data.is_feature ?? false,
           newPosition,
           data.type,
-          data.sub_type ?? null,
-        ],
+        ]
       );
 
       return result.rows[0] ?? null;
@@ -44,7 +43,11 @@ export const VideosService = {
   },
 
   // READ by query (for website)
-  async getAllVideosforWebsite(query: { id?: string; type?: string }) {
+  async getAllVideosforWebsite(query: {
+    id?: string;
+    type?: string;
+    limit?: number;
+  }) {
     let baseQuery = `SELECT * FROM works`;
     const conditions: string[] = [];
     const values: any[] = [];
@@ -63,7 +66,10 @@ export const VideosService = {
       baseQuery += ` WHERE ` + conditions.join(" AND ");
     }
 
-    baseQuery += ` ORDER BY position ASC`;
+    baseQuery += ` ORDER BY position ASC `;
+    const limit = query.limit ?? 10;
+    values.push(limit);
+    baseQuery += ` LIMIT $${values.length}`;
 
     const result = await db.query(baseQuery, values);
     return result.rows;
@@ -108,7 +114,7 @@ export const VideosService = {
     try {
       const result = await db.query(
         `DELETE FROM works WHERE id = $1 RETURNING *`,
-        [id],
+        [id]
       );
       return result.rows[0] ?? null;
     } catch (error) {

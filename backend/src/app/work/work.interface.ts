@@ -8,21 +8,11 @@ export interface IVideo {
   is_feature: boolean;
   position?: number;
   type:
-    | "main"
+    | "home"
     | "shorts"
-    | "talking"
+    | "talkinghead"
     | "podcast"
-    | "graphic"
-    | "advertising"
-    | "website";
-  sub_type?:
-    | "full"
-    | "short"
-    | "hook"
     | "thumbnail"
-    | "poster"
-    | "uiux_design"
-    | "web_development"
-    | "ovc"
-    | "reels";
+    | "saas"
+    | "about";
 }

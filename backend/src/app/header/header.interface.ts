@@ -10,7 +10,15 @@ export interface IHeaderMedia {
 
 export interface IPageHeader {
   id?: string;
-  type: "home" | "shorts" | "talkinghead" | "podcast" | "saas" | "thumbnail";
+  type:
+    | "home"
+    | "shorts"
+    | "talkinghead"
+    | "podcast"
+    | "saas"
+    | "thumbnail"
+    | "about"
+    | "carrer";
   page_subtitle: string;
   page_title?: string;
   description?: string;

@@ -23,6 +23,7 @@ import siteMap from "./app/sitemap/sitemap.routes";
 import workingProcess from "./app/working_process/process.route";
 import pageServiceRoute from "./app/pageservice/page_service.route";
 import videoRoute from "./app/video-upload/video.routes";
+import bradImageRoute from "./app/brand_images/brandimage.route";
 
 const mainRoute = Router();
 
@@ -49,5 +50,6 @@ mainRoute.use("/api", dashboardRoute);
 // new routes
 mainRoute.use("/api/our-service", pageServiceRoute);
 mainRoute.use("/api/process", workingProcess);
+mainRoute.use("/api/brand/images", bradImageRoute);
 mainRoute.use("/api", videoRoute);
 export default mainRoute;
