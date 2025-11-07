@@ -25,16 +25,8 @@ interface Testimonial {
 
 const TestimonialVideocard = ({
   testimonial,
-  onPlay,
-  onPause,
-  onEnded,
-  onClick,
 }: {
   testimonial: Testimonial;
-  onPlay: () => void;
-  onClick: () => void;
-  onPause: () => void;
-  onEnded: () => void;
 }) => {
   return (
     <Gradientcard
@@ -42,7 +34,6 @@ const TestimonialVideocard = ({
       className="md:w-[384px] w-[300px]  h-[740px] mx-auto p-3 rounded-[18px]"
     >
       <div
-        onClick={onClick}
         className=" p-3  flex flex-col  gap-4"
         // style={{ boxShadow: "0px 4px 60px 0px #1FB5DD29 inset" }}
       >
@@ -50,9 +41,6 @@ const TestimonialVideocard = ({
         <div className="w-[344px] h-[612px] rounded-[13px] overflow-hidden relative">
           <ReactPlayer
             light={testimonial?.thumbnail ?? true}
-            onPlay={onPlay}
-            onPause={onPause}
-            onEnded={onEnded}
             playIcon={
               <div className="flex items-center justify-center w-[68px] h-[48px]">
                 <Image

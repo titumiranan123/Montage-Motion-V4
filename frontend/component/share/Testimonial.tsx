@@ -45,33 +45,17 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
   const messageTesti =
     data?.filter((item: any) => item.category === "message") || [];
 
-  const videoSwiperRef = React.useRef<any>(null);
-  const textSwiperRef = React.useRef<any>(null);
-
-  const handleVideoPlay = () => {
-    if (videoSwiperRef.current && videoSwiperRef.current.swiper) {
-      videoSwiperRef.current.swiper.autoplay.stop();
-    }
-  };
-
-  const handleVideoStop = () => {
-    if (videoSwiperRef.current && videoSwiperRef.current.swiper) {
-      videoSwiperRef.current.swiper.autoplay.start();
-    }
-  };
-
-  const handleVideoCardClick = () => {
-    if (videoSwiperRef.current?.swiper) {
-      videoSwiperRef.current.swiper.autoplay.stop();
-    }
-  };
-
   return (
     <div className="container sectionGap min-h-screen ">
       <Heading subtitle={description} tag="Testimonials" title={title} />
 
       <div className="w-full mx-auto mt-10 lg:mt-16 ">
-        <Marquee gradientColor="#000" gradient pauseOnHover className="h-full">
+        <Marquee
+          gradientColor="#000"
+          gradient
+          pauseOnHover
+          className="overflow-hidden"
+        >
           {video_message?.map((testimonial: ITestimonial, idx: number) => (
             <div
               className="px-6"
@@ -82,10 +66,6 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
               <TestimonialVideocard
                 testimonial={testimonial}
                 key={testimonial.id || idx}
-                onPlay={handleVideoPlay}
-                onPause={handleVideoStop}
-                onEnded={handleVideoStop}
-                onClick={handleVideoCardClick}
               />
             </div>
           ))}
