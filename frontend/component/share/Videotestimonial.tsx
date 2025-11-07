@@ -38,8 +38,8 @@ const TestimonialVideocard = ({
 }) => {
   return (
     <Gradientcard
-      className="md:w-[310px] w-[300px]  h-[613px] mx-auto p-3 rounded-[18px]"
-      borderClassName="md:w-[312px] w-[302px]  h-[615px] mx-auto p-[1px] rounded-[18px] flex justify-center items-center"
+      borderClassName="md:w-[386px] w-[302px]  h-[742px] mx-auto p-[1px] rounded-[18px] flex justify-center items-center"
+      className="md:w-[384px] w-[300px]  h-[740px] mx-auto p-3 rounded-[18px]"
     >
       <div
         onClick={onClick}
@@ -47,7 +47,7 @@ const TestimonialVideocard = ({
         // style={{ boxShadow: "0px 4px 60px 0px #1FB5DD29 inset" }}
       >
         {/* Video Player Section */}
-        <div className="w-full h-[490px] rounded-[13px] overflow-hidden relative">
+        <div className="w-[344px] h-[612px] rounded-[13px] overflow-hidden relative">
           <ReactPlayer
             light={testimonial?.thumbnail ?? true}
             onPlay={onPlay}
@@ -85,10 +85,12 @@ const TestimonialVideocard = ({
             />
           </div>
           <div className="text-white">
-            <h3 className="text-[20px] font-bold leading-tight">
+            <h3 className="text-[20px] font-bold leading-tight poppins">
               {testimonial.name}
             </h3>
-            <p className="text-[14px] font-[400] ">{testimonial.designation}</p>
+            <p className="text-[14px] font-[400] opensans ">
+              {testimonial.designation}
+            </p>
           </div>
         </div>
       </div>

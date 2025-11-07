@@ -17,7 +17,7 @@ const getPageData = async () => {
       cache: "no-store",
     }),
     fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=home&&table=brand,service`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=home&&table=brand,services`,
       {
         cache: "no-store",
       }
@@ -87,7 +87,7 @@ const HomePage = async ({ searchParams }: { searchParams: any }) => {
   } catch (err) {
     console.warn("Invalid schema JSON:", err);
   }
-
+  console.log("data.services", data?.services?.services);
   return (
     <div className="">
       {schema && (
@@ -99,14 +99,12 @@ const HomePage = async ({ searchParams }: { searchParams: any }) => {
       <Header data={data?.header} />
       <PatnersSection data={data?.brand} />
       <OurFeatureProject tab={tab} />
-      <ServiceSections />
-      {data?.testimonial.length > 0 && (
-        <TestimonialSection
-          title="What Our Clients Say"
-          description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-          data={data?.testimonial}
-        />
-      )}
+      <ServiceSections data={data?.services} />
+      <TestimonialSection
+        title="What Our Clients Say"
+        description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
+        data={data?.testimonial}
+      />
       <OurProcess />
       <ComparisonCards />
       <IndustryWeWork />

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import VideoPlayer from "./PrettyPlayer";
+import ShortVideoPlayer from "./ShortVideoPlayer";
 
 interface Work {
   id: string;
@@ -17,7 +18,6 @@ interface DynamicWorkContentProps {
 const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
   data,
 }) => {
-  console.log("data", data);
   // Handle no data state
   if (!data || data.length === 0) {
     return (
@@ -63,6 +63,33 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
               )}
             </div>
           );
+        } else if (dt.type === "shorts") {
+          const normalizedUrl = dt.video_link
+            ? normalizeYouTubeUrl(dt.video_link)
+            : "";
+
+          return (
+            <div key={dt.id || index} className="relative  overflow-hidden">
+              {/* Type Label */}
+              {dt.type && (
+                <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2 text-white bg-[#00000066]">
+                  {dt.title}
+                </p>
+              )}
+
+              {/* Video Player */}
+              {normalizedUrl ? (
+                <ShortVideoPlayer
+                  videoUrl={normalizedUrl}
+                  thumbnail={dt.thumbnail}
+                />
+              ) : (
+                <div className="flex items-center justify-center bg-gray-700 w-full h-full rounded-[13px]">
+                  <p>No video link</p>
+                </div>
+              )}
+            </div>
+          );
         } else {
           // Handle video type
           const normalizedUrl = dt.video_link
@@ -81,17 +108,10 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
                 </p>
               )}
 
-              {/* Video Player */}
-              {normalizedUrl ? (
-                <VideoPlayer
-                  youtubeUrl={normalizedUrl}
-                  thumbnail={dt.thumbnail}
-                />
-              ) : (
-                <div className="flex items-center justify-center bg-gray-700 w-full h-full rounded-[13px]">
-                  <p>No video link</p>
-                </div>
-              )}
+              <VideoPlayer
+                youtubeUrl={normalizedUrl}
+                thumbnail={dt.thumbnail}
+              />
             </div>
           );
         }
