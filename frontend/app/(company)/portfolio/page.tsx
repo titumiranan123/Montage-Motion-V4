@@ -3,7 +3,10 @@ import React from "react";
 import Portfoliotab from "./Portfoliotab";
 import VideoPlayer from "@/component/home/PrettyPlayer";
 import FirstSection from "@/app/contact-us/FirstSection";
-
+import { getPageSEO } from "@/component/share/getPageSEO";
+export async function generateMetadata() {
+  return await getPageSEO("portfolio");
+}
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
   const { search, cat } = await searchParams;
   const res = await fetch(

@@ -9,7 +9,10 @@ import TalkingWhychooseus from "./TalkingHeadChooseus";
 import TalkingHeadPlanPurpose from "./TalkingHeadPlanPurpose";
 import TestimonialSection from "@/component/share/Testimonial";
 import TalkingHeadPricing from "./TalkingHeadPricing";
-
+import { getPageSEO } from "@/component/share/getPageSEO";
+export async function generateMetadata() {
+  return await getPageSEO("talking");
+}
 const TalkingHeadEditing = async () => {
   const res = await fetch(
     "https://api-v2.montagemotion.com/api/website/data?type=main",

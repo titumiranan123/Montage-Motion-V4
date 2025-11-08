@@ -10,7 +10,10 @@ import FaqSection from "@/component/share/FaqSection";
 import WhyChooseUs from "@/component/home/WhyChooseUs";
 import TestimonialSection from "@/component/share/Testimonial";
 import WhySassVideo from "./WhySassVideo";
-
+import { getPageSEO } from "@/component/share/getPageSEO";
+export async function generateMetadata() {
+  return await getPageSEO("saas");
+}
 const SaaSExplainer = async () => {
   const res = await fetch(
     "https://api-v2.montagemotion.com/api/website/data?type=main",

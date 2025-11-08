@@ -4,11 +4,10 @@ import axios from "axios";
 import React from "react";
 import Blogtab from "./Blogtab";
 import Blogcard from "./Blogcard";
-export const metadata = {
-  title: "Blog | MontageMotion - Tips, Trends & Insights in Video Editing",
-  description:
-    "Explore expert articles, creative tips, and the latest trends in video editing, content creation, and digital marketing from the MontageMotion team.",
-};
+import { getPageSEO } from "@/component/share/getPageSEO";
+export async function generateMetadata() {
+  return await getPageSEO("blog");
+}
 
 const Blogs = async ({ searchParams }: { searchParams: any }) => {
   const { cat, search } = await searchParams;

@@ -1,10 +1,13 @@
+import { getPageSEO } from "@/component/share/getPageSEO";
 
+export async function generateMetadata() {
+  return await getPageSEO("terms");
+}
 const Termsandconditions = () => {
-  
   return (
     <div className="max-w-[996px] mx-auto px-2">
       <h2 className="mb-3 capitalize text-white lg:mt-30 mt-10 satoshi">
-        Terms and  Conditions
+        Terms and Conditions
       </h2>
       <div className="openSans text-[#E4E8F7]">
         <div className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
