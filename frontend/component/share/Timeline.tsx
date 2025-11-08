@@ -7,6 +7,7 @@ import file_video from "@/public/assets/file-video.png";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 const steps = [
   {
     id: 1,
@@ -44,64 +45,84 @@ const steps = [
     icon: "/assets/file-video.png",
   },
 ];
+
 gsap.registerPlugin(ScrollTrigger);
 
 const AIProcess = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number>(0);
   const lineRef = useRef<HTMLDivElement | null>(null);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollTriggersRef = useRef<ScrollTrigger[]>([]);
 
   useEffect(() => {
+    // Cleanup previous ScrollTriggers
+    scrollTriggersRef.current.forEach((trigger) => trigger?.kill());
+    scrollTriggersRef.current = [];
+
     stepRefs.current.forEach((step, i) => {
       if (!step) return;
 
-      ScrollTrigger.create({
+      const trigger = ScrollTrigger.create({
         trigger: step,
-        markers: true,
-        start: "top center",
-        end: "bottom center",
-        onEnter: () => animateIn(i, step),
-        onLeave: () => animateOut(i, step),
-        onEnterBack: () => animateIn(i, step),
-        onLeaveBack: () => animateOut(i, step),
+        start: "top 70%",
+        end: "bottom 30%",
+        onEnter: () => {
+          setActive(i);
+          animateIn(i, step);
+          updateLine(i);
+        },
+        onEnterBack: () => {
+          setActive(i);
+          animateIn(i, step);
+          updateLine(i);
+        },
+        onLeave: () => {
+          animateOut(step);
+        },
+        onLeaveBack: () => {
+          animateOut(step);
+        },
       });
-      function animateIn(index: number, box: any) {
-        setActive(index);
-        gsap.fromTo(
-          box,
-          {
-            opacity: 0,
-            y: 60,
-          },
-          {
-            opacity: 1,
-            scale: 1.1,
-            y: 0,
-            duration: 0.8,
-            delay: index * 0.1,
-            ease: "power3.out",
-          }
-        );
-        if (!lineRef.current) return;
-        const totalSteps = stepRefs.current.length;
-        const heightPercent = ((index + 1) / totalSteps) * 100;
-        gsap.to(lineRef.current, {
-          height: `${heightPercent}%`,
-          duration: 0.5,
-          ease: "power3.out",
-        });
-      }
 
-      function animateOut(index: number, box: any) {
-        gsap.to(box, {
-          opacity: 1,
-          scale: 1,
-          duration: 0.5,
-          ease: "power3.in",
-        });
-      }
+      scrollTriggersRef.current.push(trigger);
     });
+
+    // Cleanup on unmount
+    return () => {
+      scrollTriggersRef.current.forEach((trigger) => trigger?.kill());
+    };
   }, []);
+
+  function animateIn(index: number, box: HTMLDivElement) {
+    gsap.to(box, {
+      opacity: 1,
+      scale: 1.1,
+      y: 0,
+      duration: 0.8,
+      ease: "power3.out",
+    });
+  }
+
+  function animateOut(box: HTMLDivElement) {
+    gsap.to(box, {
+      opacity: 0.6,
+      scale: 1,
+      duration: 0.5,
+      ease: "power3.in",
+    });
+  }
+
+  function updateLine(index: number) {
+    if (!lineRef.current) return;
+    const totalSteps = stepRefs.current.length;
+    const heightPercent = ((index + 1) / totalSteps) * 100;
+    gsap.to(lineRef.current, {
+      height: `${heightPercent}%`,
+      duration: 0.5,
+      ease: "power3.out",
+    });
+  }
+
   return (
     <div className="bg-black text-white py-16 px-4 font-sans">
       <div className="relative max-w-6xl mx-auto">
@@ -123,6 +144,7 @@ const AIProcess = () => {
             className={`flex flex-col lg:gap-0 gap-8 md:flex-row items-start md:items-center my-16 justify-between ${
               index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
             }`}
+            style={{ opacity: 0.6 }}
           >
             <div
               className={`relative w-full md:w-auto flex items-center justify-center md:absolute md:transform md:-translate-x-1/2 ${
@@ -142,7 +164,6 @@ const AIProcess = () => {
               >
                 <style>
                   {`
-
 .active-bg {
   display:flex;
   justify-content:center;
@@ -158,9 +179,9 @@ const AIProcess = () => {
   border-radius: 24px;
 }
 
-                  .verticalLine-bg {
-                    background: linear-gradient(180deg, rgba(49,95,172,0.2) 0.02%, #315FAC 21.38%, rgba(49,95,172,0.2) 100%);
-                  }
+.verticalLine-bg {
+  background: linear-gradient(180deg, rgba(49,95,172,0.2) 0.02%, #315FAC 21.38%, rgba(49,95,172,0.2) 100%);
+}
                 `}
                 </style>
                 <div
