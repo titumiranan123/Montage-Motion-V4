@@ -1,149 +1,238 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
-import { packageFeatureService } from "./package.service";
-import { IPackage } from "./pricing.interface";
+import { IPagePricePlan } from "./pricing.interface";
 
-export const packageService = {
-  /** Create a new package with auto-position and feature insert */
-  async createPackage(data: IPackage) {
-    const positionResult = await db.query(
-      `SELECT COALESCE(MAX(position), 0) as max FROM packages`
-    );
-    const newPosition = positionResult.rows[0].max + 1;
+export const pricingPageService = {
+  /** ✅ Create or update page price plan (auto upsert by type) */
+  async upsertPagePricePlan(data: IPagePricePlan) {
+    await db.query("BEGIN");
 
-    const result = await db.query(
-      `INSERT INTO packages (title, description, currency, price, billing_cycle, is_visible, type, position)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-       RETURNING *`,
-      [
-        data.title,
-        data.description,
-        data.currency,
-        data.price,
-        data.billing_cycle,
-        data.is_visible,
-        data.type,
-        newPosition,
-      ]
-    );
+    try {
+      // 1️⃣ Check if a page with this type already exists
+      const existingRes = await db.query(
+        `SELECT id FROM page_price_plans WHERE type = $1`,
+        [data.type]
+      );
 
-    const packageId = result.rows[0].id;
+      let pageId: string;
 
-    // Insert related features
-    if (data.features?.length) {
-      for (const feature of data.features) {
-        await packageFeatureService.addFeature(packageId, {
-          ...feature,
-          is_active:
-            typeof feature.is_active === "string"
-              ? feature.is_active === "true"
-              : feature.is_active,
-        });
+      if (existingRes.rowCount) {
+        // 2️⃣ Update existing page
+        pageId = existingRes.rows[0].id;
+        await db.query(
+          `
+          UPDATE page_price_plans
+          SET tag = $1,
+              heading_part1 = $2,
+              heading_part2 = $3,
+              paragraph = $4,
+              updated_at = NOW()
+          WHERE id = $5
+          `,
+          [
+            data.tag,
+            data.heading_part1,
+            data.heading_part2,
+            data.paragraph,
+            pageId,
+          ]
+        );
+      } else {
+        // 3️⃣ Create new page
+        const insertRes = await db.query(
+          `
+          INSERT INTO page_price_plans (type, tag, heading_part1, heading_part2, paragraph)
+          VALUES ($1, $2, $3, $4, $5)
+          RETURNING id
+          `,
+          [
+            data.type,
+            data.tag,
+            data.heading_part1,
+            data.heading_part2,
+            data.paragraph,
+          ]
+        );
+        pageId = insertRes.rows[0].id;
       }
-    }
 
-    return result.rows[0];
+      // 4️⃣ Get existing packages for this page
+      const existingPackagesRes = await db.query(
+        `SELECT id FROM packages WHERE page_price_plan_id = $1`,
+        [pageId]
+      );
+      const existingPackageIds = existingPackagesRes.rows.map((r) => r.id);
+
+      const receivedPackageIds = data.packages
+        .filter((p) => !!p.id)
+        .map((p) => p.id);
+
+      // 5️⃣ Delete packages that are missing in incoming data
+      const packagesToDelete = existingPackageIds.filter(
+        (id) => !receivedPackageIds.includes(id)
+      );
+
+      if (packagesToDelete.length) {
+        await db.query(`DELETE FROM packages WHERE id = ANY($1::uuid[])`, [
+          packagesToDelete,
+        ]);
+      }
+
+      // 6️⃣ Upsert each package
+      for (const [pkgIndex, pkg] of data.packages.entries()) {
+        let packageId = pkg.id;
+
+        if (packageId && existingPackageIds.includes(packageId)) {
+          // Update package
+          await db.query(
+            `
+            UPDATE packages
+            SET name = $1,
+                description = $2,
+                currency = $3,
+                price = $4,
+                billing_cycle = $5,
+                is_hidden = $6,
+        
+                position = $7,
+                updated_at = NOW()
+            WHERE id = $8
+            `,
+            [
+              pkg.name,
+              pkg.description,
+              pkg.currency,
+              pkg.price,
+              pkg.billing_cycle,
+              pkg.ishiden ?? false,
+
+              pkg.position ?? pkgIndex + 1,
+              packageId,
+            ]
+          );
+
+          // Replace features
+          await db.query(`DELETE FROM package_features WHERE package_id = $1`, [
+            packageId,
+          ]);
+        } else {
+          // Insert new package
+          const pkgRes = await db.query(
+            `
+            INSERT INTO packages (
+              page_price_plan_id, name, description, currency, price,
+              billing_cycle, is_hidden, position
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING id
+            `,
+            [
+              pageId,
+              pkg.name,
+              pkg.description,
+              pkg.currency,
+              pkg.price,
+              pkg.billing_cycle,
+              pkg.ishiden ?? false,
+
+              pkg.position ?? pkgIndex + 1,
+            ]
+          );
+          packageId = pkgRes.rows[0].id;
+        }
+
+        // Insert features for package
+        if (pkg.features?.length) {
+          for (const [fIndex, feature] of pkg.features.entries()) {
+            const isActive =
+              typeof feature.is_active === "string"
+                ? feature.is_active === "true"
+                : (feature.is_active ?? true);
+
+            await db.query(
+              `
+              INSERT INTO package_features (package_id, feature, is_active, position)
+              VALUES ($1, $2, $3, $4)
+              `,
+              [
+                packageId,
+                feature.feature,
+                isActive,
+                feature.position ?? fIndex + 1,
+              ]
+            );
+          }
+        }
+      }
+
+      await db.query("COMMIT");
+
+      // 7️⃣ Return the full updated page with all packages & features
+      const result = await this.getPagePricePlanByType({ type: data.type });
+      return result;
+    } catch (err) {
+      await db.query("ROLLBACK");
+      throw err;
+    }
   },
 
-  /** Retrieve all visible packages with optional filters */
-  async getAllPackages(filter?: { type?: string; id?: string }) {
-    const conditions: string[] = [`is_visible = true`];
+  /** ✅ Get full page with packages & features */
+  async getPagePricePlanByType(query: { type: string }) {
+    let baseQuery = `SELECT * FROM page_price_plans `;
+    const conditions: string[] = [];
     const values: any[] = [];
 
-    if (filter?.type) {
-      conditions.push(`type = $${conditions.length + 1}`);
-      values.push(filter.type);
+    if (query?.type) {
+      values.push(query?.type);
+      conditions.push(` type = $${values.length}`);
     }
 
-    if (filter?.id) {
-      conditions.push(`id = $${conditions.length + 1}`);
-      values.push(filter.id);
+    if (conditions.length > 0) {
+      baseQuery += ` WHERE ` + conditions.join(" AND ");
     }
 
-    const baseQuery = `
-      SELECT * FROM packages 
-      ${conditions.length ? `WHERE ${conditions.join(" AND ")}` : ""} 
-      ORDER BY position ASC
-    `;
+    baseQuery += ` ORDER BY id ASC `;
 
-    const pkgRes = await db.query(baseQuery, values);
+    const pageRes = await db.query(baseQuery, values);
+
+    if (!pageRes.rowCount) return [];
+
+    const page = pageRes.rows[0];
+    const pkgRes = await db.query(
+      `SELECT * FROM packages WHERE page_price_plan_id = $1 ORDER BY position ASC`,
+      [page.id]
+    );
 
     for (const pkg of pkgRes.rows) {
-      pkg.features = await packageFeatureService.getFeaturesByPackageId(pkg.id);
-    }
-
-    return pkgRes.rows;
-  },
-
-  /** Retrieve a single package by ID with its features */
-  async getPackageById(id: string) {
-    const res = await db.query(`SELECT * FROM packages WHERE id = $1`, [id]);
-    if (!res.rowCount) throw new Error("Package not found");
-
-    const features = await packageFeatureService.getFeaturesByPackageId(id);
-    return { ...res.rows[0], features };
-  },
-
-  /** Update an existing package */
-  async updatePackage(id: string, data: Partial<IPackage>) {
-    const existing = await this.getPackageById(id);
-    const updated = { ...existing, ...data };
-
-    await db.query(
-      `UPDATE packages 
-       SET title = $1,
-           description = $2,
-           currency = $3,
-           price = $4,
-           billing_cycle = $5,
-           is_visible = $6,
-           type = $7
-       WHERE id = $8`,
-      [
-        updated.title,
-        updated.description,
-        updated.currency,
-        updated.price,
-        updated.billing_cycle,
-        updated.is_visible,
-        updated.type,
-        id,
-      ]
-    );
-
-    // Replace all features if provided
-    if (data.features) {
-      await packageFeatureService.replaceAllFeatures(
-        id,
-        data.features.map((f) => ({
-          ...f,
-          is_active:
-            typeof f.is_active === "string"
-              ? f.is_active === "true"
-              : f.is_active,
-        }))
+      const featRes = await db.query(
+        `SELECT * FROM package_features WHERE package_id = $1 ORDER BY position ASC`,
+        [pkg.id]
       );
+      pkg.features = featRes.rows;
     }
 
-    return this.getPackageById(id);
+    page.packages = pkgRes.rows;
+    return page;
   },
-
-  /** Delete a package (and its features if needed) */
-  async deletePackage(id: string) {
-    await this.getPackageById(id); // ensure existence
-    await db.query(`DELETE FROM packages WHERE id = $1`, [id]);
-    return { message: "Package deleted" };
-  },
-
-  /** Update multiple package positions (drag & drop reorder) */
-  async updatePackagePositions(packages: { id: string; position: number }[]) {
-    const updates = packages.map((pkg) =>
-      db.query(`UPDATE packages SET position = $1 WHERE id = $2`, [
-        pkg.position,
-        pkg.id,
-      ])
+  /** ✅ Delete entire page (cascade) */
+  async deletePagePricePlan(type: string) {
+    const res = await db.query(
+      `SELECT id FROM page_price_plans WHERE type = $1`,
+      [type]
     );
-    await Promise.all(updates);
-    return { message: "Positions updated successfully" };
+    if (!res.rowCount) throw new Error("Page not found");
+
+    const id = res.rows[0].id;
+    await db.query(`DELETE FROM page_price_plans WHERE id = $1`, [id]); // cascade deletes packages & features
+    return { message: "Page and all related packages deleted successfully" };
+  },
+
+  /** ✅ Delete single package (cascade its features) */
+  async deleteSinglePackage(id: string) {
+    const check = await db.query(`SELECT id FROM packages WHERE id = $1`, [id]);
+    if (!check.rowCount) throw new Error("Package not found");
+
+    await db.query(`DELETE FROM packages WHERE id = $1`, [id]);
+    return { message: "Package and its features deleted successfully" };
   },
 };

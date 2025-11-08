@@ -1,84 +1,55 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../../midleware/asyncHandler";
-import { packageService } from "./pricing.service";
 import { responseHandler } from "../../utils/responseHandler";
-import { packageFeatureService } from "./package.service";
+import { pricingPageService } from "./pricing.service";
 
-// Package CRUD
+/**
+ * ✅ Create a new pricing package
+ */
 export const createPackage = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await packageService.createPackage(req.body);
-    return responseHandler(res, 201, true, "Package created", result);
-  },
+    const result = await pricingPageService.upsertPagePricePlan(req.body);
+    return responseHandler(
+      res,
+      201,
+      true,
+      "Pricing package created successfully",
+      result
+    );
+  }
 );
 
+/**
+ * Get all pricing packages (with optional filters)
+ */
 export const getAllPackages = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await packageService.getAllPackages(req.query);
-    return responseHandler(res, 200, true, "All packages fetched", result);
-  },
+    const result = await pricingPageService.getPagePricePlanByType(
+      req.query as { type: string }
+    );
+    return responseHandler(
+      res,
+      200,
+      true,
+      "All pricing packages fetched successfully",
+      result
+    );
+  }
 );
 
-export const getPackageById = asyncHandler(
-  async (req: Request, res: Response) => {
-    const result = await packageService.getPackageById(req.params.id);
-    return responseHandler(res, 200, true, "Package fetched", result);
-  },
-);
-
-export const updatePackage = asyncHandler(
-  async (req: Request, res: Response) => {
-    const result = await packageService.updatePackage(req.params.id, req.body);
-    return responseHandler(res, 200, true, "Package updated", result);
-  },
-);
-export const updatePackagePosition = asyncHandler(
-  async (req: Request, res: Response) => {
-    const result = await packageService.updatPackagePosition(req.body);
-    return responseHandler(res, 200, true, "Package updated", result);
-  },
-);
-
+/**
+ * ✅ Delete a pricing package (and its features)
+ */
 export const deletePackage = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await packageService.deletePackage(req.params.id);
-    return responseHandler(res, 200, true, "Package deleted", result);
-  },
-);
-
-// Feature CRUD
-export const addFeature = asyncHandler(async (req: Request, res: Response) => {
-  const result = await packageFeatureService.addFeature(
-    req.params.packageId,
-    req.body,
-  );
-  return responseHandler(res, 201, true, "Feature added", result);
-});
-
-export const updateFeature = asyncHandler(
-  async (req: Request, res: Response) => {
-    const result = await packageFeatureService.updateFeature(
-      req.params.featureId,
-      req.body,
+    const id = req.params.id;
+    const result = await pricingPageService.deletePagePricePlan(id);
+    return responseHandler(
+      res,
+      200,
+      true,
+      "Pricing package deleted successfully",
+      result
     );
-    return responseHandler(res, 200, true, "Feature updated", result);
-  },
-);
-export const updateFeauterPosition = asyncHandler(
-  async (req: Request, res: Response) => {
-    const result = await packageFeatureService.updatFeaturePosition(
-      req.params.packageId,
-      req.body,
-    );
-    return responseHandler(res, 200, true, "Feature updated", result);
-  },
-);
-
-export const deleteFeature = asyncHandler(
-  async (req: Request, res: Response) => {
-    const result = await packageFeatureService.deleteFeature(
-      req.params.featureId,
-    );
-    return responseHandler(res, 200, true, "Feature deleted", result);
-  },
+  }
 );

@@ -24,12 +24,14 @@ import workingProcess from "./app/working_process/process.route";
 import pageServiceRoute from "./app/pageservice/page_service.route";
 import videoRoute from "./app/video-upload/video.routes";
 import bradImageRoute from "./app/brand_images/brandimage.route";
+import pageWhychooseusRoute from "./app/whychooseus/whychooseus.route";
+import carrerRoute from "./app/carrerpost/carrer.route";
 
 const mainRoute = Router();
 
 mainRoute.use("/api", faqRoute);
 mainRoute.use("/api", headerRoute);
-mainRoute.use("/api", pricingRoute);
+mainRoute.use("/api/pricing", pricingRoute);
 mainRoute.use("/api/", testimonialRoute);
 mainRoute.use("/api", recentRoute);
 mainRoute.use("/api", AuthRoute);
@@ -50,6 +52,8 @@ mainRoute.use("/api", dashboardRoute);
 // new routes
 mainRoute.use("/api/our-service", pageServiceRoute);
 mainRoute.use("/api/process", workingProcess);
+mainRoute.use("/api/why-choose-us", pageWhychooseusRoute);
 mainRoute.use("/api/brand/images", bradImageRoute);
+mainRoute.use("/api/jobpost", carrerRoute);
 mainRoute.use("/api", videoRoute);
 export default mainRoute;

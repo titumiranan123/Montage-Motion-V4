@@ -8,13 +8,12 @@ interface Item {
 }
 
 interface InfoSection {
-  image_url: string; // example: "https://cdn.ictbangla.com/team/safwan.jpg"
-  name: string; // example: "Safwan Wafif"
-  designation: string; // example: "Project Co-ordinator"
-  description: string; // example: "Still curious? Book a call and we’ll help you figure out the best move for your brand."
-  button_text: string; // example: "Book a Call"
-  button_link: string; // example: "https://calendly.com/safwanwafif"
-  is_global?: boolean; // ✅ to indicate if it’s shared across pages
+  image_url: string;
+  name: string;
+  designation: string;
+  description: string;
+  button_link: string;
+  is_global?: boolean;
 }
 
 export interface IFaq {
@@ -24,12 +23,13 @@ export interface IFaq {
   is_visible: boolean;
   faqs: Item[];
   type:
-    | "main"
+    | "home"
     | "shorts"
-    | "talking"
+    | "talkinghead"
     | "podcast"
-    | "graphic"
+    | "thumbnail"
     | "advertising"
-    | "website";
+    | "saas"
+    | "about";
   info_section?: InfoSection;
 }

@@ -1,11 +1,22 @@
+// package.zod.ts
 import { z } from "zod";
 
+export const packageFeatureSchema = z.object({
+  id: z.string().uuid().optional(),
+  feature: z.string().min(1, "Feature name is required"),
+  is_active: z.boolean().default(true),
+  position: z.number().optional(),
+});
+
 export const packageSchema = z.object({
-  name: z.enum(["Basic", "Standard", "Premium"]),
-  price: z.number().min(0),
-  duration: z.number().min(0),
-  delivery_days: z.number().min(0),
-  revisions: z.number().min(0),
-  features: z.array(z.string()),
-  type: z.enum(["short_video", "talking_head", "podcast", "thumbnail"]),
+  id: z.string().uuid().optional(),
+  name: z.string().min(1, "Package title is required"),
+  description: z.string().optional(),
+  currency: z.string().default("USD"),
+  price: z.number().positive("Price must be positive"),
+  billing_cycle: z.string().optional(),
+  ishiden: z.boolean().default(true),
+  type: z.string().optional(),
+  position: z.number().optional(),
+  features: z.array(packageFeatureSchema).optional(),
 });

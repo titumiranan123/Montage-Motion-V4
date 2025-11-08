@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
+import { serviceSectionService } from "../pageservice/page_service.service";
 // import { packageFeatureService } from "../pricing/package.service";
 
 export const homeapiServices = {
@@ -55,11 +56,8 @@ export const homeapiServices = {
       }
       let services: any[] = [];
       if (tables.includes("services")) {
-        const brand = await client.query(
-          `SELECT * FROM service_sections WHERE type = $1  `,
-          [type]
-        );
-        services = brand.rows;
+        const result = await serviceSectionService.getAllSections({ type });
+        services = result.length > 0 ? result[0] : [];
       }
 
       // const pricingService = async () => {
