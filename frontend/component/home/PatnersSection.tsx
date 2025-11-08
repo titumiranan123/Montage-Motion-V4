@@ -22,7 +22,7 @@ const PartnersSection = ({ data }: { data: any[] }) => {
           {data.map((partner, index) => (
             <div
               key={partner.id || index}
-              className="mx-[40px] flex items-center justify-center h-[40px]"
+              className="mx-[40px] pointer-events-none select-none flex items-center justify-center h-[40px]"
             >
               <img
                 src={partner.image}
@@ -35,7 +35,7 @@ const PartnersSection = ({ data }: { data: any[] }) => {
                   maxHeight: "40px",
                   objectFit: "contain",
                 }}
-                className="rounded-lg"
+                className="rounded-lg select-none"
                 loading="lazy"
               />
             </div>

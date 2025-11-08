@@ -159,6 +159,8 @@ function StorySlider() {
   return (
     <div
       ref={containerRef}
+      data-aos="fade-up"
+      data-aos-delay={400}
       className="relative flex w-full overflow-hidden h-[594px] text-white lg:mt-10 mt-8  "
     >
       {/* LEFT: IMAGES (change only when index snaps) */}

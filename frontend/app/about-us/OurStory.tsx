@@ -51,8 +51,6 @@ const slides: Slide[] = [
 ];
 
 function OurStory() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   // track + draggable bits
   const trackRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<HTMLDivElement>(null);
@@ -148,16 +146,6 @@ function OurStory() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
-  // ---------- Click on track / marker ----------
-  const onTrackClick = (e: React.MouseEvent) => {
-    const idx = getNearestIndexFromClientY(e.clientY);
-    setActiveIndex(idx);
-    setToIndex(idx, true);
-  };
-
-  const pctFromIndex = (i: number) =>
-    count <= 1 ? 0 : (i / (count - 1)) * 100;
-
   return (
     <section className="sectionGap container">
       <Heading
@@ -169,7 +157,11 @@ function OurStory() {
         <div className="lg:w-1/2 w-full">
           <StorySlider />
         </div>
-        <div className=" text-[#E4E8F7] flex flex-col gap-4 lg:w-1/2 w-full">
+        <div
+          data-aos="fade-up"
+          data-aos-delay={500}
+          className=" text-[#E4E8F7] flex flex-col gap-4 lg:w-1/2 w-full"
+        >
           <Gradientcard
             className="max-w-[582px] min-h-[180px] rounded-[24px] py-6 px-4 "
             borderClassName="max-w-[582px] min-h-[180px] rounded-[24px] p-[1px]"

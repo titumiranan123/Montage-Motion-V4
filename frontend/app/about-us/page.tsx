@@ -13,7 +13,7 @@ export async function generateMetadata() {
 }
 const AboutUs = async () => {
   const res = await fetch(
-    "https://api-v2.montagemotion.com/api/website/data?type=main",
+    `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=about&&table=brand`,
     { cache: "no-store" } // ensures fresh data on every request
   );
 
@@ -22,7 +22,7 @@ const AboutUs = async () => {
   }
 
   const data = await res.json();
-
+  console.log(data.data);
   return (
     <div className="">
       <HeaderService mainIntro={data?.data?.header} />

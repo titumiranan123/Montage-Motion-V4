@@ -21,6 +21,8 @@ const InsideMontage = () => {
             height={593}
             className="rounded-lg object-cover w-full h-auto"
             priority
+            data-aos="fade-up"
+            data-aos-delay={400}
           />
           <Image
             src="/assets/gallary/image-4.png"
@@ -28,6 +30,8 @@ const InsideMontage = () => {
             width={389}
             height={375}
             className="rounded-lg object-cover w-full h-auto"
+            data-aos="fade-up"
+            data-aos-delay={450}
           />
         </div>
 
@@ -39,6 +43,8 @@ const InsideMontage = () => {
             width={389}
             height={265}
             className="rounded-lg object-cover w-full h-auto"
+            data-aos="fade-up"
+            data-aos-delay={500}
           />
           <Image
             src="/assets/gallary/image-5.png"
@@ -46,6 +52,8 @@ const InsideMontage = () => {
             width={389}
             height={265}
             className="rounded-lg object-cover w-full h-auto"
+            data-aos="fade-up"
+            data-aos-delay={550}
           />
         </div>
 
@@ -57,6 +65,8 @@ const InsideMontage = () => {
             width={389}
             height={410}
             className="rounded-lg object-cover w-full h-auto"
+            data-aos="fade-up"
+            data-aos-delay={550}
           />
           <Image
             src="/assets/gallary/image-6.png"
@@ -64,6 +74,8 @@ const InsideMontage = () => {
             width={389}
             height={513}
             className="rounded-lg object-cover w-full h-auto"
+            data-aos="fade-up"
+            data-aos-delay={600}
           />
         </div>
       </div>

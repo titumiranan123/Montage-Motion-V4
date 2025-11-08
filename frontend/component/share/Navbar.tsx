@@ -7,7 +7,10 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div className="py-2 mt-6 md:mt-8 bg-[#080B0C63]/39 rounded-[24px] container  flex justify-between items-center">
+    <div
+      style={{ zIndex: 9999 }}
+      className="py-2 mt-6 md:mt-8 bg-[#080B0C63]/39 rounded-[24px] container  flex justify-between items-center sticky top-4 backdrop-blur-2xl"
+    >
       <Link
         className="block hover:scale-105 transition-all duration-300"
         href={"/"}

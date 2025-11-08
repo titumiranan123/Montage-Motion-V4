@@ -33,7 +33,7 @@ const HomeProjectTab = () => {
   }, [searchParams]);
 
   return (
-    <div>
+    <div data-aos="fade-up" data-aos-delay={300}>
       <div className="flex lg:gap-6 pb-2 mt-8 min-w-[582px] justify-center items-center max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto tabBorder">
         {tabConfig.map((tab, idx) => (
           <button

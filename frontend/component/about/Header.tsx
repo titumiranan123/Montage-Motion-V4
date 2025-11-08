@@ -1,25 +1,15 @@
 import React from "react";
-import Link from "next/link";
-import { Videoplayer } from "./Reactplayer";
+
 import TurstedBy from "../home/TurstedBy";
+import VideoPlayer from "../home/PrettyPlayer";
 
 interface HeaderServiceProps {
-  mainIntro: {
-    id?: string;
-    title: string;
-    description: string;
-    thumbnail: string;
-    video_link: string;
-    is_active: boolean;
-    type: string;
-    created_at?: string;
-    updated_at?: string;
-  };
+  mainIntro: any;
 }
 
 const HeaderService: React.FC<HeaderServiceProps> = ({ mainIntro }) => {
   return (
-    <section className="px-2 lg:px-0">
+    <section className="px-2 lg:px-0 container ">
       <div className="relative w-full ">
         <div className="max-w-[900px] w-full  pt-16 lg:pt-[138px] mx-auto text-center md:text-left">
           <div
@@ -48,10 +38,10 @@ const HeaderService: React.FC<HeaderServiceProps> = ({ mainIntro }) => {
           </p>
         </div>
         {/* Responsive Video Section */}
-        <div data-aos="fade-up" data-aos-delay="500">
-          <Videoplayer
-            thumbnail={mainIntro.thumbnail}
-            video_link={mainIntro.video_link}
+        <div data-aos="fade-up" data-aos-delay="500" className="lg:mt-10 mt-8">
+          <VideoPlayer
+            thumbnail={mainIntro?.media[0]?.image_url}
+            youtubeUrl={mainIntro?.media[0]?.video_url}
           />
         </div>
       </div>

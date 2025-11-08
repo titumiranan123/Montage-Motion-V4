@@ -6,7 +6,7 @@ import Link from "next/link";
 const Header: React.FC<{ data: any }> = ({ data }) => {
   // console.log("data.media", data.media);
   return (
-    <div className="flex lg:flex-row flex-col lg:justify-between items-center   container px-[60px] overflow-hidden relative lg:h-[634px] h-[780px] lg:gap-4 gap-4 ">
+    <div className="flex lg:flex-row flex-col lg:justify-between items-center relative  container px-[60px] overflow-hidden  lg:h-[634px] h-[780px] lg:gap-4 gap-4 ">
       {/* sun raise effect */}
       <div className="absolute lg:top-1/3 md:top-[60%] top-[76%] lg:right-1/4 right-[20%]  lg:w-[689px] md:w-[500px] w-[250px] h-[400px] md:h-[900px] lg:h-[689px] bg-[#5586ED] lg:blur-[125px] md:blur-[80px] blur-[50px] rounded-full  z-10 ">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:w-[321px] md:h-[321px] w-[150px] h-[150px] bg-white rounded-full   "></div>
@@ -38,14 +38,14 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           <Link
             target="_blank"
             href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
-            className="md:w-[155px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]"
+            className="md:w-[155px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500] hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Start a project
           </Link>
           <Link
             target="_blank"
             href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
-            className="md:w-[155px] w-full h-[48px] btn-secondary text-white py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]"
+            className="md:w-[155px] w-full h-[48px] btn-secondary text-white py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500] hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Book a Call
           </Link>

@@ -37,6 +37,8 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
         if (dt.type === "thumbnail") {
           return (
             <div
+              data-aos="fade-up"
+              data-aos-delay={200 + index * 100}
               key={dt.id || index}
               className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px]"
             >
@@ -69,7 +71,12 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
             : "";
 
           return (
-            <div key={dt.id || index} className="relative  overflow-hidden">
+            <div
+              data-aos="fade-up"
+              data-aos-delay={200 + index * 100}
+              key={dt.id || index}
+              className="relative  overflow-hidden"
+            >
               {/* Type Label */}
               {dt.type && (
                 <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2 text-white bg-[#00000066]">
@@ -98,6 +105,8 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
 
           return (
             <div
+              data-aos="fade-up"
+              data-aos-delay={200 + index * 100}
               key={dt.id || index}
               className="relative aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px] overflow-hidden"
             >
