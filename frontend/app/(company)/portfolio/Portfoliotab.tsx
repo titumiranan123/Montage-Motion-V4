@@ -2,12 +2,12 @@
 import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Portfoliotab = () => {
+const Portfoliotab = ({ tab }: { tab: string }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentTab = searchParams.get("cat") || "all";
+  const currentTab = searchParams.get("cat") || tab;
   const [activeTab, setActiveTab] = useState(currentTab);
   const handleTabClick = (href: string) => {
     setActiveTab(href);
@@ -27,7 +27,7 @@ const Portfoliotab = () => {
   const tabConfig = [
     {
       title: "Talking Video Editing",
-      href: "talking",
+      href: "talkinghead",
     },
     {
       title: "Podcast Video Editing ",
@@ -39,11 +39,11 @@ const Portfoliotab = () => {
     },
     {
       title: "Thumbnail Design",
-      href: "graphic",
+      href: "thumbnail",
     },
     {
       title: "SaaS Video Editing",
-      href: "advertising",
+      href: "saas",
     },
   ];
 
@@ -52,8 +52,11 @@ const Portfoliotab = () => {
     const newUrl = `?cat=${activeTab}&search=${encodeURIComponent(value)}`;
     router.replace(newUrl);
   };
+  useEffect(() => {
+    router.push(`?cat=talkinghead`);
+  }, []);
   return (
-    <div>
+    <div data-aos="fade-up" data-aos-delay={400}>
       <style>
         {`
         .searchbg{
@@ -61,7 +64,8 @@ const Portfoliotab = () => {
         }
         `}
       </style>
-      <div className="searchbg group w-[123px] flex justify-center items-center mx-auto  rounded-full p-[1px] mt-5 focus-within:w-[260px] transition-all duration-300">
+      {/* search hidden by tailwind class */}
+      <div className="searchbg group hidden w-[123px]  justify-center items-center mx-auto  rounded-full p-[1px] mt-5 focus-within:w-[260px] transition-all duration-300">
         <button className="w-[120px] group-focus-within:w-[260px] flex items-center gap-2 bg-black rounded-full px-3 py-2 transition-all duration-300 ">
           {/* Search Icon */}
           <Search className="text-white" />

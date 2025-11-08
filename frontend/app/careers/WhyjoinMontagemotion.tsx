@@ -11,10 +11,18 @@ function WhyjoinMontagemotion() {
         title="Our Story in Motion"
       />
       <div className="lg:mt-10 mt-8 flex justify-between lg:flex-row flex-col items-center gap-7">
-        <div className="lg:w-1/2 w-full">
+        <div
+          data-aos="fade-up"
+          data-aos-delay={200}
+          className="lg:w-1/2 w-full"
+        >
           <StorySlider />
         </div>
-        <div className=" text-[#E4E8F7] flex flex-col gap-4 lg:w-1/2 w-full">
+        <div
+          data-aos="fade-up"
+          data-aos-delay={300}
+          className=" text-[#E4E8F7] flex flex-col gap-4 lg:w-1/2 w-full"
+        >
           <Gradientcard
             className="max-w-[582px] min-h-[180px] rounded-[24px] py-6 px-4 "
             borderClassName="max-w-[582px] min-h-[180px] rounded-[24px] p-[1px]"

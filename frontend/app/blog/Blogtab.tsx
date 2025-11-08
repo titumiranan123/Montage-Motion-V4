@@ -51,7 +51,7 @@ const Blogtab = () => {
     router.replace(newUrl);
   };
   return (
-    <div>
+    <div data-aos="fade-up" data-aos-delay={400}>
       <style>
         {`
         .searchbg{
@@ -59,7 +59,8 @@ const Blogtab = () => {
         }
         `}
       </style>
-      <div className="searchbg group w-[123px] flex justify-center items-center mx-auto  rounded-full p-[1px] mt-5 focus-within:w-[260px] transition-all duration-300">
+      {/* search hidden by tailwind class */}
+      <div className="searchbg group w-[123px] hidden  justify-center items-center mx-auto  rounded-full p-[1px] mt-5 focus-within:w-[260px] transition-all duration-300">
         <button className="w-[120px] group-focus-within:w-[260px] flex items-center gap-2 bg-black rounded-full px-3 py-2 transition-all duration-300 ">
           {/* Search Icon */}
           <Search className="text-white" />
@@ -73,19 +74,20 @@ const Blogtab = () => {
           />
         </button>
       </div>
-
-      <div className="flex justify-center items-center gap-6  pb-2 mt-8 min-w-[582px]  max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto ">
-        {tabConfig.map((tab) => (
-          <button
-            key={tab.href}
-            onClick={() => handleTabClick(tab.href)}
-            className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors ${
-              activeTab === tab.href ? " bg-[#2B6AB2] font-semibold" : ""
-            }`}
-          >
-            {tab.title}
-          </button>
-        ))}
+      <div className="searchbg max-w-[1002px] rounded-[56px] p-[1px] max-h-[57px] mx-auto mt-8">
+        <div className="flex  justify-center items-center gap-6  pb-2  max-w-[1002px]  max-h-[55px] rounded-[56px] py-[11px] px-3 bg-black ">
+          {tabConfig.map((tab) => (
+            <button
+              key={tab.href}
+              onClick={() => handleTabClick(tab.href)}
+              className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors ${
+                activeTab === tab.href ? " bg-[#2B6AB2] font-semibold" : ""
+              }`}
+            >
+              {tab.title}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -18,12 +18,9 @@ body {
 }
 
 .btn-color {
-  background: linear-gradient(
-    96.76deg,
-    #ffffff -19.08%,
-    #1fb5dd 48.57%,
-    #ffffff 116.22%
-  );
+  background: #2b6ab2;
+  box-shadow: 0px 0px 12px 0px #ffffff99 inset;
+  color: white !important;
 }
 .btn-secondary {
   border: 1px solid #ffffff33;

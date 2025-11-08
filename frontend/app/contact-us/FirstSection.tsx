@@ -38,7 +38,7 @@ const FirstSection = () => {
               className="w-full"
               key={idx}
               data-aos="fade-up"
-              data-aos-delay={600 + idx * 100}
+              data-aos-delay={100 + idx * 100}
             >
               <Gradientcard
                 className="contact-card flex justify-between items-center text-white max-w-[582px] w-full h-[190px] rounded-[24px] "

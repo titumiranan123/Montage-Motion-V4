@@ -6,10 +6,10 @@ export async function generateMetadata() {
 const Refundpolicy = () => {
   return (
     <div className="max-w-[996px] mx-auto px-2">
-      <h2 className="mb-[60px] mt-[120px] text-center text-[36px] text-white ">
+      <h2 className="mb-[60px] mt-[120px] font-bold poppins text-center text-[36px] text-white ">
         Refund Policy
       </h2>
-      <div className="openSans text-[#E4E8F7]">
+      <div className="opensans text-[#E4E8F7]">
         <div className="font-[400]  md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
           <p>Effective Date: 26 August, 2024</p>
           <p className="mt-4">
@@ -20,7 +20,7 @@ const Refundpolicy = () => {
         </div>
         <div className="flex flex-col gap-5 mt-5">
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               1. Eligibility for Refunds
             </h3>
             <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc openSans ms-6">
@@ -35,7 +35,7 @@ const Refundpolicy = () => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               2. Non-Refundable Services
             </h3>
             <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
@@ -45,7 +45,7 @@ const Refundpolicy = () => {
             </p>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               3. Partial Refunds
             </h3>
             <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
@@ -54,7 +54,7 @@ const Refundpolicy = () => {
             </p>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               4. Refund Process
             </h3>
             <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
@@ -67,7 +67,7 @@ const Refundpolicy = () => {
             </p>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               5. Contact Us
             </h3>
             <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">

@@ -7,15 +7,28 @@ const CareersHeader = () => {
     <div className="relative">
       <div className="flex justify-center items-center flex-col  max-w-[620px] w-full mx-auto lg:min-h-[70vh] lg:mt-14 mt-20 lg:px-0 px-4">
         <TurstedBy isCenter={true} />
-        <h2 className="text-white poppins text-[42px] md:text-[64px] font-[500] lg:text-[64px] text-center lg:leading-[81px]">
+        <h2
+          data-aos="fade-up"
+          data-aos-delay={100}
+          className="text-white poppins text-[42px] md:text-[64px] font-[500] lg:text-[64px] text-center lg:leading-[81px]"
+        >
           Your Creativity, Our Platform
         </h2>
-        <p className="text-[#C0C9EA] font-[400] text-[14px] md:text-[16px] opensans text-center mt-4 md:mt-6">
+        <p
+          data-aos="fade-up"
+          data-aos-delay={200}
+          className="text-[#C0C9EA] font-[400] text-[14px] md:text-[16px] opensans text-center mt-4 md:mt-6"
+        >
           Step into a team where your ideas matter and your skills grow. At
           Montage Motion, we empower creators to innovate, collaborate, and make
           digital content that truly stands out.
         </p>
-        <button className="md:w-[255px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500] lg:mt-10 mt-8">
+        <button
+          data-aos="fade-up"
+          data-aos-delay={300}
+          type="submit"
+          className="md:w-[255px] w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500] lg:mt-10 mt-8"
+        >
           See Open Positions
         </button>
       </div>
@@ -25,6 +38,8 @@ const CareersHeader = () => {
         className="absolute top-[10%] right-[20%] lg:block hidden"
         width={92}
         height={92}
+        data-aos="fade-in"
+        data-aos-delay={100}
       />
       <Image
         src={"/assets/career/user-2.png"}
@@ -32,6 +47,8 @@ const CareersHeader = () => {
         className="absolute top-[10%] left-[20%] lg:block hidden"
         width={92}
         height={92}
+        data-aos="fade-in"
+        data-aos-delay={150}
       />
       <Image
         src={"/assets/career/user-3.png"}
@@ -39,6 +56,8 @@ const CareersHeader = () => {
         className="absolute top-[72%] right-[12%] lg:block hidden"
         width={92}
         height={92}
+        data-aos="fade-in"
+        data-aos-delay={200}
       />
       <Image
         src={"/assets/career/user-4.png"}
@@ -46,6 +65,8 @@ const CareersHeader = () => {
         className="absolute top-[72%] left-[12%] lg:block hidden"
         width={92}
         height={92}
+        data-aos="fade-in"
+        data-aos-delay={250}
       />
       <Image
         src={"/assets/career/user-5.png"}
@@ -53,6 +74,8 @@ const CareersHeader = () => {
         className="absolute top-[80%] right-[30%] lg:block hidden"
         width={55}
         height={55}
+        data-aos="fade-in"
+        data-aos-delay={300}
       />
       <Image
         src={"/assets/career/user-6.png"}
@@ -60,6 +83,8 @@ const CareersHeader = () => {
         className="absolute top-[80%] left-[30%] lg:block hidden"
         width={55}
         height={55}
+        data-aos="fade-in"
+        data-aos-delay={350}
       />
     </div>
   );

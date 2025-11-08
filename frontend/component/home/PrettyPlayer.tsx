@@ -20,9 +20,13 @@ export default function VideoPlayer({ youtubeUrl, thumbnail }: Props) {
     type: "video",
     sources: [
       {
-        src: "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/full%20length.mp4",
+        src: youtubeUrl,
         provider: "html5",
       },
+      // {
+      //   src: "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/full%20length.mp4",
+      //   provider: "html5",
+      // },
     ],
     poster: thumbnail,
   };
@@ -133,8 +137,8 @@ export default function VideoPlayer({ youtubeUrl, thumbnail }: Props) {
           transform: translate(-50%, -50%) !important;
           background: rgba(0, 0, 0, 0.2) !important;
           backdrop-filter: blur(8px);
-          width: 60px !important;
-          height: 60px !important;
+          width: 68px !important;
+          height: 48px !important;
           border-radius: 12px !important;
           display: flex !important;
           align-items: center !important;
@@ -145,7 +149,7 @@ export default function VideoPlayer({ youtubeUrl, thumbnail }: Props) {
         }
 
         .plyr--video .plyr__control--overlaid:hover {
-          background: rgba(255, 0, 0, 0.9) !important;
+          background: #2b6ab2 !important;
           transform: translate(-50%, -50%) scale(1.1) !important;
         }
 

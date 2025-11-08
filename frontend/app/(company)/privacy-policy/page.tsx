@@ -8,12 +8,12 @@ const Privacypolicy = () => {
     <div className="max-w-[996px] mx-auto px-2">
       <h2
         style={{ textTransform: "capitalize" }}
-        className="lg:mt-30 capitalize mb-4 mt-12 text-white "
+        className="lg:mt-30 capitalize mb-4 mt-12 text-white poppins font-bold text-3xl "
       >
         Privacy Policy
       </h2>
-      <div className="openSans text-[#E4E8F7]">
-        <div className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+      <div className="opensans text-[#E4E8F7]">
+        <div className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
           <p>Effective Date: 26 August, 2024</p>
           <p className="mt-6">
             Montage Motion (&quot;we&quot; ,&quot;our&quot; , &quot;us&quot;) is
@@ -33,11 +33,11 @@ const Privacypolicy = () => {
         </div>
         <div className="flex flex-col gap-5 mt-5">
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               1. Information We Collect
             </h3>
 
-            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc openSans ms-6">
+            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc opensans ms-6">
               <li>
                 Personal Information: We may collect personal information such
                 as your name, email address, phone number, billing information,
@@ -52,14 +52,14 @@ const Privacypolicy = () => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               2. How We Share Your Information
             </h3>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               We may use the information we collect for various purposes,
               including :
             </p>
-            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc openSans ms-6">
+            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc opensans ms-6">
               <li>To provide , operate, and maintain our services.</li>
               <li>
                 To process and complete transactions,and send related
@@ -77,15 +77,15 @@ const Privacypolicy = () => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               3. How We Share Your Information
             </h3>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               We do not sell, trade, or otherwise transfer your personal
               information to third parties without your consent, except as
               described below:
             </p>
-            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc openSans ms-6">
+            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc opensans ms-6">
               <li>
                 Service Providers: We may share your information with
                 third-party service providers who perform services on our
@@ -105,10 +105,10 @@ const Privacypolicy = () => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               4. Data Security
             </h3>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               We implement appropriate technical and organizational measures to
               protect your personal information from unauthorized access,
               alteration, disclosure, or destruction. However, no method of
@@ -117,14 +117,14 @@ const Privacypolicy = () => {
             </p>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               5. Your Rights
             </h3>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               Depending on your location , you may have certain rights regarding
               your personal information , including :
             </p>
-            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc openSans ms-6">
+            <ul className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] list-disc opensans ms-6">
               <li>
                 The right to access, update, or delete the information we have
                 about you.
@@ -138,17 +138,17 @@ const Privacypolicy = () => {
                 your consent to process your personal information.
               </li>
             </ul>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               To exercise these rights, please contact us at
               imomofficial@gmail.com
             </p>
           </div>
 
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               6. Third-Party Links
             </h3>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               Our website may contain links to third-party websites or services
               that are not operated by us. We are not responsible for the
               privacy practices of these third-party sites. We encourage you to
@@ -156,10 +156,10 @@ const Privacypolicy = () => {
             </p>
           </div>
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               7. Changes to This Privacy Policy
             </h3>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               We may update this Privacy Policy from time to time. We will
               notify you of any changes by posting the new Privacy Policy on our
               website. You are advised to review this Privacy Policy
@@ -168,10 +168,10 @@ const Privacypolicy = () => {
           </div>
 
           <div>
-            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  premiumfont">
+            <h3 className="mb-2 font-[700] md:text-[24px] md:leading-[33.6px]  poppins">
               8. Contact Us
             </h3>
-            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] openSans">
+            <p className="font-[400] md:text-[16px] md:leading-[22.4px] text-[14px] leading-[20px] opensans">
               {" "}
               If you have any questions or concerns about this Privacy Policy
               periodically for any changes.

@@ -9,12 +9,14 @@ export async function generateMetadata() {
 }
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
   const { search, cat } = await searchParams;
+  console.log(cat);
   const res = await fetch(
-    `https://api-v2.montagemotion.com/api/works/website?type=${
+    `${process.env.NEXT_PUBLIC_API_URL}/api/works/website?type=${
       cat ? cat : "shorts"
     }&search=${search}`
   );
   const data = await res.json();
+  console.log(data);
   return (
     <div className=" lg:mt-16 mt-10">
       <Heading
@@ -22,10 +24,10 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
         title="Creativity That Converts"
         tag="Our Portfolio"
       />
-      <Portfoliotab />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sectionGap container">
-        {data?.data?.map((work: any) => (
-          <div className="">
+      <Portfoliotab tab={cat} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 container">
+        {data?.data?.map((work: any, idx: number) => (
+          <div data-aos="fade-up" data-aos-delay={100 + idx * 100} className="">
             <VideoPlayer
               thumbnail={work?.thumbnail}
               youtubeUrl={work?.video_link}
