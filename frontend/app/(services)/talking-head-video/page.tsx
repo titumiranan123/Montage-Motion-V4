@@ -10,37 +10,49 @@ import TalkingHeadPlanPurpose from "./TalkingHeadPlanPurpose";
 import TestimonialSection from "@/component/share/Testimonial";
 import TalkingHeadPricing from "./TalkingHeadPricing";
 import { getPageSEO } from "@/component/share/getPageSEO";
+import PodcastPricing from "../podcast-editing-service/PodcastPricing";
+import WhyChooseUs from "@/component/home/WhyChooseUs";
+import ServiceSections from "@/component/home/ServiceSections";
 export async function generateMetadata() {
   return await getPageSEO("talking");
 }
+const getPageData = async () => {
+  const [seoRes, mainRes] = await Promise.all([
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/talkinghead`, {
+      cache: "no-store",
+    }),
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=talkinghead&&table=services,pricing,process,whychooseus`,
+      {
+        cache: "no-store",
+      }
+    ),
+  ]);
+  const seoData = await seoRes.json();
+  const data = await mainRes.json();
+  return { seo: seoData.data, main: data.data };
+};
 const TalkingHeadEditing = async () => {
-  const res = await fetch(
-    "https://api-v2.montagemotion.com/api/website/data?type=main",
-    { cache: "no-store" } // ensures fresh data on every request
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  const data = await res.json();
+  const { main } = await getPageData();
+  // console.log(main);
   return (
     <div>
-      <TalkingHeader />
-      <TalkingHeadWork />
-      <TalkingService />
-      <TalkingHeadPricing />
+      <TalkingHeader data={main?.header} />
+      <TalkingHeadWork data={main?.works} />
+      <ServiceSections data={main?.services} />
+      <PodcastPricing pricing={main.pricing} />
       {/* common */}
-      {data?.data?.testimonial.length > 0 && (
+      {main?.testimonial.length > 0 && (
         <TestimonialSection
           title="What Our Clients Say"
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-          data={data?.data?.testimonial}
+          data={main?.testimonial}
         />
       )}
-      <TalkingHeadprocess />
+      {/* <TalkingHeadprocess />
 
-      <TalkingHeadPlanPurpose />
-      <TalkingWhychooseus />
+      <TalkingHeadPlanPurpose /> */}
+      <WhyChooseUs data={main?.whychooseus} />
       <FaqSection />
       <ContactSection />
     </div>

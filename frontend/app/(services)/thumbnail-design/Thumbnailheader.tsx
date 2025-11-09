@@ -1,11 +1,12 @@
 import React from "react";
-import VerticalMarqueeSlider from "./VerticalMarqueeSlider";
-import TurstedBy from "@/component/home/TurstedBy";
 
-const ShortsHeader = ({ data }: { data: any }) => {
-  // console.log(data.media);
+import TurstedBy from "@/component/home/TurstedBy";
+import Verticalheader from "./Verticalheader";
+
+const Thumbnailheader = ({ data }: { data: any }) => {
+  //   console.log(data.media);
   return (
-    <div className="flex lg:flex-row flex-col-reverse lg:justify-between items-center   container px-[60px] overflow-hidden relative lg:h-[564px] h-[780px] lg:gap-4 gap-4 ">
+    <div className="flex lg:flex-row flex-col-reverse lg:justify-between items-center   container px-[60px] overflow-hidden relative md:h-[70vh] h-screen lg:gap-4 gap-4 ">
       <div className="flex z-20 justify-center items-start  flex-col lg:w-[50%] lg:mt-0 mt-10">
         <TurstedBy />
         <h1 className="lg:text-[72px] lg:leading-[90px] text-[48px] leading-[56px] font-[500] text-white poppins md:text-left text-center lg:mt-4 mt-3">
@@ -28,11 +29,10 @@ const ShortsHeader = ({ data }: { data: any }) => {
           </button>
         </div>
       </div>
-      <div className="lg:w-[50%] w-full ">
-        <VerticalMarqueeSlider data={data?.media} />
+      <div className="lg:w-[50%] w-full lg:h-screen h-[900px] ">
+        <Verticalheader data={data?.media} />
       </div>
     </div>
   );
 };
-
-export default ShortsHeader;
+export default Thumbnailheader;

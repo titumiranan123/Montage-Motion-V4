@@ -10,7 +10,7 @@ export async function generateMetadata() {
 const Careers = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobpost`);
   const data = await res.json();
-  console.log();
+  // console.log();
   return (
     <div>
       <CareersHeader />

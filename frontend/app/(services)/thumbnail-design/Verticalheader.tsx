@@ -73,7 +73,7 @@ const VerticalMarqueeColumn: React.FC<{
   );
 };
 
-const VerticalMarqueeSlider: React.FC<any> = ({ data, speed = 30 }) => {
+const Verticalheader: React.FC<any> = ({ data, speed = 30 }) => {
   if (!data || data.length === 0) {
     return null;
   }
@@ -121,16 +121,6 @@ const VerticalMarqueeSlider: React.FC<any> = ({ data, speed = 30 }) => {
           gradientHeight={150}
           gradientColor="rgba(0, 0, 0, 1)"
         />
-
-        {/* Third Column - Up */}
-        <VerticalMarqueeColumn
-          data={data}
-          direction="up"
-          speed={speed}
-          showGradient={true}
-          gradientHeight={150}
-          gradientColor="rgba(0, 0, 0, 0.9)"
-        />
       </div>
 
       <style jsx>{`
@@ -156,4 +146,4 @@ const VerticalMarqueeSlider: React.FC<any> = ({ data, speed = 30 }) => {
   );
 };
 
-export default VerticalMarqueeSlider;
+export default Verticalheader;

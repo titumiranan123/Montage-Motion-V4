@@ -87,7 +87,7 @@ const HomePage = async ({ searchParams }: { searchParams: any }) => {
   } catch (err) {
     console.warn("Invalid schema JSON:", err);
   }
-  console.log(data.whychooseus);
+  // console.log(data.whychooseus);
   return (
     <div className="">
       {schema && (

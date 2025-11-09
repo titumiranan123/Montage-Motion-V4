@@ -10,7 +10,26 @@ const MobileMenu = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const path = usePathname();
-  const { data: servicesData } = useService();
+  const servicesData = [
+    {
+      href: "/podcast-editing-service",
+      label: "Podcast Video Editing",
+    },
+
+    {
+      href: "/short-form-video-editing",
+      label: "Short-Form & Reels Editing",
+    },
+    {
+      href: "/talking-head-video",
+      label: "Talking Head Video Editing",
+    },
+
+    {
+      href: "/saas-explainer-video",
+      label: "Video Editing Service",
+    },
+  ];
   const isServicesActive = servicesData?.some((service: any) =>
     path.startsWith(service.href)
   );
@@ -112,7 +131,7 @@ const MobileMenu = () => {
                       : "text-gray-200"
                   }`}
                 >
-                  {service.title}
+                  {service.label}
                 </Link>
               ))}
             </div>

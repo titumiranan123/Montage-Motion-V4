@@ -3,7 +3,7 @@ import Heading from "../share/Headering";
 import AIProcess from "../share/Timeline";
 
 const OurProcess = ({ process }: { process: any }) => {
-  console.log(process);
+  // console.log(process);
   return (
     <div>
       <Heading

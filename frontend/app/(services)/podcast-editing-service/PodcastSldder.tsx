@@ -32,7 +32,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
 
   const EASE = "power4.out";
   const DUR = 1.0;
-  const len = data.length;
+  const len = data?.length ?? 0;
 
   const layoutRef = useRef<Layout>({
     baseW: 688,

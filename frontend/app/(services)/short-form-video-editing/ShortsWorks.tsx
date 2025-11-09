@@ -1,11 +1,9 @@
-"use client";
+import ShortVideoPlayer from "@/component/home/ShortVideoPlayer";
 import Heading from "@/component/share/Headering";
-import useWorks from "@/hook/useWorks";
-import Image from "next/image";
+
 import React from "react";
-import ReactPlayer from "react-player";
-const ShortsWorks = () => {
-  const { data, isLoading } = useWorks("shorts");
+
+const ShortsWorks = ({ data }: { data: any }) => {
   return (
     <div className="container sectionGap">
       <Heading
@@ -19,18 +17,24 @@ const ShortsWorks = () => {
             key={idx}
             className="md:w-[384px] md:h-[683px] w-[398px] h-[707px]"
           >
-            <ReactPlayer
-              light={
-                <Image
-                  src={dt?.thumbnail}
-                  alt={dt?.title}
-                  width={384}
-                  height={683}
-                />
-              }
-              playIcon={""}
-              src={dt?.video_link}
-            />
+            <div
+              data-aos="fade-up"
+              data-aos-delay={200 + idx * 100}
+              key={idx}
+              className="relative  overflow-hidden"
+            >
+              {/* Type Label */}
+              {dt.type && (
+                <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2 text-white bg-[#00000066]">
+                  {dt.title}
+                </p>
+              )}
+
+              <ShortVideoPlayer
+                videoUrl={dt.video_link}
+                thumbnail={dt.thumbnail}
+              />
+            </div>
           </div>
         ))}
       </div>

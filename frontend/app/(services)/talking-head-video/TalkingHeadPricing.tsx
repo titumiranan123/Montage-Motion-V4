@@ -58,7 +58,7 @@ const TalkingHeadPricing = () => {
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 md:mt-10">
         {pricingInfo.plans.map((price, idx) => (
-          <PricingCard price={price} key={idx} />
+          <PricingCard price={price} key={idx} idx={idx} />
         ))}
       </div>
     </div>

@@ -81,7 +81,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const PodcastEditing = async () => {
   const { main } = await getPageData();
-  console.log(main.whychooseus);
+
   return (
     <div className="lg:mt-20 mt-10">
       <PodacstHeader data={main.header} />

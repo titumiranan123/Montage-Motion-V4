@@ -39,13 +39,13 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
   return (
     <div className="space-y-6 lg:mt-16 mt-8">
       {/* Tabs Navigation */}
-      <div className="searchbg max-w-[682px] p-[1px] rounded-[36px] ">
+      <div className="searchbg max-w-[522px] h-[57px] mx-auto p-[1px] rounded-[36px] ">
         <div
           role="tablist"
           aria-label="Content categories"
           className="relative flex justify-start  lg:justify-center 
           bg-black items-center 
-          w-full px-2 overflow-x-auto scrollbar-hide "
+          w-full px-2 overflow-x-auto scrollbar-hide h-[55px] rounded-[36px] "
           onKeyDown={handleKeyDown}
         >
           {tabs.map((tab, index) => (

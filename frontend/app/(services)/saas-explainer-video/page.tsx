@@ -34,7 +34,7 @@ const getPageData = async () => {
 };
 const SaaSExplainer = async () => {
   const { main } = await getPageData();
-  console.log(main.works);
+  // console.log(main.works);
   return (
     <div>
       <SaasHeader data={main?.header} />

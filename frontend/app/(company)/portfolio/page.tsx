@@ -11,14 +11,14 @@ export async function generateMetadata() {
 }
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
   const { search, cat } = await searchParams;
-  console.log(cat);
+  // console.log(cat);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/works/website?type=${
       cat ? cat : "shorts"
     }&search=${search}`
   );
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
   return (
     <div className=" lg:mt-16 mt-10">
       <Heading

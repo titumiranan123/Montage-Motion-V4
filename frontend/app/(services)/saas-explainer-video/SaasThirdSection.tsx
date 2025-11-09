@@ -9,11 +9,12 @@ const SaasThirdSection = () => {
         data-aos="fade-up"
         data-aos-delay={200}
         src={"/assets/sass/saascustomer.png"}
+        className="md:w-1/2 w-full"
         alt="sass"
         width={560}
         height={409}
       />
-      <div>
+      <div className="md:w-1/2 w-full">
         <h2
           data-aos="fade-up"
           data-aos-delay={300}

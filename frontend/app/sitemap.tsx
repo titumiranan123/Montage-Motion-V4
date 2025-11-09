@@ -4,7 +4,7 @@ import { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sitemap`);
   const xmlText = await res.text();
-  console.log(xmlText);
+  // console.log(xmlText);
   const parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: "",
