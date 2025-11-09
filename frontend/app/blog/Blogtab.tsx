@@ -75,12 +75,12 @@ const Blogtab = () => {
         </button>
       </div>
       <div className="searchbg max-w-[1002px] rounded-[56px] p-[1px] max-h-[57px] mx-auto mt-8">
-        <div className="flex  justify-center items-center gap-6  pb-2  max-w-[1002px]  max-h-[55px] rounded-[56px] py-[11px] px-3 bg-black ">
+        <div className="flex  justify-start lg:justify-center items-center gap-6  pb-2  max-w-[1002px]  max-h-[55px] rounded-[56px] py-[11px] px-3 bg-black flex-nowrap overflow-x-scroll scrollbar-hide ">
           {tabConfig.map((tab) => (
             <button
               key={tab.href}
               onClick={() => handleTabClick(tab.href)}
-              className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors ${
+              className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors whitespace-nowrap ${
                 activeTab === tab.href ? " bg-[#2B6AB2] font-semibold" : ""
               }`}
             >

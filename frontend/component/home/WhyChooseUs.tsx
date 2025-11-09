@@ -74,7 +74,7 @@ const WhyChooseUs = ({ data }: { data: any }) => {
                   height={35}
                   priority
                 />
-                <p className="text-[22px] leading-[100%] md:text-[24px] font-semibold poppins text-[#E4E8F7]">
+                <p className="text-[22px] leading-[100%] md:text-[24px] font-semibold poppins text-[#E4E8F7 mt-2">
                   {dt?.title}
                 </p>
                 <p className="text-[14px] md:text-[16px] font-[400] opensans text-[#E4E8F7] leading-[140%]">

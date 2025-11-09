@@ -74,16 +74,18 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
               </div>
             );
           } else {
-            <div
-              data-aos="fade-up"
-              data-aos-delay={100 + idx * 100}
-              className=""
-            >
-              <VideoPlayer
-                thumbnail={work?.thumbnail}
-                youtubeUrl={work?.video_link}
-              />
-            </div>;
+            return (
+              <div
+                data-aos="fade-up"
+                data-aos-delay={100 + idx * 100}
+                className=""
+              >
+                <VideoPlayer
+                  thumbnail={work?.thumbnail}
+                  youtubeUrl={work?.video_link}
+                />
+              </div>
+            );
           }
         })}
       </div>

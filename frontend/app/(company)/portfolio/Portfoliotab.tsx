@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 const Portfoliotab = ({ tab }: { tab: string }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentTab = searchParams.get("cat") || tab;
+  const currentTab = searchParams.get("cat") || tab ? tab : "talkinghead";
   const [activeTab, setActiveTab] = useState(currentTab);
   const handleTabClick = (href: string) => {
     setActiveTab(href);
@@ -48,7 +48,7 @@ const Portfoliotab = ({ tab }: { tab: string }) => {
   };
 
   return (
-    <div data-aos="fade-up" data-aos-delay={400}>
+    <div data-aos="fade-up" data-aos-delay={400} className="px-3">
       <style>
         {`
         .searchbg{
@@ -71,14 +71,14 @@ const Portfoliotab = ({ tab }: { tab: string }) => {
           />
         </button>
       </div>
-      <div className="searchbg group max-w-[814px] w-full h-full flex justify-center items-center mx-auto  rounded-[57px] p-[1px] mt-5 transition-all duration-300">
-        <div className="bg-black max-w-[814px] w-full rounded-[57px] h-full py-2 px-4">
+      <div className="searchbg group  max-w-[814px] h-[59px] flex justify-center items-center mx-auto rounded-[57px] p-[1px] mt-5 transition-all duration-300">
+        <div className="bg-black rounded-[57px]  h-[57px] py-2 px-6 overflow-x-auto flex flex-nowrap scrollbar-hide">
           {tabConfig.map((tab) => (
             <button
               key={tab.href}
               onClick={() => handleTabClick(tab.href)}
-              className={`py-2 px-3 text-white opensans font-[400] text-[14px]  rounded-[36px] transition-colors ${
-                activeTab === tab.href ? " bg-[#2B6AB2] font-semibold" : ""
+              className={`py-2 px-3 text-white opensans font-[400] text-[14px] rounded-[36px] transition-colors whitespace-nowrap ${
+                activeTab === tab.href ? "bg-[#2B6AB2] font-semibold" : ""
               }`}
             >
               {tab.title}
