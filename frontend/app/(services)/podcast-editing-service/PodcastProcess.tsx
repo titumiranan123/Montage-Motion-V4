@@ -18,6 +18,8 @@ const PodcastProcess = ({ data }: { data: any }) => {
           alt="process "
           width={420}
           height={542}
+          data-aos="fade-right"
+          data-aos-delay={200}
           className="max-w-[420px] w-full max-h-[542px] h-full"
           priority
         />

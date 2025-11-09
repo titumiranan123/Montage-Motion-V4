@@ -1,5 +1,4 @@
 import FaqSection from "@/component/home/FaqSection";
-import WhyChooseUs from "@/component/home/WhyChooseUs";
 import ContactSection from "@/component/share/ContactSection";
 import React from "react";
 import PodacastMarquee from "./PodacastMarquee";
@@ -13,6 +12,7 @@ import PodcastPlanwithpurpose from "./PodcastPlanwithpurpose";
 import TestimonialSection from "@/component/share/Testimonial";
 import { Metadata } from "next";
 import ServiceSections from "@/component/home/ServiceSections";
+import WhyChooseUs from "@/component/home/WhyChooseUs";
 const getPageData = async () => {
   const [seoRes, mainRes] = await Promise.all([
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/podcast`, {
@@ -81,6 +81,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const PodcastEditing = async () => {
   const { main } = await getPageData();
+  console.log(main.whychooseus);
   return (
     <div className="lg:mt-20 mt-10">
       <PodacstHeader data={main.header} />
@@ -100,7 +101,7 @@ const PodcastEditing = async () => {
       <PodcastProcess data={main.process} />
       <PodcastPlanwithpurpose />
       <PodcastWhychooseus />
-      {/* <WhyChooseUs /> */}
+      <WhyChooseUs data={main?.whychooseus} />
       <FaqSection />
       <ContactSection />
     </div>

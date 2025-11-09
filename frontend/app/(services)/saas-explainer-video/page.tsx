@@ -11,36 +11,48 @@ import WhyChooseUs from "@/component/home/WhyChooseUs";
 import TestimonialSection from "@/component/share/Testimonial";
 import WhySassVideo from "./WhySassVideo";
 import { getPageSEO } from "@/component/share/getPageSEO";
+import ServiceSections from "@/component/home/ServiceSections";
+import PodcastProcess from "../podcast-editing-service/PodcastProcess";
 export async function generateMetadata() {
   return await getPageSEO("saas");
 }
+const getPageData = async () => {
+  const [seoRes, mainRes] = await Promise.all([
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/saas`, {
+      cache: "no-store",
+    }),
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=saas&&table=services,pricing,process,whychooseus,brand`,
+      {
+        cache: "no-store",
+      }
+    ),
+  ]);
+  const seoData = await seoRes.json();
+  const data = await mainRes.json();
+  return { seo: seoData.data, main: data.data };
+};
 const SaaSExplainer = async () => {
-  const res = await fetch(
-    "https://api-v2.montagemotion.com/api/website/data?type=main",
-    { cache: "no-store" } // ensures fresh data on every request
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  const data = await res.json();
+  const { main } = await getPageData();
+  console.log(main.works);
   return (
     <div>
-      <SaasHeader />
+      <SaasHeader data={main?.header} />
       <SaasMarquee />
+      {/* <PartnersSection data={main?.brand} /> */}
       <SaasThirdSection />
-      <SaasWork />
-      <SaasService />
-      <SaasProcess />
+      <SaasWork data={main?.works} />
+      <ServiceSections data={main?.services} />
+      <PodcastProcess data={main.process} />
       <WhySassVideo />
-      {data?.data?.testimonial.length > 0 && (
+      {main?.testimonial.length > 0 && (
         <TestimonialSection
           title="What Our Clients Say"
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-          data={data?.data?.testimonial}
+          data={main?.testimonial}
         />
       )}
-      <WhyChooseUs />
+      <WhyChooseUs data={main?.whychooseus} />
       <FaqSection />
       <FirstSection />
     </div>

@@ -2,29 +2,16 @@
 import ReactPlayer from "react-player";
 import Image from "next/image";
 import React from "react";
+import VideoPlayer from "@/component/home/PrettyPlayer";
 
-const Headerpopup = () => {
+const Headerpopup = ({ data }: any) => {
   return (
     <>
       <div>
         <div className="relative max-w-[560px] mx-auto max-h-[315px] rounded-[31px] w-full h-full aspect-video bg-black overflow-hidden">
-          <ReactPlayer
-            src={"https://youtu.be/0andrjUqeQk?si=7M59WgGye8hjOQQz"}
-            playing={true}
-            light={"/assets/herothumbnail.png"}
-            playIcon={
-              <Image
-                src="/assets/icon/playsmall.png"
-                width={80}
-                height={80}
-                alt="Play"
-                className="z-10"
-                priority
-              />
-            }
-            width="100%"
-            height="100%"
-            controls
+          <VideoPlayer
+            youtubeUrl={data?.video_url}
+            thumbnail={data?.image_url}
           />
 
           {/* Fallback for when JS is disabled */}
