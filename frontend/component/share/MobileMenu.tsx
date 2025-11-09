@@ -128,36 +128,43 @@ const MobileMenu = () => {
             Portfolio
           </Link>
           <Link
-            href="/recourses"
+            href="/blog"
             onClick={toggleMobileMenu}
             className={`poppins text-[24px] border-white/10 ${
-              path === "/start-campaign"
-                ? "text-white font-bold"
-                : "text-gray-200"
+              path === "/blog" ? "text-white font-bold" : "text-gray-200"
             }`}
           >
-            Recourses
+            Blogs
           </Link>
           <Link
-            href="/about"
+            href="/careers"
             onClick={toggleMobileMenu}
             className={`poppins text-[24px] border-white/10 ${
-              path === "/about" ? "text-white font-bold" : "text-gray-200"
+              path === "/careers" ? "text-white font-bold" : "text-gray-200"
+            }`}
+          >
+            Careers
+          </Link>
+          <Link
+            href="/about-us"
+            onClick={toggleMobileMenu}
+            className={`poppins text-[24px] border-white/10 ${
+              path === "/about-us" ? "text-white font-bold" : "text-gray-200"
             }`}
           >
             About
           </Link>
           <Link
-            href="/contact"
+            href="/contact-us"
             onClick={toggleMobileMenu}
             className={`poppins text-[24px] border-white/10 ${
-              path === "/contact" ? "text-white font-bold" : "text-gray-200"
+              path === "/contact-us" ? "text-white font-bold" : "text-gray-200"
             }`}
           >
             Contact
           </Link>
 
-          <button className="w-full text-[16px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex  justify-center items-center poppins mt-8 font-[500]">
+          <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] lg:flex hidden justify-center items-center text-[16px] font-[500] poppins cursor-pointer hover:scale-105 hover:-rotate-3 transition-all duration-300 ease-in-out ">
             Start a project
           </button>
         </div>

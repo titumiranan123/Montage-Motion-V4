@@ -14,16 +14,10 @@ const Portfoliotab = ({ tab }: { tab: string }) => {
     const newUrl = `?cat=${href}`;
     router.replace(newUrl);
   };
-  // useEffect(() => {
-  //   router.replace(`?cat=${activeTab}`);
-  // }, [activeTab]);
-  // | "main"
-  //     | "shorts"
-  //     | "talking"
-  //     | "podcast"
-  //     | "graphic"
-  //     | "advertising"
-  //     | "website";
+  useEffect(() => {
+    router.replace(`?cat=${activeTab}`);
+  }, [activeTab]);
+
   const tabConfig = [
     {
       title: "Talking Video Editing",
@@ -52,9 +46,7 @@ const Portfoliotab = ({ tab }: { tab: string }) => {
     const newUrl = `?cat=${activeTab}&search=${encodeURIComponent(value)}`;
     router.replace(newUrl);
   };
-  useEffect(() => {
-    router.push(`?cat=talkinghead`);
-  }, []);
+
   return (
     <div data-aos="fade-up" data-aos-delay={400}>
       <style>

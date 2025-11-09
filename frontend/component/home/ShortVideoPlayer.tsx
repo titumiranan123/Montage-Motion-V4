@@ -174,17 +174,17 @@ export default function ShortVideoPlayer({ videoUrl, thumbnail }: Props) {
           top: 50% !important;
           left: 50% !important;
           transform: translate(-50%, -50%) !important;
-          background: rgba(0, 0, 0, 0.3) !important;
-          backdrop-filter: blur(12px);
-          width: 80px !important;
-          height: 80px !important;
-          border-radius: 50% !important;
+          background: rgba(0, 0, 0, 0.2) !important;
+          backdrop-filter: blur(8px);
+          width: 68px !important;
+          height: 48px !important;
+          border-radius: 12px !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
           padding: 0 !important;
           transition: all 0.3s ease !important;
-          border: 3px solid rgba(255, 255, 255, 0.2) !important;
+          border: none !important;
         }
 
         .short-video-container .plyr--video .plyr__control--overlaid:hover {
@@ -196,9 +196,12 @@ export default function ShortVideoPlayer({ videoUrl, thumbnail }: Props) {
         .short-video-container .plyr__control--overlaid svg {
           display: block !important;
           margin: 0 auto !important;
-          margin-left: 4px !important;
-          width: 32px !important;
-          height: 32px !important;
+          // margin-left: 22px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 22px !important;
+          height: 22px !important;
           fill: white !important;
         }
 

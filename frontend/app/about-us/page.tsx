@@ -8,33 +8,44 @@ import FirstSection from "../contact-us/FirstSection";
 import OurTeam from "./OurTeam";
 import OurStory from "./OurStory";
 import { getPageSEO } from "@/component/share/getPageSEO";
+
+// Metadata for SEO
 export async function generateMetadata() {
   return await getPageSEO("about");
 }
-const AboutUs = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=about&&table=brand`,
-    { cache: "no-store" } // ensures fresh data on every request
-  );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+const AboutUs = async () => {
+  let data: any = null;
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=about&table=brand`,
+      { cache: "no-store" } // ensures fresh data on every request
+    );
+
+    if (!res.ok) {
+      console.error("Failed to fetch About data:", res.statusText);
+    } else {
+      data = await res.json();
+    }
+  } catch (error) {
+    console.error("Error fetching About data:", error);
   }
 
-  const data = await res.json();
-  console.log(data.data);
   return (
     <div className="">
-      <HeaderService mainIntro={data?.data?.header} />
+      <HeaderService mainIntro={data?.data?.header || null} />
       <Brand />
       <OurMission />
-      {data?.data?.testimonial.length > 0 && (
+
+      {data?.data?.testimonial?.length > 0 && (
         <TestimonialSection
           title="What Our Clients Say"
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
           data={data?.data?.testimonial}
         />
       )}
+
       <OurStory />
       <OurTeam />
       <InsideMontage />
