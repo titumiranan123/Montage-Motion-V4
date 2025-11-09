@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div
       style={{ zIndex: 9999 }}
-      className="py-2 mt-6 md:mt-8 bg-[#080B0C63]/39 rounded-[24px] container  flex justify-between items-center sticky top-4 backdrop-blur-2xl"
+      className="py-2 mt-6 md:mt-8 bg-[#080B0C63]/39 rounded-[24px] container  flex justify-between items-center sticky top-4 backdrop-blur-[21px] transition-all duration-300 ease-in-out"
     >
       <Link
         className="block hover:scale-105 transition-all duration-300"
@@ -33,7 +33,7 @@ const Navbar = () => {
         <CustomLink className="" href="/contact-us" title="contact" />
       </div>
 
-      <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] lg:flex hidden justify-center items-center text-[16px] font-[500] poppins cursor-pointer">
+      <button className="w-[155px] h-[48px] btn-color text-black py-4 px-5 rounded-[16px] lg:flex hidden justify-center items-center text-[16px] font-[500] poppins cursor-pointer hover:scale-105 hover:-rotate-3 transition-all duration-300 ease-in-out ">
         Start a project
       </button>
       <div className="flex lg:hidden">

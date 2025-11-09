@@ -22,7 +22,7 @@ const Headervideopop: React.FC<{ thumbnail: string; link: string }> = ({
       {/* Thumbnail Section */}
       <div className="md:max-w-[465px] max-w-[311px] max-h-[227px] md:max-h-[340px] w-full h-full state-box">
         <CardContainer className="inter-var">
-          <CardBody className="w-[445px] h-[260px] relative group/card border-black/[0.1] rounded-xl border">
+          <CardBody className="md:w-[445px] md:h-[260px] w-full h-full relative group/card border-black/[0.1] rounded-xl border">
             <CardItem
               translateZ="100"
               rotateX={20}

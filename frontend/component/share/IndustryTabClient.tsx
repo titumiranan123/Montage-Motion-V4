@@ -34,38 +34,35 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
     [tabs.length]
   );
 
-  const underlineStyle = {
-    left: `${(activeTab * 100) / tabs.length}%`,
-    width: `${100 / tabs.length}%`,
-  };
-
   const activeTabData = tabs[activeTab];
 
   return (
     <div className="space-y-6 lg:mt-16 mt-8">
       {/* Tabs Navigation */}
-      <div
-        role="tablist"
-        aria-label="Content categories"
-        className="relative flex justify-center items-center ]  max-w-[680px] mx-auto "
-        onKeyDown={handleKeyDown}
-      >
-        {tabs.map((tab, index) => (
-          <button
-            key={tab.id}
-            role="tab"
-            data-aos="fade-up"
-            data-aos-delay={100 + index * 100}
-            aria-selected={activeTab === index}
-            aria-controls={`${labelId}-${tab.id}-panel`}
-            onClick={() => setActiveTab(index)}
-            className={`relative z-10 max-w-[170px] w-full mx-auto rounded-[36px] px-3 md:px-4 py-2 text-sm font-medium transition-opacity text-white md:py-3 md:text-base ${
-              activeTab === index ? "bg-[#2B6AB2] " : ""
-            }`}
-          >
-            {tab.title}
-          </button>
-        ))}
+      <div className="searchbg max-w-[682px] p-[1px] rounded-[36px] ">
+        <div
+          role="tablist"
+          aria-label="Content categories"
+          className="relative flex justify-start  lg:justify-center 
+          bg-black items-center 
+          w-full px-2 overflow-x-auto scrollbar-hide "
+          onKeyDown={handleKeyDown}
+        >
+          {tabs.map((tab, index) => (
+            <button
+              key={tab.id}
+              role="tab"
+              aria-selected={activeTab === index}
+              aria-controls={`${labelId}-${tab.id}-panel`}
+              onClick={() => setActiveTab(index)}
+              className={`relative z-10 whitespace-nowrap rounded-[36px] px-3 md:px-4 py-2 text-sm font-medium transition-opacity text-white md:py-3 md:text-base ${
+                activeTab === index ? "bg-[#2B6AB2]" : ""
+              }`}
+            >
+              {tab.title}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Active Tab Content */}

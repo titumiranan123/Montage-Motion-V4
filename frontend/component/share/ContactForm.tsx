@@ -33,7 +33,8 @@ const ContactForm: React.FC = () => {
     try {
       const res = await api_url.post("/api/contacts", formData);
       if (res.status === 201 || res.status === 200) {
-        toast.success("Message Send");
+        toast.success("Message sent successfully!");
+
         setFormData({
           name: "",
           email: "",
@@ -50,7 +51,7 @@ const ContactForm: React.FC = () => {
 
   return (
     <form
-      className="w-full flex flex-col gap-4 justify-center items-center md:p-6 p-4 "
+      className="w-full flex flex-col gap-4 justify-center items-center md:p-6  "
       onSubmit={handleSubmit}
     >
       <div className="text-white w-full flex flex-col gap-2 translate-all duration-300 ease-in-out hover:scale-[103%]">

@@ -52,6 +52,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
       <div className="w-full mx-auto mt-10 lg:mt-16 ">
         <Marquee
           gradientColor="#000"
+          gradientWidth={100}
           gradient
           pauseOnHover
           className="overflow-hidden"
@@ -73,6 +74,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
         <Marquee
           className=" mt-5 overflow-hidden h-[320px]"
           gradientColor="#000"
+          gradientWidth={100}
           gradient
           pauseOnHover
         >

@@ -7,8 +7,8 @@ const HomeProjectTab = () => {
   const searchParams = useSearchParams();
 
   const tabConfig = [
-    { id: "fullform", label: "Full-form Video " },
-    { id: "shorts", label: "Shorts/Reel " },
+    { id: "fullform", label: "Full-form Video" },
+    { id: "shorts", label: "Shorts/Reel" },
     { id: "thumbnail", label: "Thumbnail Design" },
     { id: "talkinghead", label: "Talking Head" },
     { id: "podcast", label: "Podcast" },
@@ -36,12 +36,20 @@ const HomeProjectTab = () => {
 
   return (
     <div className="searchbg p-[1px] max-w-[725px] max-h-[59px] rounded-[56px] mx-auto mt-8">
-      <div className="flex lg:gap-6 pb-2  w-full justify-center items-center max-h-[57px] rounded-[56px] py-[11px] px-3 bg-black mx-auto tabBorder">
-        {tabConfig.map((tab, idx) => (
+      <div
+        className="
+          flex gap-3 lg:gap-6 pb-2 w-full 
+          justify-start lg:justify-center items-center 
+          max-h-[57px] rounded-[56px] py-[11px] px-3 
+          bg-black mx-auto tabBorder 
+          overflow-x-auto scrollbar-hide
+        "
+      >
+        {tabConfig.map((tab) => (
           <button
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
-            className={`py-2 px-2 md:px-4 text-white opensans font-[400] md:text-[14px] text-[13px] rounded-[36px] transition-colors ${
+            className={`py-2 px-2 md:px-4 text-white opensans font-[400] md:text-[14px] text-[13px] rounded-[36px] transition-colors whitespace-nowrap ${
               activeTab === tab.id ? "bg-[#2B6AB2] font-semibold" : ""
             }`}
           >

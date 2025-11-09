@@ -38,7 +38,7 @@ const MobileMenu = () => {
       {/* Mobile Navigation Menu */}
       <div
         className={`lg:hidden fixed inset-0 bg-[#000] text-white z-40 px-6 pt-24 pb-10 min-h-screen transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full hidden"
         }`}
       >
         <div>

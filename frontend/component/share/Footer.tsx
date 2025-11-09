@@ -76,7 +76,7 @@ const Footer = () => {
           <p className="text-[16px] opensans font-[400]">
             Subscribe our newsletter to stay updated and get special offers.
           </p>
-          <div className="max-w-[305px] lg:mt-10 mt-6 max-h-[52px]  h-full rounded-[16px] border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2 hidden items-center justify-around">
+          <div className="max-w-[305px] lg:mt-10 mt-6 max-h-[52px]  h-full rounded-[16px] border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2 flex items-center justify-around">
             <input
               type="text"
               placeholder="Enter your email"
