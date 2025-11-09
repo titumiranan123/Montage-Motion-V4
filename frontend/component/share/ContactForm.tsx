@@ -1,9 +1,11 @@
 "use client";
 
+import { api_url } from "@/hook/Apiurl";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export interface FormDataType {
-  fullName: string;
+  name: string;
   email: string;
   interestedIn: string;
   message: string;
@@ -11,7 +13,7 @@ export interface FormDataType {
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormDataType>({
-    fullName: "",
+    name: "",
     email: "",
     interestedIn: "talking-head",
     message: "",
@@ -26,16 +28,24 @@ const ContactForm: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    try {
+      const res = await api_url.post("/api/contacts", formData);
+      if (res.status === 201 || res.status === 200) {
+        toast.success("Message Send");
+        setFormData({
+          name: "",
+          email: "",
+          interestedIn: "talking-head",
+          message: "",
+        });
+      }
+    } catch (error: any) {
+      toast.error("Failed to sent message !");
+      console.log(error.responsce);
+    }
     // Reset form if needed
-    setFormData({
-      fullName: "",
-      email: "",
-      interestedIn: "talking-head",
-      message: "",
-    });
   };
 
   return (
@@ -44,11 +54,11 @@ const ContactForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <div className="text-white w-full flex flex-col gap-2 translate-all duration-300 ease-in-out hover:scale-[103%]">
-        <label htmlFor="fullName">Full Name</label>
+        <label htmlFor="name">Full Name</label>
         <input
-          name="fullName"
+          name="name"
           type="text"
-          value={formData.fullName}
+          value={formData.name}
           onChange={handleChange}
           placeholder="John Doe"
           className="max-w-[542px] w-full h-[56px] rounded-[16px] md:p-4 p-3 border border-white/20 focus:outline-none"

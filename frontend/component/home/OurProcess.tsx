@@ -2,7 +2,8 @@ import React from "react";
 import Heading from "../share/Headering";
 import AIProcess from "../share/Timeline";
 
-const OurProcess = () => {
+const OurProcess = ({ process }: { process: any }) => {
+  console.log(process);
   return (
     <div>
       <Heading
@@ -10,7 +11,7 @@ const OurProcess = () => {
         title="Our Process for Your Online Growth"
         subtitle="Montage Motion is an Advertising and Digital Agency specializing in influencer Marketing"
       />
-      <AIProcess />
+      <AIProcess data={process?.process_steps} />
     </div>
   );
 };

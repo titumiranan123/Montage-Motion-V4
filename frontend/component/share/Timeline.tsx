@@ -48,7 +48,7 @@ const steps = [
 
 gsap.registerPlugin(ScrollTrigger);
 
-const AIProcess = () => {
+const AIProcess = ({ data }: { data: any }) => {
   const [active, setActive] = useState<number>(0);
   const lineRef = useRef<HTMLDivElement | null>(null);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -135,7 +135,7 @@ const AIProcess = () => {
           ></div>
         </div>
 
-        {steps.map((step, index) => (
+        {data?.map((step: any, index: number) => (
           <div
             key={step.id}
             ref={(el) => {
@@ -199,7 +199,7 @@ const AIProcess = () => {
                       "rounded-[24px]  z-10  firstNumber-bg relative !border-none"
                     } leading-none poppins`}
                   >
-                    {step.id}
+                    {index + 1}
                   </span>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import Heading from "../share/Headering";
 import HomeProjectTab from "./HomeProjectTab";
 import DynamicWorkContent from "./DynamicWorkContent";
 
-const OurFeatureProject = async ({ tab = "home" }: { tab: string }) => {
+const OurFeatureProject = async ({ tab = "fullform" }: { tab: string }) => {
   const workSection = {
     title: "Our Featured Projects",
     subtitle:
@@ -11,7 +11,9 @@ const OurFeatureProject = async ({ tab = "home" }: { tab: string }) => {
     tag: "Our Works",
   };
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/works/website?type=${tab}&&limit=6`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/works/website?type=${
+      tab === "fullform" ? "home" : tab
+    }&&limit=6`
   );
   const result = await response.json();
   const data = result?.data;

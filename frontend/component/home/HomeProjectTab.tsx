@@ -7,7 +7,7 @@ const HomeProjectTab = () => {
   const searchParams = useSearchParams();
 
   const tabConfig = [
-    { id: "home", label: "Full-form Video " },
+    { id: "fullform", label: "Full-form Video " },
     { id: "shorts", label: "Shorts/Reel " },
     { id: "thumbnail", label: "Thumbnail Design" },
     { id: "talkinghead", label: "Talking Head" },
@@ -15,9 +15,11 @@ const HomeProjectTab = () => {
   ];
 
   // get initial tab from URL or fallback default
-  const defaultTab = searchParams.get("tab") || "main";
+  const defaultTab = searchParams.get("tab") || "fullform";
 
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const [activeTab, setActiveTab] = useState(
+    defaultTab === "fullform" ? "home" : defaultTab
+  );
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
@@ -33,8 +35,8 @@ const HomeProjectTab = () => {
   }, [searchParams]);
 
   return (
-    <div data-aos="fade-up" data-aos-delay={300}>
-      <div className="flex lg:gap-6 pb-2 mt-8 min-w-[582px] justify-center items-center max-h-[57px] rounded-[56px] py-[11px] px-3 bg-[#1D21223D] mx-auto tabBorder">
+    <div className="searchbg p-[1px] max-w-[725px] max-h-[59px] rounded-[56px] mx-auto mt-8">
+      <div className="flex lg:gap-6 pb-2  w-full justify-center items-center max-h-[57px] rounded-[56px] py-[11px] px-3 bg-black mx-auto tabBorder">
         {tabConfig.map((tab, idx) => (
           <button
             key={tab.id}

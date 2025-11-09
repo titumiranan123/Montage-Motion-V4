@@ -28,6 +28,14 @@ body {
   backdrop-filter: blur(20px);
   box-shadow: 0px 0px 25px 0px #ffffff40 inset;
 }
+.searchbg {
+  background: linear-gradient(
+    250.64deg,
+    rgba(51, 87, 163, 0.5) 0%,
+    rgba(51, 87, 163, 0) 50%,
+    rgba(51, 87, 163, 0.5) 100%
+  );
+}
 .state-box {
   background: linear-gradient(
     209.88deg,
