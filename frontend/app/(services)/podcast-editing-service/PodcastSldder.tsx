@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 import VideoPlayer from "@/component/home/PrettyPlayer";
@@ -10,103 +10,77 @@ if (typeof window !== "undefined") {
 }
 
 type Layout = {
-  baseW: number; // slide base width
-  baseH: number; // slide base height
-  stepX: number; // spacing between slides
-  sideX: number; // side slide x offset
-  sideY: number; // side slide y offset (±)
-  sideScaleX: number; // scaleX for side slides
-  sideScaleY: number; // scaleY for side slides
-  offscreenX: number; // far hidden x offset
+  baseW: number;
+  baseH: number;
+  stepX: number;
+  sideX: number;
+  sideY: number;
+  sideScaleX: number;
+  sideScaleY: number;
+  offscreenX: number;
 };
 
-export default function PodcastSldder() {
+export default function PodcastSlider({ data }: { data: any[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
-  const autoplayRef = useRef<number | null>(null);
   const isDraggingRef = useRef(false);
   const draggableRef = useRef<Draggable | null>(null);
   const proxyRef = useRef<HTMLDivElement | null>(null);
 
-  // Anim feel
   const EASE = "power4.out";
   const DUR = 1.0;
-
-  // data
-  const data = [
-    {
-      image: "/assets/podcast/header-1.png",
-      title: "Tech Talk",
-      link: "https://youtu.be/RfO0RvZgzfc?si=XmMBkM50G0z0-oPN",
-    },
-    {
-      image: "/assets/podcast/header-2.png",
-      title: "Business Insights",
-      link: "https://youtu.be/RfO0RvZgzfc?si=XmMBkM50G0z0-oPN",
-    },
-    {
-      image: "/assets/podcast/header-3.png",
-      title: "Creative Minds",
-      link: "https://youtu.be/RfO0RvZgzfc?si=XmMBkM50G0z0-oPN",
-    },
-    {
-      image: "/assets/podcast/header-4.png",
-      title: "Future Vision",
-      link: "https://youtu.be/RfO0RvZgzfc?si=XmMBkM50G0z0-oPN",
-    },
-  ];
   const len = data.length;
 
-  // Responsive layout values
   const layoutRef = useRef<Layout>({
     baseW: 688,
     baseH: 387,
     stepX: 520,
     sideX: 500,
     sideY: 60,
-    // Side thumbnail scale relative to base (kept from your original look)
-    sideScaleX: 211 / 688,
-    sideScaleY: 185 / 387,
+    sideScaleX: 240 / 688,
+    sideScaleY: 143 / 387,
     offscreenX: 1500,
   });
 
-  // Recompute layout based on container width (16:9 base, scale offsets)
+  // 🧩 Compute layout dynamically and fix transform after measurement
   const computeLayout = () => {
     const container = containerRef.current;
     const cw = container ? container.clientWidth : 768;
 
-    // Cap max slide width and pad for small screens
-    const maxW = 688; // desktop cap
-    const minW = 260; // very small phones
+    const maxW = 688;
+    const minW = 260;
     const baseW = Math.max(minW, Math.min(maxW, Math.floor(cw * 0.85)));
-    const baseH = Math.floor(baseW * (9 / 16)); // 16:9-ish
+    const baseH = Math.floor(baseW * (9 / 16));
 
-    // Scale factors relative to the original desktop values
+    const sideScaleX = 240 / 688;
+    const sideScaleY = 143 / 387;
     const k = baseW / 688;
 
     layoutRef.current = {
       baseW,
       baseH,
-      stepX: 520 * k, // spacing
-      sideX: 500 * k, // side slide x
-      sideY: Math.max(20, 60 * k), // side slide y with floor to keep slight tilt
-      sideScaleX: 211 / 688, // keep visual proportion
-      sideScaleY: 185 / 387,
-      offscreenX: 1500 * k, // hidden far off
+      stepX: 520 * k,
+      sideX: 500 * k,
+      sideY: Math.max(20, 60 * k),
+      sideScaleX,
+      sideScaleY,
+      offscreenX: 1500 * k,
     };
 
-    // Update inner fixed sizes immediately (no tween)
     slidesRef.current.forEach((el) => {
       if (!el) return;
       el.style.width = `${layoutRef.current.baseW}px`;
       el.style.height = `${layoutRef.current.baseH}px`;
     });
+
+    // 🩵 Re-apply transforms
+    requestAnimationFrame(() => positionSlides(currentIndex));
   };
 
-  // quickTo setters
+  // 🧠 GSAP setters cache
   const settersRef = useRef<{
     x: Array<ReturnType<typeof gsap.quickTo>>;
     y: Array<ReturnType<typeof gsap.quickTo>>;
@@ -116,19 +90,6 @@ export default function PodcastSldder() {
     rotateY: Array<ReturnType<typeof gsap.quickTo>>;
   } | null>(null);
 
-  // Init base styles once
-  useEffect(() => {
-    slidesRef.current.forEach((el) => {
-      if (!el) return;
-      el.style.transformOrigin = "50% 50%";
-      el.style.backfaceVisibility = "hidden";
-      el.style.willChange = "transform, opacity";
-      (el.style as any).contain = "layout paint style";
-    });
-    gsap.config({ autoSleep: 60 });
-  }, []);
-
-  // Build quickTo setters lazily
   const ensureSetters = () => {
     if (!settersRef.current) {
       settersRef.current = {
@@ -145,50 +106,27 @@ export default function PodcastSldder() {
       const el = slidesRef.current[i];
       if (!el) continue;
       if (!s.x[i])
-        s.x[i] = gsap.quickTo(el, "x", {
-          duration: DUR,
-          ease: EASE,
-          force3D: true,
-          autoRound: false,
-        });
+        s.x[i] = gsap.quickTo(el, "x", { duration: DUR, ease: EASE });
       if (!s.y[i])
-        s.y[i] = gsap.quickTo(el, "y", {
-          duration: DUR,
-          ease: EASE,
-          force3D: true,
-          autoRound: false,
-        });
+        s.y[i] = gsap.quickTo(el, "y", { duration: DUR, ease: EASE });
       if (!s.scaleX[i])
-        s.scaleX[i] = gsap.quickTo(el, "scaleX", {
-          duration: DUR,
-          ease: EASE,
-          force3D: true,
-          autoRound: false,
-        });
+        s.scaleX[i] = gsap.quickTo(el, "scaleX", { duration: DUR, ease: EASE });
       if (!s.scaleY[i])
-        s.scaleY[i] = gsap.quickTo(el, "scaleY", {
-          duration: DUR,
-          ease: EASE,
-          force3D: true,
-          autoRound: false,
-        });
+        s.scaleY[i] = gsap.quickTo(el, "scaleY", { duration: DUR, ease: EASE });
       if (!s.opacity[i])
         s.opacity[i] = gsap.quickTo(el, "opacity", {
           duration: DUR,
           ease: EASE,
-          autoRound: false,
         });
       if (!s.rotateY[i])
         s.rotateY[i] = gsap.quickTo(el, "rotateY", {
           duration: DUR,
           ease: EASE,
-          force3D: true,
-          autoRound: false,
         });
     }
   };
 
-  // Positioner (responsive)
+  // 🧭 Position slides based on current index
   const positionSlides = (idx: number) => {
     ensureSetters();
     const s = settersRef.current!;
@@ -211,7 +149,6 @@ export default function PodcastSldder() {
       let zIndex = 0;
 
       if (Math.abs(rel) < 0.25) {
-        // center
         x = 0;
         y = 0;
         scaleX = 1;
@@ -220,7 +157,6 @@ export default function PodcastSldder() {
         rotateY = 0;
         zIndex = 30;
       } else if (Math.abs(rel) <= 1.25) {
-        // sides
         const dir = rel > 0 ? 1 : -1;
         x = dir * L.sideX;
         y = dir > 0 ? -L.sideY : L.sideY;
@@ -230,7 +166,6 @@ export default function PodcastSldder() {
         rotateY = dir * -18;
         zIndex = 20;
       } else {
-        // far hidden
         const dir = rel > 0 ? 1 : -1;
         x = dir * L.offscreenX;
         y = 0;
@@ -249,62 +184,32 @@ export default function PodcastSldder() {
       s.opacity[i](opacity);
       s.rotateY[i](rotateY);
     }
+
+    // 🩵 Force reset of container transform to avoid initial shift
+    gsap.set(containerRef.current, { x: 0 });
   };
 
-  // Autoplay
-  const stopAutoplay = () => {
-    if (autoplayRef.current) {
-      window.clearInterval(autoplayRef.current);
-      autoplayRef.current = null;
-    }
-  };
-  const startAutoplay = () => {
-    stopAutoplay();
-    autoplayRef.current = window.setInterval(() => {
-      if (!isDraggingRef.current && !isPlaying) {
-        setCurrentIndex((p) => p + 1);
-      }
-    }, 3000);
-  };
-
-  const goToSlide = (index: number) => {
-    stopAutoplay();
-    const safe = ((index % len) + len) % len;
-    const curMod = ((currentIndex % len) + len) % len;
-    const delta = safe - curMod;
-    setCurrentIndex((p) => p + delta);
-    startAutoplay();
-  };
   const nextSlide = () => setCurrentIndex((p) => p + 1);
   const prevSlide = () => setCurrentIndex((p) => p - 1);
 
   const handleSlideClick = (index: number) => {
     const safe = ((index % len) + len) % len;
     const center = ((currentIndex % len) + len) % len;
-    if (safe === center) {
-      setIsPlaying(true);
-      stopAutoplay();
-    } else {
-      goToSlide(safe);
-    }
+    if (safe === center) setIsPlaying(true);
+    else setCurrentIndex((p) => p + (safe - center));
   };
 
-  // Draggable via proxy (no container movement)
-  useEffect(() => {
+  // 🧩 Initialize once DOM is ready
+  useLayoutEffect(() => {
     if (!containerRef.current) return;
 
-    // initial layout
     computeLayout();
+    positionSlides(0); // ✅ force initial alignment
 
-    // resize observer for responsiveness
-    const ro = new ResizeObserver(() => {
-      computeLayout();
-      // reapply transforms after size change
-      positionSlides(currentIndex);
-    });
-    ro.observe(containerRef.current);
+    const ro = new ResizeObserver(() => computeLayout());
+    if (containerRef.current) ro.observe(containerRef.current);
 
-    // proxy draggable
+    // draggable proxy
     const proxy = document.createElement("div");
     proxyRef.current = proxy;
     let startX = 0;
@@ -316,38 +221,29 @@ export default function PodcastSldder() {
       inertia: true,
       onDragStart: function () {
         isDraggingRef.current = true;
-        stopAutoplay();
         startX = this.x;
       },
       onDragEnd: function () {
         const dragDistance = this.x - startX;
         gsap.set(proxy, { x: 0, y: 0 });
-
-        // threshold relative to slide width (responsive)
         const threshold = Math.max(60, layoutRef.current.baseW * 0.12);
         if (Math.abs(dragDistance) > threshold) {
           dragDistance < 0 ? nextSlide() : prevSlide();
         }
-
         isDraggingRef.current = false;
-        if (!isPlaying) startAutoplay();
       },
     })[0];
 
-    startAutoplay();
-
     return () => {
       ro.disconnect();
-      if (draggableRef.current) draggableRef.current.kill();
+      draggableRef.current?.kill();
       draggableRef.current = null;
-      stopAutoplay();
       proxyRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // drive layout on index change
-  useEffect(() => {
+  useLayoutEffect(() => {
     positionSlides(currentIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
@@ -357,14 +253,13 @@ export default function PodcastSldder() {
       <div className="w-full px-2 sm:px-4">
         <div
           ref={containerRef}
-          className="relative h-[320px] sm:h-[380px] md:h-[420px] lg:h-[460px] xl:h-[480px] cursor-grab active:cursor-grabbing"
+          className="relative h-[260px] sm:h-[320px] md:h-[400px] lg:h-[460px] xl:h-[480px] cursor-grab active:cursor-grabbing"
           style={{ perspective: "2000px" }}
         >
           <div className="relative h-full flex items-center justify-center">
             {data.map((item, index) => {
               const isCenterSlide =
                 ((currentIndex % len) + len) % len === index;
-
               return (
                 <div
                   key={index}
@@ -376,80 +271,26 @@ export default function PodcastSldder() {
                   style={{
                     transformStyle: "preserve-3d",
                     backfaceVisibility: "hidden",
-                    // responsive width/height are applied dynamically via computeLayout()
                   }}
                 >
-                  {/* inner fixed box; parent scale controls visual size */}
                   <div
-                    className="relative rounded-[22px] sm:rounded-[26px] md:rounded-[28px] lg:rounded-[31.63px] overflow-hidden"
+                    className="relative overflow-hidden bg-black rounded-[20px]"
                     style={{
                       width: layoutRef.current.baseW,
                       height: layoutRef.current.baseH,
                     }}
                   >
                     <VideoPlayer
-                      youtubeUrl={isCenterSlide && isPlaying ? item.link : ""}
-                      thumbnail={item.image}
+                      youtubeUrl={
+                        isCenterSlide && isPlaying ? item.video_url : ""
+                      }
+                      thumbnail={item.image_url}
                     />
                   </div>
                 </div>
               );
             })}
           </div>
-        </div>
-
-        {/* Optional controls (hidden by default) */}
-        <div className="hidden justify-center gap-3 mt-6 sm:mt-8">
-          {data.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                ((currentIndex % len) + len) % len === index
-                  ? "w-10 bg-purple-500"
-                  : "w-3 bg-white/30 hover:bg-white/50"
-              }`}
-            />
-          ))}
-        </div>
-
-        <div className="hidden justify-center gap-4 mt-6">
-          <button
-            onClick={prevSlide}
-            className="bg-white/10 hover:bg-white/20 text-white p-3 sm:p-4 rounded-full backdrop-blur-sm transition-all"
-          >
-            <svg
-              className="w-5 h-5 sm:w-6 sm:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={nextSlide}
-            className="bg-white/10 hover:bg-white/20 text-white p-3 sm:p-4 rounded-full backdrop-blur-sm transition-all"
-          >
-            <svg
-              className="w-5 h-5 sm:w-6 sm:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </div>

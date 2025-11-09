@@ -3,10 +3,15 @@ import { Bullet } from "../home/BulletPoint";
 import Image from "next/image";
 interface priceProp {
   price: any;
+  idx: number;
 }
-const PricingCard: React.FC<priceProp> = ({ price }) => {
+const PricingCard: React.FC<priceProp> = ({ price, idx }) => {
   return (
-    <div className="max-w-[398px] max-h-[716px] w-full h-full pricing-border p-[1px] rounded-[24px]">
+    <div
+      data-aos="fade-up"
+      data-aos-delay={100 + idx * 100}
+      className="max-w-[398px] max-h-[716px] w-full h-full pricing-border p-[1px] rounded-[24px]"
+    >
       <style>
         {`
     .pricing-border{
@@ -40,7 +45,7 @@ const PricingCard: React.FC<priceProp> = ({ price }) => {
               width={38}
               height={64}
             />
-            {price?.price}
+            {Number(price?.price).toFixed(0)}
           </p>{" "}
           <p className="text-[16px] font-[400] mt-9 opensans">
             /{price?.billing_cycle}
@@ -49,10 +54,10 @@ const PricingCard: React.FC<priceProp> = ({ price }) => {
         <div className="h-full flex justify-between flex-col gap-10">
           <div className="space-y-2">
             {price?.features?.map((b: any, i: number) => (
-              <Bullet key={i} text={b} />
+              <Bullet key={i} text={b?.feature} />
             ))}
           </div>
-          <button className="max-w-[348px]   w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]">
+          <button className="max-w-[348px]   w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500] hover:scale-105 hover:-rotate-2 duration-300 delay-75 transition-all ease-in-out">
             Start a project
           </button>
         </div>

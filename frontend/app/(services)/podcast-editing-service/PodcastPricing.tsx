@@ -47,18 +47,18 @@ const pricingInfo = {
     },
   ],
 };
-const PodcastPricing = () => {
+const PodcastPricing = ({ pricing }: { pricing: any }) => {
   return (
     <div className="container sectionGap">
       <Heading
-        title="Flexible Plans for"
-        extratitle="Every Creator"
-        tag="Pricing Plan"
-        subtitle="From solo creators to growing brands -- we've got pricing that scales with you "
+        title={pricing?.heading_part1}
+        extratitle={pricing?.heading_part2}
+        tag={pricing?.tag}
+        subtitle={pricing?.paragraph}
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 md:mt-10">
-        {pricingInfo.plans.map((price, idx) => (
-          <PricingCard price={price} key={idx} />
+        {pricing?.packages?.map((price: any, idx: number) => (
+          <PricingCard price={price} key={idx} idx={idx} />
         ))}
       </div>
     </div>
