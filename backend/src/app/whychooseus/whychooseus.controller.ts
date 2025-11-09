@@ -3,14 +3,15 @@ import { Request, Response } from "express";
 import { asyncHandler } from "../../midleware/asyncHandler";
 import { responseHandler } from "../../utils/responseHandler";
 
-import { serviceSectionService } from "./whychooseus.service";
+import { whychooseusSectionService } from "./whychooseus.service";
 import { whychooseusSchema } from "./whychooseus.zod";
 
 // ✅ Create or Update (Upsert)
 export const createOrUpdateWhyChooseUsSection = asyncHandler(
   async (req: Request, res: Response) => {
     const parsed = whychooseusSchema.parse(req.body);
-    const result = await serviceSectionService.createOrUpdateSection(parsed);
+    const result =
+      await whychooseusSectionService.createOrUpdateSection(parsed);
 
     return responseHandler(
       res,
@@ -25,7 +26,7 @@ export const createOrUpdateWhyChooseUsSection = asyncHandler(
 // ✅ Get All
 export const getAllWhyChooseUsSections = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await serviceSectionService.getAllSections(req.query);
+    const result = await whychooseusSectionService.getAllSections(req.query);
     return responseHandler(
       res,
       200,
@@ -40,7 +41,7 @@ export const getAllWhyChooseUsSections = asyncHandler(
 export const getWhyChooseUsSectionById = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id; // UUID → keep as string
-    const result = await serviceSectionService.getSectionById(id);
+    const result = await whychooseusSectionService.getSectionById(id);
 
     if (!result)
       return responseHandler(
@@ -64,7 +65,7 @@ export const getWhyChooseUsSectionById = asyncHandler(
 export const updateWhyChooseUsSection = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id; // UUID
-    const result = await serviceSectionService.updateSection(id, req.body);
+    const result = await whychooseusSectionService.updateSection(id, req.body);
 
     return responseHandler(
       res,
@@ -80,7 +81,7 @@ export const updateWhyChooseUsSection = asyncHandler(
 export const deleteWhyChooseUsSection = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id; // UUID
-    const result = await serviceSectionService.deleteSection(id);
+    const result = await whychooseusSectionService.deleteSection(id);
 
     if (!result)
       return responseHandler(

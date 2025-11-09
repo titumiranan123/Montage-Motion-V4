@@ -2,7 +2,7 @@
 import { db } from "../../db/db";
 import { IWhychooseusSection } from "./whychooseus.zod";
 
-export const serviceSectionService = {
+export const whychooseusSectionService = {
   async createOrUpdateSection(data: IWhychooseusSection) {
     const existingRes = await db.query(
       `SELECT * FROM whychooseus_sections WHERE type = $1 LIMIT 1`,
@@ -94,7 +94,7 @@ export const serviceSectionService = {
       }
     }
 
-    return await serviceSectionService.getSectionById(section.id);
+    return await whychooseusSectionService.getSectionById(section.id);
   },
 
   async getAllSections(query: { type?: string }) {
@@ -143,7 +143,7 @@ export const serviceSectionService = {
   },
 
   async updateSection(id: string, data: Partial<IWhychooseusSection>) {
-    const existing = await serviceSectionService.getSectionById(id);
+    const existing = await whychooseusSectionService.getSectionById(id);
     if (!existing) throw new Error("Why Choose Us section not found");
 
     await db.query(
@@ -181,7 +181,7 @@ export const serviceSectionService = {
       }
     }
 
-    return await serviceSectionService.getSectionById(id);
+    return await whychooseusSectionService.getSectionById(id);
   },
 
   async deleteSection(id: string) {

@@ -13,7 +13,7 @@ export const contactSchema = z.object({
     .min(1, "Email is required")
     .email("Invalid email format")
     .max(100, "Email must be at most 100 characters long"),
-
+  interestIn: z.string().optional(),
   message: z
     .string({ error: "Message is required" })
     .min(1, "Message is required")

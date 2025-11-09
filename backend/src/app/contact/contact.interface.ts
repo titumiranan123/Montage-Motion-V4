@@ -3,6 +3,7 @@ export interface IContact {
   name: string;
   email: string;
   message: string;
+  interestIn: string;
   created_at?: Date;
   updated_at?: Date;
 }

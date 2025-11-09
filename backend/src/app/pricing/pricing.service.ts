@@ -212,6 +212,7 @@ export const pricingPageService = {
     }
 
     page.packages = pkgRes.rows;
+
     return page;
   },
   /** ✅ Delete entire page (cascade) */

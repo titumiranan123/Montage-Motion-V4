@@ -4,7 +4,7 @@ import { db } from "../../db/db";
 import ApiError from "../../utils/ApiError";
 
 import { IContact } from "./contact.interface";
-import { sendEmailToAdmin } from "./utils";
+// import { sendEmailToAdmin } from "./utils";
 
 export const contactService = {
   async createContact(data: IContact) {
@@ -12,10 +12,10 @@ export const contactService = {
       throw new ApiError(400, false, "Please check your data.");
     }
     try {
-      const query = `INSERT INTO contacts (name, email, message) VALUES ($1, $2, $3) RETURNING *`;
-      const values = [data.name, data.email, data.message];
+      const query = `INSERT INTO contacts (name, email, message,interestIn) VALUES ($1, $2, $3,$4) RETURNING *`;
+      const values = [data.name, data.email, data.message, data.interestIn];
       const res = await db.query(query, values);
-      await sendEmailToAdmin(data);
+      // await sendEmailToAdmin(data);
       return res.rows;
     } catch (error: any) {
       throw new ApiError(400, false, error.message);

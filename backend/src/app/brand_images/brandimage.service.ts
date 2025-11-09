@@ -10,10 +10,10 @@ export const BrandImageService = {
         `SELECT sortOrder FROM brandimage WHERE type = $1 ORDER BY sortOrder DESC LIMIT 1`,
         [data.type]
       );
-      console.log(last.rows[0]);
+      // console.log(last.rows[0]);
       const newPosition =
         last.rows.length > 0 ? Number(last.rows[0].sortorder) + 1 : 1;
-      console.log(newPosition);
+      // console.log(newPosition);
       const result = await db.query(
         `INSERT INTO brandimage (image, alt, ishide, type,width, height,sortorder)
          VALUES ($1, $2, $3, $4,$5, $6, $7)

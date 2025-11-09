@@ -2,6 +2,9 @@
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
 import { serviceSectionService } from "../pageservice/page_service.service";
+import { pricingPageService } from "../pricing/pricing.service";
+import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
+import { processService } from "../working_process/process.service";
 // import { packageFeatureService } from "../pricing/package.service";
 
 export const homeapiServices = {
@@ -38,7 +41,7 @@ export const homeapiServices = {
       const result = await db.query(query, values);
 
       const worksService = await client.query(
-        `SELECT thumbnail, video_link, sub_type FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC`,
+        `SELECT thumbnail, video_link, sub_type FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC   LIMIT 6`,
         [type]
       );
 
@@ -58,6 +61,26 @@ export const homeapiServices = {
       if (tables.includes("services")) {
         const result = await serviceSectionService.getAllSections({ type });
         services = result.length > 0 ? result[0] : [];
+      }
+      let process: any[] = [];
+      if (tables.includes("process")) {
+        const result = await processService.getAllProcesses({ type });
+        process = result.length > 0 ? result[0] : [];
+      }
+      let whychooseus: any[] = [];
+      if (tables.includes("whychooseus")) {
+        const result = await whychooseusSectionService.getAllSections({
+          type,
+        });
+        whychooseus = result.length > 0 ? result[0] : [];
+      }
+      let pricing: any[] = [];
+      if (tables.includes("pricing")) {
+        const result = await pricingPageService.getPagePricePlanByType({
+          type,
+        });
+        // console.log("pricing", result);
+        pricing = result;
       }
 
       // const pricingService = async () => {
@@ -103,13 +126,16 @@ export const homeapiServices = {
       // const prices = await pricingService();
 
       await client.query("COMMIT");
-
+      // console.log("pricing", pricing);
       return {
         header: result.rows[0] || null,
         works: worksService.rows || [],
         testimonial: testimonialService.rows || [],
         brand: brandImages,
+        pricing: pricing,
         services: services,
+        process: process,
+        whychooseus: whychooseus,
         // faqs: allFaqs,
         // pricing: prices || [],
       };

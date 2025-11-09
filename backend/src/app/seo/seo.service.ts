@@ -44,7 +44,7 @@ export const seoMetaService = {
       `SELECT thumbnail FROM works WHERE type = $1 LIMIT 1 `,
       ["main"]
     );
-    console.log(workResult.rows[0]);
+    // console.log(workResult.rows[0]);
     const result = await db.query(
       `SELECT * FROM page_seo WHERE page_name = $1 LIMIT 1`,
       [pageName]
