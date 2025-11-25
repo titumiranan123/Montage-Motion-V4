@@ -3,6 +3,7 @@ import TurstedBy from "./TurstedBy";
 import Headervideopop from "./Headervideopop";
 import CounterNumber from "../share/CounterNumber";
 import Link from "next/link";
+import { ThreeDCardDemo } from "./Headervideocard";
 const Header: React.FC<{ data: any }> = ({ data }) => {
   // console.log("data.media", data.media);
   return (
@@ -60,10 +61,11 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
         <div className="state-box md:w-[142px] w-[94px] h-[80px] md:h-[104px] absolute lg:left-5 lg:top-[88px] md:top-[80px] md:-left-11 z-10 top-[60px] -left-3 flex justify-center items-center">
           <CounterNumber number={8} title="Years of Experience" />
         </div>
-        <Headervideopop
+        <ThreeDCardDemo
           thumbnail={data?.media?.[0]?.image_url ?? ""}
           link={data?.media?.[0]?.video_url ?? ""}
         />
+        {/* <Headervideopop /> */}
         <div className="state-box md:w-[114px] md:h-[104px] w-[90px] h-[80px] absolute lg:-bottom-4 lg:left-7 -bottom-3 md:-left-4 -left-1 flex justify-center items-center ">
           <CounterNumber number={1000} title="Succesfull Projects" />
         </div>

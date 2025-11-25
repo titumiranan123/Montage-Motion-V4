@@ -36,7 +36,10 @@ body {
     rgba(51, 87, 163, 0.5) 100%
   );
 }
-
+a:hover,
+button:hover {
+  cursor: url("/frontend/public/assets/dollar.png") 16 0, pointer;
+}
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

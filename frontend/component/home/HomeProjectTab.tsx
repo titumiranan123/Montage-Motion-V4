@@ -7,7 +7,7 @@ const HomeProjectTab = () => {
   const searchParams = useSearchParams();
 
   const tabConfig = [
-    { id: "fullform", label: "Full-form Video" },
+    { id: "fullform", label: "Long-form Video" },
     { id: "shorts", label: "Shorts/Reel" },
     { id: "thumbnail", label: "Thumbnail Design" },
     { id: "talkinghead", label: "Talking Head" },

@@ -11,7 +11,7 @@ const Gradientcard: React.FC<props> = ({
   children,
 }) => {
   return (
-    <div className={`${borderClassName} bg-border`}>
+    <div className={`${borderClassName} bg-border `}>
       <div className={`${className} bg-gradient`}>{children}</div>
     </div>
   );

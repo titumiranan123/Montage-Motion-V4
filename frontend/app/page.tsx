@@ -13,7 +13,7 @@ import IndustryWeWork from "@/component/share/IndustryWork";
 import { Metadata } from "next";
 const getPageData = async () => {
   const [seoRes, mainRes] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/home`, {
       cache: "no-store",
     }),
     fetch(
@@ -87,7 +87,7 @@ const HomePage = async ({ searchParams }: { searchParams: any }) => {
   } catch (err) {
     console.warn("Invalid schema JSON:", err);
   }
-  // console.log(data.whychooseus);
+
   return (
     <div className="">
       {schema && (

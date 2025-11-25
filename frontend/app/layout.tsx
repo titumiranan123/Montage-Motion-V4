@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/component/share/Navbar";
 import Footer from "@/component/share/Footer";
 import Provider from "./Provider";
+import CustomCursor from "@/component/home/Softcursor";
 
 const geistSans = Poppins({
   variable: "--font-poppins",
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-black `}
       >
         <Provider>
+          <CustomCursor />
           <Navbar />
           {children}
           <Footer />

@@ -19,7 +19,7 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </noscript>
       {children}
       <Toaster />
-      <SmoothFollower />
+      {/* <SmoothFollower /> */}
       <AOSInit />
     </QueryClientProvider>
   );

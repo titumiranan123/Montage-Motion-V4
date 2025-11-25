@@ -64,7 +64,7 @@ const WhyChooseUs = ({ data }: { data: any }) => {
             <Gradientcard
               key={idx}
               className="max-w-[394px] w-full h-full md:max-h-[214px] max-h-[230px] rounded-[24px] md:py-6 py-4 md:px-5 px-4"
-              borderClassName="p-[1px] rounded-[24px]"
+              borderClassName="p-[1px] rounded-[24px]  translate-all duration-300 ease-in-out hover:scale-105 cursor-pointer"
             >
               <div className="flex justify-center items-start flex-col text-white  gap-2  ">
                 <Image

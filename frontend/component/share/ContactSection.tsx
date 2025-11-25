@@ -41,7 +41,7 @@ const ContactSection = () => {
           <div data-aos="fade-up" data-aos-delay={600}>
             <Gradientcard
               className="max-w-[582px] max-h-[94px] w-full h-full rounded-[24px]"
-              borderClassName="p-[1px] rounded-[24px]"
+              borderClassName="p-[1px] rounded-[24px]  translate-all duration-300 ease-in-out hover:scale-105"
             >
               <div className="flex justify-between  items-center rounded-[24px] py-4 px-4">
                 <div>
@@ -65,7 +65,7 @@ const ContactSection = () => {
           <div data-aos="fade-up" data-aos-delay={700}>
             <Gradientcard
               className="max-w-[582px] max-h-[94px] w-full h-full rounded-[24px]"
-              borderClassName="p-[1px] rounded-[24px]"
+              borderClassName="p-[1px] rounded-[24px]  translate-all duration-300 ease-in-out hover:scale-105"
             >
               <div className="flex justify-between  items-center rounded-[24px] py-4 px-4">
                 <div>
@@ -89,7 +89,7 @@ const ContactSection = () => {
           <div data-aos="fade-up" data-aos-delay={800}>
             <Gradientcard
               className="max-w-[582px] max-h-[94px] w-full h-full rounded-[24px]"
-              borderClassName="p-[1px] rounded-[24px]"
+              borderClassName="p-[1px] rounded-[24px]  translate-all duration-300 ease-in-out hover:scale-105"
             >
               <div className="flex justify-between  items-center rounded-[24px] py-4 px-4">
                 <div>

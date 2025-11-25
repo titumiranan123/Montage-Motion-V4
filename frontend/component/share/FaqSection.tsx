@@ -76,7 +76,7 @@ const FaqSection = () => {
                   Project Co-ordinator
                 </p>
               </div>
-              <button className="btn-color max-w-[348px] w-full h-[56px] rounded-[16px] py-[16px] px-[16px] font-[500]  opensans">
+              <button className="btn-color max-w-[348px] w-full h-[56px] rounded-[16px] py-[16px] px-[16px] font-[500]  opensans  translate-all duration-300 ease-in-out group-hover:scale-105">
                 Book a Call
               </button>
             </div>

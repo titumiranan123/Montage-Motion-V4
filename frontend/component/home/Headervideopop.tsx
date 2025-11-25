@@ -20,7 +20,7 @@ const Headervideopop: React.FC<{ thumbnail: string; link: string }> = ({
   return (
     <>
       {/* Thumbnail Section */}
-      <div className="md:max-w-[465px] max-w-[311px] max-h-[227px] md:max-h-[340px] w-full h-full state-box">
+      <div className="md:max-w-[465px] hidden max-w-[311px] max-h-[227px] md:max-h-[340px] w-full h-full state-box">
         <CardContainer className="inter-var">
           <CardBody className="md:w-[445px] md:h-[260px] w-full h-full relative group/card border-black/[0.1] rounded-xl border">
             <CardItem
@@ -57,37 +57,6 @@ const Headervideopop: React.FC<{ thumbnail: string; link: string }> = ({
           />
         </button>
       </div>
-
-      {/* ✅ Global Portal Fullscreen Popup */}
-      {mounted &&
-        isOpen &&
-        ReactDOM.createPortal(
-          <div
-            className="fixed inset-0 w-screen h-screen bg-black/90 z-[9999] flex items-center justify-center p-4"
-            onClick={() => setIsOpen(false)}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full h-full max-w-[900px] max-h-[500px] rounded-lg overflow-hidden flex items-center justify-center"
-            >
-              <button
-                onClick={() => setIsOpen(false)}
-                className="absolute top-3 right-3 z-10 text-white text-2xl font-bold w-8 h-8 flex items-center justify-center bg-black/60 rounded-full hover:bg-red-500 transition"
-              >
-                ✕
-              </button>
-
-              <ReactPlayer
-                src={link}
-                playing
-                controls
-                width="100%"
-                height="100%"
-              />
-            </div>
-          </div>,
-          document.body
-        )}
     </>
   );
 };
