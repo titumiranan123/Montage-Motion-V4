@@ -1,0 +1,6 @@
+{
+    "cms":{
+        "robotText": " https://api-v2.montagemotion.com/api/robots",
+        "sitemap": " https://api-v2.montagemotion.com/api/sitemap"
+    }
+}

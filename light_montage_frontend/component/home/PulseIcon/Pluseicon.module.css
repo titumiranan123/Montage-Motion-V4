@@ -1,0 +1,115 @@
+.video_play_button {
+  position: relative;
+  z-index: 10;
+
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  padding: 0;
+  background-color: transparent;
+  animation: scale-up-center 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+  cursor: pointer;
+}
+
+.video_play_button:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: #2b6ab2;
+  border-radius: 50%;
+  animation: pulse-border 1500ms ease-out infinite;
+}
+
+.video_play_button:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  background: white;
+  border-radius: 50%;
+  transition: all 200ms;
+}
+
+/* .video_play_button:hover:after {
+  background-color: #198baa;
+} */
+
+.video_play_button span {
+  position: relative;
+  z-index: 3;
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 18px solid #2b6ab2;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+}
+
+/* Entrance Animation */
+@keyframes scale-up-center {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Pulse Animation */
+@keyframes pulse-border {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 480px) {
+  .video_play_button {
+    width: 56px;
+    height: 56px;
+  }
+
+  .video_play_button:after {
+    width: 56px;
+    height: 56px;
+    background-color: #fff;
+  }
+
+  .video_play_button:before {
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+  }
+
+  .video_play_button span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    border-left: 20px solid #25ac48;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  /* .video_play_button:hover:after {
+    background-color: #198baa;
+  } */
+}

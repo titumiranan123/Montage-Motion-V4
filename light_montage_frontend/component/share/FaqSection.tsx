@@ -1,0 +1,93 @@
+import React from "react";
+import { Heading } from "../share/Headering";
+import Image from "next/image";
+import Accordion from "./Accordion";
+import Gradientcard from "./Gradientcard";
+const items = [
+  {
+    question: "What types of videos do you specialize in editing ?",
+    answer:
+      "We specialize in editing a wide range of videos , including but not limited to promotional content , vlogs, interviews and event comverage.",
+  },
+  {
+    question: "How long does the video editing process typically take ?",
+    answer:
+      "We specialize in editing a wide range of videos , including but not limited to promotional content , vlogs, interviews and event comverage.",
+  },
+  {
+    question:
+      "Can i provide speicfic instructions for the editing style and preferences ?",
+    answer:
+      "We specialize in editing a wide range of videos , including but not limited to promotional content , vlogs, interviews and event comverage.",
+  },
+  {
+    question: "What steps are involved in your video editing service ?",
+    answer:
+      "We specialize in editing a wide range of videos , including but not limited to promotional content , vlogs, interviews and event comverage.",
+  },
+  {
+    question:
+      "Is there a limit to the revisions I can request for my edited video ?",
+    answer:
+      "We specialize in editing a wide range of videos , including but not limited to promotional content , vlogs, interviews and event comverage.",
+  },
+  {
+    question: "What types of videos do you specialize in editing ?",
+    answer:
+      "We specialize in editing a wide range of videos , including but not limited to promotional content , vlogs, interviews and event comverage.",
+  },
+];
+const FaqSection = () => {
+  return (
+    <div id="faq" className="container sectionGap">
+      <Heading
+        subtitle="Got Questions? We've Got Answers"
+        tag="FAQ"
+        title="Have Questions ?"
+      />
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
+        <div data-aos="fade-up" className="bg-white" data-aos-delay={400}>
+          <Gradientcard
+            borderClassName="max-w-[422px] max-h-[751px] h-full w-full rounded-3xl p-[1px] "
+            className="max-w-[420px] max-h-[749px] h-full w-full rounded-3xl "
+          >
+            <div className="flex justify-center  items-center flex-col h-full py-10 px-9">
+              <Image
+                src={"/assets/faq.png"}
+                alt="faq"
+                title="faqimage"
+                width={135}
+                height={135}
+                priority
+              />
+              <h2 className="md:mt-4 mt-2 mb-2 font-semibold poppins  text-(--text-primary)  text-[24px]">
+                Have more questions ?
+              </h2>
+              <p className="font-normal text-[16px] opensans leading-[140%]  text-(--text-primary)  text-center">
+                Still curious? Let’s talk it out. Book a quick call. We’ll walk
+                you through everything and help you figure out the best move for
+                your brand.
+              </p>
+              <div className="flex justify-between items-center flex-col  text-(--text-primary)  mt-12 mb-9 gap-2">
+                <h2 className="text-[24px] font-semibold leading-[100%] poppins">
+                  Safwan Wafif
+                </h2>
+                <p className="text-[16px] font-normal leading-[140%] opensans">
+                  Project Co-ordinator
+                </p>
+              </div>
+              <button className="btn-color max-w-[348px] w-full h-14 rounded-2xl py-4 px-4 font-medium  opensans animated hover:scale-105">
+                Book a Call
+              </button>
+            </div>
+          </Gradientcard>
+        </div>
+        <div className=" col-span-2 ">
+          <Accordion items={items} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FaqSection;

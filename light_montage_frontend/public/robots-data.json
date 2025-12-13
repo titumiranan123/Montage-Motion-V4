@@ -1,0 +1,12 @@
+{
+    "disallow": [
+      "/instructor-*",
+      "/student-*",
+      "/login/",
+      "/register/",
+      "/private/",
+      "/tmp/",
+      "/api/"
+    ],
+    "allow": ["/"]
+  }
