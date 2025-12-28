@@ -1,10 +1,8 @@
-import Gradientcard from "@/component/share/Gradientcard";
-import Heading from "@/component/share/Headering";
-import React from "react";
+import { Heading } from "@/component/share/Headering";
 
 const OurMission = () => {
   return (
-    <div className="container sectionGap">
+    <div className="container rounded-[42px] py-[60px] sectionGap testimonialbg">
       <Heading
         subtitle="At Montage Motion, we blend creativity, strategy, and technology to transform ideas into visuals that inspire, engage, and deliver results."
         title="Crafting Stories That "
@@ -13,10 +11,7 @@ const OurMission = () => {
       />
       <div className="lg:mt-10 mt-8 flex justify-between items-center lg:flex-row flex-col gap-6">
         <div data-aos="fade-up" data-aos-delay={300}>
-          <Gradientcard
-            className="max-w-[588px] min-h-[180px] w-full h-full rounded-3xl py-6 px-5 text-[#E4E8F7]"
-            borderClassName="max-w-[588px] min-h-[180px] w-full h-full rounded-[24px] p-[1px]"
-          >
+          <div className="max-w-[588px] min-h-[180px] w-full h-full rounded-3xl py-6 px-5 text-(--text-primary)  bg-white/40  glassShadow backdrop-blur-lg">
             <h2 className="text-[20px] md:text-[24px] font-semibold poppins">
               Our Mission{" "}
             </h2>
@@ -27,13 +22,10 @@ const OurMission = () => {
               but also achieve measurable impact. Every project is bilt on
               clarity, creativity, and consistency.
             </p>
-          </Gradientcard>
+          </div>
         </div>
         <div data-aos="fade-up" data-aos-delay={300}>
-          <Gradientcard
-            className="max-w-[588px] min-h-[180px] w-full h-full rounded-3xl py-6 px-5 text-[#E4E8F7]"
-            borderClassName="max-w-[588px] min-h-[180px] w-full h-full rounded-[24px] p-[1px]"
-          >
+          <div className="max-w-[588px] min-h-[180px] w-full h-full rounded-3xl py-6 px-5 text-(--text-primary)  bg-white/40  glassShadow backdrop-blur-lg">
             <h2 className="text-[20px] md:text-[24px] font-semibold poppins">
               Our Vision{" "}
             </h2>
@@ -44,7 +36,7 @@ const OurMission = () => {
               building a global hub of creative excellence that shapes how
               people connect with content.
             </p>
-          </Gradientcard>
+          </div>
         </div>
       </div>
     </div>

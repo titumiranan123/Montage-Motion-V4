@@ -120,9 +120,9 @@ const MobileMenu = () => {
                 isServicesOpen ? "max-h-96" : "max-h-0"
               }`}
             >
-              {servicesData?.map((service: any) => (
+              {servicesData?.map((service: any, idx: number) => (
                 <Link
-                  key={service.id}
+                  key={idx}
                   href={service.href}
                   onClick={toggleMobileMenu}
                   className={`block py-2 ${

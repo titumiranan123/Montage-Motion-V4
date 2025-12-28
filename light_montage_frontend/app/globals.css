@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 ::-webkit-scrollbar {
   width: 4px;
   border-radius: 24px;
@@ -7,34 +6,82 @@
 ::-webkit-scrollbar-thumb {
   background-color: #b9babd;
 }
+body {
+  font-family: var(--font-dmsans) !important;
+}
 
+.headerbg {
+  background: linear-gradient(180deg, #eaf0f7 30.22%, #69cde8 100%);
+}
 .poppins {
-  font-family: var(--font-poppins);
+  font-family: var(--font-poppins) !important;
 }
 .opensans {
-  font-family: var(--font-open-sans);
+  font-family: var(--font-dmsans) !important;
 }
-
 .btn-color {
   background: linear-gradient(180deg, #1fb5dd 0%, #2b6ab2 100%);
   /* box-shadow: 0px 0px 12px 0px #ffffff99 inset; */
   color: white !important;
 }
+.glassShadow {
+  box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.6),
+    inset -1px -1px 1px 0px rgba(255, 255, 255, 0.6);
+
+  backdrop-filter: blur(10px);
+  filter: url(#glass-distortion);
+  isolation: isolate;
+}
+.glassShadowithoutinset {
+  box-shadow: inset 1.5px 1.5px 1px 0 rgba(255, 255, 255, 0.6),
+    inset -1.5px -1.5px 1px 0px rgba(255, 255, 255, 0.6);
+}
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* On hover: show scrollbar */
+.scrollbar-thin:hover {
+  scrollbar-color: rgb(156 163 175) transparent;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background: rgb(156 163 175);
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb:hover {
+  background: rgb(107 114 128);
+}
 @theme {
-  --font-poppins: Poppins, sans-serif;
+  /* --font-poppins: Poppins, sans-serif; */
   --text-primary: #1c2c31;
   --text-secondary: #49565a;
 }
 
 @layer components {
+  .animated {
+    @apply transition-all duration-300 ease-in-out;
+  }
   .container {
     @apply max-w-[1440px] lg:px-20! md:px-5 px-4 mx-auto;
   }
   .sectionGap {
     @apply lg:mt-[120px] md:mt-20 mt-16;
-  }
-  .animated {
-    @apply transition-all duration-300 ease-in-out;
   }
 }
 .pill {

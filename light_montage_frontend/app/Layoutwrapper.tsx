@@ -10,12 +10,13 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
 
-  const hideNavbarRoutes = [""];
+  const hideNavbarRoutes = ["/blogs"];
   const shouldHideNavbar = hideNavbarRoutes.includes(pathname);
 
   return (
     <>
       {shouldHideNavbar && <Navbar />}
+
       {children}
     </>
   );

@@ -6,22 +6,22 @@ import Marquee from "react-fast-marquee";
 const PartnersSection = ({ data }: { data: any[] }) => {
   return (
     <section
-      // data-aos="fade-up"
-      // data-aos-delay={500}
-      className="relative w-full bg-white container py-6 overflow-hidden"
+      data-aos="fade-up"
+      data-aos-delay={500}
+      className="relative w-full  max-w-7xl px-6 mx-auto py-6 overflow-hidden "
     >
       <div className=" mx-auto w-full flex flex-col items-center justify-center">
         <Marquee
           pauseOnHover
           speed={50}
           gradient
-          gradientWidth={100}
+          gradientWidth={200}
           className="flex items-center"
         >
           {data.map((partner, index) => (
             <div
               key={partner.id || index}
-              className="mx-10 pointer-events-none select-none flex items-center justify-center h-10"
+              className="-mx-2.5 pointer-events-none select-none flex items-center justify-center "
             >
               <Image
                 src={partner.image}

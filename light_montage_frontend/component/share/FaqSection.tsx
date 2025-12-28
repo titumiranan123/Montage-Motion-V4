@@ -46,7 +46,7 @@ const FaqSection = () => {
         title="Have Questions ?"
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
-        <div data-aos="fade-up" className="bg-white" data-aos-delay={400}>
+        <div data-aos="fade-up" className="" data-aos-delay={400}>
           <Gradientcard
             borderClassName="max-w-[422px] max-h-[751px] h-full w-full rounded-3xl p-[1px] "
             className="max-w-[420px] max-h-[749px] h-full w-full rounded-3xl "

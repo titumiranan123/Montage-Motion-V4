@@ -1,5 +1,5 @@
 "use client";
-import Heading from "@/component/share/Headering";
+import { Heading } from "@/component/share/Headering";
 import React from "react";
 import { InlineWidget } from "react-calendly";
 

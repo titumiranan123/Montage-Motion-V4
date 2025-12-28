@@ -4,13 +4,13 @@ import React from "react";
 const TurstedBy = ({ isCenter }: { isCenter?: boolean }) => {
   return (
     <div
-      data-aos="fade-up"
-      data-aos-delay={100}
+      // data-aos="fade-up"
+      // data-aos-delay={100}
       className={`flex items-center ${
         isCenter
           ? "justify-center md:justify-center"
           : "justify-center md:justify-start"
-      }  w-full  text-(--text-primary)  gap-5`}
+      }  w-full  text-(--text-primary)  gap-5  bg-white/20  glassShadow backdrop-blur-lg py-4 px-3 rounded-full max-w-[300px]`}
     >
       <div className="flex w-[70px] h-5 items-center  -space-x-1.5">
         <Image
@@ -42,7 +42,7 @@ const TurstedBy = ({ isCenter }: { isCenter?: boolean }) => {
           height={24}
         />
       </div>
-      <p className="opensans text-[12px] font-normal">
+      <p className="poppins text-[12px] font-normal leading-[140%]">
         Trusted by 1000+ clients
       </p>
     </div>

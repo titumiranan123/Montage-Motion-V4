@@ -4,7 +4,7 @@ import React from "react";
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <div className="headerbg rounded-[40px] max-w-[1440px] px-[60px]  mx-auto">
+      <div className="headerbg rounded-[40px] max-w-full px-[60px]  mx-auto">
         <style>
           {`
             .headerbg {

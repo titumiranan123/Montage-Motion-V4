@@ -5,21 +5,21 @@ import Link from "next/link";
 import HeadervideoPalyer from "./HeadervideoPalyer";
 const Header: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div className="flex  flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
+    <div className="flex headerbg  pt-30 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
       {/* header content left side */}
-      <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-[680px] mx-auto">
+      <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-[700px] mx-auto">
         <TurstedBy isCenter={true} />
         <h1
           data-aos="fade-up"
           data-aos-delay={200}
-          className="lg:text-[96px] lg:leading-[90px] text-[48px] leading-[111%] font-medium text-textPrimary poppins  text-center lg:mt-5 mt-4"
+          className="lg:text-[96px]  text-[48px] leading-[111%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
         >
           Scaling Your Online Growth
         </h1>
         <p
           data-aos="fade-up"
           data-aos-delay={300}
-          className="text-textSecondary text-[14px] font-normal md:text-[16px] opensans text-center  leading-[150% ]  mt-6 "
+          className="text-(--text-secondary) text-[14px] font-normal md:text-[16px] opensans text-center  leading-[150% ]  mt-6 "
         >
           Montage Motion is a creative ad agency specializing in influencer
           marketing, video editing , thumbnails, content strategy, visual

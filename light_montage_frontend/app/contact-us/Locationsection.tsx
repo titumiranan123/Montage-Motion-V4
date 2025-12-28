@@ -1,7 +1,6 @@
 import Gradientcard from "@/component/share/Gradientcard";
-import Heading from "@/component/share/Headering";
+import { Heading } from "@/component/share/Headering";
 import { ChevronRight } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
 const Locationsection = () => {
@@ -17,15 +16,13 @@ const Locationsection = () => {
         data-aos-delay={400}
         className="max-w-[1055px] w-full max-h-[758px] h-full mt-10  mx-auto flex flex-col-reverse justify-center items-center relative gap-2"
       >
-        <Image
-          src={"/assets/location.png"}
-          alt="location"
-          priority
-          title="House #12, Road #3, Mirpur DOHS, Dhaka, Bangladesh"
-          width={1055}
-          height={578}
-          className="max-w-[1055px] w-full max-h-[758px] h-full mt-10 lg:mt-20"
-        />
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d868.4200193609572!2d90.3718197197554!3d23.83628515594626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c10077d8354d%3A0x6baa8b9e6aa72e89!2sMontage%20Motion%20Ltd.!5e1!3m2!1sen!2sus!4v1766743405766!5m2!1sen!2sus"
+          width="1055"
+          height="578"
+          loading="lazy"
+          className="rounded-lg"
+        ></iframe>
         <div
           data-aos="fade-right"
           data-aos-delay={500}

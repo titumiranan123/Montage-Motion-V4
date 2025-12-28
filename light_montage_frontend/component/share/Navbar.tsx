@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <div
       style={{ zIndex: 9999 }}
-      className="py-2 mt-2 bg-white/20  max-w-[1440px] mx-auto px-0  flex justify-between items-center sticky top-4 backdrop-blur-[21px] transition-all duration-300 ease-in-out"
+      className="py-4 mt-2 bg-white/20   max-w-7xl mx-auto px-5 rounded-[12px]  flex justify-between items-center  backdrop-blur-[21px] transition-all duration-300 ease-in-out glassShadow sticky top-2"
     >
       <Link
         className="block hover:scale-105 transition-all duration-300"
@@ -22,12 +22,12 @@ const Navbar = () => {
           height={80}
         />
       </Link>
-      <div className=" lg:flex hidden gap-6">
+      <div className=" lg:flex hidden gap-6 ">
         <CustomLink className="" href="/" title="Home" />
         <ServiceDropdown />
         <CustomLink className="" href="/portfolio" title="Portfolio" />
         <CustomLink className="" href="/careers" title="Careers" />
-        <CustomLink className="" href="/blog" title="Blogs" />
+        <CustomLink className="" href="/blogs" title="Blogs" />
         <CustomLink className="" href="/about-us" title="About" />
         <CustomLink className="" href="/contact-us" title="contact" />
       </div>

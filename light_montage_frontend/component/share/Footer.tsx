@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="justify-between py-5 px-9 rounded-[12px] max-w-3xl ms-auto w-full lg:flex hidden border border-white  bg-white/40 ">
+        <div className="justify-between py-5 px-9 rounded-[12px] max-w-3xl ms-auto w-full lg:flex hidden border border-white   bg-white/40  glassShadow ">
           <CustomLink
             className="  text-(--text-primary) "
             href="/"

@@ -47,17 +47,16 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
       <div className=" py-[60px]">
         <style>{`
       .testimonialbg {
-        background: linear-gradient(180deg, #E0D7FF 0%, rgba(224, 215, 255, 0.2) 100%);
-
+        background:   linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
       }
       `}</style>
         <Heading subtitle={description} tag="Testimonials" title={title} />
 
         <div className="w-full mx-auto mt-10 lg:mt-16 ">
           <Marquee
-            // gradientColor="#E0D7FF"
-            // gradientWidth={100}
-            // gradient
+            gradientColor="#E9F8FC"
+            gradientWidth={100}
+            gradient
             pauseOnHover
             className="overflow-hidden"
           >
@@ -77,9 +76,9 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
           </Marquee>
           <Marquee
             className=" mt-5 overflow-hidden h-80"
-            // gradientColor="#E0D7FF"
-            // gradientWidth={100}
-            // gradient
+            gradientColor="#E9F8FC"
+            gradientWidth={100}
+            gradient
             pauseOnHover
           >
             {messageTesti?.map((testimonial: ITestimonial, idx: number) => (

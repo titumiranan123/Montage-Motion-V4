@@ -47,7 +47,7 @@ const slides: Slide[] = [
   },
 ];
 
-function StorySlider() {
+function StorySlider({ activeIndexs }: { activeIndexs: number }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // track + draggable bits
@@ -56,7 +56,7 @@ function StorySlider() {
   const fillRef = useRef<HTMLDivElement>(null);
   const draggableRef = useRef<Draggable | null>(null);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(activeIndexs ?? 0);
   const count = slides.length;
 
   // ---------- Helpers (TOP → BOTTOM) ----------

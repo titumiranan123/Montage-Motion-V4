@@ -1,6 +1,5 @@
-import Heading from "@/component/share/Headering";
+import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
-import React from "react";
 
 const InsideMontage = () => {
   return (
@@ -15,7 +14,7 @@ const InsideMontage = () => {
         {/* Column 1 */}
         <div className="flex flex-col gap-4">
           <Image
-            src="/assets/gallary/image-1.png"
+            src="/assets/officegalary/image-1.png"
             alt="Creative workspace view"
             width={389}
             height={593}
@@ -25,7 +24,7 @@ const InsideMontage = () => {
             data-aos-delay={400}
           />
           <Image
-            src="/assets/gallary/image-4.png"
+            src="/assets/officegalary/image-4.png"
             alt="Behind the scenes"
             width={389}
             height={375}
@@ -38,7 +37,7 @@ const InsideMontage = () => {
         {/* Column 2 */}
         <div className="flex flex-col gap-4">
           <Image
-            src="/assets/gallary/image-2.png"
+            src="/assets/officegalary/image-2.png"
             alt="Collaborative area"
             width={389}
             height={265}
@@ -47,7 +46,7 @@ const InsideMontage = () => {
             data-aos-delay={500}
           />
           <Image
-            src="/assets/gallary/image-5.png"
+            src="/assets/officegalary/image-5.png"
             alt="Editing desk setup"
             width={389}
             height={265}
@@ -60,7 +59,7 @@ const InsideMontage = () => {
         {/* Column 3 */}
         <div className="flex flex-col gap-4">
           <Image
-            src="/assets/gallary/image-3.png"
+            src="/assets/officegalary/image-3.png"
             alt="Brainstorming session room"
             width={389}
             height={410}
@@ -69,7 +68,7 @@ const InsideMontage = () => {
             data-aos-delay={550}
           />
           <Image
-            src="/assets/gallary/image-6.png"
+            src="/assets/officegalary/image-6.png"
             alt="Team working together"
             width={389}
             height={513}

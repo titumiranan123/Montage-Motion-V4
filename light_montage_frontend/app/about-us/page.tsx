@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Brand from "@/component/about/Brand";
 import HeaderService from "@/component/about/Header";
 import TestimonialSection from "@/component/share/Testimonial";
 import React from "react";
@@ -9,7 +7,10 @@ import OurTeam from "./OurTeam";
 import OurStory from "./OurStory";
 import { getPageSEO } from "@/component/share/getPageSEO";
 import ContactSection from "@/component/share/ContactSection";
-import Navbar from "@/component/share/Navbar";
+
+import { getData } from "@/utils/getData";
+import FaqSection from "@/component/share/FaqSection";
+import PartnersSection from "@/component/home/PatnersSection";
 
 // Metadata for SEO
 export async function generateMetadata() {
@@ -17,38 +18,17 @@ export async function generateMetadata() {
 }
 
 const AboutUs = async () => {
-  let data: any = null;
-
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=about&table=brand`,
-      { cache: "no-store" } // ensures fresh data on every request
-    );
-
-    if (!res.ok) {
-      console.error("Failed to fetch About data:", res.statusText);
-    } else {
-      data = await res.json();
-    }
-  } catch (error) {
-    console.error("Error fetching About data:", error);
-  }
-
+  const data = await getData({
+    url: `api/website/data?type=about&table=brand,members`,
+  });
+  console.log(data?.data?.brand);
   return (
-    <div className="">
-      <div className="headerbg rounded-[40px] max-w-[1440px] px-[60px] mx-auto pb-[60px]">
-        <style>
-          {`
-            .headerbg {
-              background: linear-gradient(180deg, #EAF0F7 30.22%, #69CDE8 100%);
-
-            }
-            `}
-        </style>
-        <Navbar />
+    <div className=" mt-2 md:pt-0 ">
+      <div className="headerbg rounded-[40px] max-w-[1440px] px-2 xl:px-[60px] mx-auto pb-[60px] pt-16 mb-10">
         <HeaderService mainIntro={data?.data?.header || null} />
       </div>
-      <Brand />
+      <PartnersSection data={data?.data?.brand ?? []} />
+      {/* <Brand /> */}
       <OurMission />
 
       {data?.data?.testimonial?.length > 0 && (
@@ -60,7 +40,8 @@ const AboutUs = async () => {
       )}
 
       <OurStory />
-      <OurTeam />
+      <OurTeam members={data?.data?.members} />
+      <FaqSection />
       <InsideMontage />
       <ContactSection />
     </div>

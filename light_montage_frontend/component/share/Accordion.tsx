@@ -32,14 +32,15 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
     <div className="space-y-2">
       <style>{`
       .bgaccordion{
-        background: linear-gradient(180deg, #FFFFFF 0.01%, #FDEFE4 100.01%);
+        background: linear-gradient(179.93deg, #FFFFFF 0.07%, #CCF4FF 99.96%);
+        
       }
       `}</style>
       {items?.map((item, index) => (
         <div
           // data-aos="fade-up"
           // data-aos-delay={100 + index * 100}
-          className={`lg:max-w-[996px] min-h-[68px] w-full h-full rounded-[18px] border border-[#E8EAEA] ${
+          className={`lg:max-w-[996px] min-h-[68px] w-full h-full rounded-3xl  border border-[#E8EAEA] ${
             index === openIndex ? "bgaccordion border-transparent" : ""
           }`}
           key={index}
@@ -51,12 +52,12 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
               className="cursor-pointer p-6 flex justify-between items-center"
               onClick={() => handleToggle(index)}
             >
-              <h3 className="font-semibold poppins leading-[30px] md:text-[21px] text-[16px] flex items-center gap-2">
+              <h3 className="font-semibold poppins leading-[30px] md:text-[24px] md:leading-[145%] text-[16px] flex items-center gap-2">
                 Q. {item.question}
               </h3>
-              <div className="shrink-0 ml-4 border rounded-full">
+              <div className="shrink-0 ml-4 border border-(--text-primary) rounded-full">
                 <svg
-                  className={`transform fill-white transition-transform duration-300 ${
+                  className={`transform fill-(--text-primary) transition-transform duration-300 ${
                     openIndex === index ? "-rotate-180" : "rotate-0"
                   }`}
                   xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +80,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
               className="transition-all duration-300  ease-in-out overflow-hidden opensans"
             >
               <div className="px-6 pb-6 pt-0">
-                <p className="lg:text-[18px] lg:leading-[26px] text-sm font-opensans">
+                <p className="lg:text-[16px] font-normal lg:leading-[26px] text-sm opensans">
                   {item.answer}
                 </p>
               </div>

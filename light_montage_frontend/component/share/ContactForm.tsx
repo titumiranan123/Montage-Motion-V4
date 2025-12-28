@@ -32,6 +32,7 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
     try {
       const res = await api_url.post("/api/contacts", formData);
+      console.log(res);
       if (res.status === 201 || res.status === 200) {
         toast.success("Message sent successfully!");
 
@@ -44,15 +45,18 @@ const ContactForm: React.FC = () => {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error("Failed to sent message !");
-      console.log(error.responsce);
+      toast.error(
+        error?.response?.data?.errorDetails?.[0].message ??
+          "Failed to sent message !"
+      );
+      console.log(error?.response?.data?.errorDetails?.[0].message);
     }
     // Reset form if needed
   };
 
   return (
     <form
-      className="w-full  flex flex-col gap-4 justify-center items-center md:p-6  "
+      className="w-full  flex flex-col gap-4 justify-center items-center md:p-6  p-2"
       onSubmit={handleSubmit}
     >
       <div className=" text-(--text-primary)  w-full flex flex-col gap-2 ">
@@ -68,7 +72,7 @@ const ContactForm: React.FC = () => {
           value={formData.name}
           onChange={handleChange}
           placeholder="John Doe"
-          className="max-w-[542px] w-full h-14 rounded-2xl md:p-4 p-3 border border-[#B9BEBF] animated hover:scale-[103%] focus:outline-none"
+          className="max-w-[542px] w-full h-14 rounded-2xl md:p-4 p-3 border border-[#B9BEBF] animated hover:scale-[103%] focus:outline-none text-[16px] leading-[100%] font-normal"
         />
       </div>
 
@@ -85,7 +89,7 @@ const ContactForm: React.FC = () => {
           value={formData.email}
           onChange={handleChange}
           placeholder="john48@gmail.com"
-          className="max-w-[542px] w-full h-14 rounded-2xl md:p-4 p-3 border border-[#B9BEBF] animated hover:scale-[103%] focus:outline-none"
+          className="max-w-[542px] w-full h-14 rounded-2xl md:p-4 p-3 border border-[#B9BEBF] animated hover:scale-[103%] focus:outline-none text-[16px] leading-[100%] font-normal"
         />
       </div>
 
@@ -100,7 +104,7 @@ const ContactForm: React.FC = () => {
           name="interestedIn"
           value={formData.interestedIn}
           onChange={handleChange}
-          className="max-w-[542px] w-full h-14 rounded-2xl border border-[#B9BEBF] animated hover:scale-[103%]  p-3  text-(--text-primary)  focus:outline-none backdrop-blur-2xl "
+          className="max-w-[542px] w-full h-14 rounded-2xl border border-[#B9BEBF] animated hover:scale-[103%]  p-3  text-(--text-primary)  focus:outline-none backdrop-blur-2xl text-[16px] leading-[100%] font-normal"
         >
           <option className="  text-(--text-primary) " value="talking-head">
             Talking Head Video Editing
@@ -126,7 +130,7 @@ const ContactForm: React.FC = () => {
           value={formData.message}
           onChange={handleChange}
           placeholder="I would like to know more about your service"
-          className="max-w-[542px] w-full h-[120px] md:p-4 p-3 rounded-2xl border border-[#B9BEBF] animated hover:scale-[103%] focus:outline-none"
+          className="max-w-[542px] w-full h-[120px] md:p-4 p-3 rounded-2xl border border-[#B9BEBF] animated hover:scale-[103%] focus:outline-none text-[16px] leading-[100%] font-normal"
         />
       </div>
 

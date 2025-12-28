@@ -7,36 +7,25 @@ import ServiceSections from "@/component/home/ServiceSections";
 import WhyChooseUs from "@/component/home/WhyChooseUs";
 import ContactSection from "@/component/share/ContactSection";
 import FaqSection from "@/component/share/FaqSection";
+import { getPageSEO } from "@/component/share/getPageSEO";
 import IndustryWeWork from "@/component/share/IndustryWork";
-import Navbar from "@/component/share/Navbar";
 import TestimonialSection from "@/component/share/Testimonial";
-import React from "react";
-const getPageData = async () => {
-  const [seoRes, mainRes] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/seo/home`, {
-      cache: "no-store",
-    }),
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/website/data?type=home&&table=brand,services,process,whychooseus`,
-      {
-        cache: "no-store",
-      }
-    ),
-  ]);
-  const seoData = await seoRes.json();
-  const data = await mainRes.json();
-  console.log(data);
-  return { seo: seoData.data, main: data.data };
-};
+import { getData } from "@/utils/getData";
+export async function generateMetadata() {
+  return await getPageSEO("home");
+}
 const HomePage = async ({
   searchParams,
 }: {
-  searchParams: { tab: string };
+  searchParams: Promise<{ tab: string }>;
 }) => {
+  const { data } = await getData({
+    url: `api/website/data?type=home&&table=brand,services,process,whychooseus`,
+  });
+
   const { tab } = await searchParams;
-  const { main: data } = await getPageData();
   return (
-    <div className="">
+    <div className="mt-4">
       <div className="headerbg rounded-[40px] max-w-[1440px] px-[60px] mx-auto">
         <style>
           {`
@@ -46,21 +35,21 @@ const HomePage = async ({
             }
             `}
         </style>
-        <Navbar />
-        <Header data={data?.header} />
+
+        <Header data={data?.header ?? []} />
       </div>
-      <PartnersSection data={data?.brand} />
-      <OurFeatureProject tab={tab} />
-      <ServiceSections data={data?.services} />
+      <PartnersSection data={data?.brand ?? []} />
+      <OurFeatureProject tab={tab ?? []} />
+      <ServiceSections data={data?.services ?? []} />
       <TestimonialSection
         title="What Our Clients Say"
         description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-        data={data?.testimonial}
+        data={data?.testimonial ?? []}
       />
-      <OurProcess process={data?.process} />
+      <OurProcess process={data?.process ?? []} />
       <ComparisonCards />
       <IndustryWeWork />
-      <WhyChooseUs data={data?.whychooseus} />
+      <WhyChooseUs data={data?.whychooseus ?? []} />
       <FaqSection />
       <ContactSection />
     </div>

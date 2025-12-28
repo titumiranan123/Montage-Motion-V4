@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const Portfoliotab = ({ tab }: { tab: string }) => {
+const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentTab = searchParams.get("cat") || tab ? tab : "talkinghead";
@@ -19,28 +19,7 @@ const Portfoliotab = ({ tab }: { tab: string }) => {
     router.replace(`?cat=${activeTab}`);
   }, [activeTab, router]);
 
-  const tabConfig = [
-    {
-      title: "Talking Video Editing",
-      href: "talkinghead",
-    },
-    {
-      title: "Podcast Video Editing ",
-      href: "podcast",
-    },
-    {
-      title: "Shorts Video Editing",
-      href: "shorts",
-    },
-    {
-      title: "Thumbnail Design",
-      href: "thumbnail",
-    },
-    {
-      title: "SaaS Video Editing",
-      href: "saas",
-    },
-  ];
+  const tabConfig = types ?? [];
 
   const handleSearch = (e: any) => {
     const value = e.target.value;
@@ -55,6 +34,34 @@ const Portfoliotab = ({ tab }: { tab: string }) => {
         .searchbg{
           background: linear-gradient(250.64deg, rgba(51, 87, 163, 0.5) 0%, rgba(51, 87, 163, 0) 50%, rgba(51, 87, 163, 0.5) 100%);
         }
+    
+        .tabScroll {
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: thin; /* Firefox */
+          scrollbar-color: rgba(51,87,163,.6) transparent;
+        }
+      
+        /* Chrome, Edge, Safari */
+        .tabScroll::-webkit-scrollbar {
+          height: 10px;
+        }
+      
+        .tabScroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+      
+        .tabScroll::-webkit-scrollbar-thumb {
+          background: linear-gradient(
+            90deg,
+            rgba(51,87,163,.6),
+            rgba(51,87,163,.3)
+          );
+          border-radius: 10px;
+        }
+       
+      
         `}
       </style>
       {/* search hidden by tailwind class */}
@@ -72,16 +79,16 @@ const Portfoliotab = ({ tab }: { tab: string }) => {
           />
         </button>
       </div>
-      <div className="pills backdrop-blur-lg  group  max-w-[814px] h-[75px] flex justify-center items-center mx-auto rounded-[12px] p-px mt-5 transition-all duration-300">
-        {tabConfig.map((tab) => (
+      <div className="glassShadow tabScroll  bg-white/40  backdrop-blur-2xl  group  max-w-[594px] h-[75px] flex justify-left items-center mx-auto rounded-[12px] p-px mt-5 transition-all duration-300 overflow-x-scroll px-3 ">
+        {tabConfig?.slice(1)?.map((tab: any) => (
           <button
-            key={tab.href}
-            onClick={() => handleTabClick(tab.href)}
-            className={`py-2 px-3 text-(--text-primary) opensans font-normal text-[14px] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px]  ${
-              activeTab === tab.href ? "btn-color font-semibold" : ""
+            key={tab?.href}
+            onClick={() => handleTabClick(tab?.service_type)}
+            className={`py-2 px-3 text-(--text-primary) opensans font-medium text-[14px] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px]  ${
+              activeTab === tab?.service_type ? "btn-color font-semibold" : ""
             }`}
           >
-            {tab.title}
+            {tab?.service_title}
           </button>
         ))}
       </div>

@@ -1,10 +1,8 @@
 "use client";
 
 import ContactForm from "@/component/share/ContactForm";
-import Gradientcard from "@/component/share/Gradientcard";
-import Heading from "@/component/share/Headering";
+import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
-import React from "react";
 
 const FirstSection = () => {
   return (
@@ -12,8 +10,7 @@ const FirstSection = () => {
       <Heading
         subtitle="See how design meets function. Real results, clean code, and user-first experiences."
         tag="Contact Us"
-        title="Have a Project ? "
-        extratitle="Let's Talk"
+        title="Have a Project ? Let's Talk "
       />
       <div className=" lg:mt-20 mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mx-auto">
         <div className="flex flex-col gap-4 w-full justify-center items-center mx-auto">
@@ -29,21 +26,23 @@ const FirstSection = () => {
               icon: "/assets/icon/whatsapp.png",
             },
             {
-              title: "Visit Us",
+              title: "Work at Montage Motion",
               value: "See current job opportunities",
-              icon: "/assets/icon/users.png",
+              icon: "/assets/currentjob.png",
+            },
+            {
+              title: "Visit Us",
+              value: "Learn more about our services",
+              icon: "/assets/icon/visit.png",
             },
           ].map((item, idx) => (
             <div
-              className="w-full"
+              className="w-full "
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
             >
-              <Gradientcard
-                className="contact-card flex justify-between items-center text-(--text-primary) max-w-[582px] w-full h-[190px] rounded-3xl "
-                borderClassName="max-w-[582px] w-full h-[192px] rounded-[24px] p-[1px] translate-all duration-300 ease-in-out hover:scale-105"
-              >
+              <div className="contact-card flex justify-between items-center text-(--text-primary)  max-w-[622px] w-full h-[139px] rounded-3xl glassShadow bg-white/40 backdrop-blur-2xl animated hover:scale-[104%] px-5 py-6">
                 <div>
                   <h3 className="text-[20px] md:text-[24px] md:leading-[30px] font-semibold poppins">
                     {item.title}
@@ -59,17 +58,17 @@ const FirstSection = () => {
                   width={36}
                   height={36}
                 />
-              </Gradientcard>
+              </div>
             </div>
           ))}
         </div>
-        <div data-aos="fade-up" data-aos-delay={600}>
-          <Gradientcard
-            className="contact-card flex justify-center mx-auto items-center text-(--text-primary) max-w-[582px] w-full h-auto rounded-3xl"
-            borderClassName="max-w-[582px] mx-auto w-full h-auto rounded-[24px] p-[1px]"
-          >
-            <ContactForm />
-          </Gradientcard>
+
+        <div
+          data-aos="fade-up"
+          data-aos-delay={600}
+          className="contact-card flex justify-center mx-auto items-center text-(--text-primary) max-w-[582px]  w-full h-auto rounded-3xl glassShadow  bg-white/40  backdrop-blur-2xl"
+        >
+          <ContactForm />
         </div>
       </div>
     </div>

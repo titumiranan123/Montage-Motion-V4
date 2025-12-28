@@ -23,7 +23,7 @@ const TestimonialMessagecard = ({
   testimonial: testimonial;
 }) => {
   return (
-    <div className="md:w-[588px] w-[300px]  h-[299px] mx-auto p-3 pills rounded-3xl backdrop-blur-lg">
+    <div className="md:w-[588px] w-[300px]  h-[299px] mx-auto p-3 glassShadow  bg-white/40  backdrop-blur-2xl rounded-3xl">
       <div
         // style={{ boxShadow: "0px 4px 60px 0px #1FB5DD29 inset" }}
         className=" md:p-4  w-full h-auto p-4  flex flex-col gap-4"

@@ -1,205 +1,143 @@
 "use client";
-
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Draggable } from "gsap/Draggable";
-import Heading from "@/component/share/Headering";
-import StorySlider from "./StorySlider";
 import Gradientcard from "@/component/share/Gradientcard";
+import { Heading } from "@/component/share/Headering";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
-gsap.registerPlugin(ScrollTrigger, Draggable);
-
-interface Slide {
-  title: string;
-  description: string;
-  image: string;
-}
-
-const slides: Slide[] = [
+const storyCards = [
   {
-    title: "Sharpen Your Skills on Impactful Projects",
+    title: "Where we Began",
     description:
-      "Collaborate with diverse, growth-focused client teams and a world-class squad. Your work here will directly shape the success of major client campaigns.",
+      "Montage Motion started with a passion for storytelling through video. What began as a small editing team focused on helping creators polish their content quickly became a creative hub where ideas turned into impactful visuals.",
     image: "/assets/podcast/process.png",
   },
   {
-    title: "Talent Trumps Geography",
+    title: "How we Grew",
     description:
-      "We’ve turned the best talent, not the closest desk. If you don’t live near one of our physical hubs, you’re still in! We hire remote scorers with brand-new, top-grade equipment.",
+      "As demand grew, so did we. From video editing, we expanded into advertising, graphic design, and custom website development. Our team grew into a powerhouse of 12+ specialists, delivering projects for creators, businesses, and brands across industries.",
     image: "/assets/podcast/greatpodcast.png",
   },
   {
-    title: "Forge Meaningful Connections",
+    title: "Where we're Going",
     description:
-      "Join our remote team for engaging IR Talks, virtual team-building events, and fun interactive sessions. We’re always connected even in a creative flow.",
-    image: "/assets/podcast/process.png",
-  },
-  {
-    title: "Build a True Career Trajectory",
-    description:
-      "We invest in full-time, long-term opportunities for top talent. This isn’t just a job; it’s a foundation for a lasting career where you’ll have a clear path for advancement.",
-    image: "/assets/podcast/greatpodcast.png",
-  },
-  {
-    title: "Keep Growing",
-    description:
-      "Get feedback, mentorship, and ever-bigger challenges as you prove yourself.",
+      "The future is bold. Montage Motion is on a mission to become a global creative partner for content creators and brands, pushing the boundaries of short-form video, marketing visuals, and digital storytelling. We're building towards innovation, scale, and impact that inspires millions.",
     image: "/assets/podcast/process.png",
   },
 ];
 
-function OurStory() {
-  // track + draggable bits
-  const trackRef = useRef<HTMLDivElement>(null);
-  const handleRef = useRef<HTMLDivElement>(null);
-  const fillRef = useRef<HTMLDivElement>(null);
-  const draggableRef = useRef<Draggable | null>(null);
-
+export default function OurStory() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const count = slides.length;
-
-  // ---------- Helpers (TOP → BOTTOM) ----------
-  const setToIndex = (index: number, animate = true) => {
-    const track = trackRef.current;
-    const handle = handleRef.current;
-    const fill = fillRef.current;
-    if (!track || !handle || !fill) return;
-
-    const rect = track.getBoundingClientRect();
-    const trackH = rect.height;
-    const handleH = handle.offsetHeight || 16;
-
-    // t: 0 at top, 1 at bottom
-    const t = count <= 1 ? 0 : gsap.utils.clamp(0, 1, index / (count - 1));
-    const y = t * (trackH - handleH);
-
-    const apply = (obj: Element, props: gsap.TweenVars) =>
-      animate
-        ? gsap.to(obj, { ...props, duration: 0.18, ease: "power2.out" })
-        : gsap.set(obj, props);
-
-    apply(handle, { y });
-    apply(fill, { height: `${t * 100}%` });
-  };
-
-  // ---------- DRAG: snap on release (image changes on snap) ----------
+  const [capPosition, setCapPosition] = useState(8);
+  console.log("capPosition", capPosition);
   useEffect(() => {
-    const track = trackRef.current;
-    const handle = handleRef.current;
-    const fill = fillRef.current;
-    if (!track || !handle || !fill) return;
+    const handleScroll = () => {
+      const cards = document.querySelectorAll(".story-card");
+      const cardsContainer = document.querySelector(".cards-container");
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        if (
+          rect.top < window.innerHeight / 2 &&
+          rect.bottom > window.innerHeight / 2
+        ) {
+          setActiveIndex(index);
+        }
+      });
 
-    // init
-    setToIndex(0, false);
-
-    // kill previous
-    draggableRef.current?.kill();
-
-    draggableRef.current = Draggable.create(handle, {
-      type: "y",
-      bounds: track,
-      onDrag: function () {
-        // live preview of fill only (no image change while dragging)
-        const minY = this.minY ?? 0;
-        const maxY = this.maxY ?? 0;
-        const clampedY = gsap.utils.clamp(minY, maxY, this.y);
-        const t = (clampedY - minY) / (maxY - minY || 1); // 0 top → 1 bottom
-        gsap.set(fill, { height: `${gsap.utils.clamp(0, 1, t) * 100}%` });
-      },
-      onRelease: function () {
-        const minY = this.minY ?? 0;
-        const maxY = this.maxY ?? 0;
-        const clampedY = gsap.utils.clamp(minY, maxY, this.y);
-        const t = (clampedY - minY) / (maxY - minY || 1);
-        const snappedIndex = Math.round(
-          gsap.utils.clamp(0, 1, t) * (count - 1)
+      if (cardsContainer) {
+        const containerRect = cardsContainer.getBoundingClientRect();
+        const containerTop = containerRect.top;
+        const containerHeight = containerRect.height;
+        const windowHeight = window.innerHeight;
+        const relativeScroll = Math.max(
+          0,
+          Math.min(1, (windowHeight / 2 - containerTop) / containerHeight)
         );
-        setActiveIndex(snappedIndex);
-        setToIndex(snappedIndex, true);
-
-        // tiny pulse for feel
-        gsap.fromTo(
-          handle,
-          { scale: 0.95 },
-          { scale: 1, duration: 0.15, ease: "power2.out" }
-        );
-      },
-    })[0];
-
-    const onResize = () => setToIndex(activeIndex, false);
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-      draggableRef.current?.kill();
-      draggableRef.current = null;
+        setCapPosition(relativeScroll * 100);
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count]);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section className="sectionGap container">
+    <div className="bg-white p-8 max-w-7xl mx-auto">
       <Heading
-        subtitle="From humble beginnings to a growing creative powerhouse — discover how Montage Motion started, evolved, and where we’re headed next."
         tag="Our Story"
         title="Our Story in Motion"
+        subtitle="From humble beginnings to a growing creative powerhouse — discover how Montage Motion started, evolved, and where we’re headed next."
       />
-      <div className="lg:mt-10 mt-8 flex justify-between lg:flex-row flex-col items-center gap-7">
-        <div className="lg:w-1/2 w-full">
-          <StorySlider />
+
+      <div className="flex gap-8 mt-16">
+        {/* Left - Image */}
+        <div className="w-1/2 sticky top-36 h-fit">
+          <Image
+            src={storyCards[activeIndex].image}
+            alt={storyCards[activeIndex].title}
+            width={590}
+            height={620}
+            className="w-[590px] h-[620px] rounded-[13px] object-cover"
+          />
         </div>
-        <div
-          data-aos="fade-up"
-          data-aos-delay={500}
-          className=" text-[#E4E8F7] flex flex-col gap-4 lg:w-1/2 w-full"
-        >
-          <Gradientcard
-            className="max-w-[582px] min-h-[180px] rounded-3xl py-6 px-4 "
-            borderClassName="max-w-[582px] min-h-[180px] rounded-[24px] p-[1px]"
-          >
-            <h2 className="text-[20px] md:text-[24px] font-semibold poppins ">
-              Where we Began
-            </h2>
-            <p className="text-[14px] md:text-[16px] font-normal opensans ">
-              Montage Motion started with a passion for storytelling throught
-              video. What began as a small editingteam foucsed on helpoing
-              creators polish their content quickly became a creative hub where
-              ideas turned into impactful visuals.
-            </p>
-          </Gradientcard>
-          <Gradientcard
-            className="max-w-[582px] min-h-[180px] rounded-3xl py-6 px-4 "
-            borderClassName="max-w-[582px] min-h-[180px] rounded-[24px] p-[1px]"
-          >
-            <h2 className="text-[20px] md:text-[24px] font-semibold poppins ">
-              How we Began
-            </h2>
-            <p className="text-[14px] md:text-[16px] font-normal opensans ">
-              As demand grew, so did we. From video editing, we expanded into
-              advertising, graphic design, and custom website development. Our
-              team grew into a powerhouse of 12+ specialists, delivering
-              projects for creators, businesses, and brands across industries.
-            </p>
-          </Gradientcard>
-          <Gradientcard
-            className="max-w-[582px] min-h-[180px] rounded-3xl py-6 px-4 "
-            borderClassName="max-w-[582px] min-h-[180px] rounded-[24px] p-[1px]"
-          >
-            <h2 className="text-[20px] md:text-[24px] font-semibold poppins ">
-              Where we&apos;re Going
-            </h2>
-            <p className="text-[14px] md:text-[16px] font-normal opensans ">
-              The future is bold. Montage Motion is on a mission to become a
-              global creative partner for content creators and brands, pushing
-              the boundaries of short-form video, marketing visuals, and digital
-              storytelling. We’re building towards innovation, scale, and impact
-              that inspires millions.
-            </p>
-          </Gradientcard>
+        <div className="relative w-6 lg:flex hidden items-start justify-center select-none lg:sticky lg:top-32 h-[600px]">
+          <div className="relative h-full w-6 rounded-full overflow-visible">
+            {/* Background beam */}
+            <div
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(31, 181, 221, 0.2) 0.02%, #1FB5DD 21.38%, rgba(31, 181, 221, 0.2) 100%)",
+              }}
+              className="absolute left-1/2 -translate-x-1/2 w-2.5 h-full rounded-[25px]"
+            />
+
+            {/* Fill (TOP → DOWN) */}
+            <div
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-2.5 rounded-[25px] transition-all duration-300"
+              style={{
+                height: "0%",
+                background: `linear-gradient(180deg, rgba(31, 181, 221, 0.2) 0.02%, #1FB5DD 21.38%, rgba(31, 181, 221, 0.2) 100%)`,
+              }}
+            />
+
+            {/* Handle (animated cap) */}
+            <div
+              style={{
+                top: `${
+                  Number(capPosition) === 0 ? capPosition + 0 : capPosition - 6
+                }%`,
+              }}
+              className="absolute top-5 left-1/2 -translate-x-1/2 w-[18px] h-[38px] rounded-[25px] bg-[#1FB5DD]  pointer-events-none"
+              aria-label="Progress indicator"
+            />
+          </div>
+        </div>
+        {/* Right - Cards */}
+        <div className="w-1/2 space-y-8 cards-container">
+          {storyCards.map((card, index) => (
+            <div
+              key={index}
+              className="story-card"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
+              <Gradientcard
+                isHover={activeIndex !== index}
+                className="max-w-[582px] min-h-[250px] rounded-3xl py-6 px-4"
+                borderClassName={`max-w-[582px]  min-h-[250px] rounded-[24px] p-[1px] ${
+                  activeIndex === index ? "scale-105" : "scale-100"
+                }`}
+              >
+                <h2 className="text-[20px] md:text-[24px] font-semibold poppins mb-3">
+                  {card.title}
+                </h2>
+                <p className="text-[14px] md:text-[16px] font-normal opensans leading-relaxed">
+                  {card.description}
+                </p>
+              </Gradientcard>
+            </div>
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
-
-export default OurStory;

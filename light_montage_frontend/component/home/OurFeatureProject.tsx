@@ -1,6 +1,7 @@
 import HomeProjectTab from "./HomeProjectTab";
 import DynamicWorkContent from "./DynamicWorkContent";
 import { Heading } from "../share/Headering";
+import { getData } from "@/utils/getData";
 
 const OurFeatureProject = async ({ tab = "fullform" }: { tab: string }) => {
   const workSection = {
@@ -9,19 +10,16 @@ const OurFeatureProject = async ({ tab = "fullform" }: { tab: string }) => {
       "Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing",
     tag: "Our Works",
   };
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/works/website?type=${
-      tab === "fullform" ? "home" : tab
-    }&&limit=6`
-  );
-  const result = await response.json();
-  const data = result?.data;
+
+  const { data } = await getData({
+    url: `api/works/website?type=${tab === "fullform" ? "home" : tab}&&limit=6`,
+  });
 
   return (
     <div className="container bgwork rounded-[40px] lg:py-[60px] lg:mt-[50px] md:mt-10 mt-6">
       <style>{`
       .bgwork {
-        background: linear-gradient(180deg, #FFF7D3 0%, rgba(254, 249, 228, 0.2) 100%);
+        background: linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
 
       }
       `}</style>

@@ -8,8 +8,8 @@ const ContactSection = () => {
     <div className="container contactbg sectionGap  p-[60px] rounded-[40px]">
       <style>{`
       .contactbg{
-        background: linear-gradient(180deg, #E0D7FF 0%, rgba(224, 215, 255, 0.2) 100%);
-
+        background: linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
+        
       }
       `}</style>
 
@@ -21,104 +21,57 @@ user-first experiences."
         isbackground={true}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
-        <div className=" text-(--text-primary)  flex flex-col items-start justify-center w-full">
-          <div className=" flex gap-4 flex-col w-full">
-            <style>{`
-            .glass {
-            border: 2px solid hsl(0,0%,100%,0.3);
-            background:hsl(0,0%,100%,0.2);
-            backdrop-filter: blur(2px);
-            box-shadow: inset 0 0 8px -1px hsl(0,0%,100%,0.3);
-            }
-            `}</style>
-            <div data-aos="fade-up" data-aos-delay={600}>
-              <div className="max-w-[622px] h-[139px] w-full  rounded-3xl glass  py-10 px-5 flex items-center transition-all duration-300 ease-in-out  hover:scale-105">
-                <div className="flex justify-between  items-center rounded-3xl py-4 px-4 w-full">
-                  <div>
-                    <h3 className="poppins text-[24px] font-medium text-(--text-primary)">
-                      Email Us{" "}
-                    </h3>
-                    <p className="font-normal opensans md:text-[16px] text-[14px]">
-                      Hello@montagemotion.com
-                    </p>
-                  </div>
-                  <Image
-                    src={"/assets/icon/gmail.png"}
-                    alt="gmail"
-                    className="w-14 h-14 bg-white rounded-[12px] p-2.5"
-                    width={36}
-                    height={36}
-                  />
+        <div className="flex flex-col gap-4 w-full justify-center items-center mx-auto">
+          {[
+            {
+              title: "Email Us",
+              value: "hello@montagemotion.com",
+              icon: "/assets/icon/gmail.png",
+            },
+            {
+              title: "Call Us",
+              value: "+880 1786-546949",
+              icon: "/assets/icon/whatsapp.png",
+            },
+            {
+              title: "Work at Montage Motion",
+              value: "See current job opportunities",
+              icon: "/assets/currentjob.png",
+            },
+            {
+              title: "Visit Us",
+              value: "Learn more about our services",
+              icon: "/assets/icon/users.png",
+            },
+          ].map((item, idx) => (
+            <div
+              className="w-full "
+              key={idx}
+              data-aos="fade-up"
+              data-aos-delay={100 + idx * 100}
+            >
+              <div className="contact-card flex justify-between items-center text-(--text-primary)  max-w-[622px] w-full h-[139px] rounded-3xl glassShadow  bg-white/40  backdrop-blur-2xl animated hover:scale-[104%] px-5 py-6">
+                <div>
+                  <h3 className="text-[20px] md:text-[24px] md:leading-[30px] font-semibold poppins">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14px] md:text-[16px] md:leading-[140%] font-normal opensans">
+                    {item.value}
+                  </p>
                 </div>
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  className="w-14 h-14 bg-white rounded-[12px] p-2.5"
+                  width={36}
+                  height={36}
+                />
               </div>
             </div>
-            <div data-aos="fade-up" data-aos-delay={700}>
-              <div className="max-w-[622px] max-h-[139px] w-full  rounded-3xl bg-white/40 border border-white py-10 px-5 flex items-center animated  hover:scale-105">
-                <div className="flex justify-between  items-center rounded-3xl py-4 px-4 w-full">
-                  <div>
-                    <h3 className="poppins text-[24px] font-medium  text-(--text-primary) ">
-                      Chat on WhatsApp{" "}
-                    </h3>
-                    <p className="font-normal opensans md:text-[16px] text-[14px]">
-                      +8801862938306
-                    </p>
-                  </div>
-                  <Image
-                    src={"/assets/icon/whatsapp.png"}
-                    alt="gmail"
-                    className="w-14 h-14 bg-white rounded-[12px] p-2.5"
-                    width={36}
-                    height={36}
-                  />
-                </div>
-              </div>
-            </div>
-            <div data-aos="fade-up" data-aos-delay={700}>
-              <div className="max-w-[622px] h-[139px] w-full  rounded-3xl bg-white/40 border border-white py-10 px-5 flex items-center animated  hover:scale-105">
-                <div className="flex justify-between  items-center rounded-3xl py-4 px-4 w-full">
-                  <div>
-                    <h3 className="poppins text-[24px] font-medium  text-(--text-primary) ">
-                      Work at Motage Motion
-                    </h3>
-                    <p className="font-normal opensans md:text-[16px] text-[14px]">
-                      See current job opportuites
-                    </p>
-                  </div>
-                  <Image
-                    src={"/assets/icon/users.png"}
-                    alt="gmail"
-                    className="w-14 h-14 bg-white rounded-[12px] p-2.5"
-                    width={36}
-                    height={36}
-                  />
-                </div>
-              </div>
-            </div>
-            <div data-aos="fade-up" data-aos-delay={700}>
-              <div className="max-w-[622px] h-[139px] w-full  rounded-3xl bg-white/40 border border-white py-10 px-5 flex items-center animated  hover:scale-105">
-                <div className="flex justify-between  items-center rounded-3xl py-4 px-4 w-full">
-                  <div>
-                    <h3 className="poppins text-[24px] font-medium  text-(--text-primary) ">
-                      Work at Motage Motion
-                    </h3>
-                    <p className="font-normal opensans md:text-[16px] text-[14px]">
-                      See current job opportuites
-                    </p>
-                  </div>
-                  <Image
-                    src={"/assets/icon/users.png"}
-                    alt="gmail"
-                    className="w-14 h-14 bg-white rounded-[12px] p-2.5"
-                    width={36}
-                    height={36}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
         <div data-aos="fade-up" data-aos-delay={400}>
-          <div className="contact-card flex justify-between items-center  text-(--text-primary)  max-w-[622px] bg-white/40 w-full h-[604px] rounded-3xl border border-white">
+          <div className="contact-card flex justify-between items-center  text-(--text-primary)  max-w-[622px] glassShadow  bg-white/40  backdrop-blur-2xl w-full h-[604px] rounded-3xl ">
             <ContactForm />
           </div>
         </div>

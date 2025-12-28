@@ -1,63 +1,92 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import useAlltype from "@/hook/useALLtype";
 
 const HomeProjectTab = () => {
+  const { type } = useAlltype();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const tabConfig = [
-    { id: "fullform", label: "Long-form Video" },
-    { id: "shorts", label: "Shorts/Reel" },
-    { id: "thumbnail", label: "Thumbnail Design" },
-    { id: "talkinghead", label: "Talking Head" },
-    { id: "podcast", label: "Podcast" },
-  ];
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
-  // get initial tab from URL or fallback default
-  const defaultTab = searchParams.get("tab") || "fullform";
-
-  const [activeTab, setActiveTab] = useState(
-    defaultTab === "fullform" ? "home" : defaultTab
-  );
+  const tabConfig = [...type];
+  const defaultTab = searchParams.get("tab") || "home";
+  const [activeTab, setActiveTab] = useState(defaultTab);
 
   const handleTabClick = (tabId: string) => {
-    setActiveTab(tabId);
-    router.push(`?tab=${tabId}`, { scroll: false });
+    if (!isDragging) {
+      setActiveTab(tabId);
+      router.push(`?tab=${tabId}`, { scroll: false });
+    }
   };
 
-  // Sync tab state if URL changed manually
-  useEffect(() => {
-    const currentTab = searchParams.get("tab");
-    if (currentTab && currentTab !== activeTab) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setActiveTab(currentTab);
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    scrollContainerRef.current.style.cursor = "grabbing";
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.cursor = "grab";
     }
-  }, [activeTab, searchParams]);
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      setIsDragging(false);
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.style.cursor = "grab";
+      }
+    }
+  };
 
   return (
-    <div className="searchbg p-px max-w-[725px] max-h-[59px] rounded-[56px] mx-auto mt-8">
-      <div
-        className="
+    <div
+      ref={scrollContainerRef}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
+      className="
           flex gap-3 lg:gap-6 pb-2 w-full 
-          justify-start lg:justify-center items-center 
-          max-h-[57px] rounded-[56px] py-[11px] px-3 
-          bg-black mx-auto tabBorder 
-          overflow-x-auto scrollbar-hide
+          justify-start lg:justify-start items-center 
+          max-h-[79px] rounded-lg p-3 
+          mx-auto  
+          overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent
+          hover:scrollbar-thumb-gray-500
+          mt-8 glassShadow  bg-white/40  backdrop-blur-2xl max-w-[594px]
+          cursor-grab select-none
         "
-      >
-        {tabConfig.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => handleTabClick(tab.id)}
-            className={`py-2 px-2 md:px-4  text-(--text-primary)  opensans font-normal md:text-[14px] text-[13px] rounded-[36px] transition-colors whitespace-nowrap ${
-              activeTab === tab.id ? "bg-[#2B6AB2] font-semibold" : ""
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      style={{ scrollbarWidth: "thin" }}
+    >
+      {tabConfig?.slice(1)?.map((tab) => (
+        <button
+          key={tab.id}
+          onClick={() => handleTabClick(tab?.service_type)}
+          className={`py-2 px-2 md:px-4 text-(--text-primary) opensans font-semibold md:text-[16px] text-[13px] rounded-lg transition-colors whitespace-nowrap h-[51px] pointer-events-auto ${
+            activeTab === tab?.service_type ? "btn-color " : ""
+          }`}
+        >
+          {tab?.service_title}
+        </button>
+      ))}
     </div>
   );
 };
