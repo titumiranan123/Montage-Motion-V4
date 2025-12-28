@@ -11,18 +11,9 @@ const PlyrComponent = dynamic(() => import("plyr-react"), { ssr: false });
 interface Props {
   youtubeUrl: string;
   thumbnail?: string;
-  width?: string | number;
-  height?: string | number;
-  aspectRatio?: string;
 }
 
-export default function VideoPlayer({
-  youtubeUrl,
-  thumbnail,
-  width = "100%",
-  height = "auto",
-  aspectRatio = "16 / 9",
-}: Props) {
+export default function FeaturePlayer({ youtubeUrl, thumbnail }: Props) {
   const plyrRef = useRef<{ plyr: Plyr } | null>(null);
 
   const source: SourceInfo = {
@@ -32,6 +23,10 @@ export default function VideoPlayer({
         src: youtubeUrl,
         provider: "html5",
       },
+      // {
+      //   src: "https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/full%20length.mp4",
+      //   provider: "html5",
+      // },
     ],
     poster: thumbnail,
   };
@@ -92,23 +87,9 @@ export default function VideoPlayer({
       }
     };
   }, []);
-  const normalizeSize = (size: string | number) => {
-    if (typeof size === "number") {
-      return `${size}px`;
-    }
-    return size;
-  };
-  const normalizedWidth = normalizeSize(width);
-  const normalizedHeight = normalizeSize(height);
+
   return (
-    <div
-      style={{
-        width: normalizedWidth,
-        height: normalizedHeight,
-        aspectRatio: normalizedHeight === "auto" ? aspectRatio : undefined,
-      }}
-      className="video-player-wrapper overflow-hidden rounded-2xl xl:rounded-[40px]"
-    >
+    <div className="feature-player-wrapper">
       <noscript>
         <video
           controls
@@ -116,7 +97,7 @@ export default function VideoPlayer({
           style={{
             width: "100%",
             height: "100%",
-
+            background: "#000",
             objectFit: "cover",
           }}
         ></video>
@@ -127,16 +108,14 @@ export default function VideoPlayer({
           position: relative;
           width: 100%;
           aspect-ratio: 16 / 9;
+          background: #000;
         }
 
         /* Ensure video maintains aspect ratio */
-        .plyr {
-          width: 100% !important;
-          height: 100% !important;
-        }
 
-        .plyr__video-wrapper {
-        }
+        // .plyr__video-wrapper {
+        //   background: #000;
+        // }
 
         .plyr video {
           object-fit: contain;
@@ -166,7 +145,6 @@ export default function VideoPlayer({
         }
 
         .plyr--video .plyr__control--overlaid:hover {
-          background: #2b6ab2 !important;
           transform: translate(-50%, -50%) scale(1.1) !important;
         }
 
@@ -210,12 +188,6 @@ export default function VideoPlayer({
         .plyr__controls {
           opacity: 1;
           transition: opacity 0.3s ease;
-        }
-        .plyr__poster {
-          object-fit: cover; /* পুরো area cover করে, crop হতে পারে */
-          object-fit: contain; /* পুরো image দেখায়, sides এ space থাকতে পারে */
-          object-fit: fill; /* stretch করে পুরো area ভরায় */
-          object-fit: scale-down; /* original size বা contain, যেটা ছোট */
         }
 
         /* Hide controls during playback after 2 seconds of inactivity */

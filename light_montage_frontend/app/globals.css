@@ -9,7 +9,10 @@
 body {
   font-family: var(--font-dmsans) !important;
 }
-
+.feature-player-wrapper {
+  width: 410px !important;
+  height: 287px !important;
+}
 .headerbg {
   background: linear-gradient(180deg, #eaf0f7 30.22%, #69cde8 100%);
 }

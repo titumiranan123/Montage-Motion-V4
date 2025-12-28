@@ -20,7 +20,6 @@ const OurFeatureProject = async ({ tab = "fullform" }: { tab: string }) => {
       <style>{`
       .bgwork {
         background: linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
-
       }
       `}</style>
       <Heading

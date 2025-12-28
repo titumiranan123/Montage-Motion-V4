@@ -24,9 +24,10 @@ const HomePage = async ({
   });
 
   const { tab } = await searchParams;
+  console.log(data?.header);
   return (
     <div className="mt-4">
-      <div className="headerbg rounded-[40px] max-w-[1440px] px-[60px] mx-auto">
+      <div className="headerbg rounded-[40px] max-w-[1440px] px-[60px] mx-auto mb-10">
         <style>
           {`
             .headerbg {

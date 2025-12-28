@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
-import VideoPlayer from "./PrettyPlayer";
 import ShortVideoPlayer from "./ShortVideoPlayer";
+import FeaturePlayer from "./FeaturePlayer";
 
 interface Work {
   id: string;
@@ -33,7 +33,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
     url.replace("youtube.com/shorts/", "youtube.com/watch?v=");
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6  text-(--text-primary) ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6  text-(--text-primary) mx-auto max-w-7xl ">
       {data.map((dt: Work, index: number) => {
         if (dt.type === "thumbnail") {
           return (
@@ -41,15 +41,8 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
               data-aos="fade-up"
               data-aos-delay={200 + index * 100}
               key={dt.id || index}
-              className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px]"
+              className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video w-[410px]   h-[287px] rounded-[13px]"
             >
-              {/* Title */}
-              {dt.title && (
-                <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2  text-(--text-primary)  bg-[#00000066]">
-                  {dt.title}
-                </p>
-              )}
-
               {/* Thumbnail */}
               {dt.thumbnail ? (
                 <Image
@@ -106,19 +99,14 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
 
           return (
             <div
-              data-aos="fade-up"
-              data-aos-delay={200 + index * 100}
+              // data-aos="fade-up"
+              // data-aos-delay={200 + index * 100}
               key={dt.id || index}
-              className="relative aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px] overflow-hidden"
+              className="relative aspect-video max-w-[410px] w-full h-full max-h-[287px] rounded-[13px] overflow-hidden"
             >
               {/* Type Label */}
-              {dt.type && (
-                <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2  text-(--text-primary)  bg-[#00000066]">
-                  {dt.title}
-                </p>
-              )}
 
-              <VideoPlayer
+              <FeaturePlayer
                 youtubeUrl={normalizedUrl}
                 thumbnail={dt.thumbnail}
               />
