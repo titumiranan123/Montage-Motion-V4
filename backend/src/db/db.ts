@@ -12,9 +12,10 @@ import config from "../config";
 //   idleTimeoutMillis: 30000,
 //   connectionTimeoutMillis: 2000,
 // });
+
 export const db = new Pool({
   host: config.db_hostname,
-  port: 5432,
+  port: 5436,
   user: config.db_user,
   password: config.db_password,
   database: config.db_name,

@@ -41,14 +41,17 @@ mainRoute.use("/api", stateRouter);
 mainRoute.use("/api", serviceRoute);
 mainRoute.use("/api", aboutRoute);
 mainRoute.use("/api", blogRoute);
-mainRoute.use("/api", webRoute);
 mainRoute.use("/api", memberRoute);
-mainRoute.use("/api", uploadRoute);
 mainRoute.use("/api", campaignRoutes);
+mainRoute.use("/api", dashboardRoute);
+// public page route
+mainRoute.use("/api", webRoute);
+// file upload route
+mainRoute.use("/api", uploadRoute);
+// seo routes
+mainRoute.use("/api", siteMap);
 mainRoute.use("/api", seoRoute);
 mainRoute.use("/api", robotsRoute);
-mainRoute.use("/api", siteMap);
-mainRoute.use("/api", dashboardRoute);
 // new routes
 mainRoute.use("/api/our-service", pageServiceRoute);
 mainRoute.use("/api/process", workingProcess);

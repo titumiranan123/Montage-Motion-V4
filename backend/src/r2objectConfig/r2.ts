@@ -30,10 +30,10 @@ export const r2Client = new S3Client({
 export const uploadToR2 = async (
   buffer: Buffer,
   fileName: string,
-  contentType: string,
+  contentType: string
 ) => {
   try {
-    const fileKey = `montagemotion-${fileName}`;
+    const fileKey = `production/montagemotion-${fileName}`;
     const upload = new Upload({
       client: r2Client,
       params: {
@@ -47,13 +47,13 @@ export const uploadToR2 = async (
     return `https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/${fileKey}`;
   } catch (error: any) {
     errorLogger.error("R2Object Error", error);
-    throw new ApiError(400, false, error.message);
+    throw new ApiError(400, "Upload_Failed", error.message);
   }
 };
 
 export const generatePresignedUrl = async (
   fileName: string,
-  contentType: string,
+  contentType: string
 ) => {
   const fileKey = `montagemotion-${fileName}`;
 

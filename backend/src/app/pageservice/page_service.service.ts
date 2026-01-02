@@ -4,10 +4,13 @@
 import { db } from "../../db/db";
 import { IServiceSection } from "./page_service.zod";
 
+import { createSection, createServiceItem } from "./pageServiceutils";
+
 export const serviceSectionService = {
   async createOrUpdateSection(data: IServiceSection) {
+    const client = await db.connect();
     // 1️⃣ Check if section with same type exists
-    const existingRes = await db.query(
+    const existingRes = await client.query(
       `SELECT * FROM service_sections WHERE type = $1 LIMIT 1`,
       [data.type]
     );
@@ -17,6 +20,7 @@ export const serviceSectionService = {
 
     // 2️⃣ If section exists — decide what to update
     if (existingSection) {
+      // console.log(existingSection, "existingSection");
       // If heading/tag/paragraph provided → update section info
       if (
         data.tag ||
@@ -49,57 +53,16 @@ export const serviceSectionService = {
 
       // 3️⃣ If service items provided → replace old ones with new ones
       if (data.services && data.services.length > 0) {
-        await db.query(`DELETE FROM service_items WHERE section_id = $1`, [
-          section.id,
-        ]);
-
-        for (const item of data.services) {
-          await db.query(
-            `INSERT INTO service_items (section_id, service_title, service_description, image, alt)
-             VALUES ($1, $2, $3, $4, $5)`,
-            [
-              section.id,
-              item.service_title,
-              item.service_description,
-              item.image,
-              item.alt,
-            ]
-          );
-        }
+        await createServiceItem(client, data?.services, section.id, data.type);
       }
     } else {
       // 4️⃣ If section doesn’t exist → create new
-      const sectionRes = await db.query(
-        `INSERT INTO service_sections (type, tag, heading_part1, heading_part2, paragraph)
-         VALUES ($1, $2, $3, $4, $5)
-         RETURNING *`,
-        [
-          data.type,
-          data.tag,
-          data.heading_part1,
-          data.heading_part2,
-          data.paragraph,
-        ]
-      );
-      section = sectionRes.rows[0];
-
-      for (const item of data.services || []) {
-        await db.query(
-          `INSERT INTO service_items (section_id, service_title, service_description, image, alt)
-           VALUES ($1, $2, $3, $4, $5)`,
-          [
-            section.id,
-            item.service_title,
-            item.service_description,
-            item.image,
-            item.alt,
-          ]
-        );
-      }
+      const sectionId = await createSection(client, data);
+      await createServiceItem(client, data?.services, sectionId, data.type);
     }
 
     // 5️⃣ Return final section data
-    return await serviceSectionService.getSectionById(section.id);
+    return;
   },
   async getAllSections(query: { type?: string }) {
     let baseQuery = `SELECT * FROM service_sections`;
@@ -115,20 +78,78 @@ export const serviceSectionService = {
       baseQuery += ` WHERE ` + conditions.join(" AND ");
     }
 
-    baseQuery += ` ORDER BY id ASC `;
+    baseQuery += ` ORDER BY id ASC`;
 
     const sectionsRes = await db.query(baseQuery, values);
     const sections = [];
 
     for (const section of sectionsRes.rows) {
       const itemsRes = await db.query(
-        `SELECT * FROM service_items WHERE section_id = $1 ORDER BY id ASC`,
+        `SELECT * FROM service_items WHERE section_id = $1 ORDER BY position ASC`,
         [section.id]
       );
-      sections.push({ ...section, services: itemsRes.rows });
-    }
 
+      const services = [];
+
+      for (const item of itemsRes.rows) {
+        // 🔹 প্রতিটি service item এর available_section আনো
+        const availableSectionsRes = await db.query(
+          `SELECT section_name, visible FROM service_item_sections WHERE service_item_id = $1`,
+          [item.id]
+        );
+
+        services.push({
+          ...item,
+          available_section: availableSectionsRes.rows,
+        });
+      }
+
+      sections.push({
+        ...section,
+        services,
+      });
+    }
     return sections;
+  },
+  async getAllSectionsType() {
+    const baseQuery = `SELECT id FROM service_sections WHERE type = $1 `;
+
+    const sectionsRes = await db.query(baseQuery, ["home"]);
+    let sectionsType;
+    for (const section of sectionsRes.rows) {
+      const itemsRes = await db.query(
+        `SELECT service_title, service_type , href FROM service_items WHERE section_id = $1 ORDER BY position ASC`,
+        [section.id]
+      );
+      // const siplified = Object.values(itemsRes.rows).map(
+      //   (item) => item.service_type
+      // );
+      sectionsType = [
+        { service_title: "Home", service_type: "home" },
+        ...itemsRes.rows,
+      ];
+    }
+    return sectionsType;
+  },
+  async getAllTypepageSection() {
+    const baseQuery = `SELECT id FROM service_sections WHERE type = $1 `;
+
+    const sectionsRes = await db.query(baseQuery, ["home"]);
+    let sectionsType;
+    for (const section of sectionsRes.rows) {
+      const itemsRes = await db.query(
+        `SELECT * FROM service_items WHERE section_id = $1 ORDER BY position ASC`,
+        [section.id]
+      );
+      // const siplified = Object.values(itemsRes.rows).map(
+      //   (item) => item.service_type
+      // );
+      sectionsType = [
+        { service_title: "Home", service_type: "home" },
+        ...itemsRes.rows,
+      ];
+    }
+    return sectionsType;
   },
 
   async getSectionById(id: number) {

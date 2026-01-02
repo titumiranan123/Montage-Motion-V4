@@ -12,29 +12,22 @@ export const whychooseusSectionService = {
     let section;
 
     if (existingSection) {
-      if (
-        data.tag ||
-        data.heading_part1 ||
-        data.heading_part2 ||
-        data.paragraph
-      ) {
-        await db.query(
-          `UPDATE whychooseus_sections
+      await db.query(
+        `UPDATE whychooseus_sections
            SET tag = COALESCE($1, tag),
                heading_part1 = COALESCE($2, heading_part1),
                heading_part2 = COALESCE($3, heading_part2),
                paragraph = COALESCE($4, paragraph),
                updated_at = NOW()
            WHERE type = $5`,
-          [
-            data.tag,
-            data.heading_part1,
-            data.heading_part2,
-            data.paragraph,
-            data.type,
-          ]
-        );
-      }
+        [
+          data.tag,
+          data.heading_part1,
+          data.heading_part2,
+          data.paragraph,
+          data.type,
+        ]
+      );
 
       const updated = await db.query(
         `SELECT * FROM whychooseus_sections WHERE type = $1`,
@@ -64,6 +57,7 @@ export const whychooseusSectionService = {
         }
       }
     } else {
+      // new whychoose us
       const sectionRes = await db.query(
         `INSERT INTO whychooseus_sections (type, tag, heading_part1, heading_part2, paragraph)
          VALUES ($1, $2, $3, $4, $5)

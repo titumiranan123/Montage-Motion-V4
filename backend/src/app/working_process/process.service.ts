@@ -62,13 +62,13 @@ export const processService = {
              updated_at = NOW()
          WHERE type = $7`,
         [
-          data.tag,
-          data.heading_part1,
-          data.heading_part2,
-          data.paragraph,
-          data.type,
-          data.image,
-          data.alt,
+          data.tag, // $1
+          data.heading_part1, // $2
+          data.heading_part2, // $3
+          data.paragraph, // $4
+          data.image, // $5 ✅
+          data.alt, // $6 ✅
+          data.type, // $7 ✅
         ]
       );
 

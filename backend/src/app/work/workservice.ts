@@ -37,8 +37,27 @@ export const VideosService = {
   },
 
   // READ all videos
-  async getAllVideos() {
-    const result = await db.query(`SELECT * FROM works ORDER BY position ASC`);
+  async getAllVideos({ type, limit = 10 }: { type?: string; limit?: number }) {
+    let query = `SELECT * FROM works`;
+    const params: any[] = [];
+
+    // Dynamic WHERE
+    if (type) {
+      params.push(type);
+      query += ` WHERE type = $${params.length}`;
+    }
+
+    // Order
+    query += ` ORDER BY position ASC`;
+
+    // Limit
+    if (limit) {
+      params.push(limit);
+      query += ` LIMIT $${params.length}`;
+    }
+
+    const result = await db.query(query, params);
+
     return result.rows;
   },
 

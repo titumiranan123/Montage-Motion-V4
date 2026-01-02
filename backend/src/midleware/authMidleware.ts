@@ -1,46 +1,92 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
+import httpStatus from "http-status";
 import ApiError from "../utils/ApiError";
 import { jwtHelpers } from "./jwtHelper";
 import config from "../config";
 import { errorLogger } from "../logger/logger";
 
+// Type for JWT payload
+interface IJwtPayload {
+  id: string;
+  email: string;
+  role: string;
+  iat?: number;
+  exp?: number;
+}
+
+// Extended Request type
+interface AuthRequest extends Request {
+  user: IJwtPayload;
+}
+
 const auth =
   (...requiredRoles: string[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const authorization = req.headers.authorization;
-      if (!authorization) {
-        throw new ApiError(401, false, "You are not authorized");
+      // 1. Get token from header
+      const authHeader = req.headers.authorization;
+
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        throw new ApiError(
+          httpStatus.UNAUTHORIZED,
+          "MISSING_TOKEN",
+          "Access token is required"
+        );
       }
 
-      const token = authorization.split(" ")[1];
-      if (!token) {
-        throw new ApiError(401, false, "You are not authorized");
-      }
+      const token = authHeader.split(" ")[1];
 
-      let verifiedUser: any = null;
+      // 2. Verify token
+      let verifiedUser: IJwtPayload | null = null;
+
       try {
         verifiedUser = jwtHelpers.verifyToken(
           token,
-          config.jwt_secret as string,
+          config.jwt_secret as string
+        ) as IJwtPayload;
+      } catch (error: any) {
+        if (error.name === "TokenExpiredError") {
+          throw new ApiError(
+            httpStatus.UNAUTHORIZED,
+            "TOKEN_EXPIRED",
+            "Token has expired. Please login again."
+          );
+        }
+        if (error.name === "JsonWebTokenError") {
+          throw new ApiError(
+            httpStatus.UNAUTHORIZED,
+            "INVALID_TOKEN",
+            "Invalid token provided"
+          );
+        }
+
+        errorLogger.error("JWT Verification Error:", error);
+        throw new ApiError(
+          httpStatus.UNAUTHORIZED,
+          "INVALID_TOKEN",
+          "Invalid or malformed token"
         );
-      } catch (error) {
-        errorLogger.error(error);
-        throw new ApiError(401, false, "Invalid or expired token");
       }
 
-      if (!verifiedUser) {
-        throw new ApiError(401, false, "User not found");
+      // 3. Token verified, attach user to request
+      (req as AuthRequest).user = verifiedUser;
+
+      // 4. Role-based access control
+      if (requiredRoles.length > 0) {
+        if (!verifiedUser.role || !requiredRoles.includes(verifiedUser.role)) {
+          throw new ApiError(
+            httpStatus.UNAUTHORIZED,
+            "FORBIDDEN_ACCESS",
+            "You do not have permission to access this resource"
+          );
+        }
       }
 
-      (req as any).user = verifiedUser;
-
-      if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {
-        throw new ApiError(403, false, "Forbidden");
-      }
+      // All good → go next
       next();
-    } catch (error) {
+    } catch (error: any) {
+      // Let global error handler handle it
       next(error);
     }
   };

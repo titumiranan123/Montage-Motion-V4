@@ -3,11 +3,10 @@ import cors from "cors";
 import config from "./config";
 import { logger } from "./logger/logger";
 
-import { globalErrorHandler } from "./midleware/globalErrorHandler";
 import cookieParser from "cookie-parser";
 import { invalidateRoute } from "./midleware/invalideroute";
 import mainRoute from "./main.route";
-
+import globalErrorHandler from "./midleware/globalErrorHandler";
 const app = express();
 app.use(
   cors({

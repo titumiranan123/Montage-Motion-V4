@@ -3,8 +3,10 @@ import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
 import { serviceSectionService } from "../pageservice/page_service.service";
 import { pricingPageService } from "../pricing/pricing.service";
+// import { seoMetaService } from "../seo/seo.service";
 import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
 import { processService } from "../working_process/process.service";
+import { fetchSectionData } from "./utils";
 // import { packageFeatureService } from "../pricing/package.service";
 
 export const homeapiServices = {
@@ -39,9 +41,9 @@ export const homeapiServices = {
       query += ` GROUP BY ph.id ORDER BY ph.created_at DESC`;
 
       const result = await db.query(query, values);
-
+      // const seo = await seoMetaService.getSeoMetaByPage(type);
       const worksService = await client.query(
-        `SELECT thumbnail, video_link, sub_type FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC   LIMIT 6`,
+        `SELECT thumbnail, video_link FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC   LIMIT 6`,
         [type]
       );
 
@@ -53,13 +55,14 @@ export const homeapiServices = {
       if (tables.includes("brand")) {
         const brand = await client.query(
           `SELECT image, alt, width,height FROM brandimage WHERE type = $1 AND ishide = false ORDER BY sortorder ASC`,
-          [type]
+          ["home"]
         );
         brandImages = brand.rows;
       }
       let services: any[] = [];
       if (tables.includes("services")) {
         const result = await serviceSectionService.getAllSections({ type });
+
         services = result.length > 0 ? result[0] : [];
       }
       let process: any[] = [];
@@ -81,6 +84,12 @@ export const homeapiServices = {
         });
         // console.log("pricing", result);
         pricing = result;
+      }
+      let members: any[] = [];
+      if (tables.includes("members")) {
+        const res = await homeapiServices.aboutService();
+
+        members = res;
       }
 
       // const pricingService = async () => {
@@ -136,7 +145,8 @@ export const homeapiServices = {
         services: services,
         process: process,
         whychooseus: whychooseus,
-        // faqs: allFaqs,
+        members: members,
+        // seo: seo,
         // pricing: prices || [],
       };
     } catch (error) {
@@ -147,27 +157,54 @@ export const homeapiServices = {
       client.release();
     }
   },
+  // services page
+  async servicesData(type: string) {
+    const client = await db.connect();
+    if (!type) {
+      return [];
+    }
+    try {
+      await client.query("BEGIN");
+      const itemsRes = await db.query(
+        `SELECT * FROM service_items WHERE service_type = $1 ORDER BY position ASC`,
+        [type]
+      );
+      const sectionsRes = await db.query(
+        `SELECT section_name FROM service_item_sections WHERE service_item_id = $1 AND visible = $2`,
+        [itemsRes?.rows[0]?.id, true]
+      );
+      const availableSections = sectionsRes.rows.map((s) => s.section_name);
 
-  async aboutService(role: string) {
+      // header
+      const sectionsData: any = {};
+      for (const section of availableSections) {
+        const result = await fetchSectionData(section, type);
+        if (!sectionsData[result.sectionName]) {
+          sectionsData[result.sectionName] = result.data;
+        }
+      }
+
+      await client.query("COMMIT");
+      // console.log("pricing", pricing);
+      return sectionsData;
+    } catch (error) {
+      await client.query("ROLLBACK");
+      errorLogger.error(error);
+      throw error;
+    } finally {
+      client.release();
+    }
+  },
+
+  async aboutService() {
     const client = await db.connect();
     try {
       await client.query("BEGIN");
-
-      const aboutService = await client.query(`SELECT * FROM about`);
-
-      const member = role
-        ? await client.query(
-            `SELECT name, designation, photourl FROM members WHERE role = $1 ORDER BY position ASC`,
-            [role]
-          )
-        : await client.query(`SELECT * FROM members ORDER BY position ASC`);
-
+      const member = await client.query(
+        `SELECT * FROM members ORDER BY position ASC`
+      );
       await client.query("COMMIT");
-
-      return {
-        about: aboutService.rows[0] || null,
-        member: member.rows || [],
-      };
+      return member.rows ?? [];
     } catch (error) {
       await client.query("ROLLBACK");
       errorLogger.error(error);

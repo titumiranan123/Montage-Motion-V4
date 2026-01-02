@@ -31,7 +31,7 @@ const auth =
       try {
         verifiedUser = jwtHelpers.verifyToken(
           token,
-          config.jwt_secret as Secret,
+          config.jwt_secret as Secret
         );
       } catch (error) {
         errorLogger.error(error);
@@ -52,15 +52,19 @@ const auth =
       if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {
         throw new ApiError(
           403,
-          false,
-          "Access denied due to insufficient permissions",
+          "UNAUTHORIZED",
+          "Access denied due to insufficient permissions"
         );
       }
 
       next();
     } catch (error) {
       next(
-        new ApiError(401, false, (error as Error)?.message || "Unauthorized"),
+        new ApiError(
+          401,
+          "UNAUTHORIZED",
+          (error as Error)?.message || "Unauthorized"
+        )
       );
     }
   };

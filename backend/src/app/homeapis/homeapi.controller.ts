@@ -18,11 +18,22 @@ export const getAllhomeData = asyncHandler(
     return responseHandler(res, 200, true, "Fetched all header videos", result);
   }
 );
+export const getAllServicesData = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { type } = req.query;
+    const result = await homeapiServices.servicesData(type as string);
+    return responseHandler(
+      res,
+      200,
+      true,
+      "Fetched all service page data",
+      result
+    );
+  }
+);
 export const getAllAboutData = asyncHandler(
   async (req: Request, res: Response) => {
-    const { cat } = req.query;
-
-    const result = await homeapiServices.aboutService(cat as string);
+    const result = await homeapiServices.aboutService();
     return responseHandler(res, 200, true, "Fetched all about data", result);
   }
 );

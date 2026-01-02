@@ -3,9 +3,7 @@ export interface MemberProfile {
   name: string;
   designation?: string;
   photourl: string;
-  email?: string;
-  phone?: string;
-  bio?: string;
+  alt?: string;
   position?: number;
   created_at?: string;
   updated_at?: string;

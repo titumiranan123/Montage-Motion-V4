@@ -22,7 +22,6 @@ export const createHeaderVideo = asyncHandler(
 export const getAllHeaderVideos = asyncHandler(
   async (req: Request, res: Response) => {
     const { type } = req.query;
-
     const result = await pageHeaderService.getAllHeaders(type as string);
     return responseHandler(res, 200, true, "Fetched all header videos", result);
   }

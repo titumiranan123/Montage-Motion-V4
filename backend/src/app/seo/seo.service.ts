@@ -1,4 +1,5 @@
 import { db } from "../../db/db";
+import { errorLogger } from "../../logger/logger";
 import { SeoMeta } from "./seo.interface";
 
 export const seoMetaService = {
@@ -40,20 +41,25 @@ export const seoMetaService = {
   },
 
   async getSeoMetaByPage(pageName: string) {
-    const workResult = await db.query(
-      `SELECT thumbnail FROM works WHERE type = $1 LIMIT 1 `,
-      ["main"]
-    );
-    // console.log(workResult.rows[0]);
-    const result = await db.query(
-      `SELECT * FROM page_seo WHERE page_name = $1 LIMIT 1`,
-      [pageName]
-    );
-    const mergeData = {
-      ...result.rows[0],
-      ogImage: workResult?.rows[0]?.thumbnail,
-    };
-    return mergeData || null;
+    try {
+      const workResult = await db.query(
+        `SELECT thumbnail FROM works WHERE type = $1 LIMIT 1 `,
+        ["main"]
+      );
+      // console.log(workResult.rows[0]);
+      const result = await db.query(
+        `SELECT * FROM page_seo WHERE page_name = $1 LIMIT 1`,
+        [pageName]
+      );
+      const mergeData = {
+        ...result.rows[0],
+        ogImage: workResult?.rows[0]?.thumbnail,
+      };
+      return mergeData || null;
+    } catch (error) {
+      errorLogger.error(error);
+      return [];
+    }
   },
 
   async getAllSeoMeta() {

@@ -11,9 +11,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE page_headers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  type VARCHAR(50) CHECK (
-    type IN ('home', 'shorts', 'talkinghead', 'podcast', 'saas', 'thumbnail')
-  ) NOT NULL,
+  type VARCHAR(50) NOT NULL,
   page_subtitle VARCHAR(255) NOT NULL,
   page_title VARCHAR(255),
   description TEXT,

@@ -18,8 +18,8 @@ export const createVideo = asyncHandler(async (req: Request, res: Response) => {
 
 // READ ALL
 export const getAllVideos = asyncHandler(
-  async (_req: Request, res: Response) => {
-    const result = await VideosService.getAllVideos();
+  async (req: Request, res: Response) => {
+    const result = await VideosService.getAllVideos(req.query);
     return result
       ? responseHandler(res, 200, true, "Works retrieved successfully", result)
       : responseHandler(res, 404, false, "No videos found");

@@ -2,21 +2,9 @@ import { Request, Response } from "express";
 import { MemberService } from "./member.service";
 import { asyncHandler } from "../../midleware/asyncHandler";
 import { responseHandler } from "../../utils/responseHandler";
-import { MemberProfile } from "./member.interface";
 
 export const MemberController = {
   create: asyncHandler(async (req: Request, res: Response) => {
-    const { name, photourl }: Partial<MemberProfile> = req.body;
-
-    if (!name || !photourl) {
-      return responseHandler(
-        res,
-        400,
-        false,
-        "Name and photo URL are required"
-      );
-    }
-
     const member = await MemberService.createMember(req.body);
     return responseHandler(res, 201, true, "Member created", member);
   }),

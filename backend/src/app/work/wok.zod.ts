@@ -9,15 +9,7 @@ export const VideoSchema = z.object({
   isVisible: z.boolean().optional(),
   isFeature: z.boolean().optional(),
   position: z.number().optional(),
-  type: z.enum([
-    "home",
-    "shorts",
-    "talkinghead",
-    "podcast",
-    "thumbnail",
-    "saas",
-    "about",
-  ]),
+  type: z.string(),
 });
 
 // export Type from Schema

@@ -12,19 +12,11 @@ export const MemberService = {
 
     const result = await db.query(
       `INSERT INTO members (
-        name,  designation, photourl, email, phone, bio, position
+        name,  designation, photourl, alt, position
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7
+        $1, $2, $3, $4, $5
       ) RETURNING *`,
-      [
-        data.name,
-        data.designation,
-        data.photourl,
-        data.email,
-        data.phone,
-        data.bio,
-        newPosition,
-      ]
+      [data.name, data.designation, data.photourl, data.alt, newPosition]
     );
     return result.rows[0];
   },
@@ -59,20 +51,16 @@ export const MemberService = {
         role = $2,
         designation = $3,
         photourl = $4,
-        email = $5,
-        phone = $6,
-        bio = $7,
+        alt = $5,
         updated_at = NOW()
-      WHERE id = $8
+      WHERE id = $6
       RETURNING *`,
       [
         updated.name,
         updated.role,
         updated.designation,
         updated.photourl,
-        updated.email,
-        updated.phone,
-        updated.bio,
+        updated.alt,
         id,
       ]
     );

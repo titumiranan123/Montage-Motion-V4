@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from "http-status";
 import config from "../../config";
 import { db } from "../../db/db";
 import { errorLogger, logger } from "../../logger/logger";
@@ -14,120 +15,116 @@ export const authService = {
   async createUser(data: IUser) {
     const client = await db.connect();
     await client.query("BEGIN");
+
     try {
-      if (!data) {
-        throw new ApiError(400, false, "Please check your data.");
-      }
       const { name, email, password } = data;
+
       if (!name || !email || !password) {
         throw new ApiError(
-          400,
-          false,
-          "Name, email, and password are required.",
+          httpStatus.BAD_REQUEST,
+          "MISSING_FIELDS",
+          "Name, email, and password are required."
         );
       }
-      // Check if user already exists
+
       const exists = await checkUser(email);
       if (exists) {
-        errorLogger.error("User already exists");
-        throw new ApiError(400, false, "User already exists");
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          "USER_ALREADY_EXISTS",
+          "User already exists with this email."
+        );
       }
+
       const hashedPassword = await bcrypt.hash(password, 10);
       const verificationToken = generateVerificationCode();
       const verificationTokenExpiresAt = new Date(
-        Date.now() + 24 * 60 * 60 * 1000,
+        Date.now() + 24 * 60 * 60 * 1000
       );
 
-      const createUserQuery = `
-        INSERT INTO users (name, email, password)
-        VALUES ($1, $2, $3)
-        RETURNING *;
-      `;
+      // Create user
+      const userResult = await client.query(
+        `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *`,
+        [name, email, hashedPassword]
+      );
 
-      const res = await client.query(createUserQuery, [
-        name,
-        email,
-        hashedPassword,
-      ]);
-      const userId = res.rows[0].id;
+      const userId = userResult.rows[0].id;
 
-      const createDynamicDataQuery = `
-        INSERT INTO user_dynamic_data (
-          user_id, verification_token, verification_token_expires_at, updated_at
-        )
-        VALUES ($1, $2, $3, $4)
-        RETURNING *;
-      `;
-
-      await client.query(createDynamicDataQuery, [
-        userId,
-        verificationToken,
-        verificationTokenExpiresAt,
-        new Date(),
-      ]);
+      // Store verification token
+      await client.query(
+        `INSERT INTO user_dynamic_data 
+         (user_id, verification_token, verification_token_expires_at, updated_at) 
+         VALUES ($1, $2, $3, $4)`,
+        [userId, verificationToken, verificationTokenExpiresAt, new Date()]
+      );
 
       await client.query("COMMIT");
 
-      const info = {
-        name: name,
-        email: email,
-        code: verificationToken,
-      };
+      await sendVerificationEmail({ name, email, code: verificationToken });
 
-      await sendVerificationEmail(info);
-
-      return res.rows[0];
+      return userResult.rows[0];
     } catch (error: any) {
       await client.query("ROLLBACK");
-      errorLogger.error("Auth Error:", error);
-      throw new ApiError(400, false, error.message || "User creation failed");
+      errorLogger.error("User creation failed:", error);
+      throw error instanceof ApiError
+        ? error
+        : new ApiError(
+            httpStatus.INTERNAL_SERVER_ERROR,
+            "USER_CREATION_FAILED",
+            "Failed to create user"
+          );
     } finally {
       client.release();
     }
   },
+
   async verifyToken(code: string) {
     const client = await db.connect();
     try {
       await client.query("BEGIN");
-      // Check if the verification token is valid
-      const res = await client.query(
+
+      const result = await client.query(
         `SELECT user_id FROM user_dynamic_data 
          WHERE verification_token = $1 
          AND verification_token_expires_at > NOW() 
          FOR UPDATE LIMIT 1`,
-        [code],
-      );
-      if (res.rowCount === 0) {
-        throw new ApiError(400, false, "Invalid or expired verification token");
-      }
-      const userId = res.rows[0].user_id;
-      // Update the user status
-      const updateUser = await client.query(
-        `UPDATE users 
-         SET verified = true 
-         WHERE id = $1 
-         RETURNING id, name, email, verified`,
-        [userId],
+        [code]
       );
 
-      if (updateUser.rowCount === 0) {
-        throw new ApiError(400, false, "User verification failed");
+      if (result.rowCount === 0) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          "INVALID_OR_EXPIRED_TOKEN",
+          "Invalid or expired verification code"
+        );
       }
-      // Clear the verification token
+
+      const userId = result.rows[0].user_id;
+
+      const updatedUser = await client.query(
+        `UPDATE users SET verified = true WHERE id = $1 RETURNING id, name, email, verified`,
+        [userId]
+      );
+
       await client.query(
         `UPDATE user_dynamic_data 
          SET verification_token = NULL, verification_token_expires_at = NULL 
          WHERE user_id = $1`,
-        [userId],
+        [userId]
       );
+
       await client.query("COMMIT");
-      return updateUser.rows[0];
+      return updatedUser.rows[0];
     } catch (error: any) {
       await client.query("ROLLBACK");
-      errorLogger.error("Verification Error:", error);
+      errorLogger.error("Email verification failed:", error);
       throw error instanceof ApiError
         ? error
-        : new ApiError(500, false, error.message || "Verification failed");
+        : new ApiError(
+            httpStatus.INTERNAL_SERVER_ERROR,
+            "VERIFICATION_FAILED",
+            "Email verification failed"
+          );
     } finally {
       client.release();
     }
@@ -135,48 +132,53 @@ export const authService = {
 
   async login(
     data: { email: string; password: string },
-    logData: Partial<UserLoginHistory>,
+    logData: Partial<UserLoginHistory>
   ) {
     const client = await db.connect();
     let loginSuccessful = false;
+
     try {
       const result = await client.query(
         `SELECT * FROM users WHERE email = $1`,
-        [data.email],
+        [data.email]
       );
 
       if (result.rowCount === 0) {
-        throw new ApiError(404, false, "User not found");
+        throw new ApiError(
+          httpStatus.NOT_FOUND,
+          "USER_NOT_FOUND",
+          "No account found with this email"
+        );
       }
 
       const user = result.rows[0];
 
+      // Uncomment when needed
       // if (!user.verified) {
-      //   throw new ApiError(403, false, "Please verify your email first");
+      //   throw new ApiError(httpStatus.FORBIDDEN, "EMAIL_NOT_VERIFIED", "Please verify your email first", "ইমেইল ভেরিফাই করুন");
       // }
 
-      // if (user.status !== 'active') {
-      //   throw new ApiError(403, false, "Your account is not active");
-      // }
-
-      const passwordMatch = await bcrypt.compare(data.password, user.password);
-
-      if (!passwordMatch) {
-        throw new ApiError(401, false, "Invalid credentials");
+      const isPasswordValid = await bcrypt.compare(
+        data.password,
+        user.password
+      );
+      if (!isPasswordValid) {
+        throw new ApiError(
+          httpStatus.UNAUTHORIZED,
+          "INVALID_CREDENTIALS",
+          "Invalid email or password"
+        );
       }
+
       const token = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-        },
+        { id: user.id, email: user.email, role: user.role },
         config.jwt_secret as string,
-        { expiresIn: "24h" },
+        { expiresIn: "24h" }
       );
 
       loginSuccessful = true;
 
-      const logs = {
+      const loginLog = {
         user_id: user.id,
         device: logData.device,
         browser: logData.browser,
@@ -185,8 +187,9 @@ export const authService = {
         is_successful: true,
         login_time: new Date(),
       };
-      logger.info(logs);
-      await this.logUserLogin(logs);
+
+      logger.info("Login successful", loginLog);
+      await this.logUserLogin(loginLog);
 
       return {
         id: user.id,
@@ -198,15 +201,18 @@ export const authService = {
         token,
       };
     } catch (error: any) {
-      errorLogger.error("Login Error:", error);
+      errorLogger.error("Login failed:", error);
       throw error instanceof ApiError
         ? error
-        : new ApiError(500, false, error.message || "Login failed");
+        : new ApiError(
+            httpStatus.INTERNAL_SERVER_ERROR,
+            "LOGIN_FAILED",
+            "Login failed. Please try again."
+          );
     } finally {
-      // Log failed login attempt
       if (!loginSuccessful && data.email) {
         try {
-          const failedLog = {
+          await this.logUserLogin({
             user_id: data.email,
             device: logData.device,
             browser: logData.browser,
@@ -214,13 +220,9 @@ export const authService = {
             location: logData.location,
             is_successful: false,
             login_time: new Date(),
-          };
-          await this.logUserLogin(failedLog);
+          });
         } catch (logError) {
-          errorLogger.error(
-            "Failed to log unsuccessful login attempt:",
-            logError,
-          );
+          errorLogger.error("Failed to log failed login attempt:", logError);
         }
       }
       client.release();
@@ -230,12 +232,16 @@ export const authService = {
   async allUsers() {
     try {
       const res = await db.query(
-        "SELECT id, name, email, role, verified, status FROM users",
+        "SELECT id, name, email, role, verified, status, created_at FROM users ORDER BY created_at DESC"
       );
       return res.rows;
     } catch (error: any) {
       errorLogger.error("Error fetching users:", error);
-      throw new ApiError(500, false, "Failed to fetch users");
+      throw new ApiError(
+        httpStatus.INTERNAL_SERVER_ERROR,
+        "FETCH_USERS_FAILED",
+        "Failed to fetch users"
+      );
     }
   },
 
@@ -244,25 +250,31 @@ export const authService = {
     try {
       await client.query("BEGIN");
 
-      const res = await client.query(
+      const result = await client.query(
         `UPDATE users SET role = 'ADMIN' WHERE id = $1 RETURNING id, name, email, role`,
-        [id],
+        [id]
       );
 
-      if (res.rowCount === 0) {
-        throw new ApiError(404, false, "User not found");
+      if (result.rowCount === 0) {
+        throw new ApiError(
+          httpStatus.NOT_FOUND,
+          "USER_NOT_FOUND",
+          "User not found"
+        );
       }
 
       await client.query("COMMIT");
-      return res.rows[0];
+      return result.rows[0];
     } catch (error: any) {
       await client.query("ROLLBACK");
-      errorLogger.error("Error making user admin:", error);
-      throw new ApiError(
-        400,
-        false,
-        error.message || "Failed to update user role",
-      );
+      errorLogger.error("Make admin failed:", error);
+      throw error instanceof ApiError
+        ? error
+        : new ApiError(
+            httpStatus.INTERNAL_SERVER_ERROR,
+            "MAKE_ADMIN_FAILED",
+            "Failed to update user role"
+          );
     } finally {
       client.release();
     }
@@ -270,9 +282,8 @@ export const authService = {
 
   async logUserLogin(data: Partial<UserLoginHistory>) {
     const query = `
-      INSERT INTO user_login_history (
-        user_id, device, browser, ip_address, login_time, location, is_successful
-      )
+      INSERT INTO user_login_history 
+      (user_id, device, browser, ip_address, login_time, location, is_successful)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
@@ -287,11 +298,10 @@ export const authService = {
         data.location ?? null,
         data.is_successful ?? false,
       ]);
-      logger.info("Login history stored:", res.rows[0]);
       return res.rows[0];
     } catch (error) {
-      errorLogger.error("Error storing login history:", error);
-      throw new ApiError(500, false, "Failed to log login attempt");
+      errorLogger.error("Failed to save login history:", error);
+      // Don't throw here — login should not fail because of logging
     }
   },
 
@@ -300,7 +310,6 @@ export const authService = {
     try {
       await client.query("BEGIN");
 
-      // First delete dependent records
       await client.query(`DELETE FROM user_dynamic_data WHERE user_id = $1`, [
         id,
       ]);
@@ -308,22 +317,31 @@ export const authService = {
         id,
       ]);
 
-      // Then delete the user
-      const res = await client.query(
+      const result = await client.query(
         `DELETE FROM users WHERE id = $1 RETURNING id`,
-        [id],
+        [id]
       );
 
-      if (res.rowCount === 0) {
-        throw new ApiError(404, false, "User not found");
+      if (result.rowCount === 0) {
+        throw new ApiError(
+          httpStatus.NOT_FOUND,
+          "USER_NOT_FOUND",
+          "User not found"
+        );
       }
 
       await client.query("COMMIT");
       return true;
     } catch (error: any) {
       await client.query("ROLLBACK");
-      errorLogger.error("Error deleting user:", error);
-      throw new ApiError(400, false, error.message || "Failed to delete user");
+      errorLogger.error("Delete user failed:", error);
+      throw error instanceof ApiError
+        ? error
+        : new ApiError(
+            httpStatus.INTERNAL_SERVER_ERROR,
+            "DELETE_USER_FAILED",
+            "Failed to delete user"
+          );
     } finally {
       client.release();
     }
@@ -332,10 +350,10 @@ export const authService = {
 
 export const findUserByEmail = async (email: string) => {
   const res = await db.query("SELECT * FROM users WHERE email = $1", [email]);
-  return res.rows[0];
+  return res.rows[0] || null;
 };
 
 export const findUserById = async (id: string) => {
   const res = await db.query("SELECT * FROM users WHERE id = $1", [id]);
-  return res.rows;
+  return res.rows[0] || null;
 };

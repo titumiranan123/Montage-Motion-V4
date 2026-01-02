@@ -1,17 +1,15 @@
 class ApiError extends Error {
   statusCode: number;
-  status: boolean;
+  code?: string;
   isOperational: boolean;
   errorMessage: string;
 
-  constructor(statusCode: number, status: boolean, message: string) {
+  constructor(statusCode: number, errorCode: string, message: string) {
     super(message);
     this.statusCode = statusCode;
-    this.status = status;
-    this.isOperational = true; // Operational errors are those which we can predict and manage
+    this.code = errorCode;
+    this.isOperational = true;
     this.errorMessage = message;
-
-    // This is for preserving the stack trace, so it points to the place where the error is thrown
     Error.captureStackTrace(this, this.constructor);
   }
 
@@ -19,9 +17,9 @@ class ApiError extends Error {
   toJSON() {
     return {
       statusCode: this.statusCode,
-      status: this.status,
+      code: this.code,
       errorMessage: this.errorMessage,
-      stack: this.stack, // Optionally include stack trace if necessary
+      stack: this.stack,
     };
   }
 }

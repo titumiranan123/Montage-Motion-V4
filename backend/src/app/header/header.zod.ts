@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 /** ───────────────────────────────────────────────
  *  Media Item Schema (matches IHeaderMedia)
  *  ─────────────────────────────────────────────── */
@@ -12,26 +11,12 @@ export const HeaderMediaSchema = z.object({
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional(),
 });
-
 /** ───────────────────────────────────────────────
  *  Main Page Header Schema (matches IPageHeader)
  *  ─────────────────────────────────────────────── */
 export const PageHeaderSchema = z.object({
   id: z.string().uuid().optional(),
-
-  type: z
-    .enum([
-      "home",
-      "shorts",
-      "talkinghead",
-      "podcast",
-      "saas",
-      "thumbnail",
-      "about",
-      "carrer",
-    ])
-    .refine((val) => !!val, { message: "Type is required" }),
-
+  type: z.string(),
   page_title: z.string().optional(),
   page_subtitle: z.string().min(1, { message: "Page subtitle is required" }),
   description: z.string().optional(),
@@ -39,10 +24,8 @@ export const PageHeaderSchema = z.object({
     .string()
     .url({ message: "Must be a valid URL" })
     .optional(),
-
   // ✅ Nested media array
   media: z.array(HeaderMediaSchema).optional(),
-
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional(),
 });

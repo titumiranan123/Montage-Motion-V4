@@ -9,7 +9,7 @@ import { IContact } from "./contact.interface";
 export const contactService = {
   async createContact(data: IContact) {
     if (!data) {
-      throw new ApiError(400, false, "Please check your data.");
+      throw new ApiError(400, "FAILED", "Please check your data.");
     }
     try {
       const query = `INSERT INTO contacts (name, email, message,interestIn) VALUES ($1, $2, $3,$4) RETURNING *`;
@@ -18,7 +18,7 @@ export const contactService = {
       // await sendEmailToAdmin(data);
       return res.rows;
     } catch (error: any) {
-      throw new ApiError(400, false, error.message);
+      throw new ApiError(400, "FAILED", error.message);
     }
   },
   async getAllContact() {
@@ -34,7 +34,7 @@ export const contactService = {
       [id]
     );
     if (isExist.rowCount === 0) {
-      throw new ApiError(400, false, "Contact not found !");
+      throw new ApiError(400, "FAILED", "Contact not found !");
     }
     const res = await db.query(`DELETE FROM contacts WHERE id = $1;`, [id]);
     return res.rows || null;
