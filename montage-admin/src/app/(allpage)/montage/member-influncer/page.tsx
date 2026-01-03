@@ -1,0 +1,107 @@
+"use client";
+import React, { useState } from "react";
+import { MemberProfileCard } from "./MemberProfileCard";
+import { MemberProfile } from "@/interface/interface";
+import useMembers from "@/hook/useMember";
+import { MemberProfileForm } from "./Memberform";
+import { api_url } from "@/hook/Apiurl";
+import Swal from "sweetalert2";
+import { FaPlus } from "react-icons/fa";
+import ProfileCardSkeleton from "./ProfileSkeleton";
+
+const Member = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+  const { data, isLoading, refetch } = useMembers();
+
+  const handleCreateNew = () => {
+    setIsCreating(true);
+    setIsFormOpen(true);
+  };
+
+  // Handle form submission
+  const handleSubmit = async (formData: MemberProfile) => {
+    try {
+      const method = isCreating
+        ? api_url.post("/api/members", formData)
+        : api_url.put("/api/members", formData);
+      const res = await method;
+      refetch();
+      Swal.fire({
+        title: res.data.message,
+        icon: "success",
+        background: "#1f2937",
+        color: "#fff",
+        confirmButtonColor: "#6366f1",
+      });
+
+      setIsFormOpen(false);
+    } catch (err: any) {
+      Swal.fire({
+        title: "Something went wrong!",
+        text: err.responsce.data.errorMessage[0].message,
+        icon: "error",
+        background: "#1f2937",
+        color: "#fff",
+        confirmButtonColor: "#6366f1",
+      });
+    }
+  };
+
+  return (
+    <div className="min-h-screen py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Our Team </h1>
+
+          <div className="flex gap-2.5">
+            <button
+              onClick={handleCreateNew}
+              className="px-4 py-1 h-12 bg-[#1FB5DD] text-white rounded-md flex items-center gap-4"
+            >
+              Add New Member <FaPlus />
+            </button>
+          </div>
+        </div>
+
+        {/* Members grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-6">
+          {isLoading
+            ? [...Array(4)]?.map((_, idx) => <ProfileCardSkeleton key={idx} />)
+            : data?.map((member: Partial<MemberProfile>) => (
+                <MemberProfileCard key={member?.id} profile={member} />
+              ))}
+        </div>
+
+        {/* Empty state */}
+        {data?.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-300">No members found</p>
+          </div>
+        )}
+
+        {/* Form modal */}
+        {isFormOpen && (
+          <div className="fixed inset-0 bg-black/5 backdrop-blur-sm flex items-center text-white justify-center p-4 z-50 w-full">
+            <div className="bg-black rounded-lg ">
+              <div className="flex justify-end me-5 mt-5 items-center mb-4">
+                <button
+                  onClick={() => setIsFormOpen(false)}
+                  className="text-gray-300 hover:text-gray-300"
+                >
+                  ✕
+                </button>
+              </div>
+              <MemberProfileForm
+                onSubmit={handleSubmit}
+                defaultValues={undefined}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Member;

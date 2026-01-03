@@ -1,0 +1,120 @@
+"use client";
+import Image from "next/image";
+import React from "react";
+import { FaEdit, FaTrash, FaPlay } from "react-icons/fa";
+import ReactPlayer from "react-player";
+
+export interface ITestimonial {
+  id?: string;
+  name: string;
+  designation: string;
+  image: string;
+  thumbnail: string;
+  video_message?: string;
+  message?: string;
+  position?: number;
+  category: "message" | "video_message";
+  type:
+    | "home"
+    | "shorts"
+    | "talkinghead"
+    | "podcast"
+    | "saas"
+    | "thumbnail"
+    | "about";
+}
+
+const Shortcard = ({
+  data,
+  setEditData,
+  setTestimonial,
+  handleDelete,
+}: {
+  data: ITestimonial;
+  setEditData: (testimonial: ITestimonial) => void;
+  setTestimonial: (a: boolean) => void;
+  handleDelete: (id: string) => void;
+}) => {
+  return (
+    <div
+      style={{ boxShadow: "inset #0A303A 0 0 50px 6px" }}
+      className="flex w-full max-w-3xl h-72 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 "
+    >
+      {/* Media Section (Left) */}
+      <div className="relative w-2/5 min-w-[256px] h-full bg-gray-200">
+        {data.category === "video_message" ? (
+          <ReactPlayer
+            url={data.video_message}
+            playing={false}
+            light={data.thumbnail || data.image}
+            playIcon={
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-black/50 rounded-full p-3 text-white hover:bg-black/70 transition-all">
+                  <FaPlay size={20} />
+                </div>
+              </div>
+            }
+            width="100%"
+            height="100%"
+            controls
+          />
+        ) : (
+          <div className="relative h-full w-full">
+            <Image
+              src={data.image}
+              alt={data.name}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Content Section (Right) */}
+      <div className="flex flex-col w-3/5 p-5 bg-white">
+        <div className="flex-grow">
+          <div className="relative w-16 h-16 rounded-full overflow-hidden mb-4">
+            <Image
+              src={data.image}
+              alt={data.name}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="mb-3">
+            <h3 className="text-xl font-bold text-gray-800">{data.name}</h3>
+            <p className="text-sm text-gray-600">{data.designation}</p>
+          </div>
+
+          {data.message && (
+            <p className="text-gray-600 line-clamp-4">{data.message}</p>
+          )}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-3 mt-4">
+          <button
+            onClick={() => {
+              setEditData(data);
+              setTestimonial(true);
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-[#1FB5DD] text-white rounded-lg transition-colors text-sm hover:bg-[#1A9FC4]"
+          >
+            <FaEdit size={14} />
+            Edit
+          </button>
+          <button
+            onClick={() => data.id && handleDelete(data.id)}
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+          >
+            <FaTrash size={14} />
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Shortcard;

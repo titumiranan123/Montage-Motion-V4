@@ -1,0 +1,66 @@
+@import "tailwindcss";
+/* For WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1fb5dd;
+  border-radius: 6px;
+}
+h1 {
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 49.89%, #1fb5dd 100%);
+  background-clip: text;
+  color: transparent;
+}
+.swal2-container {
+  z-index: 9999 !important;
+}
+.ohNo {
+  top: 50% !important;
+}
+/* gadient card */
+.bg-gradient {
+  background: linear-gradient(209.88deg, #000000 23.29%, #315fac 214.87%);
+}
+.bg-border {
+  background: linear-gradient(
+    208.39deg,
+    #3357a3 -1.78%,
+    rgba(51, 87, 163, 0) 38.74%
+  );
+}
+.bg-border:hover {
+  background: linear-gradient(208.39deg, #3357a3 100%, rgba(51, 87, 163, 0) 0%);
+  transition: all 0.3s ease-in-out;
+}
+.testimonialTextcard {
+  width: 448px;
+  height: 308px;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: inset #0a303a 0 0 60px 4px;
+}
+
+.jodit-workplace {
+  color: white !important;
+  background-color: black !important;
+}
+
+@layer base {
+  h1 {
+    background: linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #ffffff 49.89%,
+      #1fb5dd 100%
+    );
+    background-clip: text;
+    color: transparent;
+  }
+}
