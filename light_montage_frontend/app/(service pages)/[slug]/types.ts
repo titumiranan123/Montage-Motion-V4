@@ -1,0 +1,18 @@
+export type sections =
+  | "short-hero"
+  | "home-hero"
+  | "podcast-hero"
+  | "work"
+  | "testimonial"
+  | "pricing"
+  | "service"
+  | "process"
+  | "faq"
+  | "whychooseus"
+  | "contact"
+  | "our-clients"
+  | "shorts_service"
+  | "insight"
+  | "before_after_section"
+  | "industry"
+  | "whysaas_video";

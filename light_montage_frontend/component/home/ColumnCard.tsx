@@ -21,11 +21,13 @@ export function ColumnCard({ column }: { column: any }) {
     transition: all 300 ease-in-out;
 }
     .others {
-      background: linear-gradient(180deg, #FFFFFF -4.65%, #FDEFE4 100.01%);
+      background: #FAFAFA;
+      border: 1px solid #F7F7F7;
+      
     }
       .freelancer{
       
-      background: linear-gradient(180deg, #FFFFFF -5.46%, #BFD0FF 100.01%);
+      background: #FAFAFA;
 
       }
 .bonus-bg{
@@ -74,9 +76,9 @@ export function ColumnCard({ column }: { column: any }) {
         {column.bonus && (
           <div
             // style={{ boxShadow: "0px -7px 24px 0px #5E8EF399 inset" }}
-            className="mt-6 bg-white/40 border-white border rounded-2xl bonus-bg p-4 sm:p-5  backdrop-blur-xl"
+            className="mt-6 bg-white/40   rounded-2xl glassShadow p-4 sm:p-5  backdrop-blur-xl"
           >
-            <h4 className="text-sm font-semibold leading-6 mb-3 whitespace-pre-line">
+            <h4 className="lg:text-[20px] lg:leading-[140%] font-semibold leading-6 mb-3 whitespace-pre-line">
               {column.bonus.title}
             </h4>
             <div className="space-y-2">

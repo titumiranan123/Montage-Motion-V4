@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Gradientcard from "../share/Gradientcard";
 import { Heading } from "../share/Headering";
+import Link from "next/link";
 
 const ServiceSections = ({ data }: { data: any }) => {
   return (
@@ -14,20 +15,17 @@ const ServiceSections = ({ data }: { data: any }) => {
             ? data?.paragraph
             : "Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
         }
-        title={data?.heading_part1 ? data?.heading_part1 : "Cat't Standout ?"}
-        extratitle={
-          data?.heading_part2 ? data?.heading_part2 : "Let Us Help You."
+        title={
+          data?.heading_part1
+            ? data?.heading_part1
+            : "Cat't Standout ? Let Us Help You."
         }
         tag={data?.tag ? data?.tag : "Our Services"}
       />
       <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {data?.services?.map((dt: any, idx: number) => (
-          <div key={idx} className="group perspective-1000 min-h-[500px]">
-            <style jsx global>{`
-              .perspective-1000 {
-                perspective: 1000px;
-              }
-
+          <div key={idx} className="group  min-h-[500px]">
+            <style jsx>{`
               .card3d {
                 position: relative;
                 width: 100%;
@@ -37,18 +35,15 @@ const ServiceSections = ({ data }: { data: any }) => {
                   cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 transform-origin: center center;
               }
-
               .group:hover .card3d {
                 transform: rotateY(180deg);
               }
-
               .card3d-front,
               .card3d-back {
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
                 border-radius: 24px;
                 overflow: hidden;
               }
@@ -91,7 +86,7 @@ const ServiceSections = ({ data }: { data: any }) => {
                     <div>
                       <Image
                         src={dt?.icon}
-                        alt={dt?.icon_alt}
+                        alt={dt?.icon_alt ?? ""}
                         width={35}
                         height={35}
                         priority
@@ -105,9 +100,12 @@ const ServiceSections = ({ data }: { data: any }) => {
                       {dt?.service_description}
                     </p>
                     <div className="flex justify-end items-center w-full">
-                      <button className="py-2 px-4 rounded-lg btn-color transform group-hover:scale-105 transition-transform duration-300 ease-out">
+                      <Link
+                        href={`${dt?.href}`}
+                        className="py-2 px-4 rounded-lg btn-color transform group-hover:scale-105 transition-transform duration-300 ease-out"
+                      >
                         Get Start
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </Gradientcard>

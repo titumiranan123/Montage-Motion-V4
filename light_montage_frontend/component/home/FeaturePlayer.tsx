@@ -108,15 +108,14 @@ export default function FeaturePlayer({ youtubeUrl, thumbnail }: Props) {
           position: relative;
           width: 100%;
           aspect-ratio: 16 / 9;
-          background: #000;
         }
 
         /* Ensure video maintains aspect ratio */
 
-        // .plyr__video-wrapper {
-        //   background: #000;
+        // .plyr--video {
+        //   height: 100%;
+        //   object-fit: contain;
         // }
-
         .plyr video {
           object-fit: contain;
         }
@@ -155,7 +154,9 @@ export default function FeaturePlayer({ youtubeUrl, thumbnail }: Props) {
           height: 24px !important;
           fill: white !important;
         }
-
+        .plyr__controls {
+          top: 140px;
+        }
         /* Volume slider positioning */
         .plyr--video .plyr__controls .plyr__volume {
           position: relative;
@@ -168,7 +169,7 @@ export default function FeaturePlayer({ youtubeUrl, thumbnail }: Props) {
           transform: rotate(-90deg);
           transform-origin: center bottom;
           width: 120px;
-          height: 34px;
+          height: 24px;
           opacity: 0;
           pointer-events: none;
           transition: opacity 0.15s ease;

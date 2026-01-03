@@ -93,6 +93,7 @@ export default function IndustryWeWork({ data }: { data?: TabsData }) {
         subtitle="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
         tag="Our Works"
         title="Industries We Work With"
+        width="140"
       />
       <TabsClient tabs={tabs} />
     </section>

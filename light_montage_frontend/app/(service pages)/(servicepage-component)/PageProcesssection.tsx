@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Gradientcard from "@/component/share/Gradientcard";
+import { Heading } from "@/component/share/Headering";
 
 import Image from "next/image";
-import { Heading } from "../share/Headering";
 
-export const OurProcess = ({ data }: { data: any }) => {
+export const PageProcesssection = ({ data }: { data: any }) => {
   return (
     <div className="mx-auto max-w-7xl sectionGap">
       <Heading
@@ -57,4 +57,4 @@ export const OurProcess = ({ data }: { data: any }) => {
   );
 };
 
-export default OurProcess;
+export default PageProcesssection;

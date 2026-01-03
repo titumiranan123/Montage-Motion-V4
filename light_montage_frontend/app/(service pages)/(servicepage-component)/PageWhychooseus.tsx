@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
-import Gradientcard from "../share/Gradientcard";
-import { Heading } from "../share/Headering";
+import Gradientcard from "@/component/share/Gradientcard";
+import { Heading } from "@/component/share/Headering";
 
-const WhyChooseUs = ({ data }: { data: any }) => {
+const PageWhychooseus = ({ data }: { data: any }) => {
   return (
     <div className="container  sectionGap">
       <Heading
@@ -43,4 +43,4 @@ const WhyChooseUs = ({ data }: { data: any }) => {
   );
 };
 
-export default WhyChooseUs;
+export default PageWhychooseus;

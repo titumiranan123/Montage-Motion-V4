@@ -20,11 +20,11 @@ const HomePage = async ({
   searchParams: Promise<{ tab: string }>;
 }) => {
   const { data } = await getData({
-    url: `api/website/data?type=home&&table=brand,services,process,whychooseus`,
+    url: `api/website/data?type=home&table=brand,services,process,whychooseus`,
   });
 
   const { tab } = await searchParams;
-  console.log(data?.header);
+  console.log(`data?.process?.image`, data?.services);
   return (
     <div className="mt-4">
       <div className="headerbg rounded-[40px] max-w-[1440px] px-[60px] mx-auto mb-10">
@@ -47,7 +47,7 @@ const HomePage = async ({
         description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
         data={data?.testimonial ?? []}
       />
-      <OurProcess process={data?.process ?? []} />
+      <OurProcess data={data?.process ?? []} />
       <ComparisonCards />
       <IndustryWeWork />
       <WhyChooseUs data={data?.whychooseus ?? []} />

@@ -1,8 +1,9 @@
 import React from "react";
-import { Heading } from "../share/Headering";
 import Image from "next/image";
-import Accordion from "./Accordion";
-import Gradientcard from "./Gradientcard";
+import { Heading } from "@/component/share/Headering";
+import Gradientcard from "@/component/share/Gradientcard";
+import Accordion from "@/component/share/Accordion";
+
 const items = [
   {
     question: "Do you optimize for different platforms?",
@@ -51,9 +52,9 @@ const items = [
       "No problem. Tell us what you missed and why. We will pivot the hook, pacing, or graphics. The goal is fit, not the defense of a draft.",
   },
 ];
-const FaqSection = () => {
+const PageFaqSection = () => {
   return (
-    <div id="faq" className="container sectionGap">
+    <div id="faq" className="sectionArea sectionGap">
       <Heading
         subtitle="Everything you need to know before we get started. "
         tag="FAQ"
@@ -104,4 +105,4 @@ const FaqSection = () => {
   );
 };
 
-export default FaqSection;
+export default PageFaqSection;

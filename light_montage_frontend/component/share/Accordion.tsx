@@ -52,7 +52,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
               className="cursor-pointer p-6 flex justify-between items-center"
               onClick={() => handleToggle(index)}
             >
-              <h3 className="font-semibold poppins leading-[30px] md:text-[24px] md:leading-[145%] text-[16px] flex items-center gap-2">
+              <h3 className="font-semibold poppins leading-[30px] md:text-[24px] md:leading-[25px] text-[16px] flex items-center gap-2">
                 Q. {item.question}
               </h3>
               <div className="shrink-0 ml-4 border border-(--text-primary) rounded-full">

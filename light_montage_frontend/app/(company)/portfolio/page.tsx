@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Portfoliotab from "./Portfoliotab";
-import VideoPlayer from "@/component/home/PrettyPlayer";
 import { getPageSEO } from "@/component/share/getPageSEO";
 import ShortVideoPlayer from "@/component/home/ShortVideoPlayer";
 import Image from "next/image";
 import ContactSection from "@/component/share/ContactSection";
 import { Heading } from "@/component/share/Headering";
 import { getData } from "@/utils/getData";
+import FeaturePlayer from "@/component/home/FeaturePlayer";
 export async function generateMetadata() {
   return await getPageSEO("portfolio");
 }
@@ -41,7 +41,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
             `}
         </style>
         <Portfoliotab tab={cat} types={category?.data} />
-        <div className="grid grid-cols-1 min-h-screen md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 container">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
           {data?.data?.map((work: any, idx: number) => {
             if (work?.type === "shorts") {
               return (
@@ -92,11 +92,11 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
               return (
                 <div
                   key={idx}
-                  data-aos="fade-up"
-                  data-aos-delay={100 + idx * 100}
-                  className=""
+                  // data-aos="fade-up"
+                  // data-aos-delay={100 + idx * 100}
+                  className=" rounded-lg   overflow-hidden"
                 >
-                  <VideoPlayer
+                  <FeaturePlayer
                     thumbnail={work?.thumbnail}
                     youtubeUrl={work?.video_link}
                   />

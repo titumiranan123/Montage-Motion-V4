@@ -61,12 +61,12 @@ const comparisonData = {
 // ----- MAIN EXPORT -----
 export default function ComparisonCards() {
   return (
-    <div className="mx-auto container sectionGap">
+    <div className="mx-auto  container sectionGap">
       <Heading
         subtitle="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing "
         tag="Our Service"
-        title="Our Process for your"
-        extratitle="Online Growth"
+        title="Our Process for your Online Growth"
+        width="130"
       />
       <div className="grid gap-5 sm:gap-6 md:gap-8  grid-cols-1 md:grid-cols-3 lg:mt-16 mt-9">
         {comparisonData.columns.map((col, idx) => (

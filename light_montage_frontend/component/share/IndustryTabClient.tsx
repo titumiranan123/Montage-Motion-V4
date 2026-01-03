@@ -37,32 +37,31 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
   const activeTabData = tabs[activeTab];
 
   return (
-    <div className="space-y-6 lg:mt-16 mt-8">
+    <div className="space-y-6  lg:mt-16 mt-8 ">
       {/* Tabs Navigation */}
-      <div className=" max-w-[522px] h-[57px] mx-auto p-px rounded-[36px] ">
-        <div
-          role="tablist"
-          aria-label="Content categories"
-          className="relative flex justify-start  lg:justify-center 
+
+      <div
+        role="tablist"
+        aria-label="Content categories"
+        className="relative flex justify-start  lg:justify-center 
            items-center 
-          w-full px-2 overflow-x-auto scrollbar-hide h-[55px] rounded-[36px]  pill"
-          onKeyDown={handleKeyDown}
-        >
-          {tabs.map((tab, index) => (
-            <button
-              key={tab.id}
-              role="tab"
-              aria-selected={activeTab === index}
-              aria-controls={`${labelId}-${tab.id}-panel`}
-              onClick={() => setActiveTab(index)}
-              className={`p-3 text-(--text-primary) opensans font-normal text-[14px] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px] ${
-                activeTab === index ? "btn-color font-semibold" : ""
-              }`}
-            >
-              {tab.title}
-            </button>
-          ))}
-        </div>
+          w-full px-2 overflow-x-auto scrollbar-hide  rounded-[12px] glassShadow  bg-white/40 p-3 max-w-[520px] mx-auto"
+        onKeyDown={handleKeyDown}
+      >
+        {tabs.map((tab, index) => (
+          <button
+            key={tab.id}
+            role="tab"
+            aria-selected={activeTab === index}
+            aria-controls={`${labelId}-${tab.id}-panel`}
+            onClick={() => setActiveTab(index)}
+            className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px] ${
+              activeTab === index ? "btn-color font-semibold" : ""
+            }`}
+          >
+            {tab.title}
+          </button>
+        ))}
       </div>
 
       {/* Active Tab Content */}

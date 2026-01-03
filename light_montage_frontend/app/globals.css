@@ -9,6 +9,7 @@
 body {
   font-family: var(--font-dmsans) !important;
 }
+
 .feature-player-wrapper {
   width: 410px !important;
   height: 287px !important;
@@ -77,6 +78,9 @@ body {
 }
 
 @layer components {
+  .sectionArea {
+    @apply max-w-[1440px] mx-auto 2xl:py-[60px] 2xl:px-20;
+  }
   .animated {
     @apply transition-all duration-300 ease-in-out;
   }
