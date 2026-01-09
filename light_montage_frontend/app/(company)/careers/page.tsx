@@ -12,7 +12,7 @@ const Careers = async () => {
   const data = await res.json();
   // console.log();
   return (
-    <div>
+    <div className="mt-5 ">
       <CareersHeader />
       <OurStory />
       <JobPost data={data?.data ?? []} />

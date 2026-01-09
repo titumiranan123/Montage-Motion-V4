@@ -25,7 +25,7 @@ export const Heading: React.FC<headerProp> = ({
       </p>
       {/* <GlassMorphism tag="new dev ice" /> */}
 
-      <p className="text-4xl md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins">
+      <p className="text-[40px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins">
         {title}
       </p>
       {/* 

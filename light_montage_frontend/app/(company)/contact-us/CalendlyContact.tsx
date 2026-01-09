@@ -16,7 +16,7 @@ const CalendlyContact = () => {
       <div
         data-aos="fade-up"
         data-aos-delay={400}
-        className="max-w-[1200px] w-full md:h-[761px] min-h-screen overflow-hidden  bg-cover bg-center lg:mt-20 mt-10"
+        className="max-w-[1200px] mx-auto w-full md:h-[761px] min-h-screen overflow-hidden  bg-cover bg-center lg:mt-20 mt-10"
       >
         {/* JS Disabled Fallback */}
         <noscript>

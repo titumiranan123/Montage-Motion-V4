@@ -21,7 +21,7 @@ const Locationsection = () => {
           width="1055"
           height="578"
           loading="lazy"
-          className="rounded-lg"
+          className="rounded-lg md:w-[1055px] lg:mt-0 mt-10 md:h-[578px] w-full h-full"
         ></iframe>
         <div
           data-aos="fade-right"

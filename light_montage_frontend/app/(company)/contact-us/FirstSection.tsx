@@ -11,6 +11,7 @@ const FirstSection = () => {
         subtitle="See how design meets function. Real results, clean code, and user-first experiences."
         tag="Contact Us"
         title="Have a Project ? Let's Talk "
+        width="170"
       />
       <div className=" lg:mt-20 mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mx-auto">
         <div className="flex flex-col gap-4 w-full justify-center items-center mx-auto">

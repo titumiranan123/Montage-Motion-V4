@@ -8,6 +8,7 @@ const OurMission = () => {
         title="Crafting Stories That "
         extratitle="Connect"
         tag="Our Mission & Vission"
+        width="210"
       />
       <div className="lg:mt-10 mt-8 flex justify-between items-center lg:flex-row flex-col gap-6">
         <div data-aos="fade-up" data-aos-delay={300}>
