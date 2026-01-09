@@ -15,10 +15,12 @@ const Blogs = async ({ searchParams }: { searchParams: any }) => {
     url: `api/website/blog?category=${cat}&search=${search}`,
   });
   const data = result.data;
+  console.log(data);
   return (
-    <div className="relative bg-red-500 container lg:mt-20 mt-16 min-h-screen header-background pagelogo">
+    <div className="relative  container lg:mt-40 mt-16 min-h-screen header-background pagelogo">
       <Heading
         tag="Blogs"
+        width="120"
         title="Insights & Ideas"
         subtitle="Explore tips, trends, and strategies from the world of video editing, content creation, and digital marketing ."
       />
@@ -31,6 +33,7 @@ const Blogs = async ({ searchParams }: { searchParams: any }) => {
               title={blog.title}
               short_description={blog.short_description}
               slug={blog.slug}
+              createdAt={blog?.created_at}
             />
           </div>
         ))}

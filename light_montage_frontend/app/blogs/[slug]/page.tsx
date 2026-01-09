@@ -50,6 +50,7 @@ export async function generateMetadata({
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SingleBlog = async ({ params }: { params: any }) => {
   const { slug } = await params;
   const whatWill = {
@@ -65,9 +66,9 @@ const SingleBlog = async ({ params }: { params: any }) => {
   };
   const data = await fetchSingleBlog(slug);
   return (
-    <div className=" container  flex flex-col   mt-16 lg:mt-30 px-2">
+    <div className=" max-w-[1200px] mx-auto  flex flex-col   mt-36 lg:mt-40 px-2">
       <div className="w-full">
-        <h3 className="text-white lg:text-[56px] md:text-[48px] text-[30px] md:leading-[64px] leading-[46px] poppins font-[500]">
+        <h3 className="text-(--text-primary) lg:text-[56px] md:text-[48px] text-[30px] md:leading-16 leading-[46px] poppins font-medium">
           {data?.title}
         </h3>
         <BlogHeader />
@@ -75,77 +76,79 @@ const SingleBlog = async ({ params }: { params: any }) => {
       <div className="flex justify-between lg:flex-row flex-col gap-16 lg:mt-16 mt-10">
         <div className="lg:max-w-[89px] lg:max-h-[210px] max-h-[87px] max-w-[280px] w-full">
           <Gradientcard
-            className="lg:max-w-[87px] lg:max-h-[208px] max-h-[85px] max-w-[278px] w-full h-full py-6 px-5 rounded-[24px]"
-            borderClassName="lg:max-w-[89px] lg:max-h-[210px] max-h-[87px] max-w-[280px] w-full h-full rounded-[24px] p-[1px]"
+            className="lg:max-w-[87px] lg:max-h-52 max-h-[85px] max-w-[278px] w-full h-full py-6 px-5 rounded-3xl"
+            borderClassName="lg:max-w-[89px] lg:max-h-[210px] max-h-[87px] max-w-[280px] w-full h-full rounded-[24px] p-[2px]"
           >
             <ShareButtons
               data={{
                 title: data?.title,
-                url: `https://montagemotion.com/blog/${slug}`, // current page url,
+                url: `https://montagemotion.com/blogs/${slug}`, // current page url,
                 description: data?.description,
               }}
             />
           </Gradientcard>
         </div>
         <div className="">
-          <div>
-            <Image
-              src={data?.image}
-              alt={data?.title}
-              width={900}
-              height={500}
-              priority
-            />
-          </div>
+          <Image
+            src={data?.image}
+            alt={data?.title}
+            width={900}
+            height={500}
+            priority
+          />
+
           <div className="mt-5 max-w-[764px]  mx-auto ">
             <div
-              className="text-white mt-10"
+              className="text-(--text-primary) mt-10"
               dangerouslySetInnerHTML={{ __html: data?.description }}
             ></div>
+          </div>
+          <div className="flex justify-center items-center  mt-10">
+            <Gradientcard
+              isHover={false}
+              borderClassName="max-w-[666px] h-[290px] p-[1.2px] rounded-3xl  "
+              className="max-w-[666px] h-[290px] rounded-3xl relative"
+            >
+              <div className="flex flex-col gap-4 p-6 justify-center items-center">
+                <h2 className="text-[36px] leading-10 font-semibold">
+                  Let’s Make Your Videos Shine
+                </h2>
+                <p className="text-[16px] leading-5.5 font-medium">
+                  Get scroll-stopping edits that engage and convert.
+                </p>
+                <button className="py-2 px-3 rounded-lg btn-color">
+                  Book a Call
+                </button>
+              </div>
+              <Image
+                src={"/assets/icon/blogline.png"}
+                width={666}
+                height={230}
+                alt=""
+                className="absolute bottom-0"
+              />
+            </Gradientcard>
           </div>
         </div>
         {/* what you will learn  */}
 
         <Gradientcard
-          className="max-w-[319px] w-full max-h-[580px] h-full rounded-[24px] py-5 px-4 flex justify-center items-center flex-col gap-2 bgperfect"
-          borderClassName="max-w-[319px] w-full max-h-[580px] h-full rounded-[24px] p-[1px]"
+          className="max-w-[319px] w-full max-h-[580px] h-full rounded-3xl p-6 flex justify-center items-center flex-col gap-2 bgperfect"
+          borderClassName="max-w-[319px] w-full max-h-[580px] h-full rounded-[24px] p-[2px] lg:block hidden"
         >
-          <h2 className="text-[24px] poppins font-[500] text-white">
+          <h2 className="text-[24px] leading-[30px] poppins font-medium text-(--text-primary)">
             In This Article, You’ll Learn
           </h2>
-          <style>
-            {`
-    
-    .willCard {
-
-      border-radius: 8px;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .willCard:hover {
-      background: linear-gradient(
-        258.1deg,
-        rgba(51, 87, 163, 0.6) 17.41%,
-        #3357A3 50%,
-        rgba(51, 87, 163, 0.6) 82.59%
-      );
-      transform: translateY(-2px);
-      box-shadow: 0 0 10px rgba(51, 87, 163, 0.4);
-    }
-  `}
-          </style>
 
           <div className="flex flex-wrap gap-3">
             {whatWill.article_topics?.map((article, idx) => (
               <div
                 key={idx}
-                className="willCard max-w-[299px] w-full max-h-[59px] h-full p-[1px] flex justify-center items-center"
+                className="border border-transparent hover:border-[#3357A3] max-w-[299px] w-full max-h-[57px] h-full rounded-[12px] py-2 px-4  hover:scale-[102%] animated overflow-hidden"
               >
-                <div className="hover:bg-black max-w-[299px] w-full max-h-[59px] h-full rounded-[8px] py-2 px-4   overflow-hidden">
-                  <p className="text-white text-[14px] poppins text-center">
-                    {article}
-                  </p>
-                </div>
+                <p className=" text-[#49565A] text-[14px] poppins text-left">
+                  {article}
+                </p>
               </div>
             ))}
           </div>

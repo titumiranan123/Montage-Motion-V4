@@ -6,6 +6,12 @@
 ::-webkit-scrollbar-thumb {
   background-color: #b9babd;
 }
+.scroll-hide::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  display: none;
+}
+
 body {
   font-family: var(--font-dmsans) !important;
 }

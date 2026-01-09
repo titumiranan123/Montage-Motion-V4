@@ -8,7 +8,7 @@ const Privacypolicy = () => {
     <div className="max-w-[996px] mx-auto px-2">
       <h2
         style={{ textTransform: "capitalize" }}
-        className="lg:mt-30 capitalize mb-4 mt-12 text-(--text-primary) poppins font-bold text-3xl "
+        className="lg:mt-60 capitalize mb-4 mt-40 text-(--text-primary) poppins font-bold text-3xl "
       >
         Privacy Policy
       </h2>

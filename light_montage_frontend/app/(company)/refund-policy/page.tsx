@@ -6,7 +6,7 @@ export async function generateMetadata() {
 const Refundpolicy = () => {
   return (
     <div className="max-w-[996px] mx-auto px-2">
-      <h2 className="mb-[60px] mt-[120px] font-bold poppins text-center text-[36px] text-(--text-primary) ">
+      <h2 className="mb-[60px] mt-40 font-bold poppins text-center text-[36px] text-(--text-primary) ">
         Refund Policy
       </h2>
       <div className="opensans text-(--text-primary)">

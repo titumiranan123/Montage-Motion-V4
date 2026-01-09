@@ -5,8 +5,8 @@ export async function generateMetadata() {
 }
 const Termsandconditions = () => {
   return (
-    <div className="max-w-[996px] mx-auto px-2">
-      <h2 className="mb-3 text-3xl font-bold capitalize text-(--text-primary) lg:mt-30 mt-10 poppins">
+    <div className="max-w-[996px] mx-auto px-2 ">
+      <h2 className="mb-3 text-3xl font-bold capitalize text-(--text-primary) lg:mt-60 mt-40 poppins">
         Terms and Conditions
       </h2>
       <div className="opensans text-(--text-primary)">

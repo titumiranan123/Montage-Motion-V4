@@ -3,7 +3,7 @@ import React from "react";
 
 const BlogHeader = () => {
   return (
-    <div className="flex items-center text-white gap-4 mt-3 md:flex-row flex-wrap">
+    <div className="flex items-center text-(--text-primary) gap-4 mt-3 md:flex-row flex-wrap">
       <div className="flex items-center gap-2">
         <Image
           src={"/assets/icon/date.png"}

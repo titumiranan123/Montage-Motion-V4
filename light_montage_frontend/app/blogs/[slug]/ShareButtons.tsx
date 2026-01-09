@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import React from "react";
 import { FacebookShareButton, LinkedinShareButton } from "next-share";
 const ShareButtons = ({
   data,
@@ -22,7 +21,7 @@ const ShareButtons = ({
   };
   return (
     <div className="flex flex-row lg:flex-col items-center lg:items-start justify-center gap-4 lg:gap-3 ">
-      <p className="text-white poppins text-[16px] -mt-2 font-[500] text-center">
+      <p className="text-(--text-primary)  poppins text-[16px] lg:-mt-2 font-medium text-center">
         Share
       </p>
       <FacebookShareButton

@@ -81,7 +81,7 @@ const Blogtab = () => {
       onMouseLeave={handleMouseLeave}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
-      className={`flex mx-auto h-[75px] justify-start lg:justify-start items-center gap-6 pb-2 max-w-[1002px] rounded-[12px] py-[11px] px-9 bg-white/40 backdrop-blur-md flex-nowrap overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent hover:scrollbar-thumb-gray-500 mt-5 ${
+      className={`flex mx-auto h-[75px] justify-start lg:justify-start items-center gap-4 pb-2 max-w-[1002px]  rounded-[12px] py-2 px-9 bg-white/40 glassShadow backdrop-blur-md flex-nowrap overflow-x-auto overflow-y-hidden scroll-hide mt-5 ${
         isDragging ? "cursor-grabbing" : "cursor-grab"
       }`}
     >
@@ -95,9 +95,7 @@ const Blogtab = () => {
             }
           }}
           className={`py-2 px-5 text-center h-[51px] font-normal text-[16px] rounded-[12px] transition-all whitespace-nowrap select-none ${
-            activeTab === tab.href
-              ? "bg-blue-500 text-white font-semibold shadow-lg"
-              : "bg-white/20 text-gray-700 hover:bg-white/30"
+            activeTab === tab.href ? "btn-color text-white " : " text-gray-700 "
           }`}
         >
           {tab.title}
