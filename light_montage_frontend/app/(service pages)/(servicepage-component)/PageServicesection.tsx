@@ -6,7 +6,6 @@ import { Heading } from "@/component/share/Headering";
 import Gradientcard from "@/component/share/Gradientcard";
 
 const PageServicesection = ({ data }: { data: any }) => {
-  console.log("page services ", data);
   return (
     <div className="container sectionGap">
       <Heading

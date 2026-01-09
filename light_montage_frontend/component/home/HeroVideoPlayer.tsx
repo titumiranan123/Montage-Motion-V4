@@ -2,8 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
-
-const HeadervideoPlayer = ({
+const HeroVideoPlayer = ({
   thumbnail,
   video_url,
 }: {
@@ -11,7 +10,6 @@ const HeadervideoPlayer = ({
   video_url: string;
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-
   return (
     <div className="max-w-7xl mt-20 mx-auto px-4">
       <div
@@ -43,5 +41,4 @@ const HeadervideoPlayer = ({
     </div>
   );
 };
-
-export default HeadervideoPlayer;
+export default HeroVideoPlayer;

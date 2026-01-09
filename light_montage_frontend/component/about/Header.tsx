@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import TurstedBy from "../home/TurstedBy";
-import HeadervideoPalyer from "../home/HeadervideoPalyer";
+import HeroVideoPlayer from "../home/HeroVideoPlayer";
 
 interface HeaderServiceProps {
   mainIntro: any;
@@ -43,7 +43,7 @@ const HeaderService: React.FC<HeaderServiceProps> = ({ mainIntro }) => {
           data-aos-delay="500"
           className="lg:mt-10 mt-8  "
         >
-          <HeadervideoPalyer
+          <HeroVideoPlayer
             thumbnail={mainIntro?.media?.[0]?.image_url}
             video_url={mainIntro?.media?.[0]?.video_url}
           />

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import TurstedBy from "./TurstedBy";
 import Link from "next/link";
-import HeroVideoPlayer from "./HeroVideoPlayer";
-const Header: React.FC<{ data: any }> = ({ data }) => {
+import TurstedBy from "@/component/home/TurstedBy";
+import HeroVideoPlayer from "@/component/home/HeroVideoPlayer";
+const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div className="flex headerbg  pt-30 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
+    <div className="flex headerbg   flex-col justify-center items-center relative   pt-36   lg:gap-4 gap-4 max-w-[1440px] mx-auto rounded-[40px] p-[60px]">
       {/* header content left side */}
-      <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-[700px] mx-auto">
+      <div className="flex z-20 justify-center items-center  flex-col   max-w-[1100px] mx-auto">
         <div
           data-aos="fade-up"
           data-aos-delay="100"
@@ -52,7 +52,7 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
       </div>
       <div data-aos="fade-up" data-aos-delay="500" className="lg:mt-10 mt-8  ">
         <HeroVideoPlayer
-          thumbnail={`https://i.postimg.cc/GpKBHFX3/ezgif-com-video-to-gif-converter.gif`}
+          thumbnail={data?.media?.[0]?.thumbnail}
           video_url={data?.media?.[0]?.video_url}
         />
       </div>
@@ -60,4 +60,4 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
   );
 };
 
-export default Header;
+export default PageHomeHero;
