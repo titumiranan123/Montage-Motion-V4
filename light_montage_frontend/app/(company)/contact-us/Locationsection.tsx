@@ -29,6 +29,7 @@ const Locationsection = () => {
           className="md:absolute lg:-left-20 md:-left-11 md:bottom-12  lg:bottom-20 "
         >
           <Gradientcard
+            isHover={false}
             className="max-w-[440px] max-h-[217px] w-full h-full rounded-3xl md:py-6 py-5 md:px-5 px-5 "
             borderClassName="max-w-[440px]   max-h-[219px] w-full h-full p-[1px] rounded-[24px] "
           >

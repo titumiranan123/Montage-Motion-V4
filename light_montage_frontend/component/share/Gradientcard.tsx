@@ -16,11 +16,14 @@ const Gradientcard: React.FC<Props> = ({
   return (
     <div
       className={`${borderClassName}  ${
-        isHover ? "border-hover" : "border-normal"
+        isHover ? "border-hover " : "border-normal"
       }`}
     >
       <style>{`
-      .bg-gradient-card {
+      .bg {
+        background: linear-gradient(179.93deg, #ffffff 0.07%, #ccf4ff 99.96%);
+      }
+      .bg-gradient-card:hover {
         background: linear-gradient(179.93deg, #ffffff 0.07%, #ccf4ff 99.96%);
       }
       
@@ -42,7 +45,9 @@ const Gradientcard: React.FC<Props> = ({
       
       `}</style>
       <div
-        className={`${className} bg-gradient-card transition-colors duration-300 `}
+        className={`${className} ${
+          !isHover ? "bg" : "bg-gradient-card"
+        } transition-colors duration-300 `}
       >
         {children}
       </div>

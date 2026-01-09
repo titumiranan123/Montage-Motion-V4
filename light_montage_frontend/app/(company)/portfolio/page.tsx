@@ -20,16 +20,17 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
 
   const category = await getData({ url: "api/website/service/type" });
 
-  console.log(data);
+  console.log(category);
   // console.log(data);
   return (
     <div className=" mt-4">
       <div className="portfoliobg container min-h-screen rounded-[42px]">
-        <div className="pt-[60px]"></div>
+        <div className="pt-40"></div>
         <Heading
           subtitle="Turning raw footage and ideas into content that captures attention."
           title="Creativity That Converts"
           tag="Our Portfolio"
+          width="160"
         />
         <style>
           {`
