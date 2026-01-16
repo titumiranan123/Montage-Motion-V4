@@ -12,10 +12,6 @@ export const ServiceTypeSelect = ({
   value: string;
   onChange: (p: string) => void;
 }) => {
-  const searchParams = useSearchParams();
-
-  const currentPage = searchParams.get("page");
-
   // Fetch category list
   const { data } = useQuery({
     queryKey: ["categories"],
@@ -24,7 +20,7 @@ export const ServiceTypeSelect = ({
 
   return (
     <select
-      value={currentPage ?? (value || "home")}
+      value={value}
       onChange={(e) => {
         onChange(e.target.value);
       }}

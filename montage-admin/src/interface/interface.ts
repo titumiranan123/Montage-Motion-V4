@@ -59,30 +59,43 @@ export interface IFeature {
   is_active: boolean;
   position: number;
 }
-
-export interface faqitem {
+export interface IFaqItem {
   id?: string;
-  faq_id: string;
+  faq_section_id?: string;
+
   question: string;
   answer: string;
+
+  sort_order?: number;
   is_visible: boolean;
-  position: number;
+
+  created_at?: string;
+  updated_at?: string;
 }
 
-export interface IFaq {
+export interface IFaqSection {
   id?: string;
-  title: string;
-  sub_title: string;
-  is_visible: boolean;
-  faqs: faqitem[];
-  type:
-    | "main"
-    | "shorts"
-    | "talking"
-    | "podcast"
-    | "graphic"
-    | "advertising"
-    | "website";
+
+  section_tag: string;
+  section_title: string;
+  section_description: string;
+
+  contact_image: string;
+  contact_alt?: string;
+
+  contact_heading: string;
+  contact_description?: string;
+
+  contact_name?: string;
+  contact_position?: string;
+  contact_link?: string;
+
+  is_active?: boolean;
+
+  faqs?: IFaqItem[];
+
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface MemberProfile {

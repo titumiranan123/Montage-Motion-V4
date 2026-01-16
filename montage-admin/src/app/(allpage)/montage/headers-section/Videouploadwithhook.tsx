@@ -35,7 +35,6 @@ const Videouploadwithhook: React.FC<VideoUploaderProps> = ({
   setVideoUrl,
   videoUrl,
 }) => {
-  console.log("video url ", videoUrl);
   const [temUrl, setTeamUrl] = useState<string | null>(videoUrl ?? null);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -181,7 +180,6 @@ const Videouploadwithhook: React.FC<VideoUploaderProps> = ({
       <Controller
         control={control}
         name={registerName}
-        rules={{ required: "Video is required" }}
         render={({ field: { value, onChange }, fieldState: { error } }) => {
           return (
             <>
@@ -312,10 +310,6 @@ const Videouploadwithhook: React.FC<VideoUploaderProps> = ({
                   )}
                   {uploadStatus.message}
                 </div>
-              )}
-
-              {error && (
-                <p className="mt-2 text-sm text-red-500">{error.message}</p>
               )}
             </>
           );

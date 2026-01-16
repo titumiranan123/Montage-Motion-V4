@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import ImageUploader from "@/component/ImageUploader";
 import { IPageHeader } from "./header.types";
-import useCategories from "@/hook/useCategory";
 import VideoUploader from "./VideoUploader";
 import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
 
@@ -25,7 +24,6 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
     register,
     handleSubmit,
     control,
-    reset,
     setValue,
     watch,
     formState: { errors },

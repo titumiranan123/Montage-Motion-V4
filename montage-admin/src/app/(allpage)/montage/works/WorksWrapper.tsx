@@ -100,7 +100,6 @@ export const WorkWrapper = ({ data }: { data: any }) => {
   return (
     <div className="min-h-screen text-white p-6">
       {/* Header */}
-
       <div className="flex justify-between items-center mb-10">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold ">Works Gallery</h1>

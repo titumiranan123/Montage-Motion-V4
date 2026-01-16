@@ -2,12 +2,12 @@
 
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-
 import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
 import toast from "react-hot-toast";
 import { PageService } from "./types";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 const ServiceForm = ({ initialData }: { initialData: any }) => {
   const { register, control, setValue, watch, handleSubmit } =
@@ -30,16 +30,23 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
           },
     });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, move } = useFieldArray({
     control,
     name: "services",
   });
-  console.log(watch("type"));
+
+  const moveService = (index: number, direction: "up" | "down") => {
+    if (direction === "up" && index > 0) {
+      move(index, index - 1);
+    } else if (direction === "down" && index < fields.length - 1) {
+      move(index, index + 1);
+    }
+  };
+
   const onSubmit = async (data: PageService) => {
     console.log("✅ Form Submitted:", data);
     try {
       const response = await api_url.post("/api/our-service", data);
-
       if (response.status === 200 || response.status === 201) {
         toast.success(response?.data?.message);
       }
@@ -56,7 +63,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-6 h-[70vh] overflow-y-scroll"
+        className="space-y-6 h-[70vh] overflow-y-auto"
       >
         {/* Section Type */}
         <div>
@@ -82,7 +89,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
           />
         </div>
 
-        {/* Heading */}
+        {/* Heading - Fixed to match form structure */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block font-medium text-gray-200">
@@ -93,17 +100,6 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
               type="text"
               className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
               placeholder="Enter first part of heading"
-            />
-          </div>
-          <div>
-            <label className="block font-medium text-gray-200">
-              Heading (Part 2)
-            </label>
-            <input
-              {...register("heading_part2")}
-              type="text"
-              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-              placeholder="Enter second part of heading"
             />
           </div>
         </div>
@@ -127,12 +123,44 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
           {fields.map((field, index) => (
             <div
               key={field.id}
-              className="border border-gray-700 bg-gray-950 rounded-xl p-4 mb-4 space-y-3"
+              className="relative border border-gray-700 bg-gray-950 rounded-xl p-4 mb-4 space-y-4"
             >
-              <div>
-                <label className="block font-medium text-gray-200">
-                  Service Title
-                </label>
+              {/* Move buttons in top-right corner - Fixed positioning */}
+              <div className="absolute right-4 top-4 flex gap-2 z-10">
+                <button
+                  type="button"
+                  onClick={() => moveService(index, "up")}
+                  disabled={index === 0}
+                  className={`p-2 rounded transition-colors ${
+                    index === 0
+                      ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                      : "bg-gray-700 text-white hover:bg-gray-600 cursor-pointer"
+                  }`}
+                  title="Move up"
+                >
+                  <ArrowUp size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => moveService(index, "down")}
+                  disabled={index === fields.length - 1}
+                  className={`p-2 rounded transition-colors ${
+                    index === fields.length - 1
+                      ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                      : "bg-gray-700 text-white hover:bg-gray-600 cursor-pointer"
+                  }`}
+                  title="Move down"
+                >
+                  <ArrowDown size={16} />
+                </button>
+              </div>
+
+              <div className="mt-6">
+                <div>
+                  <label className="block font-medium text-gray-200">
+                    Service Title
+                  </label>
+                </div>
                 <input
                   {...register(`services.${index}.service_title` as const)}
                   type="text"
@@ -187,7 +215,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
               <button
                 type="button"
                 onClick={() => remove(index)}
-                className="text-red-500 font-medium hover:underline"
+                className="text-red-500 font-medium hover:underline transition-colors"
               >
                 ❌ Remove Service
               </button>

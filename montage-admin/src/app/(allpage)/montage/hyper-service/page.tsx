@@ -4,7 +4,7 @@ import HyperServicewrapper from "./HyperServicewrapper";
 
 const Page = async () => {
   const responsce = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/our-service?type=home`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/home-service?type=home`
   );
 
   return (

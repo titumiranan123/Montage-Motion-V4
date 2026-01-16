@@ -55,7 +55,6 @@ const Workform: React.FC<IWorkFormProps> = ({
   );
 
   const selectedType = watch("type");
-  console.log("selectedType", selectedType);
   const onSubmitHandler = async (data: IWork) => {
     try {
       await onSubmit(data);

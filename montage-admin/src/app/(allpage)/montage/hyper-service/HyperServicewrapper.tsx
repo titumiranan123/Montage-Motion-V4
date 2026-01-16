@@ -2,21 +2,12 @@
 import React, { useEffect, useState } from "react";
 import ServiceForm from "./HyperServiceform";
 import SingleService from "./HyperSingleService";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Plus } from "lucide-react";
 
 const HyperServicewrapper = ({ data }: { data: any }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
   const [serviceData, setInitialServiceData] = useState<any | null>(null);
   const [isOpenModal, setIsModalOpent] = useState<any | null>(null);
 
-  useEffect(() => {
-    // Only push "home" if no ?page param exists
-    if (!searchParams.get("page")) {
-      router.push("?page=home");
-    }
-  }, [router, searchParams]);
   // Disable scrolling when the modal is open
   useEffect(() => {
     if (isOpenModal) {
@@ -37,61 +28,20 @@ const HyperServicewrapper = ({ data }: { data: any }) => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold ">
-            Service Page Mannagement
+            Home Page Mannagement
           </h1>
           <p className="text-gray-400">
             Manage and showcase every Service page
           </p>
         </div>
-
-        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <select
-            onChange={(e) => {
-              router.push(`?page=${e.target.value}`);
-            }}
-            aria-readonly
-            className="bg-gray-800 border border-gray-600 rounded px-3 py-2"
-          >
-            {["home"].map((type) => (
-              <option selected key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-          {/* Add New Button */}
-          <button
-            onClick={() => {
-              setInitialServiceData(null);
-              setIsModalOpent(true);
-            }}
-            className="bg-[#1FB5DD]    text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Add Service
-          </button>
-        </div>
-      </div>
-      <div>
-        {data.map((dt: any) => (
-          <div>
-            <SingleService data={dt} />
+        {data.length < 0 && (
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
             <button
               onClick={() => {
-                setInitialServiceData(dt);
+                setInitialServiceData(null);
                 setIsModalOpent(true);
               }}
-              className="bg-[#1FB5DD] mt-10   text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+              className="bg-[#1FB5DD]    text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -105,6 +55,23 @@ const HyperServicewrapper = ({ data }: { data: any }) => {
                   clipRule="evenodd"
                 />
               </svg>
+              Add Service
+            </button>
+          </div>
+        )}
+      </div>
+      <div>
+        {data.map((dt: any) => (
+          <div>
+            <SingleService data={dt} />
+            <button
+              onClick={() => {
+                setInitialServiceData(dt);
+                setIsModalOpent(true);
+              }}
+              className="bg-[#1FB5DD] mt-10   text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+            >
+              <Plus />
               Edit Service
             </button>
           </div>

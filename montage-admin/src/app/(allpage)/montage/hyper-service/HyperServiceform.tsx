@@ -2,32 +2,57 @@
 
 import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
 
-// ✅ SECTION_NAMES constant
+/* =========================
+   SECTION CONSTANTS
+========================= */
+
 export const SECTION_NAMES = [
-  "short-hero",
-  "home-hero",
-  "podcast-hero",
-  "work",
-  "testimonial",
-  "pricing",
+  "short_hero",
+  "home_hero",
+  "podcast_hero",
+
   "service",
-  "process",
-  "faq",
-  "whychooseus",
-  "contact",
-  "our-clients",
   "shorts_service",
-  "insight",
-  "before_after_section",
+
+  "our_clients",
+  "work",
+  "pricing",
+  "testimonial",
+  "process",
   "industry",
+
+  "insight",
+  "podcast_insight",
+
+  "whychooseus",
+  "faq",
+  "contact",
+
+  "before_after_section",
   "whysaas_video",
 ] as const;
 
 export type sectionName = (typeof SECTION_NAMES)[number];
+
+const SECTION_GROUPS: Record<string, sectionName[]> = {
+  hero: ["short_hero", "home_hero", "podcast_hero"],
+  serviceType: ["service", "shorts_service"],
+  insights: ["insight", "podcast_insight"],
+};
+
+const getGroupBySection = (section: sectionName) => {
+  for (const key in SECTION_GROUPS) {
+    if (SECTION_GROUPS[key].includes(section)) {
+      return SECTION_GROUPS[key];
+    }
+  }
+  return null;
+};
 
 interface SectionItem {
   section_name: sectionName;
@@ -35,6 +60,7 @@ interface SectionItem {
 }
 
 export interface ServiceItem {
+  id?: string; // Add this field
   service_title: string;
   service_description: string;
   image: string;
@@ -43,6 +69,7 @@ export interface ServiceItem {
   alt: string;
   href?: string;
   available_section?: SectionItem[];
+  order_index?: number; // Add this for ordering
 }
 
 export interface PageService {
@@ -54,53 +81,85 @@ export interface PageService {
   services: ServiceItem[];
 }
 
-const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
-  const { register, control, handleSubmit, setValue, watch } =
-    useForm<PageService>({
-      defaultValues: initialData || {
-        type: "home",
-        tag: "",
-        heading_part1: "",
-        heading_part2: "",
-        paragraph: "",
-        services: [
-          {
-            service_title: "",
-            service_description: "",
-            image: "",
-            icon: "",
-            icon_alt: "",
-            alt: "",
-            href: "",
-            available_section: [],
-          },
-        ],
-      },
-    });
+/* =========================
+   COMPONENT
+========================= */
 
-  const { fields, append, remove } = useFieldArray({
+const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
+  const {
+    register,
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<PageService>({
+    defaultValues: initialData || {
+      type: "home",
+      tag: "",
+      heading_part1: "",
+      heading_part2: "",
+      paragraph: "",
+      services: [
+        {
+          service_title: "",
+          service_description: "",
+          image: "",
+          icon: "",
+          icon_alt: "",
+          alt: "",
+          href: "",
+          available_section: [],
+        },
+      ],
+    },
+  });
+
+  const { fields, append, remove, move } = useFieldArray({
     control,
     name: "services",
   });
-
-  // Watch the services to get current values
   const watchedServices = watch("services");
 
   const onSubmit = async (data: PageService) => {
-    console.log("✅ Form Submitted:", data);
     try {
-      const response = await api_url.post("/api/our-service", data);
+      // Add order_index to each service based on their current position
+      const servicesWithOrder = data.services.map((service, index) => ({
+        ...service,
+        order_index: index,
+      }));
+
+      const updatedData = {
+        ...data,
+        services: servicesWithOrder,
+      };
+
+      const response = await api_url.post("/api/home-service", updatedData);
       if (response.status === 200 || response.status === 201) {
         toast.success(response?.data?.message || "Service saved successfully!");
+
+        // If the response contains the updated data with IDs, update the form
+        if (response.data?.data?.services) {
+          // You might want to update the form with the new IDs here
+          // Or refresh the page to get the latest data
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error saving service:", error);
       toast.error("Failed to save service!");
     }
   };
 
+  const moveService = (index: number, direction: "up" | "down") => {
+    if (direction === "up" && index > 0) {
+      move(index, index - 1);
+    } else if (direction === "down" && index < fields.length - 1) {
+      move(index, index + 1);
+    }
+  };
+
   return (
-    <div className="max-w-4xl mx-auto bg-black text-white p-8 rounded-2xl shadow-lg border border-gray-800">
+    <div className="max-w-4xl mx-auto bg-black text-white p-8 rounded-2xl border border-gray-800">
       <h1 className="text-3xl font-bold mb-6 text-[#1E9ED2]">
         Service Section Form
       </h1>
@@ -109,271 +168,207 @@ const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 h-[70vh] overflow-y-scroll"
       >
-        {/* Section Type */}
+        {/* ================= Section Info ================= */}
         <div>
-          <label className="block font-medium text-gray-200">
-            Section Type
-          </label>
+          <label className="block font-medium">Section Type</label>
           <select
             {...register("type")}
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
+            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           >
-            <option value="home" selected>
-              Home
-            </option>
+            <option value="home">Home</option>
           </select>
         </div>
 
-        {/* Tag */}
         <div>
-          <label className="block font-medium text-gray-200">Tag</label>
+          <label className="block font-medium">Tag</label>
           <input
             {...register("tag")}
-            type="text"
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-            placeholder="Enter Tag"
+            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
         </div>
 
-        {/* Headings */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-2">
-            <label className="block font-medium text-gray-200">Heading</label>
-            <input
-              {...register("heading_part1")}
-              type="text"
-              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-              placeholder="Enter first part of heading"
-            />
-          </div>
-          <div className="hidden">
-            <label className="block font-medium text-gray-200">
-              Heading (Part 2)
-            </label>
-            <input
-              {...register("heading_part2")}
-              type="text"
-              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-              placeholder="Enter second part of heading"
-            />
-          </div>
+        <div>
+          <label className="block font-medium">Heading</label>
+          <input
+            {...register("heading_part1")}
+            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
+          />
         </div>
 
-        {/* Paragraph */}
         <div>
-          <label className="block font-medium text-gray-200">Paragraph</label>
+          <label className="block font-medium">Paragraph</label>
           <textarea
             {...register("paragraph")}
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
             rows={4}
-            placeholder="Enter paragraph text"
-          ></textarea>
+            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
+          />
         </div>
 
-        {/* Services */}
-        <div>
-          <h2 className="text-2xl font-semibold text-[#1E9ED2] mb-3">
-            Services
-          </h2>
-          {fields.map((field, index) => (
+        {/* ================= Services ================= */}
+
+        {fields.map((field, index) => {
+          const currentSections =
+            watchedServices[index]?.available_section || [];
+
+          return (
             <div
               key={field.id}
-              className="border border-gray-700 bg-gray-950 rounded-xl p-4 mb-4 space-y-3"
+              className="border border-gray-700 rounded-xl p-4 space-y-4 relative"
             >
-              {/* Title */}
-              <div>
-                <label className="block font-medium text-gray-200">
-                  Service Title
-                </label>
-                <input
-                  {...register(`services.${index}.service_title` as const)}
-                  type="text"
-                  className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-                  placeholder="Enter service title"
-                />
+              {/* Move buttons in top-right corner */}
+              <div className="absolute right-4 top-4 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => moveService(index, "up")}
+                  disabled={index === 0}
+                  className={`p-2 rounded ${
+                    index === 0
+                      ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                      : "bg-gray-700 hover:bg-gray-600"
+                  }`}
+                  title="Move up"
+                >
+                  <ArrowUp size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => moveService(index, "down")}
+                  disabled={index === fields.length - 1}
+                  className={`p-2 rounded ${
+                    index === fields.length - 1
+                      ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                      : "bg-gray-700 hover:bg-gray-600"
+                  }`}
+                  title="Move down"
+                >
+                  <ArrowDown size={16} />
+                </button>
               </div>
 
-              {/* Description */}
+              {/* Hidden ID field if it exists */}
+              {field.id && (
+                <input type="hidden" {...register(`services.${index}.id`)} />
+              )}
+
+              <input
+                {...register(`services.${index}.service_title`)}
+                placeholder="Service Title"
+                className="w-full p-3 bg-gray-900 border rounded-lg"
+              />
+              <textarea
+                {...register(`services.${index}.service_description`)}
+                placeholder="Service Description"
+                className="w-full p-3 bg-gray-900 border rounded-lg"
+              />
+              <ImageUploader
+                value={watch(`services.${index}.image`)}
+                onChange={(url) => setValue(`services.${index}.image`, url)}
+              />
+              <ImageUploader
+                value={watch(`services.${index}.icon`)}
+                onChange={(url) => setValue(`services.${index}.icon`, url)}
+              />
+              <input
+                {...register(`services.${index}.alt`)}
+                placeholder="Alt Text"
+                className="w-full p-3 bg-gray-900 border rounded-lg"
+              />
+              <input
+                {...register(`services.${index}.icon_alt`)}
+                placeholder="Icon Alt Text"
+                className="w-full p-3 bg-gray-900 border rounded-lg"
+              />
+              <input
+                {...register(`services.${index}.href`, {
+                  required: true,
+                })}
+                placeholder="Slug"
+                className="w-full p-3 bg-gray-900 border rounded-lg"
+              />
+              {/* ========== AVAILABLE SECTIONS (FIXED) ========== */}
               <div>
-                <label className="block font-medium text-gray-200">
-                  Service Description
-                </label>
-                <textarea
-                  {...register(
-                    `services.${index}.service_description` as const
-                  )}
-                  className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-                  rows={3}
-                  placeholder="Enter service description"
-                ></textarea>
-              </div>
-
-              {/* Image + Alt + Slug */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="hidden">
-                  <label className="block font-medium text-gray-200">
-                    Image URL
-                  </label>
-                  <input
-                    {...register(`services.${index}.image` as const)}
-                    type="text"
-                    className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-                    placeholder="Enter image URL"
-                  />
-                </div>
-                <ImageUploader
-                  value={watch(`services.${index}.image`)}
-                  onChange={(url) => setValue(`services.${index}.image`, url)}
-                />
-                <ImageUploader
-                  value={watch(`services.${index}.icon`)}
-                  onChange={(url) => setValue(`services.${index}.icon`, url)}
-                />
-
-                <div>
-                  <label className="block font-medium text-gray-200">
-                    Alt Text
-                  </label>
-                  <input
-                    {...register(`services.${index}.alt` as const)}
-                    type="text"
-                    className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-                    placeholder="Enter alt text"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-medium text-gray-200">
-                    Icon Alt Text
-                  </label>
-                  <input
-                    {...register(`services.${index}.icon_alt` as const)}
-                    type="text"
-                    className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-                    placeholder="Enter alt text"
-                  />
-                </div>
-                <div>
-                  <label className="block font-medium text-gray-200">
-                    Slug (href)
-                  </label>
-                  <input
-                    {...register(`services.${index}.href` as const, {
-                      required: "Slug is required ",
-                    })}
-                    type="text"
-                    className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-                    placeholder="Enter slug "
-                  />
-                </div>
-
-                <div className="hidden">
-                  <label className="block font-medium text-gray-200">
-                    Icon
-                  </label>
-                  <input
-                    {...register(`services.${index}.icon` as const)}
-                    type="text"
-                    className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-                    placeholder="Enter image URL"
-                  />
-                </div>
-              </div>
-
-              {/* ✅ FIXED: Available Sections */}
-              <div>
-                <label className="block font-medium text-gray-200 mb-2">
-                  Available Sections
-                </label>
+                <p className="font-medium mb-2">Available Sections</p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                  {SECTION_NAMES?.map((section) => {
-                    const currentSections =
-                      watchedServices[index]?.available_section || [];
+                  {SECTION_NAMES.map((section) => {
                     const isChecked = currentSections.some(
                       (s) => s.section_name === section
                     );
 
                     return (
-                      <label
-                        key={section}
-                        className="flex items-center space-x-2 cursor-pointer"
-                      >
+                      <label key={section} className="flex items-center gap-2">
                         <input
                           type="checkbox"
-                          className="accent-[#1E9ED2] cursor-pointer"
                           checked={isChecked}
+                          className="accent-[#1E9ED2]"
                           onChange={(e) => {
-                            const updatedSections = [...currentSections];
+                            let updated = [...currentSections];
+                            const group = getGroupBySection(section);
 
                             if (e.target.checked) {
-                              // Add section if checked
-                              updatedSections.push({
+                              if (group) {
+                                updated = updated.filter(
+                                  (s) => !group.includes(s.section_name)
+                                );
+                              }
+                              updated.push({
                                 section_name: section,
                                 visible: true,
                               });
                             } else {
-                              // Remove section if unchecked
-                              const filteredSections = updatedSections.filter(
+                              updated = updated.filter(
                                 (s) => s.section_name !== section
                               );
-                              setValue(
-                                `services.${index}.available_section`,
-                                filteredSections
-                              );
-                              return;
                             }
 
                             setValue(
                               `services.${index}.available_section`,
-                              updatedSections
+                              updated
                             );
                           }}
                         />
-                        <span className="text-gray-300 text-sm">{section}</span>
+                        <span className="text-sm">{section}</span>
                       </label>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Remove Button */}
               <button
                 type="button"
                 onClick={() => remove(index)}
-                className="text-red-500 font-medium hover:underline"
+                className="text-red-500"
               >
-                ❌ Remove Service
+                Remove Service
               </button>
             </div>
-          ))}
+          );
+        })}
 
-          {/* Add New */}
-          <button
-            type="button"
-            onClick={() =>
-              append({
-                service_title: "",
-                service_description: "",
-                image: "",
-                alt: "",
-                href: "",
-                icon: "",
-                icon_alt: "",
-                available_section: [],
-              })
-            }
-            className="mt-2 bg-[#1E9ED2] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#1787b5] transition-all"
-          >
-            ➕ Add Service
-          </button>
-        </div>
-
-        {/* Submit */}
         <button
-          type="submit"
-          className="w-full bg-[#1E9ED2] text-white py-3 rounded-lg text-lg font-semibold hover:bg-[#1787b5] transition-all"
+          type="button"
+          onClick={() =>
+            append({
+              service_title: "",
+              service_description: "",
+              image: "",
+              icon: "",
+              icon_alt: "",
+              alt: "",
+              href: "",
+              available_section: [],
+            })
+          }
+          className="bg-[#1E9ED2] px-4 py-2 rounded-lg"
         >
-          Submit Form
+          Add Service
+        </button>
+
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="w-full cursor-pointer disabled:cursor-no-drop bg-[#1E9ED2] py-3 rounded-lg disabled:bg-slate-400 "
+        >
+          Submit
         </button>
       </form>
     </div>
