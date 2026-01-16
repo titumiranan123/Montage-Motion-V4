@@ -6,7 +6,7 @@ import {
   getAllServicesData,
   getSingleBlogs,
 } from "./homeapi.controller";
-import { getAllServiceSectionsType } from "../pageservice/page_service.controller";
+import { getAllServiceSectionsType } from "../homeservice/homeservice.controller";
 
 const webRoute = Router();
 webRoute.get("/website/data", getAllhomeData);

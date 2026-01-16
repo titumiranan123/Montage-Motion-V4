@@ -12,7 +12,7 @@ import contactRoute from "./app/contact/conatct.routes";
 import AuthRoute from "./app/auth/auth.routes";
 import faqRouter from "./app/faq/faq.routes";
 import stateRouter from "./app/state/state.routes";
-import serviceRoute from "./app/services/service.route";
+
 import uploadRoute from "./app/upload/upload.route";
 import aboutRoute from "./app/about/about.route";
 import blogRoute from "./app/blogs/blog.route";
@@ -26,6 +26,7 @@ import videoRoute from "./app/video-upload/video.routes";
 import bradImageRoute from "./app/brand_images/brandimage.route";
 import pageWhychooseusRoute from "./app/whychooseus/whychooseus.route";
 import carrerRoute from "./app/carrerpost/carrer.route";
+import homeServiceRoute from "./app/homeservice/homeservice.route";
 
 const mainRoute = Router();
 
@@ -38,7 +39,6 @@ mainRoute.use("/api", AuthRoute);
 mainRoute.use("/api", contactRoute);
 mainRoute.use("/api", faqRouter);
 mainRoute.use("/api", stateRouter);
-mainRoute.use("/api", serviceRoute);
 mainRoute.use("/api", aboutRoute);
 mainRoute.use("/api", blogRoute);
 mainRoute.use("/api", memberRoute);
@@ -54,6 +54,7 @@ mainRoute.use("/api", seoRoute);
 mainRoute.use("/api", robotsRoute);
 // new routes
 mainRoute.use("/api/our-service", pageServiceRoute);
+mainRoute.use("/api/home-service", homeServiceRoute);
 mainRoute.use("/api/process", workingProcess);
 mainRoute.use("/api/why-choose-us", pageWhychooseusRoute);
 mainRoute.use("/api/brand/images", bradImageRoute);

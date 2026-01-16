@@ -2,11 +2,11 @@
 // serviceSection.service.ts
 
 import { db } from "../../db/db";
-import { IServiceSection } from "./page_service.zod";
+import { IServiceSection } from "./homeservice.zod";
 
-import { createSection, createServiceItem } from "./pageServiceutils";
+import { createSection, createServiceItem } from "./homeserviceUtils";
 
-export const serviceSectionService = {
+export const homeService = {
   async createOrUpdateSection(data: IServiceSection) {
     const client = await db.connect();
 
@@ -18,7 +18,6 @@ export const serviceSectionService = {
         [data.type]
       );
       let section = existingRes.rows[0];
-      // check service section if have service not create new update section
       if (section) {
         await client.query(
           `UPDATE service_sections
@@ -83,14 +82,13 @@ export const serviceSectionService = {
 
     for (const section of sectionsRes.rows) {
       const itemsRes = await db.query(
-        `SELECT * FROM service_items WHERE section_id = $1 ORDER BY position ASC`,
+        `SELECT * FROM home_services WHERE section_id = $1 ORDER BY order_index ASC`,
         [section.id]
       );
 
       const services = [];
 
       for (const item of itemsRes.rows) {
-        // 🔹 প্রতিটি service item এর available_section আনো
         const availableSectionsRes = await db.query(
           `SELECT section_name, visible FROM service_item_sections WHERE service_item_id = $1`,
           [item.id]
@@ -109,9 +107,49 @@ export const serviceSectionService = {
     }
     return sections;
   },
+  async getAllSectionsType() {
+    const baseQuery = `SELECT id FROM service_sections WHERE type = $1 `;
+
+    const sectionsRes = await db.query(baseQuery, ["home"]);
+    let sectionsType;
+    for (const section of sectionsRes.rows) {
+      const itemsRes = await db.query(
+        `SELECT service_title, service_type , href FROM home_services WHERE section_id = $1 ORDER BY order_index ASC`,
+        [section.id]
+      );
+      // const siplified = Object.values(itemsRes.rows).map(
+      //   (item) => item.service_type
+      // );
+      sectionsType = [
+        { service_title: "Home", service_type: "home" },
+        ...itemsRes.rows,
+      ];
+    }
+    return sectionsType;
+  },
+  async getAllTypepageSection() {
+    const baseQuery = `SELECT id FROM service_sections WHERE type = $1 `;
+
+    const sectionsRes = await db.query(baseQuery, ["home"]);
+    let sectionsType;
+    for (const section of sectionsRes.rows) {
+      const itemsRes = await db.query(
+        `SELECT * FROM home_services WHERE section_id = $1 ORDER BY order_index ASC`,
+        [section.id]
+      );
+      // const siplified = Object.values(itemsRes.rows).map(
+      //   (item) => item.service_type
+      // );
+      sectionsType = [
+        { service_title: "Home", service_type: "home" },
+        ...itemsRes.rows,
+      ];
+    }
+    return sectionsType;
+  },
   async deleteSection(id: number) {
-    // 1️⃣ Delete related service_items first
-    await db.query(`DELETE FROM service_items WHERE section_id = $1`, [id]);
+    // 1️⃣ Delete related home_services first
+    await db.query(`DELETE FROM home_services WHERE section_id = $1`, [id]);
     // 2️⃣ Then delete the section itself
     const result = await db.query(
       `DELETE FROM service_sections WHERE id = $1 RETURNING *`,

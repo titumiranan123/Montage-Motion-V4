@@ -1,213 +1,164 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
-import { IFaq } from "./faq.interfac";
-
+import { IFaqSection } from "./faq.interfac";
 import { faqItemService } from "./faqitem.service";
 
-const checkFaqExists = async (id: string) => {
-  const res = await db.query(`SELECT 1 FROM faqs WHERE id = $1`, [id]);
-  if (res.rowCount === 0) throw new Error("FAQ not found");
+const checkFaqSectionExists = async (id: string) => {
+  const res = await db.query(`SELECT 1 FROM faq_sections WHERE id = $1`, [id]);
+  if (res.rowCount === 0) throw new Error("FAQ section not found");
 };
 
 export const faqService = {
-  /** ✅ Create or update FAQ with info_section support */
-  async createOrUpdateFaq(data: IFaq) {
+  /** ✅ Create FAQ Section with items */
+  async createFaqSection(data: IFaqSection) {
     const client = await db.connect();
     try {
       await client.query("BEGIN");
 
-      // Check if FAQ with the same type exists
-      const existingFaqResult = await client.query(
-        `SELECT * FROM faqs WHERE type = $1`,
-        [data.type]
+      const sectionResult = await client.query(
+        `INSERT INTO faq_sections (
+          section_tag,
+          section_title,
+          section_description,
+          contact_image,
+          contact_alt,
+          contact_heading,
+          contact_description,
+          contact_name,
+          contact_position,
+          contact_link,
+          is_active
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+        RETURNING *`,
+        [
+          data.section_tag,
+          data.section_title,
+          data.section_description,
+          data.contact_image,
+          data.contact_alt ?? null,
+          data.contact_heading,
+          data.contact_description ?? null,
+          data.contact_name ?? null,
+          data.contact_position ?? null,
+          data.contact_link ?? null,
+          data.is_active ?? true,
+        ]
       );
 
-      let faqId: string;
-      let faqResult;
+      const sectionId = sectionResult.rows[0].id;
 
-      if (existingFaqResult.rows.length > 0) {
-        // Update existing FAQ
-        faqId = existingFaqResult.rows[0].id;
-        faqResult = await client.query(
-          `UPDATE faqs 
-           SET title = $1, 
-               sub_title = $2, 
-               is_visible = $3, 
-               info_section = $4::jsonb,
-               updated_at = NOW()
-           WHERE id = $5 
-           RETURNING *`,
-          [
-            data.title,
-            data.sub_title,
-            data.is_visible,
-            data.info_section ? JSON.stringify(data.info_section) : null,
-            faqId,
-          ]
-        );
-
-        // Delete old faq_items before adding new ones
-        await client.query(`DELETE FROM faq_items WHERE faq_id = $1`, [faqId]);
-      } else {
-        // Insert new FAQ
-        faqResult = await client.query(
-          `INSERT INTO faqs 
-           (title, sub_title, is_visible, type, info_section) 
-           VALUES ($1, $2, $3, $4, $5::jsonb)
-           RETURNING *`,
-          [
-            data.title,
-            data.sub_title,
-            data.is_visible,
-            data.type,
-            data.info_section ? JSON.stringify(data.info_section) : null,
-          ]
-        );
-        faqId = faqResult.rows[0].id;
-      }
-
-      // Insert all faq_items again
       if (data.faqs?.length) {
         for (const item of data.faqs) {
-          await faqItemService.createFaqItem(client, faqId, item);
+          await faqItemService.createFaqItem(client, sectionId, item);
         }
       }
 
       await client.query("COMMIT");
-      return faqResult.rows[0];
+      return sectionResult.rows[0];
     } catch (error) {
       await client.query("ROLLBACK");
       errorLogger.error(error);
-      throw new Error("Failed to create or update FAQ");
+      throw new Error("Failed to create FAQ section");
     } finally {
       client.release();
     }
   },
 
-  /** ✅ Update FAQ and optionally its info_section */
-  async updateFaq(id: string, data: Partial<IFaq>) {
-    await checkFaqExists(id);
+  /** ✅ Update FAQ Section + replace items */
+  async updateFaqSection(id: string, data: Partial<IFaqSection>) {
+    await checkFaqSectionExists(id);
     const client = await db.connect();
+
     try {
       await client.query("BEGIN");
 
       await client.query(
-        `UPDATE faqs 
-         SET title = COALESCE($1, title),
-             sub_title = COALESCE($2, sub_title),
-             is_visible = COALESCE($3, is_visible),
-             type = COALESCE($4, type),
-             info_section = COALESCE($5::jsonb, info_section),
-             updated_at = NOW()
-         WHERE id = $6`,
+        `UPDATE faq_sections SET
+          section_tag = COALESCE($1, section_tag),
+          section_title = COALESCE($2, section_title),
+          section_description = COALESCE($3, section_description),
+          contact_image = COALESCE($4, contact_image),
+          contact_alt = COALESCE($5, contact_alt),
+          contact_heading = COALESCE($6, contact_heading),
+          contact_description = COALESCE($7, contact_description),
+          contact_name = COALESCE($8, contact_name),
+          contact_position = COALESCE($9, contact_position),
+          contact_link = COALESCE($10, contact_link),
+          is_active = COALESCE($11, is_active),
+          updated_at = NOW()
+        WHERE id = $12`,
         [
-          data.title,
-          data.sub_title,
-          data.is_visible,
-          data.type,
-          data.info_section ? JSON.stringify(data.info_section) : null,
+          data.section_tag,
+          data.section_title,
+          data.section_description,
+          data.contact_image,
+          data.contact_alt,
+          data.contact_heading,
+          data.contact_description,
+          data.contact_name,
+          data.contact_position,
+          data.contact_link,
+          data.is_active,
           id,
         ]
       );
 
-      // Update FAQ items if provided
-      if (data.faqs?.length) {
-        await client.query(`DELETE FROM faq_items WHERE faq_id = $1`, [id]);
+      if (data.faqs) {
+        await client.query(`DELETE FROM faq_items WHERE faq_section_id = $1`, [
+          id,
+        ]);
+
         for (const item of data.faqs) {
-          await client.query(
-            `INSERT INTO faq_items (faq_id, question, answer, is_visible, position)
-             VALUES ($1, $2, $3, $4, $5)`,
-            [id, item.question, item.answer, item.is_visible, item.position]
-          );
+          await faqItemService.createFaqItem(client, id, item);
         }
       }
 
       await client.query("COMMIT");
-      return { message: "FAQ updated successfully" };
+      return { message: "FAQ section updated successfully" };
     } catch (error) {
       await client.query("ROLLBACK");
       errorLogger.error(error);
-      throw new Error("Failed to update FAQ");
+      throw new Error("Failed to update FAQ section");
     } finally {
       client.release();
     }
   },
 
-  /** ✅ Get FAQs filtered by ID or type, including items and info_section */
-  async getFilteredFaqs(filter: { id?: string; type?: string }) {
-    let query = `SELECT * FROM faqs`;
-    const conditions: string[] = [];
+  /** ✅ Get FAQ Sections (by id or tag) */
+  async getFaqSections(filter: { id?: string; section_tag?: string }) {
+    let query = `SELECT * FROM faq_sections`;
     const values: any[] = [];
+    const conditions: string[] = [];
 
     if (filter.id) {
       values.push(filter.id);
       conditions.push(`id = $${values.length}`);
     }
 
-    if (filter.type) {
-      values.push(filter.type);
-      conditions.push(`type = $${values.length}`);
+    if (filter.section_tag) {
+      values.push(filter.section_tag);
+      conditions.push(`section_tag = $${values.length}`);
     }
 
-    if (conditions.length > 0) {
+    if (conditions.length) {
       query += ` WHERE ` + conditions.join(" AND ");
     }
 
     const result = await db.query(query, values);
 
-    for (const faq of result.rows) {
-      faq.faqs = await faqItemService.getFaqItemsByFaqId(faq.id);
-      if (faq.info_section) {
-        faq.info_section = JSON.parse(faq.info_section);
-      }
+    for (const section of result.rows) {
+      section.faqs = await faqItemService.getFaqItemsBySectionId(section.id);
     }
 
-    return result.rows || [];
+    return result.rows;
   },
 
-  /** ✅ Get FAQ by ID (includes info_section and items) */
-  async getFaqById(id: string) {
-    const faqResult = await db.query(`SELECT * FROM faqs WHERE id = $1`, [id]);
-    if (faqResult.rowCount === 0) return null;
-
-    const faq = faqResult.rows[0];
-    faq.info_section = faq.info_section ? JSON.parse(faq.info_section) : null;
-
-    const itemsResult = await db.query(
-      `SELECT * FROM faq_items WHERE faq_id = $1 ORDER BY position ASC`,
-      [id]
-    );
-    faq.faqs = itemsResult.rows;
-
-    return faq;
-  },
-
-  /** ✅ Get FAQ by type (with reusable info_section) */
-  async getFaqByType(type: string) {
-    const faqResult = await db.query(`SELECT * FROM faqs WHERE type = $1`, [
-      type,
-    ]);
-    const faqs = faqResult.rows;
-
-    for (const faq of faqs) {
-      faq.info_section = faq.info_section ? JSON.parse(faq.info_section) : null;
-
-      const itemsResult = await db.query(
-        `SELECT * FROM faq_items WHERE faq_id = $1 ORDER BY position ASC`,
-        [faq.id]
-      );
-      faq.faqs = itemsResult.rows;
-    }
-
-    return faqs;
-  },
-
-  /** ✅ Delete FAQ and its items */
-  async deleteFaq(id: string) {
-    await checkFaqExists(id);
+  /** ✅ Delete FAQ Section */
+  async deleteFaqSection(id: string) {
+    await checkFaqSectionExists(id);
     const result = await db.query(
-      `DELETE FROM faqs WHERE id = $1 RETURNING *`,
+      `DELETE FROM faq_sections WHERE id = $1 RETURNING *`,
       [id]
     );
     return result.rows[0];

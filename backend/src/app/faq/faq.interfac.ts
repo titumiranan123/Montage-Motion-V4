@@ -1,35 +1,38 @@
-interface Item {
-  id: string;
-  faq_id: string;
+export interface IFaqItem {
+  id?: string;
+  faq_section_id?: string;
+
   question: string;
   answer: string;
+
+  sort_order?: number;
   is_visible: boolean;
-  position: number;
+
+  created_at?: string;
+  updated_at?: string;
 }
 
-interface InfoSection {
-  image_url: string;
-  name: string;
-  designation: string;
-  description: string;
-  button_link: string;
-  is_global?: boolean;
-}
-
-export interface IFaq {
+export interface IFaqSection {
   id?: string;
-  title: string;
-  sub_title: string;
-  is_visible: boolean;
-  faqs: Item[];
-  type:
-    | "home"
-    | "shorts"
-    | "talkinghead"
-    | "podcast"
-    | "thumbnail"
-    | "advertising"
-    | "saas"
-    | "about";
-  info_section?: InfoSection;
+
+  section_tag: string;
+  section_title: string;
+  section_description: string;
+
+  contact_image: string;
+  contact_alt?: string;
+
+  contact_heading: string;
+  contact_description?: string;
+
+  contact_name?: string;
+  contact_position?: string;
+  contact_link?: string;
+
+  is_active?: boolean;
+
+  faqs?: IFaqItem[];
+
+  created_at?: string;
+  updated_at?: string;
 }

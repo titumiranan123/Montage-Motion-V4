@@ -158,27 +158,31 @@ export const homeapiServices = {
     }
   },
   // services page
-  async servicesData(type: string) {
+  async servicesData(href: string) {
     const client = await db.connect();
-    if (!type) {
+    if (!href) {
       return [];
     }
     try {
       await client.query("BEGIN");
       const itemsRes = await db.query(
-        `SELECT * FROM service_items WHERE service_type = $1 ORDER BY position ASC`,
-        [type]
+        `SELECT id, service_type FROM service_items WHERE href = $1 ORDER BY position ASC`,
+        [href]
       );
       const sectionsRes = await db.query(
         `SELECT section_name FROM service_item_sections WHERE service_item_id = $1 AND visible = $2`,
         [itemsRes?.rows[0]?.id, true]
       );
       const availableSections = sectionsRes.rows.map((s) => s.section_name);
+      // console.log("availableSections", itemsRes?.rows);
 
       // header
       const sectionsData: any = {};
       for (const section of availableSections) {
-        const result = await fetchSectionData(section, type);
+        const result = await fetchSectionData(
+          section,
+          itemsRes?.rows[0]?.service_type
+        );
         if (!sectionsData[result.sectionName]) {
           sectionsData[result.sectionName] = result.data;
         }

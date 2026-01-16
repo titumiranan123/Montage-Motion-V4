@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PoolClient } from "pg";
 import { errorLogger } from "../../logger/logger";
 import ApiError from "../../utils/ApiError";
 
-import { IServiceSection, ServiceItem } from "./page_service.zod";
+import { IServiceSection, ServiceItem } from "./homeservice.zod";
 
 export async function createSection(client: PoolClient, data: IServiceSection) {
   try {
@@ -33,29 +32,30 @@ export async function createServiceItem(
   try {
     // Get all existing service items for this section
     const existingItems = await client.query(
-      `SELECT * FROM service_items WHERE section_id = $1`,
+      `SELECT * FROM home_services WHERE section_id = $1 ORDER BY order_index ASC, created_at ASC`,
       [sectionId]
     );
-
     const existingItemsMap = new Map(
       existingItems.rows.map((item) => [item.id, item])
     );
-
     const processedIds = new Set<string>();
-    // Process incoming data
+    // Process incoming data WITH order_index
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
-      const orderIndex = i;
+      const orderIndex = i; // This preserves the order from frontend
+
       // Match by ID if provided, otherwise treat as new
       const existing = item.id ? existingItemsMap.get(item.id) : null;
 
       let result;
 
       if (!existing) {
+        // NEW ITEM - Generate service_type only for new items
+        const serviceType = generateServiceType(item.service_title);
+
         result = await client.query(
-          `INSERT INTO service_items (section_id, service_title, service_description, image, alt, href, service_type, icon,
-          icon_alt,position)
-           VALUES ($1, $2, $3, $4, $5, $6, $7 , $8 ,$9,$10) RETURNING *`,
+          `INSERT INTO home_services (section_id, service_title, service_description, image, alt, href, service_type, icon, icon_alt, order_index)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
           [
             sectionId,
             item.service_title,
@@ -63,28 +63,28 @@ export async function createServiceItem(
             item.image,
             item.alt,
             item.href,
-            null,
+            serviceType,
             item.icon,
             item.icon_alt,
             orderIndex,
           ]
         );
       } else {
-        // EXISTING ITEM - Update WITH service_title but WITHOUT changing service_type
+        // EXISTING ITEM - Update with order_index
         result = await client.query(
-          `UPDATE service_items 
+          `UPDATE home_services 
            SET service_title = $1,
                service_description = $2,
                image = $3,
                alt = $4,
                href = $5,
                icon = $6,
-               icon_alt =$7,
-               position =$8
+               icon_alt = $7,
+               order_index = $8
            WHERE id = $9
            RETURNING *`,
           [
-            item.service_title, // ✅ Now service_title can be updated
+            item.service_title,
             item.service_description,
             item.image,
             item.alt,
@@ -96,13 +96,39 @@ export async function createServiceItem(
           ]
         );
       }
-
       const serviceItemId = result.rows[0].id;
       processedIds.add(serviceItemId);
+      // Handle available sections (keep this part same)
+      if (item.available_section && item.available_section.length > 0) {
+        await client.query(
+          `DELETE FROM service_item_sections WHERE service_item_id = $1`,
+          [serviceItemId]
+        );
+        for (const sec of item.available_section) {
+          await client.query(
+            `INSERT INTO service_item_sections (service_item_id, section_name, visible)
+             VALUES ($1, $2, $3)`,
+            [serviceItemId, sec.section_name, sec.visible]
+          );
+        }
+      }
     }
-  } catch (error: any) {
+
+    // Delete items that were not in the incoming data
+    const itemsToDelete = existingItems.rows.filter(
+      (item) => !processedIds.has(item.id)
+    );
+
+    for (const item of itemsToDelete) {
+      await client.query(
+        `DELETE FROM service_item_sections WHERE service_item_id = $1`,
+        [item.id]
+      );
+      await client.query(`DELETE FROM home_services WHERE id = $1`, [item.id]);
+    }
+  } catch (error) {
     errorLogger.error(error);
-    throw new ApiError(404, "", error.message);
+    throw new ApiError(404, "", "Service Item creation/update failed");
   }
 }
 

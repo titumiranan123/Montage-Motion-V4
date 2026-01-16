@@ -19,6 +19,7 @@ export const createVideo = asyncHandler(async (req: Request, res: Response) => {
 // READ ALL
 export const getAllVideos = asyncHandler(
   async (req: Request, res: Response) => {
+    console.log("req.query", req.query);
     const result = await VideosService.getAllVideos(req.query);
     return result
       ? responseHandler(res, 200, true, "Works retrieved successfully", result)

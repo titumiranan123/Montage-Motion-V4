@@ -35,7 +35,7 @@ export const ServiceItemSchema = z.object({
   icon: z.string().nullable().optional(),
   icon_alt: z.string().nullable().optional(),
   href: z.string().nullable().optional(),
-  position: z.number(),
+  order_index: z.number(),
   service_type: z.string().nullable().optional(),
   page_active: z.boolean().default(false),
   available_section: z.array(SectionSchema).nullable().optional(),
@@ -47,7 +47,7 @@ export type ServiceItem = z.infer<typeof ServiceItemSchema>;
 // =====================
 // 3️⃣ Page Service / Section Schema
 // =====================
-export const ServiceSectionSchema = z.object({
+export const homeServiceSchema = z.object({
   type: z.string().min(3),
   tag: z.string().min(1, "Tag is required"),
   heading_part1: z.string().min(1, "Heading is required"),
@@ -59,5 +59,5 @@ export const ServiceSectionSchema = z.object({
 });
 
 // TypeScript type for full section
-export type IServiceSection = z.infer<typeof ServiceSectionSchema>;
+export type IServiceSection = z.infer<typeof homeServiceSchema>;
 export type IServiceItem = z.infer<typeof ServiceItemSchema>;

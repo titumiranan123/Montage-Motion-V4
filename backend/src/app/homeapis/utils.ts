@@ -1,12 +1,24 @@
 import { db } from "../../db/db";
+import { BrandImageService } from "../brand_images/brandimage.service";
 import { pageHeaderService } from "../header/header.services";
+import { serviceSectionService } from "../pageservice/page_service.service";
+import { pricingPageService } from "../pricing/pricing.service";
+import { processService } from "../working_process/process.service";
 
 // Helper function to fetch data for each section
 export const fetchSectionData = async (sectionName: string, type: string) => {
   switch (sectionName) {
-    case "short-hero": {
+    case "short_hero": {
       const header = await pageHeaderService.getAllHeaders(type as string);
       return { sectionName, data: header || null };
+    }
+    case "home_hero": {
+      const header = await pageHeaderService.getAllHeaders(type as string);
+      return { sectionName, data: header || null };
+    }
+    case "our_clients": {
+      const result = await BrandImageService.getAllBrandImage("home");
+      return { sectionName, data: result || null };
     }
 
     case "work": {
@@ -16,6 +28,10 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
       );
       return { sectionName, data: works.rows || [] };
     }
+    case "service": {
+      const result = await serviceSectionService.getAllSections({ type: type });
+      return { sectionName, data: result || [] };
+    }
 
     case "testimonial": {
       const testimonials = await db.query(
@@ -23,6 +39,12 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
         ["home"]
       );
       return { sectionName, data: testimonials.rows || [] };
+    }
+    case "pricing": {
+      const result = await pricingPageService.getPagePricePlanByType({
+        type: type,
+      });
+      return { sectionName, data: result || [] };
     }
 
     // case "faq": {
@@ -40,13 +62,13 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
     //   return { sectionName, data: faq };
     // }
 
-    // case "process": {
-    //   const processResult = await processService.getAllProcesses({ type });
-    //   return {
-    //     sectionName,
-    //     data: processResult.length > 0 ? processResult[0] : [],
-    //   };
-    // }
+    case "process": {
+      const processResult = await processService.getAllProcesses({ type });
+      return {
+        sectionName,
+        data: processResult.length > 0 ? processResult[0] : [],
+      };
+    }
 
     // case "whychooseus": {
     //   const whychooseusResult = await whychooseusSectionService.getAllSections({
