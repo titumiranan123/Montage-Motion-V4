@@ -15,13 +15,13 @@ const PartnersSection = ({ data }: { data: any[] }) => {
           pauseOnHover
           speed={50}
           gradient
-          gradientWidth={200}
+          gradientWidth={100}
           className="flex items-center"
         >
           {data.map((partner, index) => (
             <div
               key={partner.id || index}
-              className="-mx-2.5 pointer-events-none select-none flex items-center justify-center "
+              className="lg:-mx-2.5 -mx-5 pointer-events-none select-none flex items-center justify-center "
             >
               <Image
                 src={partner.image}

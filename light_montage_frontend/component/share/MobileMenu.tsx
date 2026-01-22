@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -31,7 +30,7 @@ const MobileMenu = () => {
     },
   ];
   const isServicesActive = servicesData?.some((service: any) =>
-    path.startsWith(service.href)
+    path.startsWith(service.href),
   );
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -44,15 +43,16 @@ const MobileMenu = () => {
     <div className="w-full">
       <button
         onClick={toggleMobileMenu}
-        className="w-14 h-14 btn-color   rounded-2xl flex flex-col justify-center items-center lg:hidden   poppins  font-normal gap-1"
+        className=" w-10 h-10 btn-color   rounded-2xl flex flex-col justify-center items-center lg:hidden   poppins  font-normal gap-1"
       >
-        <Image
-          src={"/assets/menu.png"}
-          alt="menu"
-          width={24}
-          height={24}
-          className="w-6 h-6 "
-        />
+        <button
+          onClick={toggleMobileMenu}
+          className=" w-10 h-10 btn-color   rounded-2xl flex flex-col justify-center items-center lg:hidden   poppins  font-normal gap-1"
+        >
+          <span className="w-3 ms-1 h-0.5 bg-white"></span>
+          <span className="w-4.75 h-0.5 bg-white"></span>
+          <span className="w-3 h-0.5 -ms-1 bg-white"></span>
+        </button>
       </button>
       {/* Mobile Navigation Menu */}
       <div

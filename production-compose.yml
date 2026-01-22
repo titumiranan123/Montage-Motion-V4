@@ -1,0 +1,49 @@
+services:
+  montagemotion-postgres:
+    image: postgres:17.4-alpine3.21
+    container_name: montagemotion-postgres
+    environment:
+      POSTGRES_USER: montdev2026
+      POSTGRES_PASSWORD: Montage2026
+      POSTGRES_DB: montagedb2026
+    volumes:
+      - /opt/montagemotion/postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
+    restart: always
+
+  montagemotion-pgadmin:
+    image: dpage/pgadmin4
+    container_name: montagemotion-pgadmin
+    user: "5050:5050"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: titumiranan.gtc@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: Montage2026
+    volumes:
+      - /opt/montagemotion/pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "5056:80"
+    depends_on:
+      - montagemotion-postgres
+    restart: always
+
+  montagemotion-redis:
+    image: redis:7.4-alpine
+    container_name: montagemotion-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - /opt/montagemotion/redis_data:/data
+    ports:
+      - "6379:6379"
+    restart: always
+
+  montagemotion-redis-ui:
+    image: redis/redisinsight:latest
+    container_name: montagemotion-redis-ui
+    volumes:
+      - /opt/montagemotion/redisinsight_data:/db
+    ports:
+      - "5540:5540"
+    depends_on:
+      - montagemotion-redis
+    restart: always

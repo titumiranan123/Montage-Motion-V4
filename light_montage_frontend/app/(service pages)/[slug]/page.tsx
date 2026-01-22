@@ -13,6 +13,7 @@ import PartnersSection from "@/component/home/PatnersSection";
 import PageHomeHero from "../(servicepage-component)/PageHomeHero";
 import PodacstHeader from "../(servicepage-component)/PodacstHeader";
 import PodcastInsight from "../(servicepage-component)/PodcastInsight";
+import SaasInshight from "../(servicepage-component)/SaasInshight";
 export async function generateMetadata({
   params,
 }: {
@@ -31,7 +32,7 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-  console.log(data?.data);
+  console.log(data);
   return (
     <div className="min-h-screen text-black mt-4 ">
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
@@ -55,6 +56,11 @@ const ServicePage = async ({
           title="What Our Clients Say"
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
         />
+      )}
+      {slug === "saas-explainer" && (
+        <>
+          <SaasInshight />
+        </>
       )}
       <PodcastInsight />
       <PageFaqSection />

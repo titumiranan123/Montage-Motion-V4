@@ -27,7 +27,10 @@ const ServiceDropdown = () => {
       </span>
 
       {/* Dropdown Panel */}
-      <div className="absolute top-6 -left-[330px] w-[1000px] transform translate-y-5 group-hover:translate-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
+      <div
+        style={{ zIndex: 9999 }}
+        className="absolute top-6 -left-[330px] w-[1000px] transform translate-y-5 group-hover:translate-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50 bg-white"
+      >
         <div className="grid grid-cols-3 lg:grid-cols-3 border   border-(--text-primary)/20 rounded-3xl  backdrop-blur-2xl ">
           {/* Design Section */}
           <ServiceColumn

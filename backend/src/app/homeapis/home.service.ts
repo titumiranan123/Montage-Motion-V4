@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
-import { serviceSectionService } from "../pageservice/page_service.service";
+import { homeService } from "../homeservice/homeservice.service";
 import { pricingPageService } from "../pricing/pricing.service";
 // import { seoMetaService } from "../seo/seo.service";
 import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
@@ -61,7 +61,7 @@ export const homeapiServices = {
       }
       let services: any[] = [];
       if (tables.includes("services")) {
-        const result = await serviceSectionService.getAllSections({ type });
+        const result = await homeService.getAllSections({ type });
 
         services = result.length > 0 ? result[0] : [];
       }

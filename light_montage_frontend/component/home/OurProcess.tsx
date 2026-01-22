@@ -6,14 +6,14 @@ import { Heading } from "../share/Headering";
 
 export const OurProcess = ({ data }: { data: any }) => {
   return (
-    <div className="mx-auto max-w-7xl sectionGap">
+    <div className="mx-auto max-w-7xl px-2 sectionGap">
       <Heading
         subtitle={data?.paragraph ?? ""}
         tag={data?.tag ?? ""}
         title={data?.heading_part1 ?? ""}
         extratitle={data?.heading_part2 ?? ""}
       />
-      <div className=" flex mt-9 md:mt-16 gap-12">
+      <div className=" flex lg:flex-row flex-col mt-9 md:mt-16 gap-12">
         <Image
           src={data?.image ?? ""}
           alt="process "
@@ -30,8 +30,8 @@ export const OurProcess = ({ data }: { data: any }) => {
             <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
               <Gradientcard
                 isHover={true}
-                className="contact-card flex justify-between items-center text-(--text-primary) max-w-[700px] w-full h-[170px] rounded-3xl"
-                borderClassName="max-w-[698px] w-full h-[172px] rounded-[24px] p-[1px]"
+                className="contact-card flex justify-between lg:items-center text-(--text-primary) flex-col lg:flex-row max-w-[700px] w-full lg:h-[170px] h-80  rounded-3xl"
+                borderClassName="max-w-[698px] w-full lg:h-[172px] h-80.5 rounded-[24px] p-[1px]"
               >
                 <Image
                   src={dt?.icon ?? ""}

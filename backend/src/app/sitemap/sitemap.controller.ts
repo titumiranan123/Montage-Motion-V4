@@ -12,7 +12,7 @@ export const siteController = asyncHandler(
 );
 export const getSiteMap = asyncHandler(async (req: Request, res: Response) => {
   const result = await siteMapService.getSitemap();
-  res.send(result?.content);
+  res.send(result);
 });
 export const getAdminSiteMap = asyncHandler(
   async (req: Request, res: Response) => {

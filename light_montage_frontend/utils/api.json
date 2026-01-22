@@ -1,6 +1,8 @@
 {
   "cms": {
-    "robotText": "https://api-v2.montagemotion.com/api/robots",
-    "sitemap": "https://api-v2.montagemotion.com/api/sitemap"
+    "robotTexts": "https://api-v2.montagemotion.com/api/robots",
+    "sitemaps": "https://api-v2.montagemotion.com/api/sitemap",
+    "robotText": "http://localhost:8001/api/robots",
+    "sitemap": "http://localhost:8001/api/sitemap"
   }
 }

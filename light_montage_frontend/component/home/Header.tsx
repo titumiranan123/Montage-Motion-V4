@@ -5,9 +5,9 @@ import Link from "next/link";
 import HeroVideoPlayer from "./HeroVideoPlayer";
 const Header: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div className="flex headerbg  pt-30 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
+    <div className="flex   lg:pt-30 pt-34 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
       {/* header content left side */}
-      <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-[700px] mx-auto">
+      <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-[780px] mx-auto">
         <div
           data-aos="fade-up"
           data-aos-delay="100"
@@ -16,9 +16,9 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           <TurstedBy isCenter={true} />
         </div>
         <h1
-          data-aos="fade-up"
-          data-aos-delay={200}
-          className="lg:text-[96px]  text-[48px] leading-[111%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
+          // data-aos="fade-up"
+          // data-aos-delay={200}
+          className="lg:text-[70px]  text-[42px] leading-[101%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
         >
           {data?.page_title}
         </h1>
@@ -50,7 +50,7 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           </Link>
         </div>
       </div>
-      <div data-aos="fade-up" data-aos-delay="500" className="lg:mt-10 mt-8  ">
+      <div data-aos="fade-up" data-aos-delay="500" className="mt-16  ">
         <HeroVideoPlayer
           thumbnail={`https://i.postimg.cc/GpKBHFX3/ezgif-com-video-to-gif-converter.gif`}
           video_url={data?.media?.[0]?.video_url}

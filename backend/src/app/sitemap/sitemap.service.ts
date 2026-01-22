@@ -12,6 +12,23 @@ export const siteMapService = {
 
   async getSitemap() {
     const result = await db.query(`SELECT * FROM site_sitemap LIMIT 1`);
-    return result.rows[0];
+    const blogResult = await db.query(`SELECT slug, created_at FROM blogs`);
+    const blogEntries = blogResult?.rows;
+
+    let blogUrlsXml = "";
+    const baseUrl = "https://montagemotion.com/blog/";
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    blogEntries.forEach((blog: any) => {
+      const lastmodDate = new Date(blog.created_at).toISOString().split("T")[0];
+      blogUrlsXml += `
+    <url>
+      <loc>${baseUrl}${blog.slug}</loc>
+      <lastmod>${lastmodDate}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+    </url>`;
+    });
+    return result?.rows[0]?.content + "\n" + blogUrlsXml;
   },
 };

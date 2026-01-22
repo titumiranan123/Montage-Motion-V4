@@ -25,17 +25,8 @@ const HomePage = async ({
 
   const { tab } = await searchParams;
   return (
-    <div className="mt-4">
-      <div className="headerbg rounded-[40px] max-w-[1440px] px-[60px] mx-auto mb-10">
-        <style>
-          {`
-            .headerbg {
-              background: linear-gradient(180deg, #EAF0F7 30.22%, #69CDE8 100%);
-
-            }
-            `}
-        </style>
-
+    <div className="lg:mt-4">
+      <div className="headerbg lg:rounded-[40px] rounded-lg max-w-[1440px] px-2 2xl:px-[60px] mx-auto mb-10">
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />
