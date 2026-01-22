@@ -28,7 +28,6 @@ const storyCards = [
 export default function OurStory() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [capPosition, setCapPosition] = useState(8);
-  console.log("capPosition", capPosition);
   useEffect(() => {
     const handleScroll = () => {
       const cards = document.querySelectorAll(".story-card");
@@ -50,7 +49,7 @@ export default function OurStory() {
         const windowHeight = window.innerHeight;
         const relativeScroll = Math.max(
           0,
-          Math.min(1, (windowHeight / 2 - containerTop) / containerHeight)
+          Math.min(1, (windowHeight / 2 - containerTop) / containerHeight),
         );
         setCapPosition(relativeScroll * 100);
       }
@@ -68,9 +67,9 @@ export default function OurStory() {
         subtitle="From humble beginnings to a growing creative powerhouse — discover how Montage Motion started, evolved, and where we’re headed next."
       />
 
-      <div className="flex gap-8 mt-16">
+      <div className="flex md:flex-row flex-col gap-8 mt-16">
         {/* Left - Image */}
-        <div className="w-1/2 sticky top-36 h-fit">
+        <div className="xl:w-1/2 xl:sticky top-36 h-fit">
           <Image
             src={storyCards[activeIndex].image}
             alt={storyCards[activeIndex].title}
@@ -79,7 +78,7 @@ export default function OurStory() {
             className="w-[590px] h-[620px] rounded-[13px] object-cover"
           />
         </div>
-        <div className="relative w-6 lg:flex hidden items-start justify-center select-none lg:sticky lg:top-32 h-[600px]">
+        <div className="relative w-6 md:flex hidden items-start justify-center select-none lg:sticky lg:top-32 h-[600px]">
           <div className="relative h-full w-6 rounded-full overflow-visible">
             {/* Background beam */}
             <div
@@ -112,7 +111,7 @@ export default function OurStory() {
           </div>
         </div>
         {/* Right - Cards */}
-        <div className="w-1/2 space-y-8 cards-container">
+        <div className="xl:w-1/2 space-y-8 cards-container">
           {storyCards.map((card, index) => (
             <div
               key={index}

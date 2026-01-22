@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 // --- Types ---
 type Step = {
@@ -103,19 +103,22 @@ const VerticalStepper: React.FC<VerticalStepperProps> = ({
   );
 };
 
-// --- Demo wrapper as default export (ready to paste into a Next.js page) ---
-export default function StepperDemo() {
-  const [activeStep, setActivestep] = useState(0);
+export default function StepperDemo({
+  activeStep,
+  setActivestep,
+  data,
+}: {
+  activeStep: number;
+  setActivestep: (p: number) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
+}) {
   return (
     <main className="flex items-center justify-center mt-6 ">
       <VerticalStepper
         activeIndex={activeStep}
         onSetpclick={setActivestep}
-        steps={[
-          { title: "Plan with Purpose" },
-          { title: "Record with Quality" },
-          { title: "Edit for Impact" },
-        ]}
+        steps={data}
       />
     </main>
   );

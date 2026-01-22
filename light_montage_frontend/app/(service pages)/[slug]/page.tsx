@@ -32,9 +32,10 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-  console.log(data);
+  console.log("data", data);
   return (
     <div className="min-h-screen text-black mt-4 ">
+      <div className="mt-32"></div>
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
       {data?.data?.home_hero && (
         <PageHomeHero data={data?.data?.home_hero?.[0]} />
@@ -62,7 +63,11 @@ const ServicePage = async ({
           <SaasInshight />
         </>
       )}
-      <PodcastInsight />
+      {slug === "podcast-editing-service" && (
+        <>
+          <PodcastInsight />
+        </>
+      )}
       <PageFaqSection />
       <PageContactsections />
     </div>

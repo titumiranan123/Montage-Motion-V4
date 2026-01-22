@@ -279,6 +279,7 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
                   <label className="block font-medium text-gray-200">
                     Page Type
                   </label>
+
                   <ServiceTypeSelect
                     onChange={(type) => {
                       setValue("type", type);

@@ -44,18 +44,18 @@ export const homeapiServices = {
       // const seo = await seoMetaService.getSeoMetaByPage(type);
       const worksService = await client.query(
         `SELECT thumbnail, video_link FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC   LIMIT 6`,
-        [type]
+        [type],
       );
 
       const testimonialService = await client.query(
         `SELECT * FROM testimonials WHERE type = $1`,
-        [type]
+        [type],
       );
       let brandImages: any[] = [];
       if (tables.includes("brand")) {
         const brand = await client.query(
           `SELECT image, alt, width,height FROM brandimage WHERE type = $1 AND ishide = false ORDER BY sortorder ASC`,
-          ["home"]
+          ["home"],
         );
         brandImages = brand.rows;
       }
@@ -166,22 +166,23 @@ export const homeapiServices = {
     try {
       await client.query("BEGIN");
       const itemsRes = await db.query(
-        `SELECT id, service_type FROM service_items WHERE href = $1 ORDER BY position ASC`,
-        [href]
+        `SELECT id, service_type FROM home_services WHERE href = $1 `,
+        [href],
       );
       const sectionsRes = await db.query(
         `SELECT section_name FROM service_item_sections WHERE service_item_id = $1 AND visible = $2`,
-        [itemsRes?.rows[0]?.id, true]
+        [itemsRes?.rows[0]?.id, true],
       );
       const availableSections = sectionsRes.rows.map((s) => s.section_name);
       // console.log("availableSections", itemsRes?.rows);
 
       // header
       const sectionsData: any = {};
+
       for (const section of availableSections) {
         const result = await fetchSectionData(
           section,
-          itemsRes?.rows[0]?.service_type
+          itemsRes?.rows[0]?.service_type,
         );
         if (!sectionsData[result.sectionName]) {
           sectionsData[result.sectionName] = result.data;
@@ -205,7 +206,7 @@ export const homeapiServices = {
     try {
       await client.query("BEGIN");
       const member = await client.query(
-        `SELECT * FROM members ORDER BY position ASC`
+        `SELECT * FROM members ORDER BY position ASC`,
       );
       await client.query("COMMIT");
       return member.rows ?? [];
@@ -221,7 +222,7 @@ export const homeapiServices = {
   async getAllHomeBlogs() {
     try {
       const result = await db.query(
-        `SELECT title, short_description, description, image, slug, created_at FROM blogs ORDER BY position ASC`
+        `SELECT title, short_description, description, image, slug, created_at FROM blogs ORDER BY position ASC`,
       );
       return result.rows || [];
     } catch (error) {
@@ -234,7 +235,7 @@ export const homeapiServices = {
     try {
       const result = await db.query(
         `SELECT title, short_description, description, image, slug, created_at FROM blogs WHERE slug = $1 ORDER BY position ASC`,
-        [slug]
+        [slug],
       );
       return result.rows[0] || null;
     } catch (error) {

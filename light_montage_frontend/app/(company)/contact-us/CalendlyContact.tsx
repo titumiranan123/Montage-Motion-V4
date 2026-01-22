@@ -14,9 +14,9 @@ const CalendlyContact = () => {
       />
 
       <div
-        data-aos="fade-up"
-        data-aos-delay={400}
-        className="max-w-[1200px] mx-auto w-full md:h-[761px] min-h-screen overflow-hidden  bg-cover bg-center lg:mt-20 mt-10"
+        // data-aos="fade-up"
+        // data-aos-delay={400}
+        className="max-w-[1200px] mx-auto w-full h-full xl:h-[761px]  overflow-hidden  bg-cover bg-center lg:mt-20 mt-10"
       >
         {/* JS Disabled Fallback */}
         <noscript>
@@ -41,7 +41,7 @@ const CalendlyContact = () => {
         </noscript>
         <InlineWidget
           url="https://calendly.com/imonofficial2/30min"
-          className="max-w-[1200px] w-full lg:h-[761px] h-[980px] overflow-hidden"
+          className="max-w-[1200px] w-full xl:h-[761px] h-[1010px] overflow-hidden"
         />
       </div>
     </div>

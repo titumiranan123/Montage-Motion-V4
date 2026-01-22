@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistDMSans?.variable} min-h-screen  `}
+        className={`${geistSans.variable} ${geistDMSans?.variable}  overflow-x-hidden `}
       >
         <Provider>
           <div className="fixed w-full top-6 z-50">

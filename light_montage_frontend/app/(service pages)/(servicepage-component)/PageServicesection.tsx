@@ -18,7 +18,7 @@ const PageServicesection = ({ data }: { data: any }) => {
           <div key={idx} className="group  min-h-[500px]">
             <Gradientcard
               isHover={true}
-              borderClassName="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] p-[1px] "
+              borderClassName="max-w-[384px] mx-auto w-full max-h-[488px] h-full rounded-[24px] p-[1px] "
               className="max-w-[384px] w-full max-h-[488px] h-full rounded-3xl  text-(--text-primary) flex justify-center items-start flex-col p-4 bg-[#F7F7F7]!"
             >
               <h2 className="text-[24px] font-semibold">{dt.service_title}</h2>

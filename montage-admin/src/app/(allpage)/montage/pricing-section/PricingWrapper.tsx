@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import PricingForm from "./Pricingform";
 import SinglePricePlan from "./SinglePricePlan";
+import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
 
 const PricingWrapper = ({ data }: { data: any }) => {
   const router = useRouter();
@@ -41,26 +42,7 @@ const PricingWrapper = ({ data }: { data: any }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-            <select
-              onChange={(e) => {
-                router.push(`?page=${e.target.value}`);
-              }}
-              className="bg-gray-800 border border-gray-600 rounded px-3 py-2"
-            >
-              {[
-                "home",
-                "shorts",
-                "talkinghead",
-                "podcast",
-                "thumbnail",
-                "saas",
-                "about",
-              ].map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
+            <CategorySelectComponent />
             {/* Add New Button */}
             <button
               onClick={() => {

@@ -14,14 +14,14 @@ const Locationsection = () => {
       <div
         data-aos="fade-up"
         data-aos-delay={400}
-        className="max-w-[1055px] w-full max-h-[758px] h-full mt-10  mx-auto flex flex-col-reverse justify-center items-center relative gap-2"
+        className="max-w-[1055px] w-full px-2 max-h-[758px] h-full mt-10  mx-auto flex flex-col-reverse justify-center items-center relative gap-2"
       >
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d868.4200193609572!2d90.3718197197554!3d23.83628515594626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c10077d8354d%3A0x6baa8b9e6aa72e89!2sMontage%20Motion%20Ltd.!5e1!3m2!1sen!2sus!4v1766743405766!5m2!1sen!2sus"
           width="1055"
           height="578"
           loading="lazy"
-          className="rounded-lg md:w-[1055px] lg:mt-0 mt-10 md:h-[578px] w-full h-full"
+          className="rounded-lg md:w-[1055px] lg:mt-0 mt-10 md:h-[578px] w-full h-full px-2"
         ></iframe>
         <div
           data-aos="fade-right"
