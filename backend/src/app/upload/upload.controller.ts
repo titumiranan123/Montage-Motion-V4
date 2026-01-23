@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import ApiError from "../../utils/ApiError";
-import { uploadToR2 } from "../../r2objectConfig/r2";
+import { deleteFromR2ByUrl, uploadToR2 } from "../../r2objectConfig/r2";
 import { errorLogger } from "../../logger/logger";
 
 export const uploadFile = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     if (!req.file) {
@@ -18,7 +18,7 @@ export const uploadFile = async (
     const fileUrl = await uploadToR2(
       fileBuffer,
       sanitizedFileName,
-      contentType
+      contentType,
     );
     res.status(200).json({
       success: true,
@@ -30,6 +30,31 @@ export const uploadFile = async (
     next(error);
   }
 };
+export const deleteFile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { url } = req.body;
+
+    if (!url) {
+      throw new ApiError(400, "Bad_Request", "url is required");
+    }
+
+    const result = await deleteFromR2ByUrl(url);
+
+    res.status(200).json({
+      success: true,
+      message: "File deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    errorLogger.error("Delete file controller error", error);
+    next(error);
+  }
+};
+
 // export const uploadFiles = async (req: Request, res: Response) => {
 //   const { fileName, contentType } = req.body;
 //   if (!fileName || !contentType) {
