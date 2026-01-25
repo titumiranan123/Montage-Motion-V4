@@ -14,6 +14,8 @@ import PageHomeHero from "../(servicepage-component)/PageHomeHero";
 import PodacstHeader from "../(servicepage-component)/PodacstHeader";
 import PodcastInsight from "../(servicepage-component)/PodcastInsight";
 import SaasInshight from "../(servicepage-component)/SaasInshight";
+import PageWhychooseus from "../(servicepage-component)/PageWhychooseus";
+import Thumbnailworksection from "../(servicepage-component)/Thumbnailworksection";
 export async function generateMetadata({
   params,
 }: {
@@ -32,10 +34,9 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-  console.log("data", data);
+  console.log("data", data.data);
   return (
     <div className="min-h-screen text-black mt-4 ">
-      <div className="mt-32"></div>
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
       {data?.data?.home_hero && (
         <PageHomeHero data={data?.data?.home_hero?.[0]} />
@@ -46,11 +47,20 @@ const ServicePage = async ({
       {data?.data?.our_clients && (
         <PartnersSection data={data?.data?.our_clients} />
       )}
+      {data?.data?.work && <Thumbnailworksection works={data?.data?.work} />}
+      {slug === "saas-explainer" && (
+        <>
+          <SaasInshight />
+        </>
+      )}
       {data?.data?.service && (
         <PageServicesection data={data?.data?.service?.[0]} />
       )}
       {data?.data?.pricing && <PagePricing pricing={data?.data?.pricing} />}
       {data?.data?.process && <PageProcesssection data={data?.data?.process} />}
+      {data?.data?.whychooseus && (
+        <PageWhychooseus data={data?.data?.whychooseus ?? []} />
+      )}
       {data?.data?.process && (
         <ServicepageTestimonial
           data={data?.data?.testimonial}
@@ -58,11 +68,7 @@ const ServicePage = async ({
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
         />
       )}
-      {slug === "saas-explainer" && (
-        <>
-          <SaasInshight />
-        </>
-      )}
+
       {slug === "podcast-editing-service" && (
         <>
           <PodcastInsight />

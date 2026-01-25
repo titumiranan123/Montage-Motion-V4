@@ -35,7 +35,8 @@ body {
   color: white !important;
 }
 .glassShadow {
-  box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.6),
+  box-shadow:
+    inset 1px 1px 1px 0 rgba(255, 255, 255, 0.6),
     inset -1px -1px 1px 0px rgba(255, 255, 255, 0.6);
 
   backdrop-filter: blur(10px);
@@ -43,7 +44,8 @@ body {
   isolation: isolate;
 }
 .glassShadowithoutinset {
-  box-shadow: inset 1.5px 1.5px 1px 0 rgba(255, 255, 255, 0.6),
+  box-shadow:
+    inset 1.5px 1.5px 1px 0 rgba(255, 255, 255, 0.6),
     inset -1.5px -1.5px 1px 0px rgba(255, 255, 255, 0.6);
 }
 .scrollbar-thin {
@@ -84,8 +86,8 @@ body {
 }
 
 @layer components {
-  .sectionArea {
-    @apply max-w-[1440px] mx-auto 2xl:py-[60px] 2xl:px-20;
+  .sectionarea {
+    @apply max-w-[1400px] mx-auto 2xl:p-[60px] p-5;
   }
   .animated {
     @apply transition-all duration-300 ease-in-out;
@@ -103,7 +105,8 @@ body {
   backdrop-filter: blur(14px);
 
   border: 2px solid rgba(255, 255, 255, 0.6);
-  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.3),
+  box-shadow:
+    inset 0 0 15px rgba(255, 255, 255, 0.3),
     0 0 25px rgba(255, 255, 255, 0.2);
 
   mask-image: linear-gradient(
@@ -118,7 +121,8 @@ body {
   backdrop-filter: blur(14px);
 
   border: 2px solid #fff;
-  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1),
+  box-shadow:
+    inset 0 0 15px rgba(255, 255, 255, 0.1),
     0 0 25px rgba(255, 255, 255, 0.2);
 
   mask-image: linear-gradient(
@@ -157,7 +161,9 @@ body {
 }
 a:hover,
 button:hover {
-  cursor: url("/frontend/public/assets/dollar.png") 16 0, pointer;
+  cursor:
+    url("/frontend/public/assets/dollar.png") 16 0,
+    pointer;
 }
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */

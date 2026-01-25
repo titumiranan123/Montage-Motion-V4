@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { api_url } from "@/hook/Apiurl";
 import { IPagePricePlan } from "./types";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
+import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
 
 const defaultValues: IPagePricePlan = {
   type: "home",
@@ -280,9 +281,9 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
                     Page Type
                   </label>
 
-                  <ServiceTypeSelect
-                    onChange={(type) => {
-                      setValue("type", type);
+                  <CategorySelectComponent
+                    onChange={(url) => {
+                      setValue("type", url);
                     }}
                     value={watch("type")}
                   />

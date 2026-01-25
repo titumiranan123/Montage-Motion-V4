@@ -4,13 +4,12 @@ import LoginPage from "./Signin";
 const Page = async ({
   searchParams,
 }: {
-  searchParams: { message?: string };
+  searchParams: Promise<{ message?: string }>;
 }) => {
-  console.log(await searchParams);
-
+  const { message } = await searchParams;
   return (
     <div>
-      <LoginPage message={(await searchParams?.message) || "unauthorized"} />
+      <LoginPage message={message || "unauthorized"} />
     </div>
   );
 };

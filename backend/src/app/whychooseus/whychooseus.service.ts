@@ -6,7 +6,7 @@ export const whychooseusSectionService = {
   async createOrUpdateSection(data: IWhychooseusSection) {
     const existingRes = await db.query(
       `SELECT * FROM whychooseus_sections WHERE type = $1 LIMIT 1`,
-      [data.type]
+      [data.type],
     );
     const existingSection = existingRes?.rows[0];
     let section;
@@ -26,19 +26,19 @@ export const whychooseusSectionService = {
           data.heading_part2,
           data.paragraph,
           data.type,
-        ]
+        ],
       );
 
       const updated = await db.query(
         `SELECT * FROM whychooseus_sections WHERE type = $1`,
-        [data.type]
+        [data.type],
       );
       section = updated.rows[0];
 
       if (data.whychooseus_items && data.whychooseus_items.length > 0) {
         await db.query(
           `DELETE FROM whychooseus_items WHERE whychooseus_id = $1`,
-          [section.id]
+          [section.id],
         );
 
         for (const item of data.whychooseus_items) {
@@ -52,7 +52,7 @@ export const whychooseusSectionService = {
               item.icon,
               item.alt,
               item.position ?? 0,
-            ]
+            ],
           );
         }
       }
@@ -68,7 +68,7 @@ export const whychooseusSectionService = {
           data.heading_part1,
           data.heading_part2,
           data.paragraph,
-        ]
+        ],
       );
       section = sectionRes.rows[0];
 
@@ -83,7 +83,7 @@ export const whychooseusSectionService = {
             item.icon,
             item.alt,
             item.position ?? 0,
-          ]
+          ],
         );
       }
     }
@@ -109,11 +109,10 @@ export const whychooseusSectionService = {
 
     const sectionsRes = await db.query(baseQuery, values);
     const sections = [];
-
     for (const section of sectionsRes.rows) {
       const itemsRes = await db.query(
         `SELECT * FROM whychooseus_items WHERE whychooseus_id = $1 ORDER BY position ASC`,
-        [section.id]
+        [section.id],
       );
       sections.push({ ...section, whychooseus_items: itemsRes.rows });
     }
@@ -124,13 +123,13 @@ export const whychooseusSectionService = {
   async getSectionById(id: string) {
     const sectionRes = await db.query(
       `SELECT * FROM whychooseus_sections WHERE id = $1`,
-      [id]
+      [id],
     );
     if (!sectionRes.rows[0]) return null;
 
     const itemsRes = await db.query(
       `SELECT * FROM whychooseus_items WHERE whychooseus_id = $1 ORDER BY position ASC`,
-      [id]
+      [id],
     );
 
     return { ...sectionRes.rows[0], whychooseus_items: itemsRes.rows };
@@ -151,13 +150,13 @@ export const whychooseusSectionService = {
         data.heading_part2 ?? existing.heading_part2,
         data.paragraph ?? existing.paragraph,
         id,
-      ]
+      ],
     );
 
     if (data.whychooseus_items?.length) {
       await db.query(
         `DELETE FROM whychooseus_items WHERE whychooseus_id = $1`,
-        [id]
+        [id],
       );
       for (const item of data.whychooseus_items) {
         await db.query(
@@ -170,7 +169,7 @@ export const whychooseusSectionService = {
             item.icon,
             item.alt,
             item.position ?? 0,
-          ]
+          ],
         );
       }
     }
@@ -184,7 +183,7 @@ export const whychooseusSectionService = {
     ]);
     const result = await db.query(
       `DELETE FROM whychooseus_sections WHERE id = $1 RETURNING *`,
-      [id]
+      [id],
     );
     return result.rows[0] || null;
   },

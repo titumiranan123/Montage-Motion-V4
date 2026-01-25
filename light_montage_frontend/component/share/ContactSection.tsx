@@ -5,7 +5,7 @@ import { Heading } from "../share/Headering";
 
 const ContactSection = () => {
   return (
-    <div className="container contactbg sectionGap  p-[60px] rounded-[40px]">
+    <div className="sectionarea contactbg sectionGap  p-[60px] rounded-[40px]">
       <style>{`
       .contactbg{
         background: linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);

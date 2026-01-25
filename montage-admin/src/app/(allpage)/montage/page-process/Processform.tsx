@@ -32,7 +32,13 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange }) => {
   );
 };
 
-const ProcessForm = ({ initialData }: { initialData: any }) => {
+const ProcessForm = ({
+  initialData,
+  setIsModalOpent,
+}: {
+  initialData: any;
+  setIsModalOpent: (p: boolean) => void;
+}) => {
   const { register, handleSubmit, control, setValue, watch } =
     useForm<ProcessSchema>({
       defaultValues: initialData
@@ -62,6 +68,7 @@ const ProcessForm = ({ initialData }: { initialData: any }) => {
       const response = await api_url.post("/api/process", data);
       if (response.status === 201) {
         toast.success(response.data.message);
+        setIsModalOpent(false);
       }
     } catch (error) {
       console.log(error);
@@ -103,14 +110,6 @@ const ProcessForm = ({ initialData }: { initialData: any }) => {
             <input
               {...register("heading_part1")}
               placeholder="Enter first part of heading"
-              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
-            />
-          </div>
-          <div className="hidden">
-            <label className="block text-gray-200 mb-1">Heading (Part 2)</label>
-            <input
-              {...register("heading_part2")}
-              placeholder="Enter second part of heading"
               className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
             />
           </div>

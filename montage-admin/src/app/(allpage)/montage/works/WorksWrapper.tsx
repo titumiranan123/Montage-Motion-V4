@@ -5,8 +5,6 @@ import Swal from "sweetalert2";
 import { api_url } from "@/hook/Apiurl";
 import VideoCard from "@/component/works/Workcard";
 import Workform from "@/component/works/Workform";
-import { useQuery } from "@tanstack/react-query";
-import { getDataCategory } from "@/utils/getCategory";
 import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
 
 interface IVideo {
@@ -27,7 +25,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
 
   const [hasChanges, setHasChanges] = useState(false);
   const [parent, tapes, setTapes] = useDragAndDrop<HTMLDivElement, IVideo>(
-    data
+    data,
   );
 
   useEffect(() => {
@@ -73,7 +71,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
     try {
       const res = await api_url.post(
         `/api/works${data.id ? `/${data.id}` : ""}`,
-        data
+        data,
       );
 
       Swal.fire({

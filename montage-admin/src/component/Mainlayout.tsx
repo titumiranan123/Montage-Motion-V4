@@ -89,29 +89,27 @@ export default function MainLayout({
           label: "Service  Section",
           icon: <FiBriefcase />,
         },
-        {
-          href: "/montage/page-process",
-          label: "Process  Section",
-          icon: <FiBriefcase />,
-        },
+
         {
           href: "/montage/pricing-section",
           label: "Create Pricing",
           icon: <FiBriefcase />,
         },
-        {
-          href: "/montage/carrerpost",
-          label: "Job Post",
-          icon: <FiBriefcase />,
-        },
+
         {
           href: "/montage/brand-section",
           label: "Brand  Section",
           icon: <FiBriefcase />,
         },
+
         {
-          href: "/montage/member-influncer",
-          label: "Member List",
+          href: "/montage/testimonials",
+          label: "Testimonials Section",
+          icon: <FiBriefcase />,
+        },
+        {
+          href: "/montage/page-process",
+          label: "Process  Section",
           icon: <FiBriefcase />,
         },
         {
@@ -120,8 +118,13 @@ export default function MainLayout({
           icon: <FiBriefcase />,
         },
         {
-          href: "/montage/testimonials",
-          label: "Testimonials Section",
+          href: "/montage/member-influncer",
+          label: "Member List",
+          icon: <FiBriefcase />,
+        },
+        {
+          href: "/montage/carrerpost",
+          label: "Job Post",
           icon: <FiBriefcase />,
         },
         {
@@ -129,15 +132,8 @@ export default function MainLayout({
           label: "Blogs",
           icon: <FiBriefcase />,
         },
-        { href: "/montage/career", label: "Career", icon: <FiFileText /> },
         { href: "/montage/contact", label: "Contact", icon: <FiMail /> },
-        { href: "/montage/about", label: "About", icon: <FiInfo /> },
-        {
-          href: "/montage/terms",
-          label: "Terms",
-          icon: <FiFile />,
-          nofollow: true,
-        },
+        { href: "/montage/career", label: "Career", icon: <FiFileText /> },
       ],
     },
   ];
@@ -203,7 +199,7 @@ export default function MainLayout({
                       {section}
                     </h3>
                   )}
-                  {items.map(({ href, label, icon, nofollow }) => (
+                  {items.map(({ href, label, icon }) => (
                     <Link
                       key={href}
                       href={href}
@@ -212,7 +208,6 @@ export default function MainLayout({
                           ? "bg-[#1FB5DD]/30 text-[#1FB5DD] font-semibold"
                           : "text-gray-300 hover:bg-[#1FB5DD]/20 hover:text-[#1FB5DD]"
                       }`}
-                      {...(nofollow ? { rel: "nofollow" } : {})}
                     >
                       <span
                         className={`flex-shrink-0 w-5 h-5 ${
@@ -287,7 +282,7 @@ export default function MainLayout({
                   <h3 className="text-xs font-bold text-[#1FB5DD]/80 uppercase tracking-widest px-4 py-1 bg-[#1FB5DD]/10 rounded-full mb-4">
                     {section}
                   </h3>
-                  {items.map(({ href, label, icon, nofollow }) => (
+                  {items.map(({ href, label, icon }) => (
                     <Link
                       key={href}
                       href={href}
@@ -296,7 +291,6 @@ export default function MainLayout({
                           ? "bg-[#1FB5DD]/30 text-[#1FB5DD]"
                           : "text-gray-300 hover:bg-[#1FB5DD]/20 hover:text-[#1FB5DD]"
                       }`}
-                      {...(nofollow ? { rel: "nofollow" } : {})}
                     >
                       <span className="w-5 h-5 mr-4">{icon}</span>
                       <span>{label}</span>

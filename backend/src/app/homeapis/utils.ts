@@ -3,6 +3,7 @@ import { BrandImageService } from "../brand_images/brandimage.service";
 import { pageHeaderService } from "../header/header.services";
 import { serviceSectionService } from "../pageservice/page_service.service";
 import { pricingPageService } from "../pricing/pricing.service";
+import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
 import { processService } from "../working_process/process.service";
 
 // Helper function to fetch data for each section
@@ -24,7 +25,7 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
     case "work": {
       const works = await db.query(
         `SELECT thumbnail, video_link FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC LIMIT 6`,
-        [type]
+        [type],
       );
       return { sectionName, data: works.rows || [] };
     }
@@ -36,7 +37,7 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
     case "testimonial": {
       const testimonials = await db.query(
         `SELECT * FROM testimonials WHERE type = $1`,
-        ["home"]
+        ["home"],
       );
       return { sectionName, data: testimonials.rows || [] };
     }
@@ -70,15 +71,16 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
       };
     }
 
-    // case "whychooseus": {
-    //   const whychooseusResult = await whychooseusSectionService.getAllSections({
-    //     type,
-    //   });
-    //   return {
-    //     sectionName,
-    //     data: whychooseusResult.length > 0 ? whychooseusResult[0] : [],
-    //   };
-    // }
+    case "whychooseus": {
+      const whychooseusResult = await whychooseusSectionService.getAllSections({
+        type: type,
+      });
+      console.log("whychooseusResult", whychooseusResult);
+      return {
+        sectionName,
+        data: whychooseusResult.length > 0 ? whychooseusResult[0] : [],
+      };
+    }
 
     // case "common_contact":
     //   return { sectionName, data: {} };

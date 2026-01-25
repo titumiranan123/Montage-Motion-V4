@@ -9,6 +9,7 @@ import Videouploadwithhook from "@/app/(allpage)/montage/headers-section/Videoup
 import ImageUploader from "../ImageUploader";
 import { url } from "inspector";
 import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
 interface IWork {
   id?: string;
@@ -47,11 +48,8 @@ const Workform: React.FC<IWorkFormProps> = ({
     },
   });
 
-  const [imagePreview, setImagePreview] = useState<string | null>(
-    initialData?.thumbnail || null
-  );
   const [videoPreview, setVideoPreview] = useState<string | null>(
-    initialData?.video_link || null
+    initialData?.video_link || null,
   );
 
   const selectedType = watch("type");
@@ -63,7 +61,7 @@ const Workform: React.FC<IWorkFormProps> = ({
       await Swal.fire(
         "Error!",
         err.message || "Failed to submit form",
-        "error"
+        "error",
       );
     }
   };
@@ -134,8 +132,8 @@ const Workform: React.FC<IWorkFormProps> = ({
             Type <span className="text-red-500">*</span>
           </label>
 
-          <CategorySelectComponent
-            value={selectedType || "home"}
+          <ServiceTypeSelect
+            value={selectedType}
             onChange={(url: any) => {
               setValue(`type`, url, {
                 shouldValidate: true,
@@ -166,15 +164,35 @@ const Workform: React.FC<IWorkFormProps> = ({
 
       {/* Video Upload */}
       {selectedType !== "thumbnail" && (
-        <Videouploadwithhook
-          control={control}
-          registerName="video_link"
-          setVideoUrl={(url) => {
-            setValue("video_link", url);
-            setVideoPreview(url);
-          }}
-          videoUrl={(videoPreview as string) ?? null}
-        />
+        <>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-300">
+              Video Url <span className="text-red-500">*</span>
+            </label>
+            <input
+              {...register("video_link")}
+              type="text"
+              placeholder="Video Url"
+              className={`w-full rounded-md p-2.5 bg-gray-800 border ${
+                errors.title ? "border-red-500" : "border-gray-700"
+              } text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-[#1FB5DD]`}
+            />
+            {errors.title && (
+              <p className="text-sm text-red-400 mt-1">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
+          {/* <Videouploadwithhook
+            control={control}
+            registerName="video_link"
+            setVideoUrl={(url) => {
+              setValue("video_link", url);
+              setVideoPreview(url);
+            }}
+            videoUrl={(videoPreview as string) ?? null}
+          /> */}
+        </>
       )}
 
       {/* Visibility and Featured Toggles */}

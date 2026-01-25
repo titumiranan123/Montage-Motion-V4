@@ -4,7 +4,7 @@ import React from "react";
 
 const SaasInshight = () => {
   return (
-    <div className="bg-red-500 container sectionGap rounded-[40px] py-15">
+    <div className="saasinsight sectionarea sectionGap rounded-[40px] p-[60px]">
       <style>
         {`
         .saasinsight {
@@ -24,7 +24,7 @@ const SaasInshight = () => {
           height={409}
         />
         <div className="md:w-1/2 w-full">
-          <p className="bg-white/40 py-1 px-6 rounded-lg w-[101px] h-[26px] text-center backdrop-blur-[21px] glassShadow">
+          <p className="glassShadowithoutinset bg-white/40  backdrop-blur-2xl w-[138px]  h-[46px] flex justify-center items-center rounded-3xl text-[14px] leading-[120%] text-(--text-primary) font-normal  poppins">
             Insight
           </p>
           <h2

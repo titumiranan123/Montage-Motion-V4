@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
                 height={92}
               />
             </Link>
-            <p className="text-[16px] opensans font-normal mt-10">
+            <p className="text-[16px] leading-[150%] opensans font-normal mt-10">
               Subscribe our newsletter to stay updated and get special offers.
             </p>
             <div className="max-w-[305px] hidden lg:mt-10 mt-6 max-h-[52px]  h-full rounded-2xl border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2  items-center justify-around">

@@ -7,29 +7,42 @@ import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
 import toast from "react-hot-toast";
 import { whychooseus_Section } from "./types";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
-const Whychooseusform = ({ initialData }: { initialData: any }) => {
-  const { register, control, setValue, handleSubmit, watch, reset } =
-    useForm<whychooseus_Section>({
-      defaultValues: initialData
-        ? initialData
-        : {
-            type: "home",
-            tag: "",
-            heading_part1: "",
-            heading_part2: "",
-            paragraph: "",
-            whychooseus_items: [
-              {
-                title: "",
-                description: "",
-                icon: "",
-                alt: "",
-              },
-            ],
-          },
-    });
+const Whychooseusform = ({
+  initialData,
+  setIsModalOpent,
+}: {
+  initialData: any;
+  setIsModalOpent: (p: boolean) => void;
+}) => {
+  const {
+    register,
+    control,
+    setValue,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<whychooseus_Section>({
+    defaultValues: initialData
+      ? initialData
+      : {
+          type: "home",
+          tag: "",
+          heading_part1: "",
+          heading_part2: "",
+          paragraph: "",
+          whychooseus_items: [
+            {
+              title: "",
+              description: "",
+              icon: "",
+              alt: "",
+            },
+          ],
+        },
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -44,13 +57,13 @@ const Whychooseusform = ({ initialData }: { initialData: any }) => {
   }, [initialData, reset]);
 
   const onSubmit = async (data: whychooseus_Section) => {
-    console.log("✅ Form Submitted:", data);
     try {
       const response = initialData?.id
         ? await api_url.put(`/api/why-choose-us/${initialData.id}`, data)
         : await api_url.post("/api/why-choose-us", data);
 
       if (response.status === 200 || response.status === 201) {
+        setIsModalOpent(false);
         toast.success(response?.data?.message);
         if (!initialData?.id) {
           reset(); // Reset form for new entries
@@ -63,24 +76,22 @@ const Whychooseusform = ({ initialData }: { initialData: any }) => {
   };
 
   return (
-    <div className="w-2xl mx-auto bg-black text-white p-8 rounded-2xl shadow-lg border border-gray-800">
-      <h1 className="text-3xl font-bold mb-6 text-[#1E9ED2]">
+    <div className="w-4xl h-[80vh] overflow-x-hidden overflow-y-scroll mx-auto bg-black text-white p-8 rounded-2xl shadow-lg border border-gray-800 ">
+      <h2 className="text-3xl font-bold mb-6 text-[#1E9ED2]">
         {initialData?.id ? "Edit" : "Add"} Service Section
-      </h1>
+      </h2>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-6 h-[70vh] overflow-y-scroll"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ">
         {/* Section Type */}
         <div>
           <label className="block font-medium text-gray-200">
             Section Type
           </label>
-          <CategorySelectComponent
-            onChange={(url) => {
-              setValue("type", url);
+          <ServiceTypeSelect
+            onChange={(type: string) => {
+              setValue("type", type);
             }}
+            slice={0}
             value={watch("type")}
           />
         </div>
@@ -235,7 +246,8 @@ const Whychooseusform = ({ initialData }: { initialData: any }) => {
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-[#1E9ED2] text-white py-3 rounded-lg text-lg font-semibold hover:bg-[#1787b5] transition-all"
+          disabled={isSubmitting}
+          className="max-w-[90%] w-full bg-[#1E9ED2] text-white py-3 rounded-lg text-lg font-semibold hover:bg-[#1787b5] transition-all btn-action"
         >
           {initialData?.id ? "Update" : "Submit"} Form
         </button>

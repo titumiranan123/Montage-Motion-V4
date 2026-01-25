@@ -1,5 +1,6 @@
 "use client";
 
+import { CategorySelectComponent } from "@/app/utils/CategorySelectComponent";
 import { api_url } from "@/hook/Apiurl";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -22,7 +23,7 @@ const ContactForm: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -47,7 +48,7 @@ const ContactForm: React.FC = () => {
     } catch (error: any) {
       toast.error(
         error?.response?.data?.errorDetails?.[0].message ??
-          "Failed to sent message !"
+          "Failed to sent message !",
       );
       console.log(error?.response?.data?.errorDetails?.[0].message);
     }
@@ -100,22 +101,10 @@ const ContactForm: React.FC = () => {
         >
           Interested In
         </label>
-        <select
-          name="interestedIn"
+        <CategorySelectComponent
+          onChange={(e) => setFormData({ ...formData, interestedIn: e })}
           value={formData.interestedIn}
-          onChange={handleChange}
-          className="max-w-[542px] w-full h-14 rounded-2xl border border-[#B9BEBF] animated hover:scale-[103%]  p-3  text-(--text-primary)  focus:outline-none backdrop-blur-2xl text-[16px] leading-[100%] font-normal"
-        >
-          <option className="  text-(--text-primary) " value="talking-head">
-            Talking Head Video Editing
-          </option>
-          <option className="  text-(--text-primary) " value="podcast">
-            Podcast Video Editing
-          </option>
-          <option className="  text-(--text-primary) " value="shorts">
-            Shorts/Reel Video Editing
-          </option>
-        </select>
+        />
       </div>
 
       <div className=" text-(--text-primary)  w-full flex flex-col gap-2 ">

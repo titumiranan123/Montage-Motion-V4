@@ -1,24 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-import SingleService from "./SingleWhyChooseus";
-import { useRouter, useSearchParams } from "next/navigation";
 import Whychooseusform from "./Whychooseusform";
 import SingleWhyChooseus from "./SingleWhyChooseus";
+import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
 
 const Whychoosewrapper = ({ data }: { data: any }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
   const [serviceData, setInitialServiceData] = useState<any | null>(null);
   const [isOpenModal, setIsModalOpent] = useState<any | null>(null);
-
-  useEffect(() => {
-    // Only push "home" if no ?page param exists
-    if (!searchParams.get("page")) {
-      router.push("?page=home");
-    }
-  }, [router, searchParams]);
   // Disable scrolling when the modal is open
   useEffect(() => {
     if (isOpenModal) {
@@ -47,26 +36,7 @@ const Whychoosewrapper = ({ data }: { data: any }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <select
-            onChange={(e) => {
-              router.push(`?page=${e.target.value}`);
-            }}
-            className="bg-gray-800 border border-gray-600 rounded px-3 py-2"
-          >
-            {[
-              "home",
-              "shorts",
-              "talkinghead",
-              "podcast",
-              "thumbnail",
-              "saas",
-              "about",
-            ].map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
+          <CategorySelectComponent />
           {/* Add New Button */}
           <button
             onClick={() => {
@@ -127,7 +97,10 @@ const Whychoosewrapper = ({ data }: { data: any }) => {
         h-screen flex justify-center items-center fixed inset-0 bg-black/60 backdrop-blur-2xl"
         >
           <div onClick={(e) => e.stopPropagation()}>
-            <Whychooseusform initialData={serviceData} />
+            <Whychooseusform
+              initialData={serviceData}
+              setIsModalOpent={setIsModalOpent}
+            />
           </div>
         </div>
       )}

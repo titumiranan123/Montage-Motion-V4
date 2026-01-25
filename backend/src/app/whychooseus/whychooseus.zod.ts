@@ -12,15 +12,7 @@ export const whychooseusItemSchema = z.object({
 
 // ✅ Schema for the full "Why Choose Us" section
 export const whychooseusSchema = z.object({
-  type: z.enum([
-    "podcast",
-    "shorts",
-    "thumbnail",
-    "saas",
-    "talkinghead",
-    "home",
-    "about",
-  ]),
+  type: z.string(),
   tag: z.string().min(1, "Tag is required"),
   heading_part1: z.string().min(1, "Heading is required"),
   heading_part2: z.string().optional(),

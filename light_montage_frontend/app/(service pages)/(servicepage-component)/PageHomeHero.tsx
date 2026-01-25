@@ -5,7 +5,7 @@ import TurstedBy from "@/component/home/TurstedBy";
 import HeroVideoPlayer from "@/component/home/HeroVideoPlayer";
 const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div className="flex headerbg   flex-col justify-center items-center relative   pt-36   lg:gap-4 gap-4 max-w-[1440px] mx-auto rounded-[40px] p-[60px]">
+    <div className="flex headerbg   flex-col justify-center items-center relative   lg:pt-56 pt-48  lg:gap-4 gap-4 sectionarea rounded-[40px]  ">
       {/* header content left side */}
       <div className="flex z-20 justify-center items-center  flex-col   max-w-[1100px] mx-auto">
         <div
@@ -16,9 +16,9 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           <TurstedBy isCenter={true} />
         </div>
         <h1
-          data-aos="fade-up"
-          data-aos-delay={200}
-          className="lg:text-[96px]  text-[48px] leading-[111%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
+          // data-aos="fade-up"
+          // data-aos-delay={200}
+          className="lg:text-[70px]  text-[30px] leading-[111%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
         >
           {data?.page_title}
         </h1>
@@ -27,7 +27,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           data-aos-delay={300}
           className="text-(--text-secondary) text-[14px] font-normal md:text-[16px] opensans text-center  leading-[150% ]  mt-6 "
         >
-          {data?.description}
+          {data?.description} {}
         </p>
         <div
           data-aos="fade-up"
@@ -52,7 +52,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
       </div>
       <div data-aos="fade-up" data-aos-delay="500" className="lg:mt-10 mt-8  ">
         <HeroVideoPlayer
-          thumbnail={data?.media?.[0]?.thumbnail}
+          thumbnail={data?.media?.[0]?.image_url}
           video_url={data?.media?.[0]?.video_url}
         />
       </div>

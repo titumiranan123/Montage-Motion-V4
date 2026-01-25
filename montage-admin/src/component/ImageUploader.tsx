@@ -3,6 +3,7 @@
 import { api_url } from "@/hook/Apiurl";
 import Image from "next/image";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FiTrash2, FiUpload } from "react-icons/fi";
 import Swal from "sweetalert2";
 
@@ -65,6 +66,50 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
       setIsUploadingImage(false);
     }
   };
+  const deleteImage = async (url: string) => {
+    if (!url) {
+      toast.error("Invalid image URL");
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This image will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    try {
+      const res = await api_url.delete("/api/delete/file", {
+        data: { url },
+      });
+
+      if (res.status === 200) {
+        onChange("");
+        toast.success(res?.data?.message || "Image deleted successfully");
+      }
+
+      return res.data;
+    } catch (error: any) {
+      console.error("Delete failed:", error?.response?.data || error.message);
+
+      Swal.fire({
+        title: "Delete failed",
+        text: error?.response?.data?.message || "Something went wrong",
+        icon: "error",
+      });
+
+      throw error;
+    }
+  };
 
   return (
     <div className="mt-2">
@@ -94,13 +139,14 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             className="object-cover"
             alt="preview"
           />
-          <button
-            type="button"
-            className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full"
-            onClick={() => onChange("")}
-          >
-            <FiTrash2 size={14} />
-          </button>
+          <div className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full cursor-pointer">
+            <FiTrash2
+              onClick={() => {
+                deleteImage(value);
+              }}
+              size={14}
+            />
+          </div>
         </div>
       ) : (
         <label className="cursor-pointer">

@@ -103,7 +103,10 @@ const Processwrapper = ({ data }: { data: any }) => {
         h-full flex justify-center items-center fixed inset-0 bg-black/30 backdrop-blur-2xl"
         >
           <div onClick={(e) => e.stopPropagation()}>
-            <ProcessForm initialData={ProcessData} />
+            <ProcessForm
+              initialData={ProcessData}
+              setIsModalOpent={setIsModalOpent}
+            />
           </div>
         </div>
       )}

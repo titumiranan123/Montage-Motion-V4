@@ -3,14 +3,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { getDataCategory } from "./getCategory";
-import { useSearchParams } from "next/navigation";
 
 export const ServiceTypeSelect = ({
   onChange,
   value,
+  slice = 0,
 }: {
   value: string;
   onChange: (p: string) => void;
+  slice?: number;
 }) => {
   // Fetch category list
   const { data } = useQuery({
@@ -26,7 +27,7 @@ export const ServiceTypeSelect = ({
       }}
       className="bg-[#101828] border border-slate-300 rounded-lg p-2 text-white w-full md:w-[200px]"
     >
-      {data?.slice(1)?.map((item: any) => (
+      {data?.slice(slice)?.map((item: any) => (
         <option key={item} value={item.service_type}>
           {item.service_title}
         </option>
