@@ -1,14 +1,8 @@
 "use client";
-import React, { useState, useCallback, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { AxiosError } from "axios";
+import React from "react";
+import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { api_url } from "@/hook/Apiurl";
-import ReactPlayer from "react-player";
-import Videouploadwithhook from "@/app/(allpage)/montage/headers-section/Videouploadwithhook";
 import ImageUploader from "../ImageUploader";
-import { url } from "inspector";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
 interface IWork {
@@ -20,7 +14,7 @@ interface IWork {
   is_visible: boolean;
   is_feature: boolean;
   position?: number;
-  type: "home" | "shorts" | "talkinghead" | "podcast" | "thumbnail" | "saas";
+  type: string;
 }
 
 interface IWorkFormProps {
@@ -48,10 +42,6 @@ const Workform: React.FC<IWorkFormProps> = ({
     },
   });
 
-  const [videoPreview, setVideoPreview] = useState<string | null>(
-    initialData?.video_link || null,
-  );
-
   const selectedType = watch("type");
   const onSubmitHandler = async (data: IWork) => {
     try {
@@ -77,54 +67,33 @@ const Workform: React.FC<IWorkFormProps> = ({
         </h1>
 
         {/* Name */}
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">
             Name <span className="text-red-500">*</span>
           </label>
           <input
-            {...register("title", {
-              required: "Title is required",
-              minLength: {
-                value: 2,
-                message: "Name must be at least 2 characters",
-              },
-            })}
+            {...register("title")}
             type="text"
             placeholder="Project Title"
-            className={`w-full rounded-md p-2.5 bg-gray-800 border ${
-              errors.title ? "border-red-500" : "border-gray-700"
-            } text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-[#1FB5DD]`}
+            className={`w-full rounded-md p-2.5 bg-gray-800 border  text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-[#1FB5DD]`}
           />
           {errors.title && (
             <p className="text-sm text-red-400 mt-1">{errors.title.message}</p>
           )}
-        </div>
+        </div> */}
 
         {/* Description */}
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">
             Description <span className="text-red-500">*</span>
           </label>
           <input
-            {...register("description", {
-              required: "Description is required",
-              minLength: {
-                value: 2,
-                message: "Description must be at least 2 characters",
-              },
-            })}
+            {...register("description")}
             type="text"
             placeholder="Project description"
-            className={`w-full rounded-md p-2.5 bg-gray-800 border ${
-              errors.description ? "border-red-500" : "border-gray-700"
-            } text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-[#1FB5DD]`}
+            className={`w-full rounded-md p-2.5 bg-gray-800 border  text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-[#1FB5DD]`}
           />
-          {errors.description && (
-            <p className="text-sm text-red-400 mt-1">
-              {errors.description.message}
-            </p>
-          )}
-        </div>
+        </div> */}
 
         {/* Type */}
         <div className="space-y-2">
@@ -141,60 +110,30 @@ const Workform: React.FC<IWorkFormProps> = ({
               });
             }}
           />
-
-          {errors.type && (
-            <p className="text-sm text-red-400 mt-1">{errors.type.message}</p>
-          )}
+        </div>
+        <div className="space-y-2 col-span-2">
+          <label className="block text-sm font-medium text-gray-300">
+            Video Url <span className="text-red-500">*</span>
+          </label>
+          <input
+            {...register("video_link")}
+            type="text"
+            placeholder="Video Url"
+            className={`w-full rounded-md p-2.5 bg-gray-800 border  text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-[#1FB5DD]`}
+          />
         </div>
       </div>
 
-      {/* Image Upload */}
-      <div className="bg-gray-800 p-6 rounded-lg shadow">
-        <ImageUploader
-          value={watch("thumbnail") || ""}
-          onChange={(url) => {
-            setValue(`thumbnail`, url, {
-              shouldValidate: true,
-              shouldDirty: true,
-            });
-          }}
-          title="Featured Image*"
-        />
-      </div>
-
-      {/* Video Upload */}
-      {selectedType !== "thumbnail" && (
-        <>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-300">
-              Video Url <span className="text-red-500">*</span>
-            </label>
-            <input
-              {...register("video_link")}
-              type="text"
-              placeholder="Video Url"
-              className={`w-full rounded-md p-2.5 bg-gray-800 border ${
-                errors.title ? "border-red-500" : "border-gray-700"
-              } text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-[#1FB5DD]`}
-            />
-            {errors.title && (
-              <p className="text-sm text-red-400 mt-1">
-                {errors.title.message}
-              </p>
-            )}
-          </div>
-          {/* <Videouploadwithhook
-            control={control}
-            registerName="video_link"
-            setVideoUrl={(url) => {
-              setValue("video_link", url);
-              setVideoPreview(url);
-            }}
-            videoUrl={(videoPreview as string) ?? null}
-          /> */}
-        </>
-      )}
-
+      <ImageUploader
+        value={watch("thumbnail") || ""}
+        onChange={(url) => {
+          setValue(`thumbnail`, url, {
+            shouldValidate: true,
+            shouldDirty: true,
+          });
+        }}
+        title="Thumbnail *"
+      />
       {/* Visibility and Featured Toggles */}
       <div className="bg-gray-800 p-6 rounded-lg shadow col-span-1 lg:col-span-2">
         <div className="flex flex-wrap gap-8">

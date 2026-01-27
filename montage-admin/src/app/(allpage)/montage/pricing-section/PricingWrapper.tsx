@@ -3,7 +3,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import PricingForm from "./Pricingform";
 import SinglePricePlan from "./SinglePricePlan";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceFilter } from "@/utils/Servicefilter";
 
 const PricingWrapper = ({ data }: { data: any }) => {
   const router = useRouter();
@@ -42,7 +42,7 @@ const PricingWrapper = ({ data }: { data: any }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-            <CategorySelectComponent />
+            <ServiceFilter slice={1} />
             {/* Add New Button */}
             <button
               onClick={() => {
@@ -101,7 +101,10 @@ const PricingWrapper = ({ data }: { data: any }) => {
         h-screen flex justify-center items-center fixed inset-0 bg-black/60 backdrop-blur-2xl"
         >
           <div onClick={(e) => e.stopPropagation()}>
-            <PricingForm initialData={serviceData} />
+            <PricingForm
+              initialData={serviceData}
+              setIsModalOpent={setIsModalOpent}
+            />
           </div>
         </div>
       )}

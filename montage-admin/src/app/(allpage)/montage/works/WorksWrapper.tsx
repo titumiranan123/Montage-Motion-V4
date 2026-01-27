@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 import { api_url } from "@/hook/Apiurl";
 import VideoCard from "@/component/works/Workcard";
 import Workform from "@/component/works/Workform";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceFilter } from "@/utils/Servicefilter";
+import { useRouter } from "next/navigation";
 
 interface IVideo {
   id?: string;
@@ -16,13 +17,13 @@ interface IVideo {
   is_visible: boolean;
   is_feature: boolean;
   position?: number;
-  type: "home" | "shorts" | "talkinghead" | "podcast" | "thumbnail" | "saas";
+  type: string;
 }
 
 export const WorkWrapper = ({ data }: { data: any }) => {
   const [isWork, setWorkModal] = useState(false);
   const [editData, setEditData] = useState<IVideo | null>(null);
-
+  const router = useRouter();
   const [hasChanges, setHasChanges] = useState(false);
   const [parent, tapes, setTapes] = useDragAndDrop<HTMLDivElement, IVideo>(
     data,
@@ -54,6 +55,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
         color: "#fff",
         confirmButtonColor: "#6366f1",
       });
+      router.refresh();
       setHasChanges(false);
     } catch (err: any) {
       Swal.fire({
@@ -73,7 +75,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
         `/api/works${data.id ? `/${data.id}` : ""}`,
         data,
       );
-
+      router.refresh();
       Swal.fire({
         title: res.data.message,
         icon: "success",
@@ -81,6 +83,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
         color: "#fff",
         confirmButtonColor: "#6366f1",
       });
+      router.refresh();
       setWorkModal(false);
       setEditData(null);
     } catch (err: any) {
@@ -112,7 +115,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
               Save Positions
             </button>
           )}
-          <CategorySelectComponent />
+          <ServiceFilter slice={0} />
 
           <div className="flex gap-4">
             <button
@@ -149,7 +152,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
       {/* Modal */}
       {isWork && (
         <div
-          style={{ zIndex: 99999 }}
+          style={{ zIndex: 10 }}
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start p-8"
         >
           <div className="bg-gray-900 p-6 rounded w-full max-w-4xl">

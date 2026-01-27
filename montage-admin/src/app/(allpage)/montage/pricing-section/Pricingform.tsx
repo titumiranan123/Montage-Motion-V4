@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 import { api_url } from "@/hook/Apiurl";
 import { IPagePricePlan } from "./types";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
 
 const defaultValues: IPagePricePlan = {
   type: "home",
@@ -49,7 +48,7 @@ const PackageItem = ({
   });
 
   return (
-    <div className="p-6 bg-gray-800/40 border border-gray-700 rounded-xl space-y-6 shadow-lg">
+    <div className="p-6  rounded-xl space-y-6 ">
       {/* Package Header */}
       <div className="flex justify-between items-center pb-4 border-b border-gray-700">
         <h3 className="text-xl font-semibold text-white">
@@ -162,7 +161,7 @@ const PackageItem = ({
             {featureFields.map((feat, featIndex) => (
               <div
                 key={feat.id}
-                className="flex items-center gap-3 p-4 bg-gray-900/30 rounded-lg border border-gray-700"
+                className="flex items-center gap-3 p-4  rounded-lg "
               >
                 <div className="flex-1">
                   <Controller
@@ -172,7 +171,7 @@ const PackageItem = ({
                       <input
                         {...field}
                         placeholder="Enter feature description"
-                        className="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+                        className="w-full p-3  border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
                       />
                     )}
                   />
@@ -206,7 +205,7 @@ const PackageItem = ({
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 bg-gray-900/20 rounded-lg border border-gray-700 border-dashed">
+          <div className="text-center py-8  rounded-lg border border-gray-700 border-dashed">
             <p className="text-gray-400 text-sm">
               No features added yet. Click "Add Feature" to get started.
             </p>
@@ -217,7 +216,13 @@ const PackageItem = ({
   );
 };
 
-const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
+const PricingPageForm = ({
+  initialData,
+  setIsModalOpent,
+}: {
+  initialData?: IPagePricePlan;
+  setIsModalOpent: (p: boolean) => void;
+}) => {
   const {
     register,
     control,
@@ -243,6 +248,7 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
       const respon = await api_url.post(`/api/pricing`, data);
       if (respon.status === 200 || respon.status === 201) {
         toast.success(" Pricing Page saved successfully!");
+        setIsModalOpent(false);
       }
     } catch (err) {
       toast.error("❌ Failed to save pricing page");
@@ -256,7 +262,7 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-3">
-            🧩 Pricing Page Manager
+            Pricing Page Manager
           </h1>
           <p className="text-gray-400 text-lg">
             Configure pricing plans for different pages on your website
@@ -265,7 +271,7 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Page Information Card */}
-          <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-2xl overflow-hidden">
+          <div className=" rounded-2xl  overflow-hidden">
             <div className="p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-2 h-8 bg-[#1E9ED2] rounded-full"></div>
@@ -281,11 +287,14 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
                     Page Type
                   </label>
 
-                  <CategorySelectComponent
-                    onChange={(url) => {
-                      setValue("type", url);
-                    }}
+                  <ServiceTypeSelect
                     value={watch("type")}
+                    onChange={(url: any) => {
+                      setValue(`type`, url, {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                      });
+                    }}
                   />
                 </div>
 
@@ -338,7 +347,7 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
           </div>
 
           {/* Packages Section */}
-          <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-2xl overflow-hidden">
+          <div className=" backdrop-blur-sm  rounded-2xl  overflow-hidden">
             <div className="p-8">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div className="flex items-center gap-3">
@@ -361,7 +370,7 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
                       position: packageFields?.length || 0,
                     })
                   }
-                  className="px-6 py-3 bg-[#1E9ED2] hover:bg-[#1a8abc] text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 flex items-center gap-2 shadow-lg"
+                  className="px-6 py-3 bg-[#1E9ED2] hover:bg-[#1a8abc] text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 flex items-center gap-2 "
                 >
                   <span className="text-lg">+</span>
                   Add New Package
@@ -413,35 +422,20 @@ const PricingPageForm = ({ initialData }: { initialData?: IPagePricePlan }) => {
             </div>
           </div>
 
-          {/* Submit Section */}
-          <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-2xl p-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  Save Pricing Configuration
-                </h3>
-                <p className="text-gray-400 text-sm">
-                  {initialData
-                    ? "Update your pricing page"
-                    : "Create a new pricing page"}
-                </p>
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="px-8 py-4 bg-gradient-to-r from-[#1E9ED2] to-[#1a8abc] hover:from-[#1a8abc] hover:to-[#1679a3] text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg flex items-center gap-2 min-w-[200px] justify-center"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Saving...
-                  </>
-                ) : (
-                  <> Save Pricing Page</>
-                )}
-              </button>
-            </div>
-          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="px-8 py-4 bg-gradient-to-r from-[#1E9ED2] to-[#1a8abc] hover:from-[#1a8abc] hover:to-[#1679a3] text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ms-auto  flex items-center gap-2 min-w-[200px] justify-center"
+          >
+            {isSubmitting ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Saving...
+              </>
+            ) : (
+              <> Save Pricing Page</>
+            )}
+          </button>
         </form>
       </div>
     </div>

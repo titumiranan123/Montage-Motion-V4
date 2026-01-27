@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import Whychooseusform from "./Whychooseusform";
 import SingleWhyChooseus from "./SingleWhyChooseus";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceFilter } from "@/utils/Servicefilter";
 
 const Whychoosewrapper = ({ data }: { data: any }) => {
   const [serviceData, setInitialServiceData] = useState<any | null>(null);
@@ -36,7 +36,7 @@ const Whychoosewrapper = ({ data }: { data: any }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <CategorySelectComponent />
+          <ServiceFilter slice={0} />
           {/* Add New Button */}
           <button
             onClick={() => {

@@ -12,6 +12,8 @@ import {
 import Swal from "sweetalert2";
 import { api_url } from "@/hook/Apiurl";
 import useWorks from "@/hook/useWorks";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface IVideo {
   id?: string;
@@ -22,7 +24,7 @@ interface IVideo {
   is_visible: boolean;
   is_feature: boolean;
   position?: number;
-  type: "home" | "shorts" | "talkinghead" | "podcast" | "thumbnail" | "saas";
+  type: string;
 }
 
 interface VideoCardProps {
@@ -38,7 +40,8 @@ const VideoCard = ({
   onToggleVisibility,
   onToggleFeature,
 }: VideoCardProps) => {
-  const { refetch } = useWorks();
+  const router = useRouter();
+
   const handleDelete = async (id: string) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -61,15 +64,17 @@ const VideoCard = ({
           },
         });
 
-        await api_url.delete(`/api/works/${id}`);
-        refetch();
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your video has been deleted.",
-          icon: "success",
-          timer: 2000,
-          showConfirmButton: false,
-        });
+        const res = await api_url.delete(`/api/works/${id}`);
+        if (res.status === 200) {
+          router.refresh();
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your video has been deleted.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        }
       } catch (error) {
         Swal.fire({
           title: "Error!",
@@ -88,65 +93,67 @@ const VideoCard = ({
       </div>
 
       {/* Video Player Section - Fixed aspect ratio (16:9) */}
-      <div className="relative w-64 h-36 flex-shrink-0 bg-black">
-        <ReactPlayer
-          url={video.video_link}
-          playing={false}
-          light={video.thumbnail}
-          playIcon={
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-black bg-opacity-50 rounded-full p-2">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+      {video.video_link === "" || video.video_link === null ? (
+        <Image src={video?.thumbnail} alt="" width={256} height={145} />
+      ) : (
+        <div className="relative w-64 h-36 flex-shrink-0 bg-black">
+          <ReactPlayer
+            url={video.video_link}
+            playing={false}
+            light={video.thumbnail}
+            playIcon={
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-black bg-opacity-50 rounded-full p-2">
+                  <svg
+                    className="w-8 h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
               </div>
-            </div>
-          }
-          width="100%"
-          height="100%"
-          controls={true}
-          style={{ position: "absolute", top: 0, left: 0 }}
-          config={{
-            youtube: {
-              playerVars: {
-                modestbranding: 1,
-                showinfo: 0,
-                rel: 0,
+            }
+            width="100%"
+            height="100%"
+            controls={true}
+            style={{ position: "absolute", top: 0, left: 0 }}
+            config={{
+              youtube: {
+                playerVars: {
+                  modestbranding: 1,
+                  showinfo: 0,
+                  rel: 0,
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
 
-        {/* Type Badge */}
-        <div className="absolute bottom-2 left-2 px-2 py-1 bg-indigo-100 text-indigo-800 rounded-md text-xs font-medium">
-          {video.type.charAt(0).toUpperCase() + video.type.slice(1)}
+          {/* Type Badge */}
+          <div className="absolute bottom-2 left-2 px-2 py-1 bg-indigo-100 text-indigo-800 rounded-md text-xs font-medium">
+            {video.type.charAt(0).toUpperCase() + video.type.slice(1)}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Video Info Section */}
       <div className="flex-1 p-4 flex flex-col min-w-0">
         {" "}
-        {/* min-w-0 prevents flex overflow */}
         <div className="flex justify-between items-start mb-2 gap-2">
-          <div className="min-w-0">
+          {/* <div className="min-w-0">
             {" "}
-            {/* Prevent text overflow */}
             <h3 className="text-lg font-semibold text-gray-900 truncate">
               {video.title}
             </h3>
             <p className="text-gray-600 text-sm line-clamp-2">
               {video.description}
             </p>
-          </div>
+          </div> */}
 
           {/* Status Badges */}
           <div className="flex gap-2 flex-shrink-0">
@@ -183,12 +190,12 @@ const VideoCard = ({
             )}
           </div>
         </div>
-        <div className="mt-auto flex justify-between items-center">
+        <div className="mt-auto flex-col flex justify-between items-center">
           <span className="text-xs rounded-full border border-red-500 p-1 w-7 h-7 flex justify-center in-checked: text-gray-500">
             {video.position || "Not set"}
           </span>
 
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2">
             <button
               onClick={() => onEdit(video)}
               className="flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-50 text-[#1FB5DD] rounded hover:bg-[#1FB5DD]/20 transition-colors"

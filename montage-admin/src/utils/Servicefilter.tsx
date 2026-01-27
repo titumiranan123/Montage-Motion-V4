@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { getDataCategory } from "./getCategory";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const ServiceFilter = ({ value }: { value: string }) => {
+export const ServiceFilter = ({ slice = 0 }: { slice: number }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -23,17 +23,16 @@ export const ServiceFilter = ({ value }: { value: string }) => {
     queryKey: ["categories"],
     queryFn: getDataCategory,
   });
-
   return (
     <select
-      value={currentPage ?? (value || "home")}
+      value={currentPage ?? "home"}
       onChange={(e) => {
         router.push(`?page=${e.target.value}`);
       }}
       className="bg-[#101828] border border-slate-300 rounded-lg p-2 text-white w-full md:w-[200px]"
     >
-      {data?.slice(1)?.map((item: any) => (
-        <option key={item} value={item.service_type}>
+      {data?.slice(slice)?.map((item: any, idx: number) => (
+        <option key={idx} value={item.service_type}>
           {item.service_title}
         </option>
       ))}

@@ -11,14 +11,7 @@ export interface ITestimonial {
   message?: string;
   position?: number;
   category: "message" | "video_message";
-  type:
-    | "home"
-    | "shorts"
-    | "talkinghead"
-    | "podcast"
-    | "saas"
-    | "thumbnail"
-    | "about";
+  type: string;
 }
 const TestimonialMessagecard = ({
   testimonial,

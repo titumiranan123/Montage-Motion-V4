@@ -8,20 +8,19 @@ import useCategories from "@/hook/useCategory";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceFilter } from "@/utils/Servicefilter";
 
 const Homewrapper = ({ initialData }: { initialData: any }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   useEffect(() => {
-    // Only push "home" if no ?page param exists
     if (!searchParams.get("page")) {
       router.push("?page=home");
     }
   }, [router, searchParams]);
   const [editData, setEditData] = useState<IPageHeader>(initialData);
   const [isHeaderModalOpen, setHeaderModalOpen] = useState(false);
-  const { data } = useCategories();
+
   const handleSubmit = async (formData: IPageHeader) => {
     try {
       const res = await api_url.post(`/api/header`, formData);
@@ -55,7 +54,7 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
         </div>
 
         <div className="flex mt-5 flex-col sm:flex-row gap-5 md:gap-3 w-full md:w-auto">
-          <CategorySelectComponent />
+          <ServiceFilter slice={0} />
 
           <button
             onClick={() => {

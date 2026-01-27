@@ -6,7 +6,7 @@ import { ProcessSchema } from "./types";
 import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
 import toast from "react-hot-toast";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
 // ✅ Tailwind custom toggle (no Headless UI)
 interface ToggleSwitchProps {
@@ -85,7 +85,7 @@ const ProcessForm = ({
         {/* Process Type */}
         <div>
           <label className="block text-gray-200 mb-1">Process Type</label>
-          <CategorySelectComponent
+          <ServiceTypeSelect
             onChange={(url) => {
               setValue("type", url);
             }}

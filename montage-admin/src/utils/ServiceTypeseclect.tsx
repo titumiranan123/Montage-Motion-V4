@@ -27,8 +27,8 @@ export const ServiceTypeSelect = ({
       }}
       className="bg-[#101828] border border-slate-300 rounded-lg p-2 text-white w-full md:w-[200px]"
     >
-      {data?.slice(slice)?.map((item: any) => (
-        <option key={item} value={item.service_type}>
+      {data?.slice(slice)?.map((item: any, idx: number) => (
+        <option key={idx} value={item.service_type}>
           {item.service_title}
         </option>
       ))}

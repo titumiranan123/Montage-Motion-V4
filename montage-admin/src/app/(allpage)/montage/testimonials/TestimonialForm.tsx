@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import ReactPlayer from "react-player";
 import { api_url } from "@/hook/Apiurl";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
 export interface ITestimonial {
   id?: string;
@@ -50,13 +50,13 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
   });
 
   const [imagePreview, setImagePreview] = useState<string | null>(
-    initialData?.image || null
+    initialData?.image || null,
   );
   const [videoPreview, setVideoPreview] = useState<string | null>(
-    initialData?.video_message || null
+    initialData?.video_message || null,
   );
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(
-    initialData?.thumbnail || null
+    initialData?.thumbnail || null,
   );
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isUploadingVideo, setIsUploadingVideo] = useState(false);
@@ -79,7 +79,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         Swal.fire(
           "Invalid File",
           "Only JPG, PNG, and WEBP images are allowed",
-          "error"
+          "error",
         );
         return;
       }
@@ -107,11 +107,11 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
             headers: { "Content-Type": "multipart/form-data" },
             onUploadProgress: (progressEvent: any) => {
               const percentCompleted = Math.round(
-                (progressEvent.loaded * 100) / (progressEvent.total || 1)
+                (progressEvent.loaded * 100) / (progressEvent.total || 1),
               );
               setImageUploadProgress(percentCompleted);
             },
-          }
+          },
         );
         setValue("image", response.data.url, { shouldValidate: true });
         await Swal.fire("Success!", "Image uploaded successfully", "success");
@@ -122,7 +122,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         setIsUploadingImage(false);
       }
     },
-    [currentImage, setValue]
+    [currentImage, setValue],
   );
 
   const handleVideoUpload = useCallback(
@@ -134,7 +134,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         Swal.fire(
           "Invalid File",
           "Only MP4 and MOV videos are allowed",
-          "error"
+          "error",
         );
         return;
       }
@@ -162,11 +162,11 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
             headers: { "Content-Type": "multipart/form-data" },
             onUploadProgress: (progressEvent) => {
               const percentCompleted = Math.round(
-                (progressEvent.loaded * 100) / (progressEvent.total || 1)
+                (progressEvent.loaded * 100) / (progressEvent.total || 1),
               );
               setVideoUploadProgress(percentCompleted);
             },
-          }
+          },
         );
 
         setValue("video_message", response.data.url, { shouldValidate: true });
@@ -177,14 +177,14 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         await Swal.fire(
           "Upload Failed",
           err.message || "Failed to upload video",
-          "error"
+          "error",
         );
       } finally {
         setIsUploadingVideo(false);
         setVideoUploadProgress(0);
       }
     },
-    [currentVideo, setValue]
+    [currentVideo, setValue],
   );
 
   const handleThumbnailUpload = useCallback(
@@ -196,7 +196,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         Swal.fire(
           "Invalid File",
           "Only JPG, PNG, and WEBP images are allowed",
-          "error"
+          "error",
         );
         return;
       }
@@ -222,17 +222,17 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
             headers: { "Content-Type": "multipart/form-data" },
             onUploadProgress: (progressEvent: any) => {
               const percentCompleted = Math.round(
-                (progressEvent.loaded * 100) / (progressEvent.total || 1)
+                (progressEvent.loaded * 100) / (progressEvent.total || 1),
               );
               setThumbnailUploadProgress(percentCompleted);
             },
-          }
+          },
         );
         setValue("thumbnail", response.data.url, { shouldValidate: true });
         await Swal.fire(
           "Success!",
           "Thumbnail uploaded successfully",
-          "success"
+          "success",
         );
       } catch (error: any) {
         setThumbnailPreview(currentThumbnail || null);
@@ -241,7 +241,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         setIsUploadingThumbnail(false);
       }
     },
-    [currentThumbnail, setValue]
+    [currentThumbnail, setValue],
   );
 
   const onSubmitHandler = async (data: ITestimonial) => {
@@ -263,7 +263,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
       await Swal.fire(
         "Error!",
         err.message || "Failed to submit form",
-        "error"
+        "error",
       );
     }
   };
@@ -364,7 +364,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Type <span className="text-red-500">*</span>
                 </label>
-                <CategorySelectComponent
+                <ServiceTypeSelect
                   onChange={(type) => setValue("type", type)}
                   value={watch("type")}
                 />

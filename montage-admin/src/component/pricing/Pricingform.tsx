@@ -1,4 +1,5 @@
 "use client";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -22,7 +23,7 @@ interface IPackage {
   note: string;
   purchase_link: string;
   pricing_type: "single" | "combo";
-  type: "home" | "shorts" | "talkinghead" | "podcast" | "thumbnail" | "saas";
+  type: string;
 }
 
 interface FormValues {
@@ -93,7 +94,7 @@ const PricingForm = () => {
   const removeFeature = (pkgIndex: number, featureIndex: number) => {
     const newPackages = [...packages];
     newPackages[pkgIndex].features = newPackages[pkgIndex].features.filter(
-      (_, i) => i !== featureIndex
+      (_, i) => i !== featureIndex,
     );
     setValue("packages", newPackages);
   };
@@ -157,18 +158,15 @@ const PricingForm = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Type
                 </label>
-                <select
-                  {...register(`packages.${pkgIndex}.type`)}
-                  className="w-full p-2 border rounded-md"
-                >
-                  <option value="main">Main</option>
-                  <option value="shorts">Shorts</option>
-                  <option value="talking">Talking</option>
-                  <option value="podcast">Podcast</option>
-                  <option value="graphic">Graphic</option>
-                  <option value="advertising">Advertising</option>
-                  <option value="website">Website</option>
-                </select>
+                <ServiceTypeSelect
+                  value={watch(`packages.${pkgIndex}.type`)}
+                  onChange={(url: any) => {
+                    setValue(`packages.${pkgIndex}.type`, url, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
+                  }}
+                />
               </div>
 
               <div>
@@ -277,7 +275,7 @@ const PricingForm = () => {
                     <input
                       type="text"
                       {...register(
-                        `packages.${pkgIndex}.features.${featureIndex}.feature`
+                        `packages.${pkgIndex}.features.${featureIndex}.feature`,
                       )}
                       placeholder="Feature name"
                       className="w-full p-2 border rounded-md"
@@ -286,7 +284,7 @@ const PricingForm = () => {
                   <div className="col-span-2">
                     <select
                       {...register(
-                        `packages.${pkgIndex}.features.${featureIndex}.is_present`
+                        `packages.${pkgIndex}.features.${featureIndex}.is_present`,
                       )}
                       className="w-full p-2 border rounded-md"
                     >
@@ -302,7 +300,7 @@ const PricingForm = () => {
                         `packages.${pkgIndex}.features.${featureIndex}.position`,
                         {
                           valueAsNumber: true,
-                        }
+                        },
                       )}
                       placeholder="Position"
                       className="w-full p-2 border rounded-md"
@@ -313,7 +311,7 @@ const PricingForm = () => {
                       type="checkbox"
                       id={`active-${pkgIndex}-${featureIndex}`}
                       {...register(
-                        `packages.${pkgIndex}.features.${featureIndex}.is_active`
+                        `packages.${pkgIndex}.features.${featureIndex}.is_active`,
                       )}
                       className="h-4 w-4 text-[#1FB5DD] rounded"
                     />

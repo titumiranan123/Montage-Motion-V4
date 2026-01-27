@@ -17,14 +17,7 @@ interface ITestimonial {
   message?: string;
   position?: number;
   category: "message" | "video_message";
-  type:
-    | "home"
-    | "shorts"
-    | "talkinghead"
-    | "podcast"
-    | "saas"
-    | "thumbnail"
-    | "about";
+  type: string;
 }
 const Testimonial = () => {
   const [isTestimonial, setTestimonial] = useState(false);
@@ -106,7 +99,8 @@ const Testimonial = () => {
   // Filter testimonials by type
   const filteredData = data?.filter(
     (item: any) =>
-      item.type === activeFilter.type && item.category === activeFilter.category
+      item.type === activeFilter.type &&
+      item.category === activeFilter.category,
   );
 
   return (
@@ -242,7 +236,7 @@ const Testimonial = () => {
                     setTestimonial={setTestimonial}
                     handleDelete={handleDelete}
                   />
-                )
+                ),
               )}
             </div>
           ) : (

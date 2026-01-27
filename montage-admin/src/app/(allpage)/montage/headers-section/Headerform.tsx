@@ -5,7 +5,7 @@ import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import ImageUploader from "@/component/ImageUploader";
 import { IPageHeader } from "./header.types";
 import VideoUploader from "./VideoUploader";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
 interface IHeaderFormProps {
   defaultValues?: IPageHeader;
@@ -80,7 +80,7 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
 
         <div>
           <label className="text-sm text-gray-300">Type</label>
-          <CategorySelectComponent
+          <ServiceTypeSelect
             onChange={(url) => {
               setValue("type", url);
             }}

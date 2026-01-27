@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProcessForm from "./Processform";
 import SingleProcess from "./SingleProcess";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceFilter } from "@/utils/Servicefilter";
 
 const Processwrapper = ({ data }: { data: any }) => {
   const router = useRouter();
@@ -42,7 +42,7 @@ const Processwrapper = ({ data }: { data: any }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <CategorySelectComponent />
+          <ServiceFilter slice={0} />
           {/* Add New Button */}
           <button
             onClick={() => {

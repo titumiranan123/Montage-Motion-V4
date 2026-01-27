@@ -112,11 +112,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   };
 
   return (
-    <div className="mt-2">
-      {title && <label className="text-sm text-gray-200 mb-2">{title}</label>}
+    <div className="max-w-[350px] w-full">
+      {title && <label className="text-sm text-gray-200 mb-4">{title}</label>}
 
       {isUploadingImage && (
-        <div className="mb-3">
+        <div className="mb-3 mt-3">
           <div className="flex justify-between text-sm text-gray-300 mb-1">
             <span>Uploading...</span>
             <span>{imageUploadProgress}%</span>
