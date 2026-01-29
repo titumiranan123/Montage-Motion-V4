@@ -1,160 +1,154 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React from "react";
-import Image from "next/image";
+import { Play } from "lucide-react";
+import React, { useRef, useState } from "react";
 
 interface MarqueeItem {
   image_url: string;
+  video_url: string;
   alt?: string;
 }
 
-const VerticalMarqueeColumn: React.FC<{
+interface VerticalMarqueeSliderProps {
   data: MarqueeItem[];
-  direction: "up" | "down";
-  speed: number;
-  showGradient: boolean;
-  gradientHeight: number;
-  gradientColor: string;
-}> = ({
+  speed?: number; // pixels per second
+  pauseOnHover?: boolean;
+}
+
+const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
   data,
-  direction,
-  speed,
-  showGradient,
-  gradientHeight,
-  gradientColor,
+  speed = 30,
+  pauseOnHover = true,
 }) => {
-  return (
-    <div className="relative h-full w-[171px] overflow-hidden group">
-      {/* Gradient overlays */}
-      {showGradient && (
-        <>
-          <div
-            className="absolute top-0 left-0 right-0 z-10 pointer-events-none"
-            style={{
-              height: `${gradientHeight}px`,
-              background: `linear-gradient(to bottom, ${gradientColor} 0%, transparent 100%)`,
-            }}
-          />
-          {/* <div
-            className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none"
-            style={{
-              height: `${gradientHeight}px`,
-              background:
-                "linear-gradient(161.24deg, rgba(0, 0, 0, 0) 24.82%, #000000 86.61%)",
-              backdropFilter: `blur(29.299999237060547px)`,
-            }}
-          /> */}
-        </>
-      )}
+  const [pausedColumns, setPausedColumns] = useState<Set<number>>(new Set());
 
-      {/* Scrolling content */}
-      <div
-        className="flex flex-col gap-5 group-hover:[animation-play-state:paused]"
-        style={{
-          animation: `scroll${
-            direction === "up" ? "Up" : "Down"
-          } ${speed}s linear infinite`,
-        }}
-      >
-        {/* Duplicate data for seamless loop */}
-        {[...data, ...data].map((item, idx) => (
-          <div key={idx} className="w-[171px] h-[228px] shrink-0">
-            <Image
-              src={item.image_url}
-              alt={item.alt || `Image ${idx + 1}`}
-              width={171}
-              height={228}
-              className="w-full h-full object-cover rounded-lg"
-              loading="lazy"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+  const togglePause = (columnIndex: number, isPaused: boolean) => {
+    setPausedColumns((prev) => {
+      const newSet = new Set(prev);
+      if (isPaused) {
+        newSet.add(columnIndex);
+      } else {
+        newSet.delete(columnIndex);
+      }
+      return newSet;
+    });
+  };
 
-const VerticalMarqueeSlider: React.FC<any> = ({ data, speed = 30 }) => {
   if (!data || data.length === 0) {
     return null;
   }
 
-  return (
-    <div className="w-full h-screen  overflow-hidden">
-      <div className="flex justify-center items-center gap-4  h-full relative">
-        <div className="gradient-overlay absolute z-10 bottom-0 right-0 w-full blur-2xl"></div>
-        <div className="gradient-overlay1 absolute z-10 top-0 right-0 w-full blur-2xl "></div>
+  // Calculate animation duration based on speed
+  const itemHeight = 228 + 20; // image height + gap
+  const animationDuration = (data.length * itemHeight) / speed;
 
-        <style>{`
-          .gradient-overlay {
-           
-            width: 100%;
-            height: 285px;
-            background: linear-gradient(161.24deg, rgba(0, 0, 0, 0) 4.82%, #000000 78.14%);
-           
+  const renderMarqueeColumn = (direction: "up" | "down", key: number) => {
+    const isColumnPaused = pausedColumns.has(key);
+    return (
+      <div
+        key={key}
+        className="relative h-[500px] overflow-hidden"
+        onMouseEnter={pauseOnHover ? () => togglePause(key, true) : undefined}
+        onMouseLeave={pauseOnHover ? () => togglePause(key, false) : undefined}
+      >
+        <div
+          className={`flex flex-col gap-5 ${isColumnPaused ? "animate-pause" : ""}`}
+          style={{
+            animation: `marquee-${direction} ${animationDuration}s linear infinite`,
+          }}
+        >
+          {/* Original items */}
+          {data.map((item, idx) => (
+            <div
+              key={`${key}-${idx}`}
+              className=" aspect-9/16 bg-black rounded-lg overflow-hidden"
+            >
+              <VideoPlayer src={item.video_url} />
+            </div>
+          ))}
+        </div>
+
+        <style jsx>{`
+          @keyframes marquee-up {
+            0% {
+              transform: translateY(0);
+            }
+            100% {
+              transform: translateY(-50%);
+            }
           }
-          .gradient-overlay1 {
-          
-            width: 100%;
-            height: 285px;
-            background: linear-gradient(161.24deg, rgba(0, 0, 0, 0) 4.82%, #000000 86.61%);
 
-            
+          @keyframes marquee-down {
+            0% {
+              transform: translateY(-50%);
+            }
+            100% {
+              transform: translateY(0);
+            }
+          }
+
+          .animate-pause {
+            animation-play-state: paused !important;
           }
         `}</style>
-
-        {/* First Column - Up */}
-        <VerticalMarqueeColumn
-          data={data}
-          direction="up"
-          speed={speed}
-          showGradient={true}
-          gradientHeight={150}
-          gradientColor="rgba(0, 0, 0, 0.9)"
-        />
-
-        {/* Second Column - Down */}
-        <VerticalMarqueeColumn
-          data={data}
-          direction="down"
-          speed={speed}
-          showGradient={true}
-          gradientHeight={150}
-          gradientColor="rgba(0, 0, 0, 1)"
-        />
-
-        {/* Third Column - Up */}
-        <VerticalMarqueeColumn
-          data={data}
-          direction="up"
-          speed={speed}
-          showGradient={true}
-          gradientHeight={150}
-          gradientColor="rgba(0, 0, 0, 0.9)"
-        />
       </div>
+    );
+  };
 
-      <style jsx>{`
-        @keyframes scrollUp {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(-50%);
-          }
-        }
+  return (
+    <div className=" flex gap-3 ">
+      {/* First Column - Up */}
+      {renderMarqueeColumn("up", 0)}
 
-        @keyframes scrollDown {
-          0% {
-            transform: translateY(-50%);
-          }
-          100% {
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+      {/* Second Column - Down */}
+      {renderMarqueeColumn("down", 1)}
+
+      {/* Third Column - Up */}
+      <div className="lg:block hidden">{renderMarqueeColumn("up", 2)}</div>
     </div>
   );
 };
 
 export default VerticalMarqueeSlider;
+
+function VideoPlayer({ src }: { src: string }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleVideoClick = () => {
+    handlePlayPause();
+  };
+
+  return (
+    <div className="relative w-full aspect-9/16  rounded-lg overflow-hidden">
+      <video
+        ref={videoRef}
+        src={src}
+        className="w-full h-full object-cover"
+        onClick={handleVideoClick}
+      />
+
+      {/* Play/Pause Icon - Center এ */}
+      <div
+        className="absolute inset-0 flex items-center justify-center cursor-pointer transition-opacity"
+        onClick={handleVideoClick}
+      >
+        <div
+          className={`transition-all w-[45px] h-8 bg-white/10 backdrop-blur-xs flex justify-center items-center rounded-lg ${isPlaying ? "opacity-0" : "opacity-100 hover:opacity-80"}`}
+        >
+          <Play size={21} className="text-white drop-shadow-lg fill-white" />
+        </div>
+      </div>
+    </div>
+  );
+}

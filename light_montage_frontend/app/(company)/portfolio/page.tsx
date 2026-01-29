@@ -1,27 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Portfoliotab from "./Portfoliotab";
 import { getPageSEO } from "@/component/share/getPageSEO";
-import ShortVideoPlayer from "@/component/home/ShortVideoPlayer";
 import Image from "next/image";
 import ContactSection from "@/component/share/ContactSection";
 import { Heading } from "@/component/share/Headering";
 import { getData } from "@/utils/getData";
-import FeaturePlayer from "@/component/home/FeaturePlayer";
+import VideoPlayer from "@/component/home/VideoPlayer";
 export async function generateMetadata() {
   return await getPageSEO("portfolio");
 }
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
-  const { search, cat } = await searchParams;
+  const category = await getData({ url: "api/website/service/type" });
+  const { cat } = await searchParams;
   const data = await getData({
-    url: `api/works/website?type=${
-      cat ? cat : "shortsreels-editing"
-    }&search=${search}`,
+    url: `api/works/website?type=${cat && cat !== "all" ? cat : "home"}`,
   });
 
-  const category = await getData({ url: "api/website/service/type" });
-
-  console.log(category);
-  // console.log(data);
+  console.log("data", data.data);
   return (
     <div className=" mt-4">
       <div className="portfoliobg container min-h-screen rounded-[42px]">
@@ -32,19 +27,12 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
           tag="Our Portfolio"
           width="160"
         />
-        <style>
-          {`
-            .portfoliobg {
-              background: linear-gradient(180deg, #EAF0F7 30.22%, #69CDE8 65.11%, #EAF0F7 100%);
 
-            }
-            
-            `}
-        </style>
         <Portfoliotab tab={cat} types={category?.data} />
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
           {data?.data?.map((work: any, idx: number) => {
-            if (work?.type === "shorts") {
+            console.log(work);
+            if (work?.type === "shortsreels-editing") {
               return (
                 <div
                   key={idx}
@@ -52,19 +40,20 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
                   data-aos-delay={100 + idx * 100}
                   className=""
                 >
-                  <ShortVideoPlayer
+                  <VideoPlayer
                     thumbnail={work?.thumbnail}
-                    videoUrl={work?.video_link}
+                    link={work?.video_link}
+                    className="aspect-9/16! "
                   />
                 </div>
               );
-            } else if (work.type === "thumbnail") {
+            } else if (work.video_link === "" || work.video_link === null) {
               return (
                 <div
                   data-aos="fade-up"
                   data-aos-delay={200 + idx * 100}
                   key={work.id || idx}
-                  className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[348px] w-full h-full max-h-[216px] rounded-[13px]"
+                  className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[410px] w-full h-full max-h-[308px] rounded-[13px]"
                 >
                   {/* Title */}
                   {work.title && (
@@ -93,13 +82,13 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
               return (
                 <div
                   key={idx}
-                  // data-aos="fade-up"
-                  // data-aos-delay={100 + idx * 100}
+                  data-aos="fade-up"
+                  data-aos-delay={100 + idx * 100}
                   className=" rounded-lg   overflow-hidden"
                 >
-                  <FeaturePlayer
+                  <VideoPlayer
                     thumbnail={work?.thumbnail}
-                    youtubeUrl={work?.video_link}
+                    link={work?.video_link}
                   />
                 </div>
               );
@@ -108,6 +97,14 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
         </div>
       </div>
       <ContactSection />
+      <style>
+        {`
+            .portfoliobg {
+              background: linear-gradient(180deg, #EAF0F7 30.22%, #69CDE8 65.11%, #EAF0F7 100%);
+
+            }
+          `}
+      </style>
     </div>
   );
 };

@@ -87,7 +87,7 @@ body {
 
 @layer components {
   .sectionarea {
-    @apply max-w-[1400px] mx-auto 2xl:p-[60px] p-5;
+    @apply max-w-[1400px] mx-auto 2xl:p-[60px] p-2.5;
   }
   .animated {
     @apply transition-all duration-300 ease-in-out;
@@ -97,6 +97,9 @@ body {
   }
   .sectionGap {
     @apply lg:mt-[120px] md:mt-20 mt-16;
+  }
+  .animated {
+    @apply transition-transform duration-200 ease-in-out;
   }
 }
 .pill {

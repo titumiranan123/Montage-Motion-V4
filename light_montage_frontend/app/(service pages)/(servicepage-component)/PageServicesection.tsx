@@ -18,20 +18,24 @@ const PageServicesection = ({ data }: { data: any }) => {
           <div key={idx} className="group  min-h-[500px]">
             <Gradientcard
               isHover={true}
-              borderClassName="max-w-[384px] mx-auto w-full max-h-[488px] h-full rounded-[24px] p-[1px] "
-              className="max-w-[384px] w-full max-h-[488px] h-full rounded-3xl  text-(--text-primary) flex justify-center items-start flex-col p-4 bg-[#F7F7F7]!"
+              borderClassName="max-w-[384px] mx-auto w-full max-h-[482px] h-full rounded-[24px] p-[1px] animated hover:scale-[102%]"
+              className="max-w-[384px] w-full max-h-[480px] h-full rounded-3xl  text-(--text-primary) flex  items-start flex-col p-4 bg-[#F7F7F7]!"
             >
-              <h2 className="text-[24px] font-semibold">{dt.service_title}</h2>
-              <p className="text-[16px] font-normal leading--[140%] text-(--text-primary)">
-                {dt.service_description}
-              </p>
+              <div>
+                <h2 className="text-[24px] font-semibold">
+                  {dt.service_title}
+                </h2>
+                <p className="text-[16px] font-normal leading-[140%] text-(--text-primary)">
+                  {dt.service_description}
+                </p>
+              </div>
               <Image
                 src={dt.image}
                 alt={dt.title}
                 width={344}
                 height={276}
                 priority
-                className="max-w-[344px] w-full max-h-[276px] h-full"
+                className="max-w-[344px] w-full max-h-[276px] h-full mt-12"
               />
             </Gradientcard>
           </div>

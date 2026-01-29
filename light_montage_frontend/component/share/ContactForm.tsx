@@ -57,7 +57,7 @@ const ContactForm: React.FC = () => {
 
   return (
     <form
-      className="w-full  flex flex-col gap-4 justify-center items-center md:p-6  p-2"
+      className="w-full  flex flex-col gap-4 justify-center items-center md:p-6  p-1 "
       onSubmit={handleSubmit}
     >
       <div className=" text-(--text-primary)  w-full flex flex-col gap-2 ">

@@ -7,7 +7,7 @@ import React, { useState } from "react";
 const OurTeam = ({ members }: any) => {
   const [index, setIndex] = useState(6);
   return (
-    <div className="container teambg rounded-[42px] py-[60px] sectionGap">
+    <div className="sectionarea teambg rounded-[42px]  sectionGap">
       <style>
         {`
         .teambg {
@@ -26,7 +26,7 @@ const OurTeam = ({ members }: any) => {
         {members?.slice(0, index)?.map((member: any, idx: number) => {
           return (
             <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
-              <div className="max-w-[410px] mx-auto h-[530px] w-full rounded-2xl py-6 px-5 flex flex-col justify-center items-center glassShadow bg-white/40 backdrop-blur-2xl">
+              <div className="max-w-[410px] mx-auto h-[530px] w-full rounded-2xl md:py-6 md:px-5 py-3 px-1 flex flex-col justify-center items-center glassShadow bg-white/40 backdrop-blur-2xl">
                 <Image
                   src={member?.photourl}
                   alt={member?.name}

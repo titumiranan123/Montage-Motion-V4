@@ -1,11 +1,10 @@
 import Image from "next/image";
-import React from "react";
 import ContactForm from "./ContactForm";
 import { Heading } from "../share/Headering";
 
 const ContactSection = () => {
   return (
-    <div className="sectionarea contactbg sectionGap  p-[60px] rounded-[40px]">
+    <div className="sectionarea contactbg sectionGap   rounded-[40px]">
       <style>{`
       .contactbg{
         background: linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
@@ -50,7 +49,7 @@ user-first experiences."
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
             >
-              <div className="contact-card flex justify-between items-center text-(--text-primary)  max-w-[622px] w-full h-[139px] rounded-3xl glassShadow  bg-white/40  backdrop-blur-2xl animated hover:scale-[104%] px-5 py-6">
+              <div className="contact-card flex justify-between items-center text-(--text-primary)  max-w-[622px] w-full h-[139px] rounded-3xl glassShadow  bg-white/40  backdrop-blur-2xl animated hover:scale-[104%] md:px-5 md:py-6 px-1 py-1">
                 <div>
                   <h3 className="text-[20px] md:text-[24px] md:leading-[30px] font-semibold poppins">
                     {item.title}
@@ -70,10 +69,12 @@ user-first experiences."
             </div>
           ))}
         </div>
-        <div data-aos="fade-up" data-aos-delay={400}>
-          <div className="contact-card flex justify-between items-center  text-(--text-primary)  max-w-[622px] glassShadow  bg-white/40  backdrop-blur-2xl w-full h-[604px] rounded-3xl ">
-            <ContactForm />
-          </div>
+        <div
+          // data-aos="fade-up"
+          // data-aos-delay={400}
+          className=" flex justify-between items-center  text-(--text-primary)  max-w-[622px] glassShadow  bg-white/40  backdrop-blur-sm w-full h-[604px] rounded-3xl "
+        >
+          <ContactForm />
         </div>
       </div>
     </div>

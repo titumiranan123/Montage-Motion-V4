@@ -8,7 +8,7 @@ type TabItem = {
   id: string;
   title: string;
   description: string;
-  offer: { points: string[] };
+  offer_points: string[];
   cta: { label: string; link: string };
   image: string;
 };
@@ -31,7 +31,7 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
       };
       actions[e.key as keyof typeof actions]?.();
     },
-    [tabs.length]
+    [tabs.length],
   );
 
   const activeTabData = tabs[activeTab];
@@ -88,7 +88,7 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
                 </p>
 
                 <ul className="space-y-2 text-sm md:text-base opensans">
-                  {activeTabData.offer.points.map((point, index) => (
+                  {activeTabData.offer_points.map((point, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <CircleCheck />
                       <span className="opacity-90">{point}</span>

@@ -34,15 +34,13 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-  console.log("data", data.data);
+  console.log(data?.data?.service[0].services);
   return (
     <div className="min-h-screen text-black mt-4 ">
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
-      {data?.data?.home_hero && (
-        <PageHomeHero data={data?.data?.home_hero?.[0]} />
-      )}
+      {data?.data?.home_hero && <PageHomeHero data={data?.data?.home_hero} />}
       {data?.data?.podcast_hero && (
-        <PodacstHeader data={data?.data?.podcast_hero?.[0]} />
+        <PodacstHeader data={data?.data?.podcast_hero} />
       )}
       {data?.data?.our_clients && (
         <PartnersSection data={data?.data?.our_clients} />
@@ -57,16 +55,16 @@ const ServicePage = async ({
         <PageServicesection data={data?.data?.service?.[0]} />
       )}
       {data?.data?.pricing && <PagePricing pricing={data?.data?.pricing} />}
-      {data?.data?.process && <PageProcesssection data={data?.data?.process} />}
-      {data?.data?.whychooseus && (
-        <PageWhychooseus data={data?.data?.whychooseus ?? []} />
-      )}
       {data?.data?.process && (
         <ServicepageTestimonial
           data={data?.data?.testimonial}
           title="What Our Clients Say"
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
         />
+      )}
+      {data?.data?.process && <PageProcesssection data={data?.data?.process} />}
+      {data?.data?.whychooseus && (
+        <PageWhychooseus data={data?.data?.whychooseus ?? []} />
       )}
 
       {slug === "podcast-editing-service" && (

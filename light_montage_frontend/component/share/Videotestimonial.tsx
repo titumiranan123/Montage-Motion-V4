@@ -44,7 +44,7 @@ const TestimonialVideocard = ({
               />
             </div>
           }
-          src={testimonial.video_message}
+          url={testimonial.video_message}
           height={"100%"}
           width={"100%"}
           controls

@@ -14,7 +14,7 @@ const HeroVideoPlayer = ({
     <div className="lg:rounded-[40px] rounded-[20px] xl:w-7xl lg:w-[958px] sm:w-150 w-[320px] h-full overflow-hidden aspect-video relative bg-black ">
       <ReactPlayer
         light={thumbnail}
-        src={video_url}
+        url={video_url}
         playing={isPlaying}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
