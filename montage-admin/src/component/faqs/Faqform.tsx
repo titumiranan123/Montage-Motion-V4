@@ -3,26 +3,21 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { FaPlus, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { useEffect } from "react";
 import { IFaqItem, IFaqSection } from "@/interface/interface";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
+import ImageUploader from "../ImageUploader";
 
 interface FaqFormProps {
   initialData?: IFaqSection;
   onSubmit: (data: IFaqSection) => Promise<void>;
   onCancel: () => void;
-  isLoading?: boolean;
 }
 
-export const FaqForm = ({
-  initialData,
-  onSubmit,
-  onCancel,
-  isLoading,
-}: FaqFormProps) => {
+export const FaqForm = ({ initialData, onSubmit, onCancel }: FaqFormProps) => {
   const {
     control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     watch,
     setValue,
     reset,
@@ -85,21 +80,26 @@ export const FaqForm = ({
     >
       {/* Section Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="text-sm text-gray-300">Section Tag*</label>
-          <CategorySelectComponent
-            value={watch("section_tag")}
-            onChange={(v) => setValue("section_tag", v)}
+        <div className="flex flex-col space-y-3">
+          <label className="text-sm text-gray-300">Page Type*</label>
+          <ServiceTypeSelect
+            value={watch("type")}
+            onChange={(v) => setValue("type", v)}
           />
         </div>
 
-        <div>
-          <label className="block text-sm text-gray-300 mb-1">
-            Section Title*
-          </label>
+        <div className="flex flex-col space-y-3">
+          <label className=" text-sm text-gray-300 ">Section Tag *</label>
+          <input
+            {...register("section_tag", { required: "Required" })}
+            className="w-full p-2 rounded-md text-white border border-slate-400"
+          />
+        </div>
+        <div className="flex flex-col space-y-3 col-span-2">
+          <label className=" text-sm text-gray-300 ">Section Title *</label>
           <input
             {...register("section_title", { required: "Required" })}
-            className="w-full p-2 rounded-md text-black"
+            className="w-full p-2 rounded-md text-white border border-slate-400"
           />
         </div>
 
@@ -109,17 +109,61 @@ export const FaqForm = ({
           </label>
           <textarea
             {...register("section_description", { required: "Required" })}
-            className="w-full p-2 rounded-md text-black min-h-[80px]"
+            className="w-full p-2 rounded-md text-white border border-slate-400 min-h-[120px]"
           />
         </div>
-
+        {/* contact information  */}
+        <div className="col-span-2 text-2xl">Contact Information</div>
         <div>
           <label className="block text-sm text-gray-300 mb-1">
             Contact Heading*
           </label>
           <input
             {...register("contact_heading", { required: "Required" })}
-            className="w-full p-2 rounded-md text-black"
+            className="w-full p-2 rounded-md text-white border border-slate-400"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-gray-300 mb-1">
+            Contact Description *
+          </label>
+          <input
+            {...register("contact_description", { required: "Required" })}
+            className="w-full p-2 rounded-md text-white border border-slate-400"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-gray-300 mb-1">Name *</label>
+          <input
+            {...register("contact_name", { required: "Required" })}
+            className="w-full p-2 rounded-md text-white border border-slate-400"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-gray-300 mb-1">
+            Designation *
+          </label>
+          <input
+            {...register("contact_position", { required: "Required" })}
+            className="w-full p-2 rounded-md text-white border border-slate-400"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-gray-300 mb-1">
+            Contact Link *
+          </label>
+          <input
+            {...register("contact_link", { required: "Required" })}
+            className="w-full p-2 rounded-md text-white border border-slate-400"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-gray-300 mb-1">
+            Contact Alt *
+          </label>
+          <input
+            {...register("contact_alt", { required: "Required" })}
+            className="w-full p-2 rounded-md text-white border border-slate-400"
           />
         </div>
 
@@ -127,9 +171,9 @@ export const FaqForm = ({
           <label className="block text-sm text-gray-300 mb-1">
             Contact Image*
           </label>
-          <input
-            {...register("contact_image", { required: "Required" })}
-            className="w-full p-2 rounded-md text-black"
+          <ImageUploader
+            value={watch("contact_image")}
+            onChange={(url) => setValue(`contact_image`, url)}
           />
         </div>
       </div>
@@ -138,13 +182,6 @@ export const FaqForm = ({
       <div className="mt-8">
         <div className="flex justify-between mb-4">
           <h3 className="text-lg text-gray-300">FAQ Items</h3>
-          <button
-            type="button"
-            onClick={addFaqItem}
-            className="flex items-center bg-[#1FB5DD] px-3 py-2 rounded-md"
-          >
-            <FaPlus className="mr-2" /> Add Item
-          </button>
         </div>
 
         {fields.map((field, index) => (
@@ -170,13 +207,13 @@ export const FaqForm = ({
             <input
               {...register(`faqs.${index}.question`, { required: true })}
               placeholder="Question"
-              className="w-full p-2 rounded-md text-black mb-2"
+              className="w-full p-2 rounded-md text-white border border-slate-400 mb-2"
             />
 
             <textarea
               {...register(`faqs.${index}.answer`, { required: true })}
               placeholder="Answer"
-              className="w-full p-2 rounded-md text-black min-h-[80px]"
+              className="w-full p-2 rounded-md text-white border border-slate-400 min-h-[80px]"
             />
 
             <div className="mt-2 flex items-center">
@@ -189,6 +226,13 @@ export const FaqForm = ({
             </div>
           </div>
         ))}
+        <button
+          type="button"
+          onClick={addFaqItem}
+          className="flex items-center bg-[#1FB5DD] px-3 py-2 rounded-md"
+        >
+          <FaPlus className="mr-2" /> Add Item
+        </button>
       </div>
 
       {/* Actions */}
@@ -202,10 +246,36 @@ export const FaqForm = ({
         </button>
         <button
           type="submit"
-          disabled={isLoading}
-          className="px-4 py-2 bg-[#1FB5DD] rounded-md"
+          disabled={isSubmitting}
+          className="px-4 py-2 flex items-center gap-3 justify-center w-44 bg-[#1FB5DD] rounded-md disabled:cursor-not-allowed"
         >
-          {isLoading ? "Saving..." : "Save"}
+          {isSubmitting ? (
+            <>
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Saving ...
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </div>
     </form>

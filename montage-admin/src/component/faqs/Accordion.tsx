@@ -1,7 +1,6 @@
 "use client";
 import { api_url } from "@/hook/Apiurl";
 import useFaq from "@/hook/useFaq";
-import { faqitem } from "@/interface/interface";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -10,7 +9,7 @@ import Swal from "sweetalert2";
 
 interface AccordionProp {
   index: number;
-  item: faqitem;
+  item: any;
 }
 
 const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
@@ -23,7 +22,7 @@ const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<faqitem>({
+  } = useForm<any>({
     defaultValues: {
       id: item.id,
       faq_id: item.faq_id,
@@ -41,17 +40,17 @@ const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
 
   const handleDelete = async () => {
     const result = await Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     });
-  
+
     if (!result.isConfirmed) return;
-  
+
     try {
       await api_url.delete(`/api/faqitem/${item.id}`);
       await refetch();
@@ -66,15 +65,14 @@ const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
     setIsEditModalOpen(true);
   };
 
-  const onSubmit = async (data: faqitem) => {
+  const onSubmit = async (data: any) => {
     try {
       await api_url.patch(`/api/faqitem/${item.id}`, data);
       setIsEditModalOpen(false);
-      refetch()
-      reset()
+      refetch();
+      reset();
       toast.success("FAQ updated successfully");
     } catch (error) {
-
       toast.error("Update failed");
     }
   };
@@ -158,7 +156,7 @@ const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
               {/* Question Field */}
               <div className="mb-4">
                 <label className="block text-white mb-2" htmlFor="question">
-                  Question*
+                  Question *
                 </label>
                 <input
                   id="question"
@@ -167,11 +165,6 @@ const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
                     required: "Question is required",
                   })}
                 />
-                {errors.question && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {errors.question.message}
-                  </p>
-                )}
               </div>
 
               {/* Answer Field */}
@@ -184,11 +177,6 @@ const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
                   className="w-full p-2 rounded bg-[#333] text-white min-h-[100px]"
                   {...register("answer", { required: "Answer is required" })}
                 />
-                {errors.answer && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {errors.answer.message}
-                  </p>
-                )}
               </div>
 
               {/* Visibility Toggle */}
@@ -203,8 +191,6 @@ const Accordion: React.FC<AccordionProp> = ({ item, index }) => {
                   Visible to users
                 </label>
               </div>
-
-             
 
               {/* Form Actions */}
               <div className="flex justify-end gap-3">

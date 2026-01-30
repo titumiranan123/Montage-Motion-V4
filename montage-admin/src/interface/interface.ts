@@ -75,7 +75,7 @@ export interface IFaqItem {
 
 export interface IFaqSection {
   id?: string;
-
+  type: string;
   section_tag: string;
   section_title: string;
   section_description: string;

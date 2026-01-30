@@ -36,7 +36,7 @@ const Sitemapform = ({ data }: { data: any }) => {
       console.log(JSON.stringify(data.sitemap_xml));
       const res = await api_url.post(
         "/api/sitemap",
-        { sitemap_xml: data.sitemap_xml }
+        { sitemap_xml: data.sitemap_xml },
         // JSON.stringify(data.sitemap_xml)
       );
 
@@ -51,8 +51,8 @@ const Sitemapform = ({ data }: { data: any }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold bg-gradient-to-r from-[#1FB5DD] to-[#4FFFD0] bg-clip-text text-transparent mb-8 tracking-tight">
+    <div className="max-w-4xl bg-[#0A0A0A] rounded-lg mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold bg-[#1FB5DD] bg-clip-text text-transparent mb-8 tracking-tight">
         Sitemap.xml Editor
       </h1>
 
@@ -95,7 +95,7 @@ const Sitemapform = ({ data }: { data: any }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 rounded-full bg-gradient-to-r from-[#1FB5DD] to-[#4FFFD0] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
+            className={`w-full py-3 rounded-full bg-[#1FB5DD] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
               isSubmitting ? "animate-pulse" : ""
             }`}
           >

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { getDataCategory } from "./getCategory";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const ServiceFilter = ({ slice = 0 }: { slice: number }) => {
+export const ServiceFilter = ({ slice = 0 }: { slice?: number }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 

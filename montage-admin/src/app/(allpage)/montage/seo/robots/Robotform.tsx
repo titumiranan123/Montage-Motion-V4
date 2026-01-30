@@ -45,17 +45,14 @@ const RobotsTxtForm = ({ data }: any) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold bg-gradient-to-r from-[#1FB5DD] to-[#4FFFD0] bg-clip-text text-transparent mb-8 tracking-tight">
+    <div className="max-w-4xl bg-[#0A0A0A] rounded-lg mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold bg-[#1FB5DD]  bg-clip-text text-transparent mb-8 tracking-tight">
         Robots.txt Editor
       </h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         {/* Robots.txt Editor */}
         <div>
-          <label className="block text-sm font-semibold text-gray-200 mb-2">
-            Robots.txt Content
-          </label>
           <Controller
             name="robots_txt"
             control={control}
@@ -88,7 +85,7 @@ const RobotsTxtForm = ({ data }: any) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 rounded-full bg-gradient-to-r from-[#1FB5DD] to-[#4FFFD0] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
+            className={`w-full py-3 rounded-full bg-[#1FB5DD] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
               isSubmitting ? "animate-pulse" : ""
             }`}
           >

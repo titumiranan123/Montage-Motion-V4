@@ -128,6 +128,21 @@ export default function MainLayout({
           icon: <FiBriefcase />,
         },
         {
+          href: "/montage/comparison",
+          label: "Comparision",
+          icon: <FiBriefcase />,
+        },
+        {
+          href: "/montage/industries",
+          label: "Industries",
+          icon: <FiBriefcase />,
+        },
+        {
+          href: "/montage/faqs",
+          label: "Faq Section",
+          icon: <FiBriefcase />,
+        },
+        {
           href: "/montage/blogs",
           label: "Blogs",
           icon: <FiBriefcase />,

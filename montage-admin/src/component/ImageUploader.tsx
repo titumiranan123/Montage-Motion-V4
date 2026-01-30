@@ -11,12 +11,15 @@ interface ImageUploaderProps {
   value?: string;
   onChange: (url: string) => void;
   title?: string;
+  className?: string;
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
   value,
   onChange,
   title,
+
+  className,
 }) => {
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
@@ -129,40 +132,43 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           </div>
         </div>
       )}
-
-      {value ? (
-        <div className="relative w-[350px] h-[250px] border rounded-md overflow-hidden">
-          <Image
-            src={value}
-            width={350}
-            height={250}
-            className="object-cover"
-            alt="preview"
-          />
-          <div className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full cursor-pointer">
-            <FiTrash2
-              onClick={() => {
-                deleteImage(value);
-              }}
-              size={14}
+      <div className={`w-full h-full`}>
+        {value ? (
+          <div className="relative w-full h-full py-4   overflow-hidden">
+            <Image
+              src={value}
+              width={350}
+              height={250}
+              className="object-cover"
+              alt="preview"
             />
+            <div className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full cursor-pointer">
+              <FiTrash2
+                onClick={() => {
+                  deleteImage(value);
+                }}
+                size={14}
+              />
+            </div>
           </div>
-        </div>
-      ) : (
-        <label className="cursor-pointer">
-          <div className="flex flex-col items-center justify-center border-2 border-gray-600 border-dashed w-[350px] h-[250px] bg-gray-950 rounded-md">
-            <FiUpload size={24} className="text-gray-400 mb-2" />
-            <p className="text-gray-300">Click to upload image</p>
-          </div>
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleImageUpload}
-            disabled={isUploadingImage}
-          />
-        </label>
-      )}
+        ) : (
+          <label className={``}>
+            <div
+              className={`${className} w-[350px] h-[250px] flex flex-col items-center justify-center border-2 border-gray-600 border-dashed  bg-gray-950 rounded-md`}
+            >
+              <FiUpload size={24} className="text-gray-400 mb-2" />
+              <p className="text-gray-300">Click to upload image</p>
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+              disabled={isUploadingImage}
+            />
+          </label>
+        )}
+      </div>
     </div>
   );
 };

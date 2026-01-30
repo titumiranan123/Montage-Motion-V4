@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import ServiceForm from "./Serviceform";
 import SingleService from "./SingleService";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CategorySelectComponent } from "@/utils/CategorySelectComponent";
-import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { ServiceFilter } from "@/utils/Servicefilter";
 
 const Servicewrapper = ({ data, page }: { data: any; page: string }) => {
@@ -46,7 +44,7 @@ const Servicewrapper = ({ data, page }: { data: any; page: string }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <ServiceFilter value={page} />
+          <ServiceFilter />
           {/* Add New Button */}
           <button
             onClick={() => {

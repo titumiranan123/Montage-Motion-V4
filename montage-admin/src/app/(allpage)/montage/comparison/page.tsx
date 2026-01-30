@@ -1,15 +1,22 @@
-"use client";
+import { getData } from "@/utils/getDate";
+import ComparisonForm from "./ComparisonForm";
+import ComparisonWrapper from "./ComparisonWrapper";
 
-import EditableComparisonColumn from "./EditableComparisonColum";
+export default async function ComparisonPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page: string }>;
+}) {
+  const { page } = await searchParams;
 
-export default function ComparisonPage() {
-  const handleSave = (data: any) => {
-    console.log("Saved:", data);
-  };
-
+  const data = await getData({ slug: `comparison?page=${page ?? "home"}` });
+  // console.log(
+  //   data?.columns?.[2].entries.filter((en) => en.entry_type === "item"),
+  // );
+  // console.log(data?.columns);
   return (
-    <div className="flex flex-wrap gap-6 justify-center">
-      <EditableComparisonColumn />
+    <div className="w-full">
+      <ComparisonWrapper data={data} />
     </div>
   );
 }

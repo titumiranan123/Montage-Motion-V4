@@ -96,7 +96,7 @@ const Workform: React.FC<IWorkFormProps> = ({
         </div> */}
 
         {/* Type */}
-        <div className="space-y-2">
+        <div className="space-y-2 ">
           <label className="block text-sm font-medium text-gray-300">
             Type <span className="text-red-500">*</span>
           </label>

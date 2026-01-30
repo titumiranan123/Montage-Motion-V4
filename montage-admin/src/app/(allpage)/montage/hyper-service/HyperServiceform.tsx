@@ -291,7 +291,7 @@ const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {SECTION_NAMES.map((section) => {
                     const isChecked = currentSections.some(
-                      (s) => s.section_name === section
+                      (s) => s.section_name === section,
                     );
 
                     return (
@@ -307,7 +307,7 @@ const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
                             if (e.target.checked) {
                               if (group) {
                                 updated = updated.filter(
-                                  (s) => !group.includes(s.section_name)
+                                  (s) => !group.includes(s.section_name),
                                 );
                               }
                               updated.push({
@@ -316,13 +316,13 @@ const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
                               });
                             } else {
                               updated = updated.filter(
-                                (s) => s.section_name !== section
+                                (s) => s.section_name !== section,
                               );
                             }
 
                             setValue(
                               `services.${index}.available_section`,
-                              updated
+                              updated,
                             );
                           }}
                         />
@@ -364,11 +364,37 @@ const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
         </button>
 
         <button
-          disabled={isSubmitting}
           type="submit"
-          className="w-full cursor-pointer disabled:cursor-no-drop bg-[#1E9ED2] py-3 rounded-lg disabled:bg-slate-400 "
+          disabled={isSubmitting}
+          className="px-4 py-2 flex items-center gap-3 justify-center w-full bg-[#1FB5DD] rounded-md disabled:cursor-not-allowed"
         >
-          Submit
+          {isSubmitting ? (
+            <>
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Saving ...
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </div>

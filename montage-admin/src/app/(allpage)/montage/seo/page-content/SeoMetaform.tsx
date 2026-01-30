@@ -58,7 +58,6 @@ interface SeoMetaFormProps {
 }
 
 const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
-  console.log(initialData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
@@ -98,18 +97,11 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
       setValue("meta_robots", initialData.meta_robots ?? "index, follow"); // default applied
       setValue(
         "twitter_card_type",
-        initialData.twitter_card_type ?? "summary_large_image"
+        initialData.twitter_card_type ?? "summary_large_image",
       );
       setValue("schema", initialData.schema ?? "");
     }
   }, [initialData]);
-
-  const [titleLength, setTitleLength] = useState(
-    initialData?.meta_title?.length || 0
-  );
-  const [descLength, setDescLength] = useState(
-    initialData?.meta_description?.length || 0
-  );
 
   const pageOptions: SeoMeta["page_name"][] = [
     "home",
@@ -176,7 +168,7 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
   };
   return (
     <div
-      className={`max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 ${inter.className}`}
+      className={`max-w-4xl bg-[#0A0A0A] rounded-xl mx-auto py-12 px-4 sm:px-6 lg:px-8 ${inter.className}`}
     >
       <h1 className="text-3xl font-bold bg-gradient-to-r from-[#1FB5DD] to-[#4FFFD0] bg-clip-text text-transparent mb-8 tracking-tight">
         Page SEO Content Editor
@@ -249,7 +241,6 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
             {...register("meta_title", {
               required: "Meta title is required",
             })}
-            onChange={(e) => setTitleLength(e.target.value.length)}
             className="w-full p-3 bg-[#0D0D0D] border border-[#1FB5DD]/40 text-gray-200 rounded-xl focus:ring-4 focus:ring-[#4FFFD0]/40 transition"
             placeholder="Enter meta title (max 60 characters)"
           />
@@ -273,7 +264,6 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
             {...register("meta_description", {
               required: "Meta description is required",
             })}
-            onChange={(e) => setDescLength(e.target.value.length)}
             className="w-full p-3 bg-[#0D0D0D] border border-[#1FB5DD]/40 text-gray-200 rounded-xl focus:ring-4 focus:ring-[#4FFFD0]/40 transition resize-y"
             placeholder="Enter meta description (max 160 characters)"
           />

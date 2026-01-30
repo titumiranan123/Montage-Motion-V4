@@ -16,6 +16,10 @@
 .btn-action {
   @apply hover:scale-[102%] transition-transform duration-200 active:scale-95 disabled:cursor-not-allowed;
 }
+.btn-color {
+  background: linear-gradient(180deg, #1fb5dd 0%, #2b6ab2 100%);
+  color: white !important;
+}
 h1 {
   background: linear-gradient(90deg, #ffffff 0%, #ffffff 49.89%, #1fb5dd 100%);
   background-clip: text;
