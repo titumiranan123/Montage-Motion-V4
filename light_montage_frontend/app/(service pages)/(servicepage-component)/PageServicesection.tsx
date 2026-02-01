@@ -1,13 +1,12 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import Image from "next/image";
 import { Heading } from "@/component/share/Headering";
 import Gradientcard from "@/component/share/Gradientcard";
 
 const PageServicesection = ({ data }: { data: any }) => {
   return (
-    <div className="container sectionGap">
+    <div className="sectionarea sectionGap">
       <Heading
         subtitle={data?.paragraph}
         title={data?.heading_part1}

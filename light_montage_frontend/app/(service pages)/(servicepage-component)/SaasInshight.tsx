@@ -4,7 +4,7 @@ import React from "react";
 
 const SaasInshight = () => {
   return (
-    <div className="saasinsight sectionarea sectionGap rounded-[40px] p-[60px]">
+    <div className="saasinsight sectionarea sectionGap rounded-[40px] ">
       <style>
         {`
         .saasinsight {
@@ -54,8 +54,8 @@ const SaasInshight = () => {
             </button>
             <Link
               href={"/portfolio"}
-              // data-aos="fade-up"
-              // data-aos-delay={600}
+              data-aos="fade-up"
+              data-aos-delay={600}
               style={{}}
               className="md:w-[155px] w-full h-12 btn-secondary text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium  bg-white/40 backdrop-blur-[21px] glassShadow"
             >

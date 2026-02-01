@@ -33,7 +33,6 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
     try {
       const res = await api_url.post("/api/contacts", formData);
-      console.log(res);
       if (res.status === 201 || res.status === 200) {
         toast.success("Message sent successfully!");
 
@@ -50,7 +49,6 @@ const ContactForm: React.FC = () => {
         error?.response?.data?.errorDetails?.[0].message ??
           "Failed to sent message !",
       );
-      console.log(error?.response?.data?.errorDetails?.[0].message);
     }
     // Reset form if needed
   };

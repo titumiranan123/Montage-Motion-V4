@@ -43,14 +43,19 @@ const ServicepageTestimonial: React.FC<TestimonialSectionProps> = ({
     data?.filter((item: any) => item.category === "message") || [];
 
   return (
-    <div className="container testimonialbg rounded-[40px]    sectionGap">
+    <div className="sectionarea testimonialbg rounded-[40px]    sectionGap">
       <div className=" py-[60px]">
         <style>{`
       .testimonialbg {
         background:   linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
       }
       `}</style>
-        <Heading subtitle={description} tag="Testimonials" title={title} />
+        <Heading
+          subtitle={description}
+          tag="Testimonials"
+          title={title}
+          width="160"
+        />
 
         <div className="w-full mx-auto mt-10 lg:mt-16 ">
           <Marquee

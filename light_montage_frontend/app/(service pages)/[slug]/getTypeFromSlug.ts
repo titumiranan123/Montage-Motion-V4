@@ -1,3 +1,5 @@
+import { getData } from "@/utils/getData";
+
 interface ServiceTypeItem {
   href: string;
   service_type: string;
@@ -12,17 +14,9 @@ export const getTypeFromSlug = async (slug: string): Promise<string | null> => {
   if (!slug) return null;
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/website/service/type`,
-      { cache: "no-store" } // optional: avoids stale data in Next.js
-    );
-
-    if (!res.ok) {
-      console.error("Failed to fetch service types:", res.status);
-      return null;
-    }
-
-    const result: ServiceTypeResponse = await res.json();
+    const result: ServiceTypeResponse = await getData({
+      url: `api/website/service/type`,
+    });
 
     const matchedType = result?.data?.find((item) => item.href === slug);
 

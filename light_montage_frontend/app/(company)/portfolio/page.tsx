@@ -16,7 +16,6 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
     url: `api/works/website?type=${cat && cat !== "all" ? cat : "home"}`,
   });
 
-  console.log("data", data.data);
   return (
     <div className=" mt-4">
       <div className="portfoliobg container min-h-screen rounded-[42px]">
@@ -31,7 +30,6 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
         <Portfoliotab tab={cat} types={category?.data} />
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
           {data?.data?.map((work: any, idx: number) => {
-            console.log(work);
             if (work?.type === "shortsreels-editing") {
               return (
                 <div

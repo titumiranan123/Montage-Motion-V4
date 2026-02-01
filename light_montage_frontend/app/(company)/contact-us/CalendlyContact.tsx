@@ -11,6 +11,7 @@ const CalendlyContact = () => {
         tag="Book a Call"
         title="Your Next Step"
         extratitle="Starts Here"
+        width="160"
       />
 
       <div

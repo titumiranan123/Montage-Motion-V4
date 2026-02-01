@@ -5,7 +5,7 @@ import React from "react";
 
 const PageContactsections = () => {
   return (
-    <div className="sectionArea contactbg sectionGap   rounded-[40px]">
+    <div className="sectionarea contactbg sectionGap   rounded-[40px]">
       <style>{`
       .contactbg{
         background: linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
@@ -18,6 +18,7 @@ const PageContactsections = () => {
 user-first experiences."
         tag="Contact Us"
         isbackground={true}
+        width="160"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
         <div className="flex flex-col gap-4 w-full justify-center items-center mx-auto">

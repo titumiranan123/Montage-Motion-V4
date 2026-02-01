@@ -7,22 +7,17 @@ export async function getPageSEO(slug: string): Promise<Metadata> {
   };
 
   const apiURL = process.env.NEXT_PUBLIC_API_URL;
-  if (!apiURL) {
-    console.error("NEXT_PUBLIC_API_URL is not set!");
-    return defaultSEO;
-  }
+  if (!apiURL) return defaultSEO;
 
   try {
-    const res = await fetch(`${apiURL}/api/seo/${slug}`, { cache: "no-store" });
+    const res = await fetch(`${apiURL}/api/seo/${slug}`, {
+      next: { revalidate: 1 },
+    });
 
-    if (!res.ok) {
-      console.error("SEO API returned status:", res.status);
-      return defaultSEO;
-    }
+    if (!res.ok) return defaultSEO;
 
     const data = await res.json();
     const seo = data?.data;
-
     if (!seo) return defaultSEO;
 
     return {
@@ -56,8 +51,7 @@ export async function getPageSEO(slug: string): Promise<Metadata> {
       },
       robots: seo.meta_robots || "index, follow",
     };
-  } catch (error) {
-    console.error("SEO fetch failed:", error);
+  } catch {
     return defaultSEO;
   }
 }

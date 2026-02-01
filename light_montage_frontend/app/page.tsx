@@ -6,8 +6,8 @@ import ComparisonCards from "@/component/home/PriceComparison";
 import ServiceSections from "@/component/home/ServiceSections";
 import WhyChooseUs from "@/component/home/WhyChooseUs";
 import ContactSection from "@/component/share/ContactSection";
-import FaqSection from "@/component/share/FaqSection";
 import { getPageSEO } from "@/component/share/getPageSEO";
+import HomeFaqSection from "@/component/share/HomeFaqSection";
 import IndustryWeWork from "@/component/share/IndustryWork";
 import TestimonialSection from "@/component/share/Testimonial";
 import { getData } from "@/utils/getData";
@@ -17,20 +17,19 @@ export async function generateMetadata() {
 const HomePage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ tab: string }>;
+  searchParams: Promise<{ cat: string }>;
 }) => {
   const { data } = await getData({
-    url: `api/website/data?type=home&table=brand,services,process,whychooseus`,
+    url: `api/website/data?type=home&table=brand,services,process,whychooseus,industries,comparision,faq`,
   });
-
-  const { tab } = await searchParams;
+  const { cat } = await searchParams;
   return (
     <div className="lg:mt-4">
       <div className="headerbg lg:rounded-[40px] rounded-lg max-w-[1440px] px-2 2xl:px-[60px] mx-auto mb-10">
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />
-      <OurFeatureProject tab={tab ?? []} />
+      <OurFeatureProject tab={cat ?? []} />
       <ServiceSections data={data?.services ?? []} />
       <TestimonialSection
         title="What Our Clients Say"
@@ -38,10 +37,10 @@ const HomePage = async ({
         data={data?.testimonial ?? []}
       />
       <OurProcess data={data?.process ?? []} />
-      <ComparisonCards />
-      <IndustryWeWork />
+      <ComparisonCards data={data?.comparision} />
+      <IndustryWeWork data={data?.industries} />
       <WhyChooseUs data={data?.whychooseus ?? []} />
-      <FaqSection />
+      <HomeFaqSection data={data?.faq} />
       <ContactSection />
     </div>
   );

@@ -4,13 +4,12 @@ import JobPost from "./JobPost";
 import CareersHeader from "./CareersHeader";
 import { getPageSEO } from "@/component/share/getPageSEO";
 import OurStory from "../about-us/OurStory";
+import { getData } from "@/utils/getData";
 export async function generateMetadata() {
   return await getPageSEO("career");
 }
 const Careers = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobpost`);
-  const data = await res.json();
-  // console.log();
+  const data = await getData({ url: `api/jobpost` });
   return (
     <div className="mt-5 ">
       <CareersHeader />

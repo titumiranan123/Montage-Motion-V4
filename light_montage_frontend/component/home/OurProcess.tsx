@@ -19,8 +19,8 @@ export const OurProcess = ({ data }: { data: any }) => {
           alt="process "
           width={638}
           height={898}
-          // data-aos="fade-right"
-          // data-aos-delay={200}
+          data-aos="fade-right"
+          data-aos-delay={200}
           className="max-w-[638px] w-full max-h-[898px] h-full"
           priority
         />
@@ -30,8 +30,8 @@ export const OurProcess = ({ data }: { data: any }) => {
             <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
               <Gradientcard
                 isHover={true}
-                className="contact-card flex justify-between lg:items-center text-(--text-primary) flex-col lg:flex-row max-w-[700px] w-full lg:h-[170px] h-80  rounded-3xl"
-                borderClassName="max-w-[698px] w-full lg:h-[172px] h-80.5 rounded-[24px] p-[1px]"
+                className="contact-card flex justify-between lg:items-center text-(--text-primary) flex-col lg:flex-row max-w-[700px] w-full lg:h-[170px] h-80  rounded-3xl "
+                borderClassName="max-w-[698px] w-full lg:h-[172px] h-80.5 rounded-[24px] p-[1px] transition-transform duration-200 ease-in-out hover:scale-[104%]"
               >
                 <Image
                   src={dt?.icon ?? ""}

@@ -18,9 +18,10 @@ const OurTeam = ({ members }: any) => {
       </style>
       <Heading
         subtitle="A passionate team of creators, strategists, and innovatiors working together to bring ideas to life."
-        tag="Our Services"
+        tag="Our Members"
         title="Meet the Minds Behind "
         extratitle="Montage Motion"
+        width="160"
       />
       <div className="mt-8 lg:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4">
         {members?.slice(0, index)?.map((member: any, idx: number) => {

@@ -11,6 +11,7 @@ const PageWhychooseus = ({ data }: { data: any }) => {
         subtitle={data?.paragraph}
         tag={data?.tag}
         title={data?.heading_part1 ?? data?.heading_part2}
+        width="160"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mt-20 mt-10 gap-10 ">
         {data?.whychooseus_items?.map((dt: any, idx: number) => (
@@ -31,7 +32,10 @@ const PageWhychooseus = ({ data }: { data: any }) => {
                 <p className="text-[22px] leading-[100%] md:text-[24px] font-semibold poppins text-[#E4E8F7 mt-2">
                   {dt?.title}
                 </p>
-                <p className="text-[14px] md:text-[16px] font-normal opensans text-(--text-secondary) leading-[140%]">
+                <p
+                  title={dt?.description}
+                  className="text-[14px] md:text-[16px] font-normal opensans text-(--text-secondary) leading-[140%] line-clamp-3"
+                >
                   {dt?.description}
                 </p>
               </div>

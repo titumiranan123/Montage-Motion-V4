@@ -1,90 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Heading } from "../share/Headering";
 import { TabsClient } from "./IndustryTabClient";
-
 // ---------- Types ----------
-type TabItem = {
+export interface OfferPoint {
+  text: string;
+  position: number;
+}
+
+export interface CTA {
+  label: string;
+  link: string;
+}
+
+export interface TabItem {
   id: string;
+  tab_key: string;
   title: string;
   description: string;
-  offer_points: string[];
-  cta: { label: string; link: string };
   image: string;
-};
+  position: number;
+  offer_points: OfferPoint[];
+  cta: CTA;
+}
 
-type TabsData = {
-  tabs: TabItem[];
-};
+export default function IndustryWeWork({ data }: { data?: any }) {
+  const tabs = data?.tabs as TabItem;
 
-const DEFAULT_DATA: TabsData = {
-  tabs: [
-    {
-      id: "podcasting",
-      title: "Podcasting",
-      description:
-        "Our brilliant team are expert on both 2D and 3D Animation. We create Character Animation and Explainer for personal and commercial use.",
-      image: "/assets/industries.png",
-      offer_points: [
-        "Experienced team",
-        "20+ in-house team to grow your online presence",
-        "1000+ projects completed successfully",
-      ],
-      cta: {
-        label: "Book a Call",
-        link: "#",
-      },
-    },
-    {
-      id: "corporate",
-      title: "Corporate",
-      description:
-        "We deliver engaging corporate video content including company profiles, training videos, and client testimonials designed to strengthen your brand story.",
-      image: "/assets/industries.png",
-      offer_points: [
-        "Dedicated creative director for each project",
-        "Custom scriptwriting & professional voiceover",
-        "Trusted by 200+ corporate clients",
-      ],
-      cta: {
-        label: "Explore Corporate Works",
-        link: "#",
-      },
-    },
-    {
-      id: "saas_tech",
-      title: "SaaS & Tech",
-      description:
-        "We help SaaS and Tech brands explain their complex solutions through high-quality explainer videos, animations, and product walkthroughs.",
-      image: "/assets/industries.png",
-      offer_points: [
-        "Tech-savvy script & design team",
-        "3D product visualization & app demos",
-        "Result-driven storytelling for user engagement",
-      ],
-      cta: {
-        label: "See Tech Projects",
-        link: "#",
-      },
-    },
-    {
-      id: "content_creation",
-      title: "Content Creation",
-      description:
-        "Our content team crafts scroll-stopping video and social content tailored for brands, influencers, and digital campaigns.",
-      image: "/assets/industries.png",
-      offer_points: [
-        "Creative direction & brand strategy",
-        "Optimized for social media & ads",
-        "Weekly content calendar support",
-      ],
-      cta: {
-        label: "Start Creating",
-        link: "#",
-      },
-    },
-  ],
-};
-export default function IndustryWeWork({ data }: { data?: TabsData }) {
-  const tabs = data?.tabs ?? DEFAULT_DATA.tabs;
   return (
     <section className="w-full sectionGap container rounded-[40px] py-10 industriesbg">
       <style>{`

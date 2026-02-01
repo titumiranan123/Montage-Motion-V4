@@ -52,7 +52,7 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
       </div>
       <div data-aos="fade-up" data-aos-delay="500" className="mt-16  ">
         <HeroVideoPlayer
-          thumbnail={`https://i.postimg.cc/GpKBHFX3/ezgif-com-video-to-gif-converter.gif`}
+          thumbnail={data?.media?.[0]?.image_url}
           video_url={data?.media?.[0]?.video_url}
         />
       </div>

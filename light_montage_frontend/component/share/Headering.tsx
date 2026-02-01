@@ -16,14 +16,19 @@ export const Heading: React.FC<headerProp> = ({
   width = 400,
 }) => {
   return (
-    <div className="flex flex-col gap-1 justify-center items-center max-w-5xl w-full mx-auto">
-      <p
+    <div className="flex flex-col gap-1 justify-center items-center max-w-5xl w-full mx-auto ">
+      {/* <p
         style={{ maxWidth: `${width}px` }}
         className={`glassShadowithoutinset bg-white/40  backdrop-blur-2xl max-w-[238px] w-full h-[46px] flex justify-center items-center rounded-3xl text-[16px] leading-[140%] text-(--text-primary) font-normal  poppins`}
       >
         {tag}
+      </p> */}
+      <p
+        style={{ maxWidth: `${width}px` }}
+        className={`  max-w-[238px] w-full h-[46px] flex justify-center items-center rounded-3xl text-[16px] leading-[140%] text-(--text-primary) font-normal  poppins glass-card`}
+      >
+        {tag}
       </p>
-      {/* <GlassMorphism tag="new dev ice" /> */}
 
       <p className="text-[40px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins">
         {title}
@@ -38,6 +43,55 @@ export const Heading: React.FC<headerProp> = ({
       <p className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-4/9 mx-auto ">
         {subtitle}
       </p>
+      <style>{`
+       .glass-card {
+        width: "100%";
+        height: 46px;
+        background: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+          0 0.2px 1px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 0 6px 3px rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+      }
+      
+      .glass-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.8),
+          transparent,
+          rgba(255, 255, 255, 0.3)
+        );
+      }
+     
+      `}</style>
     </div>
   );
 };

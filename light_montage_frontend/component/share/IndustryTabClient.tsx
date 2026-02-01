@@ -1,19 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
 import { useState, useCallback, useId } from "react";
 import { ChevronRight, CircleCheck } from "lucide-react";
 import Gradientcard from "./Gradientcard";
 
-type TabItem = {
-  id: string;
-  title: string;
-  description: string;
-  offer_points: string[];
-  cta: { label: string; link: string };
-  image: string;
-};
-
-export function TabsClient({ tabs }: { tabs: TabItem[] }) {
+export function TabsClient({ tabs }: { tabs: any }) {
+  const safeTabs = Array.isArray(tabs) ? tabs : [];
   const [activeTab, setActiveTab] = useState(0);
   const labelId = useId();
 
@@ -24,18 +17,17 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
       e.preventDefault();
       const actions = {
         Home: () => setActiveTab(0),
-        End: () => setActiveTab(tabs.length - 1),
-        ArrowRight: () => setActiveTab((i) => (i + 1) % tabs.length),
+        End: () => setActiveTab(safeTabs.length - 1),
+        ArrowRight: () => setActiveTab((i) => (i + 1) % safeTabs.length),
         ArrowLeft: () =>
-          setActiveTab((i) => (i - 1 + tabs.length) % tabs.length),
+          setActiveTab((i) => (i - 1 + safeTabs.length) % safeTabs.length),
       };
       actions[e.key as keyof typeof actions]?.();
     },
-    [tabs.length],
+    [safeTabs.length],
   );
 
-  const activeTabData = tabs[activeTab];
-
+  const activeTabData = safeTabs[activeTab];
   return (
     <div className="space-y-6  lg:mt-16 mt-8 ">
       {/* Tabs Navigation */}
@@ -48,26 +40,24 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
           w-full px-2 overflow-x-auto scrollbar-hide  rounded-[12px] glassShadow  bg-white/40 p-3 max-w-[520px] mx-auto"
         onKeyDown={handleKeyDown}
       >
-        {tabs.map((tab, index) => (
+        {safeTabs?.map((tab: any, index: number) => (
           <button
-            key={tab.id}
+            key={tab?.id}
             role="tab"
             aria-selected={activeTab === index}
-            aria-controls={`${labelId}-${tab.id}-panel`}
+            aria-controls={`${labelId}-${tab?.id}-panel`}
             onClick={() => setActiveTab(index)}
             className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px] ${
               activeTab === index ? "btn-color font-semibold" : ""
             }`}
           >
-            {tab.title}
+            {tab?.title}
           </button>
         ))}
       </div>
-
-      {/* Active Tab Content */}
       <div
         role="tabpanel"
-        aria-labelledby={`${labelId}-${activeTabData.id}`}
+        aria-labelledby={`${labelId}-${activeTabData?.id}`}
         className=""
         data-aos="fade-up"
         data-aos-delay={300}
@@ -81,34 +71,36 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
             <div className="rounded-2xl  p-3   md:p-6 flex justify-between items-center lg:flex-row flex-col-reverse gap-4 lg:w-[916px] lg:max-w-full max-w-[916px]  mx-auto w-full relative ">
               <div className=" text-(--text-primary)   w-full lg:w-1/2">
                 <h3 className="mb-3 text-xl font-semibold md:text-2xl poppins">
-                  {activeTabData.title}
+                  {activeTabData?.title}
                 </h3>
                 <p className="mb-5 text-sm leading-relaxed opacity-90 md:text-base opensans">
-                  {activeTabData.description}
+                  {activeTabData?.description}
                 </p>
 
                 <ul className="space-y-2 text-sm md:text-base opensans">
-                  {activeTabData.offer_points.map((point, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <CircleCheck />
-                      <span className="opacity-90">{point}</span>
-                    </li>
-                  ))}
+                  {activeTabData?.offer_points?.map(
+                    (point: any, index: number) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CircleCheck />
+                        <span className="opacity-90">{point?.text}</span>
+                      </li>
+                    ),
+                  )}
                 </ul>
 
                 <a
-                  href={activeTabData.cta.link}
+                  href={activeTabData?.cta?.link}
                   className="mt-6 inline-flex items-center justify-center rounded-2xl  px-4 py-2.5 md:text-[16px] text-[14px] font-medium  opensans"
                 >
-                  {activeTabData.cta.label}
+                  {activeTabData?.cta?.label}
                   <ChevronRight />
                 </a>
               </div>
               {/* Image Card */}
               <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/10 w-full lg:w-1/2 ">
                 <Image
-                  src={activeTabData.image}
-                  alt={activeTabData.title}
+                  src={activeTabData?.image}
+                  alt={activeTabData?.title}
                   width={600}
                   height={390}
                   className="h-full w-full object-cover"
@@ -119,8 +111,8 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
             </div>
             <div className="lg:absolute hidden left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
               <Image
-                src="/assets/industriesworok.png"
-                alt="backend"
+                src={activeTabData?.image}
+                alt={activeTabData?.title}
                 className="max-w-[1435px] w-full mx-auto"
                 width={1435}
                 height={10}
@@ -129,6 +121,7 @@ export function TabsClient({ tabs }: { tabs: TabItem[] }) {
           </div>
         </Gradientcard>
       </div>
+      {/* Active Tab Content */}
     </div>
   );
 }

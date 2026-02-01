@@ -1,94 +1,82 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import useAlltype from "@/hook/useALLtype";
 
-const HomeProjectTab = () => {
-  const { type } = useAlltype();
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+
+const HomeTab = ({ types }: { types: any }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  const tabConfig = [...type];
-  const defaultTab = searchParams.get("tab") || "home";
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const cat = searchParams.get("cat");
 
-  const handleTabClick = (tabId: string) => {
+  /* ✅ FIRST LOAD: set default query */
+  useEffect(() => {
+    if (!cat) {
+      router.replace(`?cat=${types?.[1]?.service_type}`, {
+        scroll: false,
+      });
+    }
+  }, [cat, router, types]);
+
+  const handleTabClick = (href: string) => {
     if (!isDragging) {
-      setActiveTab(tabId);
-      router.push(`?tab=${tabId}`, { scroll: false });
+      router.replace(`?cat=${href}`, { scroll: false });
     }
   };
 
-  // Mouse drag handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollContainerRef.current) return;
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-    scrollContainerRef.current.style.cursor = "grabbing";
+    setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
+    setScrollLeft(containerRef.current?.scrollLeft || 0);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
+  const handleMouseLeave = () => setIsDragging(false);
+  const handleMouseUp = () => setIsDragging(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !containerRef.current) return;
     e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Scroll speed multiplier
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+    const x = e.pageX - (containerRef.current.offsetLeft || 0);
+    const walk = (x - startX) * 1;
+    containerRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = "grab";
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.style.cursor = "grab";
-      }
-    }
-  };
+  const tabConfig = types ?? [];
 
   return (
     <div
-      ref={scrollContainerRef}
+      ref={containerRef}
       onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
-      className="
-          flex gap-3 lg:gap-6 pb-2 w-full 
-          justify-start lg:justify-start items-center 
-          max-h-[79px] rounded-lg p-3 
-          mx-auto  
-          overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent
-          hover:scrollbar-thumb-gray-500
-          mt-8 glassShadow  bg-white/40  backdrop-blur-2xl max-w-[594px]
-          cursor-grab select-none
-        "
-      style={{ scrollbarWidth: "thin" }}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      className={`glassShadow bg-white/40 backdrop-blur-2xl
+        max-w-[594px] h-[75px]
+        flex justify-start items-center
+        mx-auto rounded-[12px]
+        mt-5 transition-all duration-300
+        overflow-x-auto px-3 gap-2
+        scroll-hide ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
     >
-      {tabConfig?.slice(1)?.map((tab) => (
+      {tabConfig?.slice(1)?.map((tb: any) => (
         <button
-          key={tab.id}
-          onClick={() => handleTabClick(tab?.service_type)}
-          className={`py-2 px-2 md:px-4 text-(--text-primary) opensans font-semibold md:text-[16px] text-[13px] rounded-lg transition-colors whitespace-nowrap h-[51px] pointer-events-auto ${
-            activeTab === tab?.service_type ? "btn-color " : ""
-          }`}
+          key={tb?.service_type}
+          onClick={() => handleTabClick(tb?.service_type)}
+          className={`py-2 px-3 opensans font-medium text-[14px]
+            rounded-[12px] whitespace-nowrap h-[51px]
+            ${cat === tb?.service_type ? "btn-color font-semibold" : ""}`}
         >
-          {tab?.service_title}
+          {tb?.service_title}
         </button>
       ))}
     </div>
   );
 };
 
-export default HomeProjectTab;
+export default HomeTab;

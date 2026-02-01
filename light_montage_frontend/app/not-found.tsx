@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/component/share/Navbar";
 import Link from "next/link";
 import React from "react";
 
@@ -17,8 +16,6 @@ export default function NotFound() {
           }
         `}
       </style>
-
-      <Navbar />
 
       <div className="pb-[60px] f pt-24">
         {/* 404 */}

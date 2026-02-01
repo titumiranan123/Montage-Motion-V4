@@ -11,7 +11,8 @@ export const getData = async ({
     });
 
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+      console.log(response);
+      return null;
     }
 
     return await response.json();

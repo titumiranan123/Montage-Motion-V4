@@ -112,7 +112,7 @@ export default function OurStory() {
         </div>
         {/* Right - Cards */}
         <div className="xl:w-1/2 space-y-8 cards-container">
-          {storyCards.map((card, index) => (
+          {storyCards?.map((card, index) => (
             <div
               key={index}
               className="story-card"

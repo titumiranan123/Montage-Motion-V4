@@ -68,7 +68,7 @@ const info = {
 };
 const PageFaqSection = () => {
   return (
-    <div id="faq" className="sectionArea sectionGap">
+    <div id="faq" className="sectionarea sectionGap">
       <Heading
         subtitle="Everything you need to know before we get started. "
         tag="FAQ"

@@ -9,7 +9,7 @@ const extractUrlTags = (xmlString: string) => {
 export async function GET() {
   let combineAllSiteMapXml = undefined;
   try {
-    const data = await axios.get(api.cms.sitemap);
+    const data = await axios.get(api.cms.sitemaps);
 
     const finalData = extractUrlTags(data.data);
     combineAllSiteMapXml = `<?xml version="1.0" encoding="UTF-8"?>

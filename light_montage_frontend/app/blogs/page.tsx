@@ -15,7 +15,6 @@ const Blogs = async ({ searchParams }: { searchParams: any }) => {
     url: `api/website/blog?category=${cat}&search=${search}`,
   });
   const data = result.data;
-  console.log(data);
   return (
     <div className="relative  container lg:mt-40 mt-16 min-h-screen header-background pagelogo">
       <Heading

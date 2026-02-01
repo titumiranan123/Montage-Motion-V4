@@ -11,14 +11,7 @@ interface Testimonial {
   message?: string;
   position?: number;
   category: "message" | "video_message";
-  type:
-    | "main"
-    | "shorts"
-    | "talking"
-    | "podcast"
-    | "graphic"
-    | "advertising"
-    | "website";
+  type: string;
 }
 
 const TestimonialVideocard = ({
