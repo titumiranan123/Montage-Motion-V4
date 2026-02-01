@@ -4,7 +4,7 @@ import { z } from "zod";
  * faq_items table schema
  */
 export const faqItemSchema = z.object({
-  id: z.string().uuid().optional(),
+  id: z.string().nullable().optional(),
 
   faq_section_id: z.string().uuid().optional(),
 

@@ -5,7 +5,7 @@ import { MemberProfile } from "./member.interface";
 export const MemberService = {
   async createMember(data: MemberProfile) {
     const positionResult = await db.query(
-      `SELECT MAX(position) as max FROM members`
+      `SELECT MAX(position) as max FROM members`,
     );
     const lastPosition = positionResult.rows[0]?.max || 0;
     const newPosition = lastPosition + 1;
@@ -16,7 +16,7 @@ export const MemberService = {
       ) VALUES (
         $1, $2, $3, $4, $5
       ) RETURNING *`,
-      [data.name, data.designation, data.photourl, data.alt, newPosition]
+      [data.name, data.designation, data.photourl, data.alt, newPosition],
     );
     return result.rows[0];
   },
@@ -25,7 +25,7 @@ export const MemberService = {
     const result = role
       ? await db.query(
           `SELECT * FROM members WHERE role = $1 ORDER BY position ASC`,
-          [role]
+          [role],
         )
       : await db.query(`SELECT * FROM members ORDER BY position ASC`);
     return result.rows;
@@ -44,25 +44,17 @@ export const MemberService = {
       ...existing,
       ...data,
     };
-
     const result = await db.query(
       `UPDATE members SET
         name = $1,
-        role = $2,
-        designation = $3,
-        photourl = $4,
-        alt = $5,
+  
+        designation = $2,
+        photourl = $3,
+        alt = $4,
         updated_at = NOW()
-      WHERE id = $6
+      WHERE id = $5
       RETURNING *`,
-      [
-        updated.name,
-        updated.role,
-        updated.designation,
-        updated.photourl,
-        updated.alt,
-        id,
-      ]
+      [updated.name, updated.designation, updated.photourl, updated.alt, id],
     );
     return result.rows[0];
   },
@@ -70,7 +62,7 @@ export const MemberService = {
   async deleteMember(id: string) {
     const result = await db.query(
       `DELETE FROM members WHERE id = $1 RETURNING *`,
-      [id]
+      [id],
     );
     return result.rows[0] || null;
   },
@@ -81,14 +73,14 @@ export const MemberService = {
     for (const mem of members) {
       const existing = await db.query(
         `SELECT position FROM members WHERE id = $1`,
-        [mem.id]
+        [mem.id],
       );
       const currentPosition = existing.rows[0]?.position;
 
       if (currentPosition !== mem.position) {
         const updateQuery = db.query(
           `UPDATE members SET position = $1 WHERE id = $2`,
-          [mem.position, mem.id]
+          [mem.position, mem.id],
         );
         updates.push(updateQuery);
       }

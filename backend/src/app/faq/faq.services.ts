@@ -43,7 +43,7 @@ export const faqService = {
           data.contact_position ?? null,
           data.contact_link ?? null,
           data.is_active ?? true,
-        ]
+        ],
       );
 
       const sectionId = sectionResult.rows[0].id;
@@ -86,8 +86,9 @@ export const faqService = {
           contact_position = COALESCE($9, contact_position),
           contact_link = COALESCE($10, contact_link),
           is_active = COALESCE($11, is_active),
+          type = COALESCE($12, type),
           updated_at = NOW()
-        WHERE id = $12`,
+        WHERE id = $13`,
         [
           data.section_tag,
           data.section_title,
@@ -100,8 +101,9 @@ export const faqService = {
           data.contact_position,
           data.contact_link,
           data.is_active,
+          data.type,
           id,
-        ]
+        ],
       );
 
       if (data.faqs) {
@@ -126,7 +128,7 @@ export const faqService = {
   },
 
   /** ✅ Get FAQ Sections (by id or tag) */
-  async getFaqSections(filter: { id?: string; section_tag?: string }) {
+  async getFaqSections(filter: { id?: string; page?: string }) {
     let query = `SELECT * FROM faq_sections`;
     const values: any[] = [];
     const conditions: string[] = [];
@@ -136,9 +138,9 @@ export const faqService = {
       conditions.push(`id = $${values.length}`);
     }
 
-    if (filter.section_tag) {
-      values.push(filter.section_tag);
-      conditions.push(`section_tag = $${values.length}`);
+    if (filter.page) {
+      values.push(filter.page);
+      conditions.push(`type = $${values.length}`);
     }
 
     if (conditions.length) {
@@ -146,11 +148,9 @@ export const faqService = {
     }
 
     const result = await db.query(query, values);
-
     for (const section of result.rows) {
       section.faqs = await faqItemService.getFaqItemsBySectionId(section.id);
     }
-
     return result.rows;
   },
 
@@ -159,7 +159,7 @@ export const faqService = {
     await checkFaqSectionExists(id);
     const result = await db.query(
       `DELETE FROM faq_sections WHERE id = $1 RETURNING *`,
-      [id]
+      [id],
     );
     return result.rows[0];
   },

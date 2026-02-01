@@ -4,33 +4,35 @@ import { pageHeaderService } from "../header/header.services";
 import { serviceSectionService } from "../pageservice/page_service.service";
 import { pricingPageService } from "../pricing/pricing.service";
 import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
+import { VideosService } from "../work/workservice";
 import { processService } from "../working_process/process.service";
+// import your SECTION_NAMES array
 
 // Helper function to fetch data for each section
 export const fetchSectionData = async (sectionName: string, type: string) => {
+  console.log(sectionName);
   switch (sectionName) {
-    case "short_hero": {
-      const header = await pageHeaderService.getAllHeaders(type as string);
-      return { sectionName, data: header || null };
+    case "short_hero":
+    case "home_hero":
+    case "podcast_hero": {
+      console.log("sectionName", sectionName);
+
+      const header = await pageHeaderService.getAllHeaders(type);
+      return { sectionName, data: header?.[0] || null };
     }
-    case "home_hero": {
-      const header = await pageHeaderService.getAllHeaders(type as string);
-      return { sectionName, data: header || null };
-    }
+
     case "our_clients": {
       const result = await BrandImageService.getAllBrandImage("home");
-      return { sectionName, data: result || null };
+      return { sectionName, data: result?.[0] || null };
     }
 
     case "work": {
-      const works = await db.query(
-        `SELECT thumbnail, video_link FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC LIMIT 6`,
-        [type],
-      );
-      return { sectionName, data: works.rows || [] };
+      const works = await VideosService.getAllVideosForSite({ type, limit: 6 });
+      return { sectionName, data: works || [] };
     }
+
     case "service": {
-      const result = await serviceSectionService.getAllSections({ type: type });
+      const result = await serviceSectionService.getAllSections({ type });
       return { sectionName, data: result || [] };
     }
 
@@ -41,49 +43,29 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
       );
       return { sectionName, data: testimonials.rows || [] };
     }
+
     case "pricing": {
-      const result = await pricingPageService.getPagePricePlanByType({
-        type: type,
-      });
+      const result = await pricingPageService.getPagePricePlanByType({ type });
       return { sectionName, data: result || [] };
     }
 
-    // case "faq": {
-    //   const faqRes = await db.query(
-    //     `SELECT id, title, sub_title FROM faqs WHERE type = $1 AND is_visible = true`,
-    //     [type]
-    //   );
-    //   const faq = faqRes.rows[0];
-    //   if (!faq) return { sectionName, data: null };
-    //   const faqItems = await db.query(
-    //     `SELECT * FROM faq_items WHERE faq_id = $1 ORDER BY position ASC`,
-    //     [faq.id]
-    //   );
-    //   faq.faqs = faqItems.rows;
-    //   return { sectionName, data: faq };
-    // }
-
     case "process": {
       const processResult = await processService.getAllProcesses({ type });
-      return {
-        sectionName,
-        data: processResult.length > 0 ? processResult[0] : [],
-      };
+      return { sectionName, data: processResult[0] || [] };
     }
 
     case "whychooseus": {
       const whychooseusResult = await whychooseusSectionService.getAllSections({
-        type: type,
+        type,
       });
-      console.log("whychooseusResult", whychooseusResult);
-      return {
-        sectionName,
-        data: whychooseusResult.length > 0 ? whychooseusResult[0] : [],
-      };
+      return { sectionName, data: whychooseusResult[0] || [] };
     }
 
-    // case "common_contact":
-    //   return { sectionName, data: {} };
+    case "contact": {
+      console.log("sectionName", sectionName);
+      const result = true;
+      return { sectionName, data: result };
+    }
 
     default:
       return { sectionName, data: null };

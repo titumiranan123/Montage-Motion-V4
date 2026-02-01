@@ -9,7 +9,7 @@ export const VideosService = {
     try {
       const last = await db.query(
         `SELECT position FROM works WHERE type = $1 ORDER BY position DESC LIMIT 1`,
-        [data.type]
+        [data.type],
       );
       const newPosition = last.rows.length > 0 ? last.rows[0].position + 1 : 1;
 
@@ -26,7 +26,7 @@ export const VideosService = {
           data.is_feature ?? false,
           newPosition,
           data.type,
-        ]
+        ],
       );
 
       return result.rows[0] ?? null;
@@ -60,7 +60,35 @@ export const VideosService = {
 
     return result.rows;
   },
+  async getAllVideosForSite({
+    type,
+    limit = 10,
+  }: {
+    type?: string;
+    limit?: number;
+  }) {
+    let query = `SELECT thumbnail , video_link  FROM works`;
+    const params: any[] = [];
 
+    // Dynamic WHERE
+    if (type) {
+      params.push(type);
+      query += ` WHERE type = $${params.length}`;
+    }
+
+    // Order
+    query += ` ORDER BY position ASC`;
+
+    // Limit
+    if (limit) {
+      params.push(limit);
+      query += ` LIMIT $${params.length}`;
+    }
+
+    const result = await db.query(query, params);
+
+    return result.rows;
+  },
   // READ by query (for website)
   async getAllVideosforWebsite(query: {
     id?: string;
@@ -133,7 +161,7 @@ export const VideosService = {
     try {
       const result = await db.query(
         `DELETE FROM works WHERE id = $1 RETURNING *`,
-        [id]
+        [id],
       );
       return result.rows[0] ?? null;
     } catch (error) {

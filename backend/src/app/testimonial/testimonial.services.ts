@@ -6,7 +6,7 @@ export const testimonialService = {
   async addTestimonial(data: ITestimonial) {
     try {
       const { rows } = await db.query(
-        `SELECT position FROM testimonials ORDER BY position DESC LIMIT 1`
+        `SELECT position FROM testimonials ORDER BY position DESC LIMIT 1`,
       );
 
       const newPosition = rows.length > 0 ? rows[0].position + 1 : 1;
@@ -25,7 +25,7 @@ export const testimonialService = {
           data.category,
           data.type,
           data.thumbnail,
-        ]
+        ],
       );
 
       return result.rows[0];
@@ -35,9 +35,10 @@ export const testimonialService = {
     }
   },
 
-  async getAllTestimonial() {
+  async getAllTestimonial(type: string) {
     const result = await db.query(
-      `SELECT * FROM testimonials ORDER BY position ASC`
+      `SELECT * FROM testimonials WHERE type = $1 ORDER BY position ASC `,
+      [type],
     );
     return result.rows;
   },
@@ -58,7 +59,7 @@ export const testimonialService = {
         if (!id || position === undefined) continue;
         await client.query(
           `UPDATE testimonials SET position = $1 WHERE id = $2`,
-          [position, id]
+          [position, id],
         );
       }
 
@@ -101,7 +102,7 @@ export const testimonialService = {
           data.position ?? 1,
           data.thumbnail,
           id,
-        ]
+        ],
       );
 
       return result.rows[0];

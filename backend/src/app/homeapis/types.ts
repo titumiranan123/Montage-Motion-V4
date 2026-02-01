@@ -16,3 +16,28 @@ export type sectionName =
   | "before_after_section"
   | "industry"
   | "whysaas_video";
+export const SECTION_NAMES = [
+  "short_hero",
+  "home_hero",
+  "podcast_hero",
+
+  "service",
+  "shorts_service",
+
+  "our_clients",
+  "work",
+  "pricing",
+  "testimonial",
+  "process",
+  "industry",
+
+  "insight",
+  "podcast_insight",
+
+  "whychooseus",
+  "faq",
+  "contact",
+
+  "before_after_section",
+  "whysaas_video",
+] as const;

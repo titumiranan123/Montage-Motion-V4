@@ -30,6 +30,7 @@ export interface IFaqSection {
   contact_link?: string;
 
   is_active?: boolean;
+  type: string;
 
   faqs?: IFaqItem[];
 

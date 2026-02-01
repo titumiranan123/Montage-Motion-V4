@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const VideoSchema = z.object({
-  id: z.string().optional(),
-  title: z.string().min(1, "Title is required").optional(),
-  description: z.string().min(1, "Description is required").optional(),
+  id: z.string().nullable().optional(),
+  title: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
   thumbnail: z.string().url("Thumbnail must be a valid URL"),
-  video_link: z.string().optional(),
+  video_link: z.string().nullable().optional(),
   isVisible: z.boolean().optional(),
   isFeature: z.boolean().optional(),
   position: z.number().optional(),

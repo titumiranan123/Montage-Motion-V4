@@ -21,8 +21,11 @@ export const testimonialController = {
     return responseHandler(res, 201, true, "Testimonial created", result);
   }),
 
-  getAll: asyncHandler(async (_req: Request, res: Response) => {
-    const result = await testimonialService.getAllTestimonial();
+  getAll: asyncHandler(async (req: Request, res: Response) => {
+    const type = req.query.type;
+
+    const result = await testimonialService.getAllTestimonial(type as string);
+
     return responseHandler(res, 200, true, "Testimonials fetched", result);
   }),
 

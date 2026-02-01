@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 
 import httpStatus from "http-status";
 import ApiError from "../utils/ApiError";
+import config from "../config";
 
 const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   let statusCode = 500;
@@ -42,7 +43,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     errorCode,
     errorDetails,
     timestamp: new Date().toISOString(),
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+    ...(config.nodeEnv === "development" && { stack: err.stack }),
   });
 };
 

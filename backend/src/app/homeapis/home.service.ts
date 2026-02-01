@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
+import { comparisonService } from "../comparison/comparison.services";
+import { faqService } from "../faq/faq.services";
 import { homeService } from "../homeservice/homeservice.service";
+import { industryTabsService } from "../industry/industry.services";
 import { pricingPageService } from "../pricing/pricing.service";
 // import { seoMetaService } from "../seo/seo.service";
 import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
@@ -77,6 +80,23 @@ export const homeapiServices = {
         });
         whychooseus = result.length > 0 ? result[0] : [];
       }
+      let comparision: any = [];
+      if (tables.includes("comparision")) {
+        const result = await comparisonService.getComparisons(type as string);
+        comparision = result ?? [];
+      }
+      let faq: any = [];
+      if (tables.includes("faq")) {
+        const result = await faqService.getFaqSections({ page: type });
+        faq = result && result.length > 0 ? result[0] : [];
+      }
+      let industries: any = [];
+      if (tables.includes("industries")) {
+        const result = await industryTabsService.getSections(
+          type as string | undefined,
+        );
+        industries = result.length > 0 ? result[0] : [];
+      }
       let pricing: any[] = [];
       if (tables.includes("pricing")) {
         const result = await pricingPageService.getPagePricePlanByType({
@@ -146,6 +166,9 @@ export const homeapiServices = {
         process: process,
         whychooseus: whychooseus,
         members: members,
+        comparision: comparision,
+        industries: industries,
+        faq: faq,
         // seo: seo,
         // pricing: prices || [],
       };

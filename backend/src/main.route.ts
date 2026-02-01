@@ -27,6 +27,8 @@ import bradImageRoute from "./app/brand_images/brandimage.route";
 import pageWhychooseusRoute from "./app/whychooseus/whychooseus.route";
 import carrerRoute from "./app/carrerpost/carrer.route";
 import homeServiceRoute from "./app/homeservice/homeservice.route";
+import comparisonRoute from "./app/comparison/comparison.routes";
+import industriesRoute from "./app/industry/industry.routes";
 
 const mainRoute = Router();
 
@@ -60,4 +62,7 @@ mainRoute.use("/api/why-choose-us", pageWhychooseusRoute);
 mainRoute.use("/api/brand/images", bradImageRoute);
 mainRoute.use("/api/jobpost", carrerRoute);
 mainRoute.use("/api", videoRoute);
+// new
+mainRoute.use("/api/comparison", comparisonRoute);
+mainRoute.use("/api/industries", industriesRoute);
 export default mainRoute;
