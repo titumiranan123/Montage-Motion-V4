@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useState } from "react";
 import ServiceForm from "./HyperServiceform";
@@ -61,8 +62,8 @@ const HyperServicewrapper = ({ data }: { data: any }) => {
         )}
       </div>
       <div>
-        {data.map((dt: any) => (
-          <div>
+        {data.map((dt: any, idx: number) => (
+          <div key={idx}>
             <SingleService data={dt} />
             <button
               onClick={() => {
@@ -85,7 +86,10 @@ const HyperServicewrapper = ({ data }: { data: any }) => {
         h-screen flex justify-center items-center fixed inset-0 bg-black/60 backdrop-blur-2xl"
         >
           <div onClick={(e) => e.stopPropagation()}>
-            <ServiceForm initialData={serviceData} />
+            <ServiceForm
+              initialData={serviceData}
+              setIsModalOpent={setIsModalOpent}
+            />
           </div>
         </div>
       )}

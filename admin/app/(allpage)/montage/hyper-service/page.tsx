@@ -4,9 +4,9 @@ import HyperServicewrapper from "./HyperServicewrapper";
 
 const Page = async () => {
   const responsce = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/home-service?type=home`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/home-service?type=home`,
   );
-
+  console.log(responsce?.data?.data?.[0].services?.[5]);
   return (
     <main className="min-h-screen  py-10">
       <HyperServicewrapper

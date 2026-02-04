@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/incompatible-library */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useForm, useFieldArray } from "react-hook-form";
 import { FaPlus, FaTrash, FaArrowUp, FaArrowDown } from "react-icons/fa";
@@ -75,6 +77,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
     }
   };
   const onSubmit = async (data: IFaqSection) => {
+    console.log("type", data);
     try {
       const url = data.id ? `/api/faq/${data.id}` : "/api/faq";
 
@@ -104,7 +107,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 bg-slate-900 lg:w-[800px] p-5 rounded-2xl text-white h-[550px] overflow-y-auto"
+      className="space-y-6 bg-slate-900 lg:w-200 p-5 rounded-2xl text-white h-137.5 overflow-y-auto"
     >
       {/* Section Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -137,7 +140,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
           </label>
           <textarea
             {...register("section_description", { required: "Required" })}
-            className="w-full p-2 rounded-md text-white border border-slate-400 min-h-[120px]"
+            className="w-full p-2 rounded-md text-white border border-slate-400 min-h-30"
           />
         </div>
         {/* contact information  */}
@@ -241,7 +244,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             <textarea
               {...register(`faqs.${index}.answer`, { required: true })}
               placeholder="Answer"
-              className="w-full p-2 rounded-md text-white border border-slate-400 min-h-[80px]"
+              className="w-full p-2 rounded-md text-white border border-slate-400 min-h-20"
             />
 
             <div className="mt-2 flex items-center">

@@ -1,22 +1,24 @@
+/* eslint-disable react-hooks/incompatible-library */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect } from "react";
-import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
+import React from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import ImageUploader from "@/component/ImageUploader";
 import { IPageHeader } from "./header.types";
-import VideoUploader from "./VideoUploader";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import ReactPlayer from "react-player";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+import { api_url } from "@/hook/Apiurl";
 
 interface IHeaderFormProps {
   defaultValues?: IPageHeader;
-  onSubmit: SubmitHandler<IPageHeader>;
-  onCancel?: () => void;
+  onCancel: () => void;
 }
 
 const HeaderForm: React.FC<IHeaderFormProps> = ({
   defaultValues,
-  onSubmit,
 
   onCancel,
 }) => {
@@ -35,7 +37,6 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
     control,
     name: "media",
   });
-
   const addMedia = () => {
     append({ image_url: "", video_url: "", alt: "" });
   };
@@ -43,11 +44,35 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
   const removeMediaItem = (index: number) => {
     remove(index);
   };
+  const router = useRouter();
 
+  const onSubmit = async (formData: IPageHeader) => {
+    try {
+      const res = await api_url.post(`/api/header`, formData);
+      router.refresh();
+      onCancel();
+      Swal.fire({
+        title: res.data?.message ?? "Header saved successfully!",
+        icon: "success",
+        background: "#1f2937",
+        color: "#fff",
+        confirmButtonColor: "#1FB5DD",
+      });
+    } catch (err: any) {
+      Swal.fire({
+        title: "Something went wrong!",
+        text: err?.message ?? "Unknown error",
+        icon: "error",
+        background: "#1f2937",
+        color: "#fff",
+        confirmButtonColor: "#1FB5DD",
+      });
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-8 w-full max-w-7xl mx-auto mt-8 rounded-xl shadow-xl bg-gray-900 p-6 lg:p-8 h-[580px] overflow-y-auto"
+      className="space-y-8 w-full max-w-7xl mx-auto mt-8 rounded-xl shadow-xl bg-gray-900 p-6 lg:p-8 h-145 overflow-y-auto"
     >
       {/* Header */}
       <div className="space-y-2">
@@ -154,7 +179,7 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
           </div>
 
           {/* Media Items List */}
-          <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+          <div className="space-y-4 max-h-100 overflow-y-auto pr-2">
             {fields.map((field, index) => {
               const imageUrl = watch(`media.${index}.image_url`);
               const videoUrl = watch(`media.${index}.video_url`);

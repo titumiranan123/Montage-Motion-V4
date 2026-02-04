@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/incompatible-library */
 "use client";
 
 import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
 import { ArrowDown, ArrowUp } from "lucide-react";
-import React from "react";
+import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -25,6 +26,7 @@ export const SECTION_NAMES = [
   "testimonial",
   "process",
   "industry",
+  "comparison",
 
   "insight",
   "podcast_insight",
@@ -85,7 +87,13 @@ export interface PageService {
    COMPONENT
 ========================= */
 
-const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
+const ServiceForm = ({
+  initialData,
+  setIsModalOpent,
+}: {
+  initialData?: PageService;
+  setIsModalOpent: (p: boolean) => void;
+}) => {
   const {
     register,
     control,
@@ -120,7 +128,7 @@ const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
     name: "services",
   });
   const watchedServices = watch("services");
-
+  const router = useRouter();
   const onSubmit = async (data: PageService) => {
     try {
       // Add order_index to each service based on their current position
@@ -135,9 +143,10 @@ const ServiceForm = ({ initialData }: { initialData?: PageService }) => {
       };
 
       const response = await api_url.post("/api/home-service", updatedData);
+      setIsModalOpent(false);
       if (response.status === 200 || response.status === 201) {
         toast.success(response?.data?.message || "Service saved successfully!");
-
+        router.refresh();
         // If the response contains the updated data with IDs, update the form
         if (response.data?.data?.services) {
           // You might want to update the form with the new IDs here

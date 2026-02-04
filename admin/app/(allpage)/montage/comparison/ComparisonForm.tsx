@@ -22,6 +22,7 @@ type SectionProps = {
   fieldArray: ReturnType<typeof useFieldArray<ComparisonFormData>>;
   watch: any;
   setValue: any;
+  errors: any;
 };
 
 const Section = ({
@@ -32,6 +33,7 @@ const Section = ({
   fieldArray,
   watch,
   setValue,
+  errors,
 }: SectionProps) => {
   const { fields, append, remove } = fieldArray;
 
@@ -61,24 +63,41 @@ const Section = ({
       )}
 
       {/* Items */}
-      {items.map((entry) => (
-        <div key={entry.index} className="flex gap-2">
-          <input
-            {...register(`columns.${colIndex}.entries.${entry.index}.text`)}
-            className="input w-full border border-slate-800 py-2 px-3 rounded-lg"
-            placeholder="Item text"
-          />
-          <input
-            type="hidden"
-            {...register(
-              `columns.${colIndex}.entries.${entry.index}.entry_type`,
+      {items.map((entry) => {
+        const fieldError =
+          errors?.columns?.[colIndex]?.entries?.[entry.index]?.text;
+
+        return (
+          <div key={entry.index} className="flex flex-col gap-1 w-full">
+            <div className="flex gap-2">
+              <input
+                {...register(
+                  `columns.${colIndex}.entries.${entry.index}.text`,
+                  { required: "Text is required" },
+                )}
+                className="input w-full border border-slate-800 py-2 px-3 rounded-lg"
+                placeholder="Item text"
+              />
+
+              <input
+                type="hidden"
+                {...register(
+                  `columns.${colIndex}.entries.${entry.index}.entry_type`,
+                )}
+              />
+
+              <button type="button" onClick={() => remove(entry.index)}>
+                <X />
+              </button>
+            </div>
+
+            {/* 🔴 Error message */}
+            {fieldError && (
+              <p className="text-red-500 text-sm">{fieldError.message}</p>
             )}
-          />
-          <button type="button" onClick={() => remove(entry.index)}>
-            <X />
-          </button>
-        </div>
-      ))}
+          </div>
+        );
+      })}
 
       {/* Bonus */}
       {bonuses.length > 0 && (
@@ -151,7 +170,7 @@ export default function ComparisonForm({
     register,
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
     setValue,
     watch,
   } = useForm<ComparisonFormData>({
@@ -206,25 +225,25 @@ export default function ComparisonForm({
         </div>
 
         <div>
-          <label className="block text-gray-200 mb-1">Tag</label>
+          <label className="block text-gray-200 mb-1">Tag *</label>
           <input
-            {...register("tag")}
+            {...register("tag", { required: "Tag is required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
         </div>
 
         <div className="col-span-2">
-          <label className="block text-gray-200 mb-1">Section Title</label>
+          <label className="block text-gray-200 mb-1">Section Title *</label>
           <input
-            {...register("heading_title")}
+            {...register("heading_title", { required: "Tag is required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
         </div>
 
         <div className="col-span-2">
-          <label className="block text-gray-200 mb-1">Paragraph</label>
+          <label className="block text-gray-200 mb-1">Paragraph *</label>
           <textarea
-            {...register("paragraph")}
+            {...register("paragraph", { required: "Tag is required" })}
             rows={4}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
@@ -239,6 +258,7 @@ export default function ComparisonForm({
         fieldArray={montage}
         setValue={setValue}
         watch={watch}
+        errors={errors}
       />
       <Section
         title="Other Agencies"
@@ -247,6 +267,7 @@ export default function ComparisonForm({
         fieldArray={agencies}
         setValue={setValue}
         watch={watch}
+        errors={errors}
       />
       <Section
         title="Freelancers"
@@ -255,6 +276,7 @@ export default function ComparisonForm({
         fieldArray={freelancers}
         setValue={setValue}
         watch={watch}
+        errors={errors}
       />
       <button
         type="submit"

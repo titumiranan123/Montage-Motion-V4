@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IPageHeader } from "./header.types";
 import HeaderForm from "./Headerform";
-import Swal from "sweetalert2";
-import { api_url } from "@/hook/Apiurl";
+
 import Image from "next/image";
 import ReactPlayer from "react-player";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -20,30 +20,6 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
   const [editData, setEditData] = useState<IPageHeader>(initialData);
   const [isHeaderModalOpen, setHeaderModalOpen] = useState(false);
 
-  const handleSubmit = async (formData: IPageHeader) => {
-    try {
-      const res = await api_url.post(`/api/header`, formData);
-      Swal.fire({
-        title: res.data?.message ?? "Header saved successfully!",
-        icon: "success",
-        background: "#1f2937",
-        color: "#fff",
-        confirmButtonColor: "#1FB5DD",
-      });
-
-      setHeaderModalOpen(false);
-      setEditData(initialData);
-    } catch (err: any) {
-      Swal.fire({
-        title: "Something went wrong!",
-        text: err?.message ?? "Unknown error",
-        icon: "error",
-        background: "#1f2937",
-        color: "#fff",
-        confirmButtonColor: "#1FB5DD",
-      });
-    }
-  };
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -78,7 +54,7 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
           }}
         >
           {/* Header Title & Description */}
-          <div className="max-w-[800px] mx-auto mt-10 text-center">
+          <div className="max-w-200 mx-auto mt-10 text-center">
             <h1 className="text-[21px] md:text-[45px] lg:text-[64px] font-bold leading-tight uppercase">
               {header?.page_title || "No Title"}
             </h1>
@@ -93,12 +69,12 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
           </div>
 
           {/* Dynamic Media Items */}
-          <div className="flex justify-center items-center flex-wrap gap-6 lg:mt-[80px] mt-[40px]">
+          <div className="flex justify-center items-center flex-wrap gap-6 lg:mt-20 mt-10">
             {header?.media?.length ? (
               header?.media?.map((media, i) => (
                 <div
                   key={i}
-                  className="mx-auto rounded-xl overflow-hidden bg-gray-900 lg:w-[600px] w-full aspect-video relative"
+                  className="mx-auto rounded-xl overflow-hidden bg-gray-900 lg:w-150 w-full aspect-video relative"
                 >
                   {media?.video_url ? (
                     <ReactPlayer
@@ -178,7 +154,6 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
             {/* ✅ The Correct Form Component */}
             <HeaderForm
               defaultValues={editData}
-              onSubmit={handleSubmit}
               onCancel={() => setHeaderModalOpen(false)}
             />
           </div>

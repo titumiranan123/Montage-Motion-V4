@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
 
@@ -18,7 +19,7 @@ const PageFaqSection = ({ data }: { data: any }) => {
         <div data-aos="fade-up" className="" data-aos-delay={400}>
           <Gradientcard
             borderClassName="max-w-[422px] max-h-[751px] h-full w-full rounded-3xl p-[1px] "
-            className="max-w-[420px] max-h-[749px] h-full w-full rounded-3xl "
+            className="max-w-105 max-h-187.25 h-full w-full rounded-3xl "
           >
             <div className="flex justify-center  items-center flex-col h-full py-10 px-9">
               <Image
@@ -47,7 +48,7 @@ const PageFaqSection = ({ data }: { data: any }) => {
                 href={`${data.contact_link}`}
                 target="_blank"
                 style={{ background: "#29bbf5" }}
-                className=" max-w-[348px] w-full h-14 rounded-2xl py-4 px-4 font-medium   opensans animated hover:scale-105 flex justify-center items-center bg-[#29bbf5]"
+                className=" max-w-87 w-full h-14 rounded-2xl py-4 px-4 font-medium   opensans animated hover:scale-105 flex justify-center items-center bg-[#29bbf5]"
               >
                 Book a Call
               </Link>

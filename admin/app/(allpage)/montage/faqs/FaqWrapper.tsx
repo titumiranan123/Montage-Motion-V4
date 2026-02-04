@@ -1,16 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { FaqForm } from "@/component/faqs/Faqform";
-import { api_url } from "@/hook/Apiurl";
 import { IFaqSection } from "@/interface/interface";
 import React, { useState } from "react";
-import Swal from "sweetalert2";
 import PageFaqSection from "./PagefaqSection";
 import { ServiceFilter } from "@/utils/Servicefilter";
 
 const FaqWrapper = ({ data }: any) => {
   const [existingData, setExistingData] = useState<IFaqSection | undefined>();
   const [isItemOpen, setItemOpen] = useState(false);
-  console.log("data", data);
   return (
     <div className="text-gray-100 p-4 md:p-8">
       {/* Header */}
@@ -57,7 +55,9 @@ const FaqWrapper = ({ data }: any) => {
             <h3 className="text-lg font-medium mt-4 mb-2">
               No FAQ Sections Found
             </h3>
-            <p className="text-sm">You haven't created any FAQ sections yet.</p>
+            <p className="text-sm">
+              You haven&apos;t created any FAQ sections yet.
+            </p>
           </div>
           <button
             onClick={() => {
