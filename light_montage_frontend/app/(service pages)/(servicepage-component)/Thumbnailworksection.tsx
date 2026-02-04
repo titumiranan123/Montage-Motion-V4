@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Heading } from "@/component/share/Headering";
@@ -6,11 +7,11 @@ import ReactPlayer from "react-player";
 
 const Thumbnailworksection = ({ works }: { works: any }) => {
   return (
-    <div className="container sectionGap">
+    <div className="sectionarea overflow-hidden sectionGap">
       <Heading
-        subtitle="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing "
+        subtitle="SaaS explainer videos, product demos, feature announcements, and onboarding tutorials that convert prospects into users. Clean edits focus attention where it matters most. "
         tag="Our Works"
-        title="Our Feature Reels"
+        title="What We Create"
         width="180"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 lg:mt-16">
@@ -48,7 +49,7 @@ const Thumbnailworksection = ({ works }: { works: any }) => {
                 <ReactPlayer
                   url={dt.video_link}
                   playing={false}
-                  light={dt.thumbnail}
+                  light={<img src={dt.thumbnail} alt="" />}
                   width={"100%"}
                   height={"100%"}
                   controls={true}

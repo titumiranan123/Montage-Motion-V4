@@ -3,7 +3,6 @@ import { getData } from "@/utils/getData";
 import React from "react";
 import { getTypeFromSlug } from "./getTypeFromSlug";
 import PageContactsections from "../(servicepage-component)/PageContactsections";
-import PageFaqSection from "../(servicepage-component)/PagefaqSection";
 import PageProcesssection from "../(servicepage-component)/PageProcesssection";
 import PagePricing from "../(servicepage-component)/PagePricing";
 import PageServicesection from "../(servicepage-component)/PageServicesection";
@@ -16,6 +15,8 @@ import PodcastInsight from "../(servicepage-component)/PodcastInsight";
 import SaasInshight from "../(servicepage-component)/SaasInshight";
 import PageWhychooseus from "../(servicepage-component)/PageWhychooseus";
 import Thumbnailworksection from "../(servicepage-component)/Thumbnailworksection";
+import HomeFaqSection from "@/component/share/HomeFaqSection";
+import ComparisonCards from "@/component/home/PriceComparison";
 export async function generateMetadata({
   params,
 }: {
@@ -34,7 +35,7 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-
+  console.log(data?.data?.comparison?.[0]);
   return (
     <div className="min-h-screen text-black mt-4 ">
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
@@ -63,6 +64,9 @@ const ServicePage = async ({
         />
       )}
       {data?.data?.process && <PageProcesssection data={data?.data?.process} />}
+      {data?.data?.comparison && (
+        <ComparisonCards data={data?.data?.comparison?.[0]} />
+      )}
       {data?.data?.whychooseus && (
         <PageWhychooseus data={data?.data?.whychooseus ?? []} />
       )}
@@ -72,8 +76,8 @@ const ServicePage = async ({
           <PodcastInsight />
         </>
       )}
-      {data?.data?.whychooseus && <PageFaqSection />}
-      {data?.data?.whychooseus && <PageContactsections />}
+      {data?.data?.faq && <HomeFaqSection data={data?.data?.faq} />}
+      {data?.data?.contact && <PageContactsections />}
     </div>
   );
 };

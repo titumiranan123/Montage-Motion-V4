@@ -32,17 +32,17 @@ const SaasInshight = () => {
             data-aos-delay={300}
             className="text-(--text-primary) text-[40px] font-semibold md:text-[56px] poppins text-center md:text-left leading-[110%]  mt-6"
           >
-            Turn Your Saas Into a Story Customers Remember
+            SaaS Explainer Video Editing That Converts Visitor into Customers
           </h2>
           <p
             data-aos="fade-up"
             data-aos-delay={400}
             className="text-(--text-primary) text-[14px] font-normal md:text-[16px] opensans text-center md:text-left leading-[150% ]  mt-6"
           >
-            Don’t let your product get lost in technical jargon. With Montage
-            Motion, you get videos that simplify, engage, and convert—designed
-            to boost signups, retention, and trust. Let’s create the explainer
-            video that takes your SaaS from great idea to market leader.
+            Features mean nothing if prospects don&apos;t understand them in 60
+            seconds. Tight editing removes confusion, highlights benefits over
+            specs, and shows exactly how your software solves their problem
+            without wasting time on unnecessary details.
           </p>
           <div className="w-full flex md:flex-row flex-col gap-3 mt-10">
             <button
