@@ -17,7 +17,7 @@ export async function createSection(client: PoolClient, data: IServiceSection) {
         data.heading_part1,
         data.heading_part2,
         data.paragraph,
-      ]
+      ],
     );
     return res.rows[0]?.id;
   } catch (error) {
@@ -28,34 +28,62 @@ export async function createSection(client: PoolClient, data: IServiceSection) {
 export async function createServiceItem(
   client: PoolClient,
   data: ServiceItem[],
-  sectionId: string
+  sectionId: string,
 ) {
   try {
     // Get all existing service items for this section
     const existingItems = await client.query(
       `SELECT * FROM service_items WHERE section_id = $1`,
-      [sectionId]
+      [sectionId],
     );
 
     const existingItemsMap = new Map(
-      existingItems.rows.map((item) => [item.id, item])
+      existingItems.rows.map((item) => [item.id, item]),
     );
 
     const processedIds = new Set<string>();
+
     // Process incoming data
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
       const orderIndex = i;
-      // Match by ID if provided, otherwise treat as new
+
+      // Check if item exists
       const existing = item.id ? existingItemsMap.get(item.id) : null;
 
       let result;
 
-      if (!existing) {
+      if (existing) {
+        // DELETE existing item first
+        await client.query(`DELETE FROM service_items WHERE id = $1`, [
+          existing.id,
+        ]);
+
+        // Then INSERT new item with same ID
+        result = await client.query(
+          `INSERT INTO service_items (id, section_id, service_title, service_description, image, alt, href, service_type, icon,
+          icon_alt, position, created_at, updated_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), NOW()) RETURNING *`,
+          [
+            existing.id, // Keep the same ID
+            sectionId,
+            item.service_title,
+            item.service_description,
+            item.image,
+            item.alt,
+            item.href,
+            null,
+            item.icon,
+            item.icon_alt,
+            orderIndex,
+          ],
+        );
+      } else {
+        // NEW ITEM - Insert with new ID
         result = await client.query(
           `INSERT INTO service_items (section_id, service_title, service_description, image, alt, href, service_type, icon,
-          icon_alt,position)
-           VALUES ($1, $2, $3, $4, $5, $6, $7 , $8 ,$9,$10) RETURNING *`,
+          icon_alt, position, created_at, updated_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW()) RETURNING *`,
           [
             sectionId,
             item.service_title,
@@ -67,38 +95,26 @@ export async function createServiceItem(
             item.icon,
             item.icon_alt,
             orderIndex,
-          ]
-        );
-      } else {
-        // EXISTING ITEM - Update WITH service_title but WITHOUT changing service_type
-        result = await client.query(
-          `UPDATE service_items 
-           SET service_title = $1,
-               service_description = $2,
-               image = $3,
-               alt = $4,
-               href = $5,
-               icon = $6,
-               icon_alt =$7,
-               position =$8
-           WHERE id = $9
-           RETURNING *`,
-          [
-            item.service_title, // ✅ Now service_title can be updated
-            item.service_description,
-            item.image,
-            item.alt,
-            item.href,
-            item.icon,
-            item.icon_alt,
-            orderIndex,
-            existing.id,
-          ]
+          ],
         );
       }
 
       const serviceItemId = result.rows[0].id;
       processedIds.add(serviceItemId);
+    }
+
+    // Delete items that were not in the incoming data
+    const incomingIds = data
+      .map((item) => item.id)
+      .filter((id) => id) as string[];
+    const itemsToDelete = existingItems.rows
+      .filter((item) => !incomingIds.includes(item.id))
+      .map((item) => item.id);
+
+    if (itemsToDelete.length > 0) {
+      await client.query(`DELETE FROM service_items WHERE id = ANY($1)`, [
+        itemsToDelete,
+      ]);
     }
   } catch (error: any) {
     errorLogger.error(error);
@@ -108,7 +124,7 @@ export async function createServiceItem(
 
 export function generateServiceType(
   service_title: string,
-  format: "kebab" | "snake" = "kebab"
+  format: "kebab" | "snake" = "kebab",
 ): string {
   if (!service_title) return "";
 

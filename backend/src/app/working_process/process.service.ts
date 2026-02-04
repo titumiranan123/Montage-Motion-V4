@@ -7,7 +7,7 @@ export const processService = {
     // Check if a process already exists for given type
     const existingRes = await db.query(
       `SELECT * FROM processes WHERE type = $1 LIMIT 1`,
-      [data.type]
+      [data.type],
     );
 
     const existingProcess = existingRes.rows[0];
@@ -27,7 +27,7 @@ export const processService = {
           data.paragraph,
           data.image,
           data.alt,
-        ]
+        ],
       );
 
       process = processRes.rows[0];
@@ -45,7 +45,7 @@ export const processService = {
               step.title,
               step.description,
               step.isHiden ?? false,
-            ]
+            ],
           );
         }
       }
@@ -69,13 +69,13 @@ export const processService = {
           data.image, // $5 ✅
           data.alt, // $6 ✅
           data.type, // $7 ✅
-        ]
+        ],
       );
 
       // Reload updated process
       const updated = await db.query(
         `SELECT * FROM processes WHERE type = $1`,
-        [data.type]
+        [data.type],
       );
       process = updated.rows[0];
 
@@ -96,7 +96,7 @@ export const processService = {
               step.title,
               step.description,
               step.isHiden ?? false,
-            ]
+            ],
           );
         }
       }
@@ -128,8 +128,8 @@ export const processService = {
     const processes = [];
     for (const process of processesRes.rows) {
       const stepsRes = await db.query(
-        `SELECT * FROM process_steps WHERE process_id = $1 ORDER BY title ASC`,
-        [process.id]
+        `SELECT * FROM process_steps WHERE process_id = $1 ORDER BY position ASC`,
+        [process.id],
       );
       processes.push({ ...process, process_steps: stepsRes.rows });
     }
@@ -146,7 +146,7 @@ export const processService = {
 
     const stepsRes = await db.query(
       `SELECT * FROM process_steps WHERE process_id = $1 ORDER BY title ASC`,
-      [id]
+      [id],
     );
 
     return { ...processRes.rows[0], process_steps: stepsRes.rows };
@@ -177,7 +177,7 @@ export const processService = {
         data.image ?? existing.image,
         data.alt ?? existing.alt,
         id,
-      ]
+      ],
     );
 
     if (data.process_steps?.length) {
@@ -193,7 +193,7 @@ export const processService = {
             step.title,
             step.description,
             step.isHiden ?? false,
-          ]
+          ],
         );
       }
     }
@@ -205,7 +205,7 @@ export const processService = {
   async deleteProcess(id: string) {
     const result = await db.query(
       `DELETE FROM processes WHERE id = $1 RETURNING *`,
-      [id]
+      [id],
     );
     return result.rows[0] || null;
   },

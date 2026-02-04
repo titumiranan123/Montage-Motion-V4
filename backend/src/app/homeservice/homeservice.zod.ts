@@ -15,6 +15,7 @@ export const SectionSchema = z.object({
     "contact",
     "our_clients",
     "shorts_service",
+    "comparison",
     "insight",
     "podcast_insight",
     "before_after_section",

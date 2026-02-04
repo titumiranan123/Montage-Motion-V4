@@ -21,6 +21,7 @@ export const faqItemSchema = z.object({
 export const faqSectionSchema = z.object({
   id: z.string().uuid().optional(),
 
+  type: z.string().min(1, "Section tag is required"),
   section_tag: z.string().min(1, "Section tag is required"),
   section_title: z.string().min(1, "Section title is required"),
   section_description: z.string().min(1, "Section description is required"),

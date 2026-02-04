@@ -15,7 +15,7 @@ export const homeService = {
       // finding existing service section
       const existingRes = await client.query(
         `SELECT * FROM service_sections WHERE type = $1 LIMIT 1`,
-        [data.type]
+        [data.type],
       );
       let section = existingRes.rows[0];
       if (section) {
@@ -32,19 +32,19 @@ export const homeService = {
             data.heading_part2,
             data.paragraph,
             data.type,
-          ]
+          ],
         );
 
         const updated = await client.query(
           `SELECT * FROM service_sections WHERE type = $1`,
-          [data.type]
+          [data.type],
         );
         section = updated.rows[0];
       } else {
         const sectionId = await createSection(client, data);
         const created = await client.query(
           `SELECT * FROM service_sections WHERE id = $1`,
-          [sectionId]
+          [sectionId],
         );
         section = created.rows[0];
       }
@@ -83,7 +83,7 @@ export const homeService = {
     for (const section of sectionsRes.rows) {
       const itemsRes = await db.query(
         `SELECT * FROM home_services WHERE section_id = $1 ORDER BY order_index ASC`,
-        [section.id]
+        [section.id],
       );
 
       const services = [];
@@ -91,7 +91,7 @@ export const homeService = {
       for (const item of itemsRes.rows) {
         const availableSectionsRes = await db.query(
           `SELECT section_name, visible FROM service_item_sections WHERE service_item_id = $1`,
-          [item.id]
+          [item.id],
         );
 
         services.push({
@@ -115,7 +115,7 @@ export const homeService = {
     for (const section of sectionsRes.rows) {
       const itemsRes = await db.query(
         `SELECT service_title, service_type , href FROM home_services WHERE section_id = $1 ORDER BY order_index ASC`,
-        [section.id]
+        [section.id],
       );
       // const siplified = Object.values(itemsRes.rows).map(
       //   (item) => item.service_type
@@ -135,7 +135,7 @@ export const homeService = {
     for (const section of sectionsRes.rows) {
       const itemsRes = await db.query(
         `SELECT * FROM home_services WHERE section_id = $1 ORDER BY order_index ASC`,
-        [section.id]
+        [section.id],
       );
       // const siplified = Object.values(itemsRes.rows).map(
       //   (item) => item.service_type
@@ -153,7 +153,7 @@ export const homeService = {
     // 2️⃣ Then delete the section itself
     const result = await db.query(
       `DELETE FROM service_sections WHERE id = $1 RETURNING *`,
-      [id]
+      [id],
     );
 
     return result.rows[0] || null;

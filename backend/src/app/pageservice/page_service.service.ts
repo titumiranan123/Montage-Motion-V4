@@ -15,7 +15,7 @@ export const serviceSectionService = {
       // finding existing service section
       const existingRes = await client.query(
         `SELECT * FROM service_sections WHERE type = $1 LIMIT 1`,
-        [data.type]
+        [data.type],
       );
       let section = existingRes.rows[0];
       // check service section if have service not create new update section
@@ -33,19 +33,19 @@ export const serviceSectionService = {
             data.heading_part2,
             data.paragraph,
             data.type,
-          ]
+          ],
         );
 
         const updated = await client.query(
           `SELECT * FROM service_sections WHERE type = $1`,
-          [data.type]
+          [data.type],
         );
         section = updated.rows[0];
       } else {
         const sectionId = await createSection(client, data);
         const created = await client.query(
           `SELECT * FROM service_sections WHERE id = $1`,
-          [sectionId]
+          [sectionId],
         );
         section = created.rows[0];
       }
@@ -84,7 +84,7 @@ export const serviceSectionService = {
     for (const section of sectionsRes.rows) {
       const itemsRes = await db.query(
         `SELECT * FROM service_items WHERE section_id = $1 ORDER BY position ASC`,
-        [section.id]
+        [section.id],
       );
 
       const services = [];
@@ -93,7 +93,7 @@ export const serviceSectionService = {
         // 🔹 প্রতিটি service item এর available_section আনো
         const availableSectionsRes = await db.query(
           `SELECT section_name, visible FROM service_item_sections WHERE service_item_id = $1`,
-          [item.id]
+          [item.id],
         );
 
         services.push({
@@ -115,7 +115,7 @@ export const serviceSectionService = {
     // 2️⃣ Then delete the section itself
     const result = await db.query(
       `DELETE FROM service_sections WHERE id = $1 RETURNING *`,
-      [id]
+      [id],
     );
 
     return result.rows[0] || null;

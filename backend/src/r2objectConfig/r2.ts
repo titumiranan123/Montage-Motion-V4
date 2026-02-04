@@ -84,7 +84,7 @@ export const deleteFromR2ByUrl = async (fileUrl: string) => {
     const fileKey = fileUrl.replace(R2_PUBLIC_BASE_URL, "");
     const command = new DeleteObjectCommand({
       Bucket: "montagemotion",
-      Key: fileKey,
+      Key: `/production/${fileKey}`,
     });
     await r2Client.send(command);
     return {

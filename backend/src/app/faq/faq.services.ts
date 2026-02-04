@@ -12,12 +12,16 @@ const checkFaqSectionExists = async (id: string) => {
 export const faqService = {
   /** ✅ Create FAQ Section with items */
   async createFaqSection(data: IFaqSection) {
+    if (!data?.type) {
+      throw new Error("Please provide type");
+    }
     const client = await db.connect();
     try {
       await client.query("BEGIN");
 
       const sectionResult = await client.query(
         `INSERT INTO faq_sections (
+        type,
           section_tag,
           section_title,
           section_description,
@@ -29,9 +33,10 @@ export const faqService = {
           contact_position,
           contact_link,
           is_active
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
         RETURNING *`,
         [
+          data.type,
           data.section_tag,
           data.section_title,
           data.section_description,

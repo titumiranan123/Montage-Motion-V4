@@ -1,5 +1,7 @@
 import { db } from "../../db/db";
 import { BrandImageService } from "../brand_images/brandimage.service";
+import { comparisonService } from "../comparison/comparison.services";
+import { faqService } from "../faq/faq.services";
 import { pageHeaderService } from "../header/header.services";
 import { serviceSectionService } from "../pageservice/page_service.service";
 import { pricingPageService } from "../pricing/pricing.service";
@@ -10,13 +12,10 @@ import { processService } from "../working_process/process.service";
 
 // Helper function to fetch data for each section
 export const fetchSectionData = async (sectionName: string, type: string) => {
-  console.log(sectionName);
   switch (sectionName) {
     case "short_hero":
     case "home_hero":
     case "podcast_hero": {
-      console.log("sectionName", sectionName);
-
       const header = await pageHeaderService.getAllHeaders(type);
       return { sectionName, data: header?.[0] || null };
     }
@@ -60,9 +59,17 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
       });
       return { sectionName, data: whychooseusResult[0] || [] };
     }
+    case "comparison": {
+      const result = await comparisonService.getComparisons(type as string);
+      return { sectionName, data: result || [] };
+    }
+    case "faq": {
+      const result = await faqService.getFaqSections({ page: type });
+
+      return { sectionName, data: result[0] || [] };
+    }
 
     case "contact": {
-      console.log("sectionName", sectionName);
       const result = true;
       return { sectionName, data: result };
     }

@@ -16,7 +16,7 @@ export async function createSection(client: PoolClient, data: IServiceSection) {
         data.heading_part1,
         data.heading_part2,
         data.paragraph,
-      ]
+      ],
     );
     return res.rows[0]?.id;
   } catch (error) {
@@ -27,16 +27,16 @@ export async function createSection(client: PoolClient, data: IServiceSection) {
 export async function createServiceItem(
   client: PoolClient,
   data: ServiceItem[],
-  sectionId: string
+  sectionId: string,
 ) {
   try {
     // Get all existing service items for this section
     const existingItems = await client.query(
       `SELECT * FROM home_services WHERE section_id = $1 ORDER BY order_index ASC, created_at ASC`,
-      [sectionId]
+      [sectionId],
     );
     const existingItemsMap = new Map(
-      existingItems.rows.map((item) => [item.id, item])
+      existingItems.rows.map((item) => [item.id, item]),
     );
     const processedIds = new Set<string>();
     // Process incoming data WITH order_index
@@ -67,7 +67,7 @@ export async function createServiceItem(
             item.icon,
             item.icon_alt,
             orderIndex,
-          ]
+          ],
         );
       } else {
         // EXISTING ITEM - Update with order_index
@@ -93,7 +93,7 @@ export async function createServiceItem(
             item.icon_alt,
             orderIndex,
             existing.id,
-          ]
+          ],
         );
       }
       const serviceItemId = result.rows[0].id;
@@ -102,13 +102,13 @@ export async function createServiceItem(
       if (item.available_section && item.available_section.length > 0) {
         await client.query(
           `DELETE FROM service_item_sections WHERE service_item_id = $1`,
-          [serviceItemId]
+          [serviceItemId],
         );
         for (const sec of item.available_section) {
           await client.query(
             `INSERT INTO service_item_sections (service_item_id, section_name, visible)
-             VALUES ($1, $2, $3)`,
-            [serviceItemId, sec.section_name, sec.visible]
+             VALUES ($1, $2, $3) RETURNING *`,
+            [serviceItemId, sec.section_name, sec.visible],
           );
         }
       }
@@ -116,13 +116,13 @@ export async function createServiceItem(
 
     // Delete items that were not in the incoming data
     const itemsToDelete = existingItems.rows.filter(
-      (item) => !processedIds.has(item.id)
+      (item) => !processedIds.has(item.id),
     );
 
     for (const item of itemsToDelete) {
       await client.query(
         `DELETE FROM service_item_sections WHERE service_item_id = $1`,
-        [item.id]
+        [item.id],
       );
       await client.query(`DELETE FROM home_services WHERE id = $1`, [item.id]);
     }
@@ -134,7 +134,7 @@ export async function createServiceItem(
 
 export function generateServiceType(
   service_title: string,
-  format: "kebab" | "snake" = "kebab"
+  format: "kebab" | "snake" = "kebab",
 ): string {
   if (!service_title) return "";
 
