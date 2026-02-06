@@ -46,7 +46,7 @@ const Dot: React.FC<{ index: number; isActive: boolean }> = ({
 
   return (
     <div
-      className="relative w-[84px] h-[84px] z-10 flex  items-center justify-center  text-zinc-900 "
+      className="relative w-21 h-21 z-10 flex  items-center justify-center  text-zinc-900 "
       aria-hidden
     >
       <span className="text-xs font-semibold leading-none flex justify-center items-center h-7 w-7 rounded-full  bg-white">
@@ -62,18 +62,17 @@ const VerticalStepper: React.FC<VerticalStepperProps> = ({
   onSetpclick,
 }) => {
   return (
-    <div className="relative grid w-full max-w-[340px] grid-cols-[auto_1fr] gap-x-4">
+    <div className="relative grid w-full max-w-85 grid-cols-[auto_1fr] gap-x-4">
       {/* Vertical line */}
       <div
         style={{
-          background:
-            "linear-gradient(180deg, rgba(49, 95, 172, 0.2) 0.02%, #315FAC 21.38%, rgba(49, 95, 172, 0.2) 100%)",
+          background: `linear-gradient(180deg, rgba(31, 181, 221, 0.2) 0.02%, #1FB5DD 21.38%, rgba(31, 181, 221, 0.2) 100%)`,
         }}
-        className="pointer-events-none absolute left-[39px] top-8 h-[70%] w-2 "
+        className="pointer-events-none absolute left-9.75 top-8 h-[70%] w-2 "
       />
 
       {/* Steps */}
-      {steps.map((step, i) => {
+      {steps?.map((step, i) => {
         const isActive = i === activeIndex;
         return (
           <React.Fragment key={i}>
@@ -90,10 +89,10 @@ const VerticalStepper: React.FC<VerticalStepperProps> = ({
               <p
                 className={[
                   "select-none text-[17px] font-medium",
-                  isActive ? "text-(--text-priamry)" : "text-slate-500",
+                  isActive ? "text-(--text-primary)" : "text-slate-500",
                 ].join(" ")}
               >
-                {step.title}
+                {step?.title}
               </p>
             </div>
           </React.Fragment>
@@ -118,7 +117,7 @@ export default function StepperDemo({
       <VerticalStepper
         activeIndex={activeStep}
         onSetpclick={setActivestep}
-        steps={data}
+        steps={data?.steps}
       />
     </main>
   );

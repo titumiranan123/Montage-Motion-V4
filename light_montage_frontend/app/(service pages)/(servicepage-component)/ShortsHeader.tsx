@@ -26,8 +26,12 @@ const ShortsHeader = ({ data }: { data: any }) => {
           </button>
         </div>
       </div>
-      <div className="lg:w-[50%] h-[553px] mt-14 mx-auto w-full ">
+      <div className="lg:w-[50%] mt-32 mx-auto w-full relative">
         <VerticalMarqueeSlider data={data?.media} />
+        {/* Top Fade (White) */}
+        <div className="absolute bg-linear-to-b from-white to-transparent h-40 left-0 top-0 w-full   pointer-events-none "></div>
+        {/* Bottom Fade (White) */}
+        <div className="absolute bg-linear-to-t from-white to-transparent h-40  left-0 bottom-0 w-full glasx pointer-events-none"></div>
       </div>
     </div>
   );

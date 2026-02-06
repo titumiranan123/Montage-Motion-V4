@@ -35,6 +35,7 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
+  console.log(data?.data?.insight);
   return (
     <div className="min-h-screen text-black mt-4 ">
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
@@ -63,6 +64,7 @@ const ServicePage = async ({
         />
       )}
       {data?.data?.process && <PageProcesssection data={data?.data?.process} />}
+      {data?.data?.insight && <PodcastInsight data={data?.data?.insight} />}
       {data?.data?.comparison && (
         <ComparisonCards data={data?.data?.comparison?.[0]} />
       )}

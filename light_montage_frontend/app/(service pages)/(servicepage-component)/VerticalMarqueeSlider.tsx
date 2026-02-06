@@ -46,7 +46,7 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
     return (
       <div
         key={key}
-        className="relative h-[500px] overflow-hidden"
+        className="relative h-[600px] overflow-hidden"
         onMouseEnter={pauseOnHover ? () => togglePause(key, true) : undefined}
         onMouseLeave={pauseOnHover ? () => togglePause(key, false) : undefined}
       >
@@ -130,7 +130,7 @@ function VideoPlayer({ src }: { src: string }) {
   };
 
   return (
-    <div className="relative w-full aspect-9/16  rounded-lg overflow-hidden">
+    <div className="relative w-full aspect-9/16  rounded-lg overflow-hidden ">
       <video
         ref={videoRef}
         src={src}

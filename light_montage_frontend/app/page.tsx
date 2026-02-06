@@ -28,7 +28,6 @@ const HomePage = async ({
       <div className="headerbg lg:rounded-[40px] rounded-lg max-w-[1440px] px-2 2xl:px-[60px] mx-auto mb-10 min-h-screen">
         <Header data={data?.header ?? []} />
       </div>
-
       <PartnersSection data={data?.brand ?? []} />
       <OurFeatureProject tab={cat ?? []} />
       <ServiceSections data={data?.services ?? []} />
