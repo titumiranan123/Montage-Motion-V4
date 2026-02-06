@@ -29,6 +29,7 @@ import carrerRoute from "./app/carrerpost/carrer.route";
 import homeServiceRoute from "./app/homeservice/homeservice.route";
 import comparisonRoute from "./app/comparison/comparison.routes";
 import industriesRoute from "./app/industry/industry.routes";
+import insightRoute from "./app/insight/insight.routes";
 
 const mainRoute = Router();
 
@@ -65,4 +66,5 @@ mainRoute.use("/api", videoRoute);
 // new
 mainRoute.use("/api/comparison", comparisonRoute);
 mainRoute.use("/api/industries", industriesRoute);
+mainRoute.use("/api/insight", insightRoute);
 export default mainRoute;
