@@ -2,7 +2,15 @@ import { Heading } from "@/component/share/Headering";
 
 const OurMission = () => {
   return (
-    <div className="container rounded-[42px] py-[60px] sectionGap testimonialbg">
+    <div className="container rounded-[42px] py-[60px] sectionGap missionbg">
+      <style>{`
+      .missionbg {
+        background:
+linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
+
+        
+      }
+      `}</style>
       <Heading
         subtitle="At Montage Motion, we blend creativity, strategy, and technology to transform ideas into visuals that inspire, engage, and deliver results."
         title="Crafting Stories That "

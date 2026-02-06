@@ -58,6 +58,8 @@ const FaqSection = () => {
         subtitle="Everything you need to know before we get started. "
         tag="FAQ"
         title="Frequently Asked Questions"
+        isbackground={true}
+        width="160"
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
         <div data-aos="fade-up" className="" data-aos-delay={400}>

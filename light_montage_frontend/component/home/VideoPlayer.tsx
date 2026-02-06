@@ -1,4 +1,5 @@
 "use client";
+import { Play } from "lucide-react";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 
@@ -12,35 +13,32 @@ const VideoPlayer = ({
   className?: string;
 }) => {
   return (
-    <div className={`${className} aspect-video rounded-lg overflow-hidden`}>
+    <div
+      className={`${className} aspect-video rounded-lg overflow-hidden relative`}
+    >
       <ReactPlayer
         url={link}
-        playing={false}
-        light={thumbnail}
-        width={"100%"}
-        height={"100%"}
-        controls={true}
+        width="100%"
+        height="100%"
+        controls
+        playsinline
         playIcon={
-          <div className="flex items-center justify-center w-[68px] h-12">
-            <Image
-              src="/assets/icon/playsmall.png"
-              width={68}
-              height={48}
-              alt="Play"
-              className=""
-              priority
+          <button className="w-16 absolute top-[42%] left-[44%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
+            <Play
+              fill="#fff"
+              className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
             />
-          </div>
+          </button>
         }
-        config={{
-          youtube: {
-            playerVars: {
-              modestbranding: 1,
-              showinfo: 0,
-              rel: 0,
-            },
-          },
-        }}
+        light={
+          <Image
+            src={thumbnail}
+            alt="Intro video thumbnail"
+            fill
+            priority
+            className="object-cover"
+          />
+        }
       />
     </div>
   );

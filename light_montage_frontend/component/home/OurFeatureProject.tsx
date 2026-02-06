@@ -36,6 +36,7 @@ const OurFeatureProject = async ({ tab }: { tab: string }) => {
         subtitle={workSection.subtitle}
         title={workSection.title}
         tag={workSection.tag}
+        width="160"
       />
       <HomeTab types={category?.data} />
       <DynamicWorkContent data={data?.data} />

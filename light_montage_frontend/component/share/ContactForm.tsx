@@ -16,7 +16,7 @@ const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormDataType>({
     name: "",
     email: "",
-    interestedIn: "talking-head",
+    interestedIn: "",
     message: "",
   });
 

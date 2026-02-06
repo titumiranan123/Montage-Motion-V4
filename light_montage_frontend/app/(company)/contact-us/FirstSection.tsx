@@ -49,7 +49,7 @@ const FirstSection = () => {
                     <h3 className="text-[20px] md:text-[24px] md:leading-[30px] font-semibold poppins">
                       {item.title}
                     </h3>
-                    <p className="text-[14px] md:text-[16px] md:leading-[140%] font-normal opensans">
+                    <p className="text-[14px] md:text-[16px] md:leading-[140%] font-normal opensans mt-1">
                       {item.value}
                     </p>
                   </div>

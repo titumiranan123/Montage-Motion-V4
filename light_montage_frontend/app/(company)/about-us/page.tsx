@@ -18,6 +18,7 @@ const AboutUs = async () => {
   const data = await getData({
     url: `api/website/data?type=about&table=brand,members`,
   });
+
   return (
     <div className=" mt-2 md:pt-0 ">
       <div className="headerbg rounded-[40px] max-w-[1440px] px-2 xl:px-[60px] mx-auto pb-[60px] pt-16 mb-10">

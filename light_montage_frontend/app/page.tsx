@@ -23,12 +23,12 @@ const HomePage = async ({
     url: `api/website/data?type=home&table=brand,services,process,whychooseus,industries,comparision,faq`,
   });
   const { cat } = await searchParams;
-  console.log(data?.comparision);
   return (
     <div className="lg:mt-4">
-      <div className="headerbg lg:rounded-[40px] rounded-lg max-w-[1440px] px-2 2xl:px-[60px] mx-auto mb-10">
+      <div className="headerbg lg:rounded-[40px] rounded-lg max-w-[1440px] px-2 2xl:px-[60px] mx-auto mb-10 min-h-screen">
         <Header data={data?.header ?? []} />
       </div>
+
       <PartnersSection data={data?.brand ?? []} />
       <OurFeatureProject tab={cat ?? []} />
       <ServiceSections data={data?.services ?? []} />

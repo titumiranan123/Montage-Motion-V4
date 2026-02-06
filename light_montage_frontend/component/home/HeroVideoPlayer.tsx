@@ -1,6 +1,6 @@
 "use client";
+import { Play } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
 import ReactPlayer from "react-player";
 const HeroVideoPlayer = ({
   thumbnail,
@@ -9,29 +9,65 @@ const HeroVideoPlayer = ({
   thumbnail: string;
   video_url: string;
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   return (
-    <div className="lg:rounded-[40px] rounded-[20px] xl:w-7xl lg:w-[958px] sm:w-150 w-[320px] h-full overflow-hidden aspect-video relative bg-black ">
+    <div
+      className="
+        lg:mt-10 mt-8
+        overflow-hidden
+        max-w-7xl
+        mx-auto
+        
+        rounded-[40px]
+        bg-black relative aspect-video w-full
+      "
+    >
       <ReactPlayer
-        light={thumbnail}
         url={video_url}
-        playing={isPlaying}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        playIcon={
-          <div className="w-[70px] rounded-lg bg-black/20 flex justify-center items-center backdrop-blur-sm h-12 hover:bg-black/40 transition-colors cursor-pointer">
-            <Image
-              src={"/assets/icon/palyicon.png"}
-              width={22}
-              height={22}
-              alt="playicon"
-            />
-          </div>
+        playing={false}
+        light={
+          <Image
+            src={thumbnail}
+            fill
+            alt=" "
+            className="w-full h-full aspect-video"
+          />
         }
-        controls
+        playIcon={
+          <Image
+            src="/assets/playbutton.png"
+            width={80}
+            height={80}
+            alt="Play"
+            className="z-10"
+            priority
+          />
+        }
         width="100%"
         height="100%"
+        controls
+        config={{
+          youtube: {
+            playerVars: {
+              modestbranding: 1,
+              rel: 0,
+              controls: 1,
+              fs: 0,
+            },
+          },
+        }}
         className="absolute top-0 left-0"
+      />
+      <ReactPlayer
+        url={video_url}
+        width="100%"
+        height="100%"
+        controls
+        light={thumbnail} // ✅ শুধু URL
+        playIcon={
+          <div className="flex items-center justify-center w-full h-full">
+            <Play className="text-red-500 w-16 h-16" />
+          </div>
+        }
       />
     </div>
   );

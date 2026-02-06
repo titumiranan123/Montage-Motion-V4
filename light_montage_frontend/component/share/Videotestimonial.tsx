@@ -1,3 +1,4 @@
+import { Play } from "lucide-react";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 
@@ -26,16 +27,12 @@ const TestimonialVideocard = ({
         <ReactPlayer
           light={testimonial?.thumbnail ?? true}
           playIcon={
-            <div className="flex items-center justify-center w-[68px] h-12">
-              <Image
-                src="/assets/icon/playsmall.png"
-                width={68}
-                height={48}
-                alt="Play"
-                className=""
-                priority
+            <button className="w-16 absolute top-[42%] left-[44%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-sm  st group">
+              <Play
+                fill="#fff"
+                className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
               />
-            </div>
+            </button>
           }
           url={testimonial.video_message}
           height={"100%"}

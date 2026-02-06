@@ -19,7 +19,6 @@ const ContactPage = async () => {
           {`
             .candly{
               background: linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
-              
             }
             `}
         </style>

@@ -60,11 +60,13 @@ export default function OurStory() {
   }, []);
 
   return (
-    <div className="bg-white p-8 max-w-7xl mx-auto">
+    <div className="bg-white sectionGap p-8 max-w-7xl mx-auto">
       <Heading
         tag="Our Story"
         title="Our Story in Motion"
         subtitle="From humble beginnings to a growing creative powerhouse — discover how Montage Motion started, evolved, and where we’re headed next."
+        isbackground={true}
+        width="160"
       />
 
       <div className="flex md:flex-row flex-col gap-8 mt-16">

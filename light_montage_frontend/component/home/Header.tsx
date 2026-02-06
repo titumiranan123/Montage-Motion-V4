@@ -1,8 +1,11 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import TurstedBy from "./TurstedBy";
 import Link from "next/link";
-import HeroVideoPlayer from "./HeroVideoPlayer";
+import ReactPlayer from "react-player";
+import Image from "next/image";
+import { Play } from "lucide-react";
 const Header: React.FC<{ data: any }> = ({ data }) => {
   return (
     <div className="flex   lg:pt-30 pt-34 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
@@ -16,8 +19,8 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           <TurstedBy isCenter={true} />
         </div>
         <h1
-          // data-aos="fade-up"
-          // data-aos-delay={200}
+          data-aos="fade-up"
+          data-aos-delay={200}
           className="lg:text-[70px]  text-[42px] leading-[101%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
         >
           {data?.page_title}
@@ -50,10 +53,40 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           </Link>
         </div>
       </div>
-      <div data-aos="fade-up" data-aos-delay="500" className="mt-16  ">
-        <HeroVideoPlayer
-          thumbnail={data?.media?.[0]?.image_url}
-          video_url={data?.media?.[0]?.video_url}
+      <div
+        className="
+             lg:mt-10 mt-8
+             overflow-hidden
+             max-w-7xl
+             mx-auto
+             
+             rounded-[40px]
+             bg-black relative aspect-video w-full
+           "
+      >
+        <ReactPlayer
+          url={`https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/videos/work3.mp4`}
+          width="100%"
+          height="100%"
+          controls
+          playsinline
+          playIcon={
+            <button className="w-16 absolute top-[42%] left-[48%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
+              <Play
+                fill="#fff"
+                className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+              />
+            </button>
+          }
+          light={
+            <Image
+              src={data?.media?.[0]?.image_url}
+              alt="Intro video thumbnail"
+              fill
+              priority
+              className="object-cover"
+            />
+          }
         />
       </div>
     </div>

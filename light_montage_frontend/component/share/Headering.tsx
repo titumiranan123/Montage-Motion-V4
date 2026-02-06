@@ -14,18 +14,13 @@ export const Heading: React.FC<headerProp> = ({
   subtitle,
   tag,
   width = 400,
+  isbackground,
 }) => {
   return (
     <div className="flex flex-col gap-1 justify-center items-center max-w-5xl w-full mx-auto ">
-      {/* <p
-        style={{ maxWidth: `${width}px` }}
-        className={`glassShadowithoutinset bg-white/40  backdrop-blur-2xl max-w-[238px] w-full h-[46px] flex justify-center items-center rounded-3xl text-[16px] leading-[140%] text-(--text-primary) font-normal  poppins`}
-      >
-        {tag}
-      </p> */}
       <p
         style={{ maxWidth: `${width}px` }}
-        className={`  max-w-[238px] w-full h-[46px] flex justify-center items-center rounded-3xl text-[16px] leading-[140%] text-(--text-primary) font-normal  poppins glass-card`}
+        className={`  max-w-[238px] w-full h-[46px] flex justify-center items-center rounded-3xl text-[16px] leading-[140%]  font-normal  poppins glass-card ${isbackground ? "text-[#1FB5DD]" : "text-(--text-primary)"}`}
       >
         {tag}
       </p>

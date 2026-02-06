@@ -14,10 +14,9 @@ const ContactSection = () => {
 
       <Heading
         title="Have a Project? Let’s Talk "
-        subtitle="See how design meets function. Real results, clean code, and 
-user-first experiences."
+        subtitle="See how design meets function. Real results, clean code, and user-first experiences."
         tag="Contact Us"
-        isbackground={true}
+        isbackground={false}
         width="160"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">

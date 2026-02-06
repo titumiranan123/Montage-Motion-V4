@@ -9,47 +9,44 @@ const stepsData = [
   {
     id: 1,
     title: "Plan with Purpose",
-    content: {
-      heading: "Plan with Purpose",
-      description:
-        "Define the core message of your video. A well-planned script or outline ensures that your content stays focused and delivers clear value.",
-      items: [
-        "Define Your Audience",
-        "Set a Clear Goal",
-        "Create an Outline",
-        "Plan Your Visuals",
-      ],
-    },
+
+    heading: "Plan with Purpose",
+    description:
+      "Define the core message of your video. A well-planned script or outline ensures that your content stays focused and delivers clear value.",
+    items: [
+      "Define Your Audience",
+      "Set a Clear Goal",
+      "Create an Outline",
+      "Plan Your Visuals",
+    ],
   },
   {
     id: 2,
     title: "Record with Quality",
-    content: {
-      heading: "Record with Quality",
-      description:
-        "Ensure professional audio and video quality. Good recording practices make your content more engaging and easier to understand.",
-      items: [
-        "Use Good Lighting",
-        "Check Audio Levels",
-        "Frame Your Shot",
-        "Use a Quality Microphone",
-      ],
-    },
+
+    heading: "Record with Quality",
+    description:
+      "Ensure professional audio and video quality. Good recording practices make your content more engaging and easier to understand.",
+    items: [
+      "Use Good Lighting",
+      "Check Audio Levels",
+      "Frame Your Shot",
+      "Use a Quality Microphone",
+    ],
   },
   {
     id: 3,
     title: "Edit for Impact",
-    content: {
-      heading: "Edit for Impact",
-      description:
-        "Polish your content through editing. Remove unnecessary parts, add transitions, and enhance your message for maximum impact.",
-      items: [
-        "Cut Unnecessary Footage",
-        "Add Transitions",
-        "Enhance Audio",
-        "Add Text & Graphics",
-      ],
-    },
+
+    heading: "Edit for Impact",
+    description:
+      "Polish your content through editing. Remove unnecessary parts, add transitions, and enhance your message for maximum impact.",
+    items: [
+      "Cut Unnecessary Footage",
+      "Add Transitions",
+      "Enhance Audio",
+      "Add Text & Graphics",
+    ],
   },
 ];
 const PodcastInsight = () => {
@@ -92,20 +89,17 @@ const PodcastInsight = () => {
         >
           <div>
             <h2 className="text-[24px] font-semibold poppins">
-              {stepsData?.[activeStep].content.heading}
+              {stepsData?.[activeStep].heading}
             </h2>
             <p className="opensans text-[14px] md:text-[16px] font-normal">
-              {stepsData?.[activeStep].content.description}
+              {stepsData?.[activeStep].description}
             </p>
           </div>
           <div className="flex justify-between flex-col gap-6 md:gap-8 md:mt-8 mt-6">
             <div>
-              <Bullet text="Define Your Audience" />
-              <Bullet text="Set a Core Goal" />
-              <Bullet text="Pick a Strong Theme" />
-              <Bullet text="Plan Episodes in Advance" />
-              <Bullet text="Script with Flexiblity" />
-              <Bullet text="Balance Length with Value" />
+              {stepsData?.[activeStep].items.map((it: string, idx: number) => (
+                <Bullet key={idx} text={it} />
+              ))}
             </div>
             <button className="flex poppins">
               Get More Suggestions <ChevronRight />
