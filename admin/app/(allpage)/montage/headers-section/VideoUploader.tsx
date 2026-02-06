@@ -34,7 +34,7 @@ const VideoUploader: React.FC<Props> = ({ value, onChange }) => {
   const [isDragActive, setIsDragActive] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<UploadStatus | null>(null);
   const [parts, setParts] = useState<{ ETag: string; PartNumber: number }[]>(
-    []
+    [],
   );
 
   const MAX_VIDEO_SIZE = 300 * 1024 * 1024;
@@ -85,7 +85,7 @@ const VideoUploader: React.FC<Props> = ({ value, onChange }) => {
       const { data }: AxiosResponse<InitiateResponse> = await axios.post(
         `${BASE_URL}/uploadVideo/initiate`,
         { fileName: file.name },
-        { headers: { "Content-Type": "application/json" } }
+        { headers: { "Content-Type": "application/json" } },
       );
 
       const { uploadId, videoId } = data;
@@ -110,7 +110,7 @@ const VideoUploader: React.FC<Props> = ({ value, onChange }) => {
           formData.append("partNumber", partNumber.toString());
 
           parallelUploads.push(
-            axios.post(`${BASE_URL}/uploadVideo/upload-part`, formData)
+            axios.post(`${BASE_URL}/uploadVideo/upload-part`, formData),
           );
         }
 
@@ -168,7 +168,7 @@ const VideoUploader: React.FC<Props> = ({ value, onChange }) => {
 
       {temUrl ? (
         /* Preview */
-        <div className="relative w-[350px] rounded-md overflow-hidden border border-gray-700 mb-3">
+        <div className="relative w-87.5 rounded-md overflow-hidden border border-gray-700 mb-3">
           <div className="relative w-full pb-[56.25%] overflow-hidden rounded-md">
             <ReactPlayer
               url={temUrl}
@@ -195,7 +195,7 @@ const VideoUploader: React.FC<Props> = ({ value, onChange }) => {
       ) : (
         /* Drag Drop Area */
         <div
-          className={`flex items-center justify-center border-2 border-dashed border-gray-600 rounded-md p-6 lg:w-[350px] h-[220px] transition ${
+          className={`flex items-center justify-center border-2 border-dashed border-gray-600 rounded-md p-6 lg:w-87.5 h-55 transition ${
             isDragActive ? "bg-gray-800 border-[#1E9ED2]" : "bg-gray-950"
           }`}
           onDragEnter={handleDrag}
@@ -257,7 +257,7 @@ const VideoUploader: React.FC<Props> = ({ value, onChange }) => {
         <button
           type="button"
           onClick={handleUpload}
-          className="mt-3 w-[180px] h-[40px] bg-[#1E9ED2] text-white rounded-md hover:bg-[#157fb1]"
+          className="mt-3 w-45 h-10 bg-[#1E9ED2] text-white rounded-md hover:bg-[#157fb1]"
         >
           <FiUpload className="inline mr-2" /> Upload Video
         </button>
@@ -270,8 +270,8 @@ const VideoUploader: React.FC<Props> = ({ value, onChange }) => {
             uploadStatus.type === "error"
               ? "bg-red-900/30 text-red-400"
               : uploadStatus.type === "success"
-              ? "bg-green-900/30 text-green-400"
-              : "bg-blue-900/30 text-blue-400"
+                ? "bg-green-900/30 text-green-400"
+                : "bg-blue-900/30 text-blue-400"
           }`}
         >
           {uploadStatus.type === "error" ? (

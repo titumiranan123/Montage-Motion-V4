@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState, DragEvent } from "react";
@@ -26,7 +27,6 @@ interface VideoUploadProps {
 }
 
 const VideoUpload: React.FC<VideoUploadProps> = ({
-  videoId,
   setVideoId,
   videoPreview,
   setVideoPreview,
@@ -34,7 +34,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [parts, setParts] = useState<{ ETag: string; PartNumber: number }[]>(
-    []
+    [],
   );
   const [progress, setProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState<UploadStatus | null>(null);
@@ -114,7 +114,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
         await axios.post(
           `${BASE_URL}/uploadVideo/initiate`,
           { fileName: file.name },
-          { headers: { "Content-Type": "application/json" } }
+          { headers: { "Content-Type": "application/json" } },
         );
 
       const { uploadId, videoId: newVideoId } = initData;
@@ -147,7 +147,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
           parallelUploads.push(
             axios.post(`${BASE_URL}/uploadVideo/upload-part`, formData, {
               headers: { "Content-Type": "multipart/form-data" },
-            })
+            }),
           );
         }
 
@@ -172,7 +172,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
       await axios.post(
         `${BASE_URL}/uploadVideo/complete`,
         { uploadId, videoId: newVideoId, parts },
-        { headers: { "Content-Type": "application/json" } }
+        { headers: { "Content-Type": "application/json" } },
       );
 
       setProgress(100);
@@ -203,7 +203,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
       {/* 🖼 Preview */}
       {videoPreview && (
         <div className="mb-4 relative">
-          <div className="relative w-full max-w-[500px] rounded-lg overflow-hidden">
+          <div className="relative w-full max-w-125 rounded-lg overflow-hidden">
             <video
               controls
               src={videoPreview}
@@ -230,7 +230,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
       {/* 📦 Upload Area */}
       {!videoPreview && (
         <div
-          className={`border-2 border-dashed rounded-lg p-8 mb-6 text-center transition-all w-[330px] h-[200px] ${
+          className={`border-2 border-dashed rounded-lg p-8 mb-6 text-center transition-all w-82.5 h-50 ${
             isDragActive
               ? "border-blue-500 bg-blue-50"
               : "border-gray-300 hover:border-blue-400"
@@ -273,7 +273,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
       <button
         onClick={handleUpload}
         disabled={uploading || !file}
-        className={`w-[180px] h-[44px] rounded-lg font-medium flex items-center justify-center transition-colors ${
+        className={`w-45 h-11 rounded-lg font-medium flex items-center justify-center transition-colors ${
           uploading || !file
             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
             : "bg-blue-600 hover:bg-blue-700 text-white"
@@ -318,8 +318,8 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
             uploadStatus.type === "error"
               ? "bg-red-50 border border-red-200 text-red-700"
               : uploadStatus.type === "success"
-              ? "bg-green-50 border border-green-200 text-green-700"
-              : "bg-blue-50 border border-blue-200 text-blue-700"
+                ? "bg-green-50 border border-green-200 text-green-700"
+                : "bg-blue-50 border border-blue-200 text-blue-700"
           }`}
         >
           {uploadStatus.type === "error" ? (
