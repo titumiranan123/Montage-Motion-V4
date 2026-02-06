@@ -10,14 +10,20 @@ import { PageService } from "./types";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
-const ServiceForm = ({ initialData }: { initialData: any }) => {
+const ServiceForm = ({
+  initialData,
+  setIsModalOpent,
+}: {
+  initialData: any;
+  setIsModalOpent: (p: false) => void;
+}) => {
   const {
     register,
     control,
     setValue,
     watch,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<PageService>({
     defaultValues: initialData
       ? initialData
@@ -55,6 +61,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
     try {
       const response = await api_url.post("/api/our-service", data);
       if (response.status === 200 || response.status === 201) {
+        setIsModalOpent(false);
         toast.success(response?.data?.message);
       }
     } catch (error) {
@@ -96,17 +103,6 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
             {/* Section Type */}
             <div className="space-y-2">
               <label className=" font-medium text-gray-200 flex items-center gap-2">
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z"
-                    clipRule="evenodd"
-                  />
-                </svg>
                 Page Name *
               </label>
               <ServiceTypeSelect
@@ -114,10 +110,19 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                   setValue("type", type);
                 }}
                 value={watch("type")}
+                slice={1}
               />
-              <p className="text-sm text-gray-500 mt-1">
-                Select the Page of service section
-              </p>
+              <input
+                type="hidden"
+                {...register(`type`, {
+                  required: "type is required",
+                })}
+              />
+              {errors.type && (
+                <p className="text-sm text-red-400 mt-1">
+                  {errors.type.message}
+                </p>
+              )}
             </div>
 
             {/* Tag */}
@@ -137,14 +142,14 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                 Tag
               </label>
               <input
-                {...register("tag")}
+                {...register("tag", { required: "Required Field" })}
                 type="text"
                 className="w-full p-3 bg-gray-800/50 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all"
                 placeholder="e.g., Premium, Featured, New"
               />
-              <p className="text-sm text-gray-500 mt-1">
-                Short tag for identification
-              </p>
+              {errors?.tag?.message && (
+                <p className="text-red-500 text-sm">{errors.tag.message}</p>
+              )}
             </div>
           </div>
         </section>
@@ -160,28 +165,19 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className=" font-medium text-gray-200 flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
                   Heading
                 </label>
                 <input
-                  {...register("heading_part1")}
+                  {...register("heading_part1", { required: "Required Field" })}
                   type="text"
                   className="w-full p-3 bg-gray-800/50 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all"
                   placeholder="Enter main heading text"
                 />
-                <p className="text-sm text-gray-500 mt-1">
-                  Primary heading text
-                </p>
+                {errors?.heading_part1?.message && (
+                  <p className="text-red-500 text-sm">
+                    {errors.heading_part1.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -199,14 +195,18 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                 Description Paragraph
               </label>
               <textarea
-                {...register("paragraph")}
+                {...register("paragraph", {
+                  required: "Paragraph is Required",
+                })}
                 className="w-full p-3 bg-gray-800/50 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all resize-none"
                 rows={4}
                 placeholder="Enter detailed description for this section..."
               ></textarea>
-              <p className="text-sm text-gray-500 mt-1">
-                Provide a comprehensive description
-              </p>
+              {errors?.paragraph?.message && (
+                <p className="text-red-500 text-sm">
+                  {errors.paragraph.message}
+                </p>
+              )}
             </div>
           </div>
         </section>
@@ -332,11 +332,17 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                       <input
                         {...register(
                           `services.${index}.service_title` as const,
+                          { required: "Service title is required" },
                         )}
                         type="text"
                         className="w-full p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all"
                         placeholder="Enter a descriptive service title"
                       />
+                      {errors?.services?.[index]?.service_title?.message && (
+                        <p className="text-red-500 text-sm">
+                          {errors.services[index].service_title.message}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
@@ -346,11 +352,17 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                       <textarea
                         {...register(
                           `services.${index}.service_description` as const,
+                          { required: "Service Description is required" },
                         )}
                         className="w-full p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all resize-none"
                         rows={3}
                         placeholder="Describe what this service includes..."
                       ></textarea>
+                      {errors?.services?.[index]?.service_title?.message && (
+                        <p className="text-red-500 text-sm">
+                          {errors.services[index].service_title.message}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -360,9 +372,11 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                         Image URL
                       </label>
                       <input
-                        {...register(`services.${index}.image` as const)}
+                        {...register(`services.${index}.image` as const, {
+                          required: "Image is Required",
+                        })}
                         type="text"
-                        className="w-full p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all"
+                        className="w-full hidden p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all"
                         placeholder="https://example.com/image.jpg"
                       />
                       <ImageUploader
@@ -371,20 +385,29 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                           setValue(`services.${index}.image`, url)
                         }
                       />
+                      {errors?.services?.[index]?.image?.message && (
+                        <p className="text-red-500 text-sm">
+                          {errors.services[index].image.message}
+                        </p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <label className="block font-medium text-gray-200">
                         Alt Text
                       </label>
                       <input
-                        {...register(`services.${index}.alt` as const)}
+                        {...register(`services.${index}.alt` as const, {
+                          required: "Alt is required",
+                        })}
                         type="text"
                         className="w-full p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all"
                         placeholder="Descriptive text for accessibility"
                       />
-                      <p className="text-sm text-gray-500 mt-1">
-                        Important for SEO and accessibility
-                      </p>
+                      {errors?.services?.[index]?.alt?.message && (
+                        <p className="text-red-500 text-sm">
+                          {errors.services[index].alt.message}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>

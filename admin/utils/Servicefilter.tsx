@@ -17,19 +17,19 @@ export const ServiceFilter = ({
   const searchParams = useSearchParams();
 
   const currentPage = searchParams.get("page");
-
-  // Set default page if missing
-  useEffect(() => {
-    if (!currentPage) {
-      router.replace("?page=home"); // replace prevents reload
-    }
-  }, [currentPage, router]);
-
   // Fetch category list
   const { data } = useQuery({
     queryKey: ["categories"],
     queryFn: getDataCategory,
   });
+  console.log(data?.[0]);
+  // Set default page if missing
+  useEffect(() => {
+    if (!currentPage) {
+      router.replace(`?page=${data?.[slice]?.service_type}`); // replace prevents reload
+    }
+  }, [currentPage, data, router, slice]);
+
   const allTypes = [...(data ?? []), ...others];
   return (
     <select

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useDragAndDrop } from "@formkit/drag-and-drop/react";
 import { useEffect, useState } from "react";
@@ -33,7 +35,7 @@ export const WorkWrapper = ({ data }: { data: any }) => {
     if (data) {
       setTapes(data);
     }
-  }, [data]);
+  }, [data, setTapes]);
 
   useEffect(() => {
     setHasChanges(true);
@@ -153,13 +155,16 @@ export const WorkWrapper = ({ data }: { data: any }) => {
       {isWork && (
         <div
           style={{ zIndex: 999 }}
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start p-8"
+          onClick={() => setWorkModal(false)}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm bg-opacity-50 flex justify-center items-start p-8"
         >
-          <Workform
-            initialData={editData}
-            onCancel={() => setWorkModal(false)}
-            onSubmit={handleSubmit}
-          />
+          <div onClick={(e) => e.stopPropagation()} className="w-full">
+            <Workform
+              initialData={editData}
+              onCancel={() => setWorkModal(false)}
+              onSubmit={handleSubmit}
+            />
+          </div>
         </div>
       )}
     </div>

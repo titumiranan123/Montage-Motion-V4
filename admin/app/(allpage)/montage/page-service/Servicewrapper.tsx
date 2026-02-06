@@ -1,23 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useState } from "react";
 import ServiceForm from "./Serviceform";
 import SingleService from "./SingleService";
-import { useRouter, useSearchParams } from "next/navigation";
 import { ServiceFilter } from "@/utils/Servicefilter";
 
-const Servicewrapper = ({ data, page }: { data: any; page: string }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
+const Servicewrapper = ({ data }: { data: any; page: string }) => {
   const [serviceData, setInitialServiceData] = useState<any | null>(null);
   const [isOpenModal, setIsModalOpent] = useState<any | null>(null);
 
-  useEffect(() => {
-    // Only push "home" if no ?page param exists
-    if (!searchParams.get("page")) {
-      router.push("?page=home");
-    }
-  }, [router, searchParams]);
   // Disable scrolling when the modal is open
   useEffect(() => {
     if (isOpenModal) {
@@ -44,7 +35,7 @@ const Servicewrapper = ({ data, page }: { data: any; page: string }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <ServiceFilter />
+          <ServiceFilter slice={1} />
           {/* Add New Button */}
           <button
             onClick={() => {
@@ -70,8 +61,8 @@ const Servicewrapper = ({ data, page }: { data: any; page: string }) => {
         </div>
       </div>
       <div>
-        {data.map((dt: any) => (
-          <div>
+        {data.map((dt: any, idx: number) => (
+          <div key={idx}>
             <SingleService data={dt} />
             <button
               onClick={() => {
@@ -105,7 +96,10 @@ const Servicewrapper = ({ data, page }: { data: any; page: string }) => {
         h-screen flex justify-center items-center fixed inset-0 bg-black/60 backdrop-blur-2xl"
         >
           <div onClick={(e) => e.stopPropagation()}>
-            <ServiceForm initialData={serviceData} />
+            <ServiceForm
+              initialData={serviceData}
+              setIsModalOpent={setIsModalOpent}
+            />
           </div>
         </div>
       )}

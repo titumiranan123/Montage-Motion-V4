@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { WorkWrapper } from "./WorksWrapper";
 import { getData } from "@/utils/getDate";

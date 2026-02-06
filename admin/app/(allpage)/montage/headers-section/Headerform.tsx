@@ -127,11 +127,22 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
           <div className="space-y-4">
             <div className="space-y-3">
               <label className="text-sm font-medium text-gray-300">Type</label>
+              <input
+                type="hidden"
+                {...register(`type`, {
+                  required: "Type is required",
+                })}
+              />
               <ServiceTypeSelect
                 onChange={(url) => setValue("type", url)}
                 value={watch("type")}
                 others={[{ service_title: "About", service_type: "about" }]}
               />
+              {errors.type && (
+                <p className="text-sm text-red-400 mt-1">
+                  {errors.type.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-3">
@@ -139,10 +150,15 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
                 CTA Primary Link
               </label>
               <input
-                {...register("cta_primary_link")}
+                {...register("cta_primary_link", { required: "required" })}
                 placeholder="https://example.com"
                 className="w-full px-4 py-3 bg-gray-800 rounded-lg text-white border border-gray-700 focus:ring-2 focus:ring-[#1FB5DD] focus:border-transparent"
               />
+              {errors.cta_primary_link && (
+                <p className="text-sm text-red-400 mt-1">
+                  {errors.cta_primary_link.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -152,11 +168,16 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
               Description
             </label>
             <textarea
-              {...register("description")}
+              {...register("description", { required: "required" })}
               rows={4}
               className="w-full px-4 py-3 bg-gray-800 rounded-lg text-white border border-gray-700 focus:ring-2 focus:ring-[#1FB5DD] focus:border-transparent resize-none"
               placeholder="Enter description"
             />
+            {errors.description && (
+              <p className="text-sm text-red-400 mt-1">
+                {errors.description.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -233,6 +254,12 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
                     <label className="text-sm font-medium text-gray-300">
                       Featured Image *
                     </label>
+                    <input
+                      type="hidden"
+                      {...register(`media.${index}.image_url`, {
+                        required: "Image is required",
+                      })}
+                    />
                     <div className="bg-gray-800 border border-gray-700 rounded-lg p-3">
                       <ImageUploader
                         value={imageUrl || ""}

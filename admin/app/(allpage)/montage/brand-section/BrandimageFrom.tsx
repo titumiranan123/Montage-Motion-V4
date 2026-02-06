@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -6,6 +7,7 @@ import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
 interface IBrandImage {
   id?: string;
@@ -57,7 +59,7 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
           alt: "",
           width: "",
           height: "",
-          type: "home",
+          type: "",
           ishide: false,
         },
   });
@@ -104,7 +106,7 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
           {/* Image Upload */}
           <div>
             <label className="block font-medium text-gray-200 mb-1">
-              Image URL
+              Image URL *
             </label>
 
             <div className="mt-3">
@@ -112,14 +114,25 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
                 value={watch("image")}
                 onChange={(url) => setValue("image", url)}
               />
+              <input
+                {...register("image", { required: "Image is Required" })}
+                type="text"
+                className="hidden"
+                placeholder=""
+              />
             </div>
+            {errors.image && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.image.message}
+              </p>
+            )}
           </div>
 
           {/* Alt Text */}
           <div className="space-y-6">
             <div>
               <label className="block font-medium text-gray-200 mb-1">
-                Alt Text
+                Alt Text *
               </label>
               <input
                 {...register("alt", { required: "Alt text is required" })}
@@ -135,10 +148,10 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
             </div>
             <div>
               <label className="block font-medium text-gray-200 mb-1">
-                Image Height
+                Image Height *
               </label>
               <input
-                {...register("height")}
+                {...register("height", { required: "Height is required" })}
                 type="text"
                 className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#1FA4C0] focus:border-[#1FA4C0] transition-colors"
                 placeholder="Enter image height"
@@ -151,10 +164,10 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
             </div>
             <div>
               <label className="block font-medium text-gray-200 mb-1">
-                Image Width
+                Image Width *
               </label>
               <input
-                {...register("width")}
+                {...register("width", { required: "Width is required" })}
                 type="text"
                 className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#1FA4C0] focus:border-[#1FA4C0] transition-colors"
                 placeholder="Enter image width"
@@ -169,20 +182,33 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
 
           {/* Type Field */}
           <div>
-            <label className="block font-medium text-gray-200">
-              Section Type
-            </label>
-            <select
-              {...register("type")}
-              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
-            >
-              <option value="podcast">Podcast</option>
-              <option value="shorts">Shorts</option>
-              <option value="thumbnail">Thumbnail</option>
-              <option value="saas">SaaS</option>
-              <option value="talkinghead">Talking Head</option>
-              <option value="home">Home</option>
-            </select>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Page Type *
+                </label>
+                <div className="relative">
+                  <ServiceTypeSelect
+                    value={watch("type")}
+                    onChange={(url: any) => {
+                      setValue(`type`, url);
+                    }}
+                  />
+                  <input
+                    {...register("type", {
+                      required: "Type is required",
+                    })}
+                    placeholder="e.g., Affordable Pricing, Premium Plans"
+                    className="hidden"
+                  />
+                </div>
+                {errors.type && (
+                  <p className="text-sm text-red-400 mt-1">
+                    {errors.type.message}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Hide Field */}

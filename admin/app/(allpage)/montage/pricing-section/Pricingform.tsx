@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/incompatible-library */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import {
@@ -13,7 +15,7 @@ import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { useRouter } from "next/navigation";
 
 const defaultValues: IPagePricePlan = {
-  type: "home",
+  type: " ",
   tag: "",
   heading_part1: "",
   heading_part2: "",
@@ -38,6 +40,7 @@ const PackageItem = ({
   control,
   register,
   removePackage,
+  errors,
 }: any) => {
   const {
     fields: featureFields,
@@ -68,67 +71,127 @@ const PackageItem = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">
-            Package Name
+            Package Name *
           </label>
           <input
-            {...register(`packages.${pkgIndex}.name`)}
+            {...register(`packages.${pkgIndex}.name`, {
+              required: "Package name is required",
+            })}
             placeholder="e.g., Basic Plan, Premium Plan"
-            className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+            className={`w-full p-3 bg-gray-900/50 border ${
+              errors?.packages?.[pkgIndex]?.name
+                ? "border-red-500"
+                : "border-gray-600"
+            } rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200`}
           />
+          {errors?.packages?.[pkgIndex]?.name && (
+            <p className="text-sm text-red-400 mt-1">
+              {errors.packages[pkgIndex].name.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">
-            Description
+            Description *
           </label>
           <input
-            {...register(`packages.${pkgIndex}.description`)}
+            {...register(`packages.${pkgIndex}.description`, {
+              required: "Description is required",
+            })}
             placeholder="Short description of the package"
-            className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+            className={`w-full p-3 bg-gray-900/50 border ${
+              errors?.packages?.[pkgIndex]?.description
+                ? "border-red-500"
+                : "border-gray-600"
+            } rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200`}
           />
+          {errors?.packages?.[pkgIndex]?.description && (
+            <p className="text-sm text-red-400 mt-1">
+              {errors.packages[pkgIndex].description.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">
-            Currency
+            Currency *
           </label>
           <select
-            {...register(`packages.${pkgIndex}.currency`)}
-            className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+            {...register(`packages.${pkgIndex}.currency`, {
+              required: "Currency is required",
+            })}
+            className={`w-full p-3 bg-gray-900/50 border ${
+              errors?.packages?.[pkgIndex]?.currency
+                ? "border-red-500"
+                : "border-gray-600"
+            } rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200`}
           >
             <option value="BDT">BDT</option>
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
             <option value="GBP">GBP</option>
           </select>
+          {errors?.packages?.[pkgIndex]?.currency && (
+            <p className="text-sm text-red-400 mt-1">
+              {errors.packages[pkgIndex].currency.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">
-            Price
+            Price *
           </label>
           <input
             type="number"
-            {...register(`packages.${pkgIndex}.price`, { valueAsNumber: true })}
+            {...register(`packages.${pkgIndex}.price`, {
+              required: "Price is required",
+              valueAsNumber: true,
+              min: {
+                value: 0,
+                message: "Price must be 0 or greater",
+              },
+            })}
             placeholder="0.00"
             min="0"
             step="0.01"
-            className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+            className={`w-full p-3 bg-gray-900/50 border ${
+              errors?.packages?.[pkgIndex]?.price
+                ? "border-red-500"
+                : "border-gray-600"
+            } rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200`}
           />
+          {errors?.packages?.[pkgIndex]?.price && (
+            <p className="text-sm text-red-400 mt-1">
+              {errors.packages[pkgIndex].price.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">
-            Billing Cycle
+            Billing Cycle *
           </label>
           <select
-            {...register(`packages.${pkgIndex}.billing_cycle`)}
-            className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+            {...register(`packages.${pkgIndex}.billing_cycle`, {
+              required: "Billing cycle is required",
+            })}
+            className={`w-full p-3 bg-gray-900/50 border ${
+              errors?.packages?.[pkgIndex]?.billing_cycle
+                ? "border-red-500"
+                : "border-gray-600"
+            } rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200`}
           >
             <option value="one-time">One-time</option>
             <option value="monthly">Monthly</option>
             <option value="yearly">Yearly</option>
           </select>
+          {errors?.packages?.[pkgIndex]?.billing_cycle && (
+            <p className="text-sm text-red-400 mt-1">
+              {errors.packages[pkgIndex].billing_cycle.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2 flex items-end">
@@ -146,7 +209,7 @@ const PackageItem = ({
       {/* Features Section */}
       <div className="border-t border-gray-700 pt-6">
         <div className="flex justify-between items-center mb-4">
-          <h4 className="text-lg font-semibold text-white">Features</h4>
+          <h4 className="text-lg font-semibold text-white">Features *</h4>
           <button
             type="button"
             onClick={() => addFeature({ feature: "", is_active: true })}
@@ -168,31 +231,28 @@ const PackageItem = ({
                   <Controller
                     name={`packages.${pkgIndex}.features.${featIndex}.feature`}
                     control={control}
-                    render={({ field }) => (
-                      <input
-                        {...field}
-                        placeholder="Enter feature description"
-                        className="w-full p-3  border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
-                      />
+                    rules={{ required: "Feature is required" }}
+                    render={({ field, fieldState }) => (
+                      <div>
+                        <input
+                          {...field}
+                          placeholder="Enter feature description"
+                          className={`w-full p-3  border ${
+                            fieldState.error
+                              ? "border-red-500"
+                              : "border-gray-600"
+                          } rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200`}
+                        />
+                        {fieldState.error && (
+                          <p className="text-sm text-red-400 mt-1">
+                            {fieldState.error.message}
+                          </p>
+                        )}
+                      </div>
                     )}
                   />
                 </div>
                 <div className="flex items-center gap-3">
-                  {/* <Controller
-                    name={`packages.${pkgIndex}.features.${featIndex}.is_active`}
-                    control={control}
-                    render={({ field }) => (
-                      <label className="flex items-center gap-2 text-sm text-gray-300">
-                        <span>Active:</span>
-                        <input
-                          type="checkbox"
-                          checked={field.value}
-                          onChange={(e) => field.onChange(e.target.checked)}
-                          className="h-4 w-4 text-[#1E9ED2] rounded focus:ring-[#1E9ED2]"
-                        />
-                      </label>
-                    )}
-                  /> */}
                   <button
                     type="button"
                     onClick={() => removeFeature(featIndex)}
@@ -208,8 +268,14 @@ const PackageItem = ({
         ) : (
           <div className="text-center py-8  rounded-lg border border-gray-700 border-dashed">
             <p className="text-gray-400 text-sm">
-              No features added yet. Click "Add Feature" to get started.
+              No features added yet. Click &quot;Add Feature&quot; to get
+              started.
             </p>
+            {errors?.packages?.[pkgIndex]?.features && (
+              <p className="text-sm text-red-400 mt-2">
+                At least one feature is required
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -230,9 +296,10 @@ const PricingPageForm = ({
     handleSubmit,
     setValue,
     watch,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<IPagePricePlan>({
     defaultValues: initialData ?? defaultValues,
+    mode: "onBlur",
   });
 
   const {
@@ -243,7 +310,9 @@ const PricingPageForm = ({
     control,
     name: "packages",
   });
+
   const router = useRouter();
+
   const onSubmit: SubmitHandler<IPagePricePlan> = async (data) => {
     try {
       const respon = await api_url.post(`/api/pricing`, data);
@@ -259,31 +328,16 @@ const PricingPageForm = ({
   };
 
   return (
-    <div className="h-[85vh] overflow-y-auto bg-gradient-to-br from-gray-950 to-gray-900 p-6 rounded-2xl border border-gray-800/50 shadow-2xl">
+    <div className="h-[85vh] overflow-y-auto bg-linear-to-br from-gray-950 to-gray-900 p-6 rounded-2xl border border-gray-800/50 shadow-2xl">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#1E9ED2] rounded-2xl mb-6 shadow-lg">
-            <svg
-              className="w-8 h-8 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
           <h1 className="text-4xl font-bold text-white mb-4 bg-[#1E9ED2] bg-clip-text">
             Pricing Page Manager
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            Design and customize pricing plans for different sections of your
-            website
+
+          <p className="text-sm text-gray-500 mt-2">
+            Fields marked with * are required
           </p>
         </div>
 
@@ -308,46 +362,44 @@ const PricingPageForm = ({
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Page Type
+                      Page Type *
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-gray-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3"
-                          />
-                        </svg>
-                      </div>
                       <ServiceTypeSelect
                         value={watch("type")}
                         onChange={(url: any) => {
-                          setValue(`type`, url, {
-                            shouldValidate: true,
-                            shouldDirty: true,
-                          });
+                          setValue(`type`, url);
                         }}
                       />
+                      <input
+                        {...register("type", {
+                          required: "Type is required",
+                        })}
+                        placeholder="e.g., Affordable Pricing, Premium Plans"
+                        className="hidden"
+                      />
                     </div>
+                    {errors.type && (
+                      <p className="text-sm text-red-400 mt-1">
+                        {errors.type.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <label className="block text-sm font-medium text-gray-300">
-                    Tag Line
+                    Tag Line *
                   </label>
                   <div className="relative">
                     <input
-                      {...register("tag")}
+                      {...register("tag", {
+                        required: "Tag line is required",
+                      })}
                       placeholder="e.g., Affordable Pricing, Premium Plans"
-                      className="w-full pl-12 p-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 transition-all duration-200"
+                      className={`w-full pl-12 p-4 bg-gray-900/50 border ${
+                        errors.tag ? "border-red-500" : "border-gray-700"
+                      } rounded-xl text-white placeholder-gray-500 transition-all duration-200`}
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg
@@ -365,17 +417,28 @@ const PricingPageForm = ({
                       </svg>
                     </div>
                   </div>
+                  {errors.tag && (
+                    <p className="text-sm text-red-400 mt-1">
+                      {errors.tag.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-4">
                   <label className="block text-sm font-medium text-gray-300">
-                    Heading
+                    Heading *
                   </label>
                   <div className="relative">
                     <input
-                      {...register("heading_part1")}
+                      {...register("heading_part1", {
+                        required: "Heading is required",
+                      })}
                       placeholder="First part of main heading"
-                      className="w-full pl-12 p-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-500  transition-all duration-200"
+                      className={`w-full pl-12 p-4 bg-gray-900/50 border ${
+                        errors.heading_part1
+                          ? "border-red-500"
+                          : "border-gray-700"
+                      } rounded-xl text-white placeholder-gray-500  transition-all duration-200`}
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg
@@ -393,18 +456,66 @@ const PricingPageForm = ({
                       </svg>
                     </div>
                   </div>
+                  {errors.heading_part1 && (
+                    <p className="text-sm text-red-400 mt-1">
+                      {errors.heading_part1.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-4">
+                  <label className="block text-sm font-medium text-gray-300">
+                    Second Heading *
+                  </label>
+                  <div className="relative">
+                    <input
+                      {...register("heading_part2", {
+                        required: "Second heading is required",
+                      })}
+                      placeholder="Second part of main heading"
+                      className={`w-full pl-12 p-4 bg-gray-900/50 border ${
+                        errors.heading_part2
+                          ? "border-red-500"
+                          : "border-gray-700"
+                      } rounded-xl text-white placeholder-gray-500  transition-all duration-200`}
+                    />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg
+                        className="w-5 h-5 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  {errors.heading_part2 && (
+                    <p className="text-sm text-red-400 mt-1">
+                      {errors.heading_part2.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="lg:col-span-2 space-y-4">
                   <label className="block text-sm font-medium text-gray-300">
-                    Description Paragraph
+                    Description Paragraph *
                   </label>
                   <div className="relative">
                     <textarea
-                      {...register("paragraph")}
+                      {...register("paragraph", {
+                        required: "Description paragraph is required",
+                      })}
                       placeholder="Detailed description about the pricing section..."
                       rows={4}
-                      className="w-full pl-12 pt-4 pb-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-500  transition-all duration-200 resize-vertical"
+                      className={`w-full pl-12 pt-4 pb-4 bg-gray-900/50 border ${
+                        errors.paragraph ? "border-red-500" : "border-gray-700"
+                      } rounded-xl text-white placeholder-gray-500  transition-all duration-200 resize-vertical`}
                     />
                     <div className="absolute top-4 left-3 flex items-start pointer-events-none">
                       <svg
@@ -422,6 +533,11 @@ const PricingPageForm = ({
                       </svg>
                     </div>
                   </div>
+                  {errors.paragraph && (
+                    <p className="text-sm text-red-400 mt-1">
+                      {errors.paragraph.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -475,6 +591,13 @@ const PricingPageForm = ({
                 </button>
               </div>
 
+              {errors.packages &&
+                typeof errors.packages.message === "string" && (
+                  <div className="mb-6 p-4 bg-red-900/20 border border-red-700 rounded-lg">
+                    <p className="text-red-400">{errors.packages.message}</p>
+                  </div>
+                )}
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {packageFields.map((pkg, pkgIndex) => (
                   <PackageItem
@@ -484,13 +607,14 @@ const PricingPageForm = ({
                     control={control}
                     register={register}
                     removePackage={removePackage}
+                    errors={errors}
                   />
                 ))}
               </div>
 
               {packageFields.length === 0 && (
                 <div className="text-center py-16 bg-gray-900/20 rounded-2xl border-2 border-gray-700 border-dashed">
-                  <div className="w-20 h-20 mx-auto bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                  <div className="w-20 h-20 mx-auto bg-linear-to-r from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
                     <svg
                       className="w-10 h-10 text-gray-600"
                       fill="none"
@@ -539,7 +663,7 @@ const PricingPageForm = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-10 py-4 bg-[#1E9ED2] hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-3 shadow-xl shadow-blue-900/30 min-w-[220px] justify-center group"
+              className="px-10 py-4 bg-[#1E9ED2] hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-3 shadow-xl shadow-blue-900/30 min-w-55 justify-center group"
             >
               {isSubmitting ? (
                 <>

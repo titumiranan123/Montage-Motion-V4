@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/incompatible-library */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -35,10 +37,10 @@ const Workform: React.FC<IWorkFormProps> = ({
     setValue,
     watch,
 
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<IWork>({
     defaultValues: {
-      type: "home",
+      type: "",
       ...initialData,
     },
   });
@@ -60,7 +62,7 @@ const Workform: React.FC<IWorkFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="space-y-8 h-[600px] overflow-y-auto max-w-7xl mx-auto p-5 mt-10 bg-[#070707] rounded-xl"
+      className="space-y-8 h-150 overflow-y-auto max-w-7xl mx-auto p-5 mt-10 bg-[#070707] rounded-xl"
     >
       {/* Header */}
       <div className="space-y-2">
@@ -88,6 +90,15 @@ const Workform: React.FC<IWorkFormProps> = ({
                 });
               }}
             />
+            <input
+              type="hidden"
+              {...register(`type`, {
+                required: "Type is required",
+              })}
+            />
+            {errors.type && (
+              <p className="text-sm text-red-400 mt-1">{errors.type.message}</p>
+            )}
           </div>
 
           {/* Video URL */}
@@ -96,11 +107,16 @@ const Workform: React.FC<IWorkFormProps> = ({
               Video Url <span className="text-red-500">*</span>
             </label>
             <input
-              {...register("video_link")}
+              {...register("video_link", { required: "Required !" })}
               type="text"
               placeholder="Video Url"
               className={`w-full rounded-md p-3 bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-transparent focus:outline-none transition-all`}
             />
+            {errors.video_link && (
+              <p className="text-sm text-red-400 mt-1">
+                {errors.video_link.message}
+              </p>
+            )}
           </div>
 
           {/* Toggles */}
@@ -121,7 +137,7 @@ const Workform: React.FC<IWorkFormProps> = ({
                     {...register("is_visible")}
                     className="sr-only peer"
                   />
-                  <div className="relative w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#1FB5DD] rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1FB5DD]"></div>
+                  <div className="relative w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#1FB5DD] rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1FB5DD]"></div>
                 </label>
               </div>
 
@@ -138,7 +154,7 @@ const Workform: React.FC<IWorkFormProps> = ({
                     {...register("is_feature")}
                     className="sr-only peer"
                   />
-                  <div className="relative w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#1FB5DD] rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1FB5DD]"></div>
+                  <div className="relative w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#1FB5DD] rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1FB5DD]"></div>
                 </label>
               </div>
             </div>
@@ -163,6 +179,17 @@ const Workform: React.FC<IWorkFormProps> = ({
                 }}
                 title=""
               />
+              <input
+                type="hidden"
+                {...register(`thumbnail`, {
+                  required: "Thumbnail is required",
+                })}
+              />
+              {errors.thumbnail && (
+                <p className="text-sm text-red-400 mt-1">
+                  {errors.thumbnail.message}
+                </p>
+              )}
             </div>
           </div>
 
