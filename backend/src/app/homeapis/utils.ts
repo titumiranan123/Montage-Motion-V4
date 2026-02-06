@@ -3,6 +3,7 @@ import { BrandImageService } from "../brand_images/brandimage.service";
 import { comparisonService } from "../comparison/comparison.services";
 import { faqService } from "../faq/faq.services";
 import { pageHeaderService } from "../header/header.services";
+import { getSectionByPage } from "../insight/insight.services";
 import { serviceSectionService } from "../pageservice/page_service.service";
 import { pricingPageService } from "../pricing/pricing.service";
 import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
@@ -62,6 +63,10 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
     case "comparison": {
       const result = await comparisonService.getComparisons(type as string);
       return { sectionName, data: result || [] };
+    }
+    case "insight": {
+      const result = await getSectionByPage(type as string);
+      return { sectionName, data: result?.[0] || [] };
     }
     case "faq": {
       const result = await faqService.getFaqSections({ page: type });
