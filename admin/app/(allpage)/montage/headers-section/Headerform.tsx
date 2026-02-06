@@ -130,6 +130,7 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
               <ServiceTypeSelect
                 onChange={(url) => setValue("type", url)}
                 value={watch("type")}
+                others={[{ service_title: "About", service_type: "about" }]}
               />
             </div>
 

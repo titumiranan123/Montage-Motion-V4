@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/incompatible-library */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
@@ -62,7 +63,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-800">
+    <div className="max-w-5xl mx-auto bg-linear-to-br from-gray-900 to-black text-white p-8 rounded-2xl shadow-2xl border border-gray-800">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-[#1E9ED2] flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-[#1E9ED2]/20 flex items-center justify-center">
@@ -229,7 +230,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                   alt: "",
                 })
               }
-              className="flex items-center gap-2 bg-gradient-to-r from-[#1E9ED2] to-[#0D8BC6] text-white px-4 py-2 rounded-lg font-semibold hover:from-[#1787b5] hover:to-[#0C7AA5] transition-all shadow-lg hover:shadow-xl"
+              className="flex items-center gap-2 bg-linear-to-r from-[#1E9ED2] to-[#0D8BC6] text-white px-4 py-2 rounded-lg font-semibold hover:from-[#1787b5] hover:to-[#0C7AA5] transition-all shadow-lg hover:shadow-xl"
             >
               <svg
                 className="w-5 h-5"
@@ -252,7 +253,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
             {fields.map((field, index) => (
               <div
                 key={field.id}
-                className="relative group bg-gradient-to-br from-gray-950 to-gray-900 border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition-all"
+                className="relative group bg-linear-to-br from-gray-950 to-gray-900 border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition-all"
               >
                 {/* Service Header with Controls */}
                 <div className="flex items-center justify-between mb-6">
@@ -423,7 +424,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
                       alt: "",
                     })
                   }
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-[#1E9ED2] to-[#0D8BC6] text-white px-6 py-3 rounded-lg font-semibold hover:from-[#1787b5] hover:to-[#0C7AA5] transition-all shadow-lg"
+                  className="inline-flex items-center gap-2 bg-linear-to-r from-[#1E9ED2] to-[#0D8BC6] text-white px-6 py-3 rounded-lg font-semibold hover:from-[#1787b5] hover:to-[#0C7AA5] transition-all shadow-lg"
                 >
                   <svg
                     className="w-5 h-5"
@@ -446,7 +447,7 @@ const ServiceForm = ({ initialData }: { initialData: any }) => {
         </section>
 
         {/* Submit Section */}
-        <div className="sticky bottom-0 pt-4 bg-gradient-to-t from-black via-black to-transparent">
+        <div className="sticky bottom-0 pt-4 bg-linear-to-t from-black via-black to-transparent">
           <button
             type="submit"
             disabled={isSubmitting}

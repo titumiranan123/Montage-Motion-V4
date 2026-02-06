@@ -29,7 +29,10 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
         </div>
 
         <div className="flex mt-5 flex-col sm:flex-row gap-5 md:gap-3 w-full md:w-auto">
-          <ServiceFilter slice={0} />
+          <ServiceFilter
+            slice={0}
+            others={[{ service_title: "About", service_type: "about" }]}
+          />
 
           <button
             onClick={() => {
@@ -80,7 +83,14 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
                     <ReactPlayer
                       url={media?.video_url}
                       playing={false}
-                      light={media?.image_url}
+                      light={
+                        <Image
+                          src={media?.image_url}
+                          fill
+                          alt=" "
+                          className="w-full h-full aspect-video"
+                        />
+                      }
                       playIcon={
                         <Image
                           src="/assets/playbutton.png"

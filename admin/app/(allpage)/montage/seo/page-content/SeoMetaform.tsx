@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
@@ -6,8 +8,6 @@ import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
-import axios from "axios";
-import { useSession } from "next-auth/react";
 import { api_url } from "@/hook/Apiurl";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -24,21 +24,7 @@ const inter = Inter({
 
 interface SeoMeta {
   id?: number;
-  page_name:
-    | "home"
-    | "podcast"
-    | "shorts"
-    | "talking"
-    | "saas"
-    | "thumbnail"
-    | "portfolio"
-    | "career"
-    | "contact"
-    | "about"
-    | "blog"
-    | "terms"
-    | "privacy"
-    | "refund";
+  page_name: string;
   meta_title: string;
   meta_description: string;
   meta_keywords?: string;
@@ -54,10 +40,10 @@ interface SeoMeta {
 
 interface SeoMetaFormProps {
   initialData?: Partial<SeoMeta>;
-  token: string;
+  type: string[];
 }
 
-const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
+const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
@@ -94,7 +80,7 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
       setValue("meta_description", initialData.meta_description ?? "");
       setValue("meta_keywords", initialData.meta_keywords ?? "");
       setValue("canonical_url", initialData.canonical_url ?? "");
-      setValue("meta_robots", initialData.meta_robots ?? "index, follow"); // default applied
+      setValue("meta_robots", initialData.meta_robots ?? "index, follow");
       setValue(
         "twitter_card_type",
         initialData.twitter_card_type ?? "summary_large_image",
@@ -104,12 +90,7 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
   }, [initialData]);
 
   const pageOptions: SeoMeta["page_name"][] = [
-    "home",
-    "podcast",
-    "shorts",
-    "talking",
-    "saas",
-    "thumbnail",
+    ...type,
     "portfolio",
     "career",
     "contact",
@@ -161,16 +142,17 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
           confirmButtonColor: "#6366f1",
         });
       }
-    } catch (error) {
-      setIsSubmitting(false);
+    } catch (error: any) {
       console.log(error);
+      setIsSubmitting(false);
+      toast.error(error.errorDetails?.[0]?.message);
     }
   };
   return (
     <div
       className={`max-w-4xl bg-[#0A0A0A] rounded-xl mx-auto py-12 px-4 sm:px-6 lg:px-8 ${inter.className}`}
     >
-      <h1 className="text-3xl font-bold bg-gradient-to-r from-[#1FB5DD] to-[#4FFFD0] bg-clip-text text-transparent mb-8 tracking-tight">
+      <h1 className="text-3xl font-bold bg-linear-to-r from-[#1FB5DD] to-[#4FFFD0] bg-clip-text text-transparent mb-8 tracking-tight">
         Page SEO Content Editor
       </h1>
 
@@ -366,7 +348,7 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, token }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 rounded-full bg-gradient-to-r from-[#1FB5DD] to-[#4FFFD0] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
+            className={`w-full py-3 rounded-full bg-linear-to-r from-[#1FB5DD] to-[#4FFFD0] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
               isSubmitting ? "animate-pulse" : ""
             }`}
           >

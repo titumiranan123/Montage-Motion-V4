@@ -100,7 +100,7 @@ const ServiceForm = ({
     handleSubmit,
     setValue,
     watch,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<PageService>({
     defaultValues: initialData || {
       type: "home",
@@ -168,7 +168,7 @@ const ServiceForm = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-black text-white p-8 rounded-2xl border border-gray-800">
+    <div className="w-4xl mx-auto bg-black text-white p-8 rounded-2xl border border-gray-800">
       <h1 className="text-3xl font-bold mb-6 text-[#1E9ED2]">
         Service Section Form
       </h1>
@@ -181,36 +181,52 @@ const ServiceForm = ({
         <div>
           <label className="block font-medium">Section Type</label>
           <select
-            {...register("type")}
+            {...register("type", { required: "Type is Required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           >
             <option value="home">Home</option>
           </select>
+          {errors?.type?.message && (
+            <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>
+          )}
         </div>
 
         <div>
           <label className="block font-medium">Tag</label>
           <input
-            {...register("tag")}
+            {...register("tag", { required: "tag is required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors?.tag?.message && (
+            <p className="text-red-500 text-sm mt-1">{errors.tag.message}</p>
+          )}
         </div>
 
         <div>
           <label className="block font-medium">Heading</label>
           <input
-            {...register("heading_part1")}
+            {...register("heading_part1", { required: "required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors?.heading_part1?.message && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.heading_part1.message}
+            </p>
+          )}
         </div>
 
         <div>
           <label className="block font-medium">Paragraph</label>
           <textarea
-            {...register("paragraph")}
+            {...register("paragraph", { required: "Required" })}
             rows={4}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors?.paragraph?.message && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.paragraph.message}
+            </p>
+          )}
         </div>
 
         {/* ================= Services ================= */}
@@ -254,46 +270,124 @@ const ServiceForm = ({
                 </button>
               </div>
 
-              {/* Hidden ID field if it exists */}
-              {field.id && (
-                <input type="hidden" {...register(`services.${index}.id`)} />
-              )}
-
-              <input
-                {...register(`services.${index}.service_title`)}
-                placeholder="Service Title"
-                className="w-full p-3 bg-gray-900 border rounded-lg"
-              />
-              <textarea
-                {...register(`services.${index}.service_description`)}
-                placeholder="Service Description"
-                className="w-full p-3 bg-gray-900 border rounded-lg"
-              />
-              <ImageUploader
-                value={watch(`services.${index}.image`)}
-                onChange={(url) => setValue(`services.${index}.image`, url)}
-              />
-              <ImageUploader
-                value={watch(`services.${index}.icon`)}
-                onChange={(url) => setValue(`services.${index}.icon`, url)}
-              />
-              <input
-                {...register(`services.${index}.alt`)}
-                placeholder="Alt Text"
-                className="w-full p-3 bg-gray-900 border rounded-lg"
-              />
-              <input
-                {...register(`services.${index}.icon_alt`)}
-                placeholder="Icon Alt Text"
-                className="w-full p-3 bg-gray-900 border rounded-lg"
-              />
-              <input
-                {...register(`services.${index}.href`, {
-                  required: true,
-                })}
-                placeholder="Slug"
-                className="w-full p-3 bg-gray-900 border rounded-lg"
-              />
+              <div>
+                {/* Hidden ID field if it exists */}
+                {field.id && (
+                  <input type="hidden" {...register(`services.${index}.id`)} />
+                )}
+              </div>
+              <div>
+                <input
+                  {...register(`services.${index}.service_title`, {
+                    required: "required field",
+                  })}
+                  placeholder="Service Title"
+                  className="w-full p-3 bg-gray-900 border rounded-lg"
+                />
+                {errors?.services?.[index]?.service_title?.message && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.services[index].service_title.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <textarea
+                  {...register(`services.${index}.service_description`, {
+                    required: "required field",
+                  })}
+                  placeholder="Service Description"
+                  className="w-full p-3 bg-gray-900 border rounded-lg"
+                />
+                {errors?.services?.[index]?.service_description?.message && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.services[index].service_description.message}
+                  </p>
+                )}
+              </div>
+              <div className="grid grid-cols-1 xl:grid-cols-2">
+                <div>
+                  <input
+                    type="hidden"
+                    {...register(`services.${index}.image`, {
+                      required: "Image is required",
+                    })}
+                  />
+                  <ImageUploader
+                    value={watch(`services.${index}.image`)}
+                    onChange={(url) =>
+                      setValue(`services.${index}.image`, url, {
+                        shouldValidate: true,
+                      })
+                    }
+                  />
+                  {errors?.services?.[index]?.image?.message && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.services[index].image.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <input
+                    type="hidden"
+                    {...register(`services.${index}.icon`, {
+                      required: "icon is required",
+                    })}
+                  />
+                  <ImageUploader
+                    value={watch(`services.${index}.icon`)}
+                    onChange={(url) => setValue(`services.${index}.icon`, url)}
+                  />
+                  {errors?.services?.[index]?.icon?.message && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.services[index].icon.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="grid gap-2 grid-cols-1 xl:grid-cols-2">
+                <div>
+                  <input
+                    {...register(`services.${index}.alt`, {
+                      required: "required field",
+                    })}
+                    placeholder="Alt Text"
+                    className="w-full p-3 bg-gray-900 border rounded-lg"
+                  />
+                  {errors?.services?.[index]?.alt?.message && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.services[index].alt.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <input
+                    {...register(`services.${index}.icon_alt`, {
+                      required: "required field",
+                    })}
+                    placeholder="Icon Alt Text"
+                    className="w-full p-3 bg-gray-900 border rounded-lg"
+                  />
+                  {errors?.services?.[index]?.icon_alt?.message && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.services[index].icon_alt.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div>
+                <input
+                  {...register(`services.${index}.href`, {
+                    required: "required field",
+                  })}
+                  placeholder="Slug"
+                  className="w-full p-3 bg-gray-900 border rounded-lg"
+                />
+                {errors?.services?.[index]?.href?.message && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.services[index].href.message}
+                  </p>
+                )}
+              </div>
               {/* ========== AVAILABLE SECTIONS (FIXED) ========== */}
               <div>
                 <p className="font-medium mb-2">Available Sections</p>

@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import ServiceForm from "./Serviceform";
 import axios from "axios";
 import Servicewrapper from "./Servicewrapper";
 
 const Page = async ({ searchParams }: { searchParams: any }) => {
   const { page } = await searchParams;
   const responsce = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/our-service?type=${page}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/our-service?type=${page}`,
   );
 
   return (

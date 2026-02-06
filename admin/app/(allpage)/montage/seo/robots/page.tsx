@@ -4,7 +4,6 @@ import { getData } from "@/utils/getDate";
 
 const Robotform = async () => {
   const data = await getData({ slug: "admin/robots" });
-  console.log("data", data);
   return (
     <div>
       <RobotsTxtForm data={data} />

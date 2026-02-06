@@ -1,18 +1,12 @@
 import React from "react";
-import axios from "axios";
 import HyperServicewrapper from "./HyperServicewrapper";
+import { getData } from "@/utils/getDate";
 
 const Page = async () => {
-  const responsce = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/home-service?type=home`,
-  );
-  console.log(responsce?.data?.data?.[0].services?.[5]);
+  const data = await getData({ slug: "home-service?type=home" });
   return (
     <main className="min-h-screen  py-10">
-      <HyperServicewrapper
-        data={responsce?.data?.data}
-        key={responsce?.data?.data}
-      />
+      <HyperServicewrapper data={data} key={data} />
     </main>
   );
 };

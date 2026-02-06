@@ -1,13 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { api_url } from "@/hook/Apiurl";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import {
-  useForm,
-  SubmitHandler,
-  useFieldArray,
-  Controller,
-} from "react-hook-form";
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
 
 /* -------------------------------------------------------------------------- */
@@ -92,7 +88,7 @@ const defaultCareerPage: ICareerPage = {
   ],
 };
 
-const JobItem = ({ job, jobIndex, control, register, removeJob }: any) => {
+const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
   const [showSalary, setShowSalary] = useState(!!job.salary?.amount);
 
   return (
@@ -352,7 +348,7 @@ const CareerPageForm = ({
   };
 
   return (
-    <div className="h-[80vh]  bg-gradient-to-br from-gray-900 to-gray-800 p-4">
+    <div className="h-[80vh]  bg-linear-to-br from-gray-900 to-gray-800 p-4">
       <div className="max-w-6xl mx-auto h-[75vh] overflow-y-scroll">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Page Information Card */}
@@ -518,7 +514,7 @@ const CareerPageForm = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-8 py-4 bg-gradient-to-r from-[#1E9ED2] to-[#1a8abc] hover:from-[#1a8abc] hover:to-[#1679a3] text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg flex items-center gap-2 min-w-[200px] justify-center"
+                className="px-8 py-4 bg-linear-to-r from-[#1E9ED2] to-[#1a8abc] hover:from-[#1a8abc] hover:to-[#1679a3] text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg flex items-center gap-2 min-w-50 justify-center"
               >
                 {isSubmitting ? (
                   <>

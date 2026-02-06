@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
@@ -19,11 +20,7 @@ interface SitemapFormData {
 const Sitemapform = ({ data }: { data: any }) => {
   const { control, handleSubmit, setValue } = useForm<SitemapFormData>({
     defaultValues: {
-      sitemap_xml:
-        data?.content ??
-        `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>https://example.com/</loc>\n    <lastmod>${
-          new Date().toISOString().split("T")[0]
-        }</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>\n</urlset>`,
+      sitemap_xml: data ?? ``,
     },
   });
 
@@ -33,7 +30,6 @@ const Sitemapform = ({ data }: { data: any }) => {
   const onSubmit = async (data: SitemapFormData) => {
     try {
       setIsSubmitting(true);
-      console.log(JSON.stringify(data.sitemap_xml));
       const res = await api_url.post(
         "/api/sitemap",
         { sitemap_xml: data.sitemap_xml },

@@ -1,8 +1,6 @@
-import Image from "next/image";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Heading from "../page-service/Headering";
-import Gradientcard from "../page-service/Gradientcard";
-import PricingCard from "./Careercard";
 import CareerCard from "./Careercard";
 
 const SinglePricePlan = ({ data }: { data: any }) => {

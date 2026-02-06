@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
@@ -5,7 +6,13 @@ import React, { useEffect } from "react";
 import { getDataCategory } from "./getCategory";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const ServiceFilter = ({ slice = 0 }: { slice?: number }) => {
+export const ServiceFilter = ({
+  slice = 0,
+  others = [],
+}: {
+  slice?: number;
+  others?: any[];
+}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -23,15 +30,16 @@ export const ServiceFilter = ({ slice = 0 }: { slice?: number }) => {
     queryKey: ["categories"],
     queryFn: getDataCategory,
   });
+  const allTypes = [...(data ?? []), ...others];
   return (
     <select
       value={currentPage ?? "home"}
       onChange={(e) => {
         router.push(`?page=${e.target.value}`);
       }}
-      className="bg-[#101828] border border-slate-300 rounded-lg p-2 text-white w-full md:w-[200px]"
+      className="bg-[#101828] border border-slate-300 rounded-lg p-2 text-white w-full md:w-50"
     >
-      {data?.slice(slice)?.map((item: any, idx: number) => (
+      {allTypes?.slice(slice)?.map((item: any, idx: number) => (
         <option key={idx} value={item.service_type}>
           {item.service_title}
         </option>
