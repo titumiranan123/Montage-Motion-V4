@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -88,7 +89,7 @@ const CareerWrapper = ({ data }: { data: any }) => {
               clipRule="evenodd"
             />
           </svg>
-          Edit Service
+          Edit Job
         </button>
       </div>
       {isOpenModal && (

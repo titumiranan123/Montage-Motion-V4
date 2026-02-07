@@ -103,7 +103,7 @@ const ServiceForm = ({
             {/* Section Type */}
             <div className="space-y-2">
               <label className=" font-medium text-gray-200 flex items-center gap-2">
-                Page Name *
+                Page Type *
               </label>
               <ServiceTypeSelect
                 onChange={(type: string) => {

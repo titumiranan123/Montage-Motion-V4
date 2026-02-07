@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import Gradientcard from "./Gradientcard";
@@ -17,7 +18,7 @@ const SingleWhyChooseus = ({ data }: { data: any }) => {
           <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
             <Gradientcard
               key={idx}
-              className="max-w-[384px] w-full h-full md:min-h-[302px] max-h-[302px] rounded-[24px] md:py-6 py-4 md:px-5 px-4"
+              className="max-w-[384px] w-full h-full md:min-h-75.5 max-h-75.5 rounded-3xl md:py-6 py-4 md:px-5 px-4"
               borderClassName="p-[1px] max-w-[384px] w-full h-full md:min-h-[304px] max-h-[304px] rounded-[24px]"
             >
               <div className="flex justify-center items-start flex-col text-white gap-2">
@@ -31,7 +32,7 @@ const SingleWhyChooseus = ({ data }: { data: any }) => {
                 <p className="text-[22px] md:text-[24px] font-semibold poppins text-[#E4E8F7]">
                   {dt?.title}
                 </p>
-                <p className="text-[14px] md:text-[16px] font-[400] opensans text-[#E4E8F7]">
+                <p className="text-[14px] md:text-[16px] font-normal opensans text-[#E4E8F7]">
                   {dt?.description}
                 </p>
               </div>

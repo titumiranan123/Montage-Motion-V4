@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
 import { MemberProfileCard } from "./MemberProfileCard";
@@ -11,7 +12,7 @@ import { FaPlus } from "react-icons/fa";
 const Member = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  const { data, isLoading, refetch } = useMembers();
+  const { data, refetch } = useMembers();
 
   const handleCreateNew = () => {
     setIsCreating(true);
@@ -79,21 +80,19 @@ const Member = () => {
 
         {/* Form modal */}
         {isFormOpen && (
-          <div className="fixed inset-0 bg-black/5 backdrop-blur-sm flex items-center text-white justify-center p-4 z-50 w-full">
-            <div className="bg-black rounded-lg ">
-              <div className="flex justify-end me-5 mt-5 items-center mb-4">
-                <button
-                  onClick={() => setIsFormOpen(false)}
-                  className="text-gray-300 hover:text-gray-300"
-                >
-                  ✕
-                </button>
-              </div>
-              <MemberProfileForm
-                onSubmit={handleSubmit}
-                defaultValues={undefined}
-              />
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center text-white justify-center p-4 z-50 w-full">
+            <div className="flex justify-end me-5 mt-5 items-center mb-4">
+              <button
+                onClick={() => setIsFormOpen(false)}
+                className="text-gray-300 hover:text-gray-300"
+              >
+                ✕
+              </button>
             </div>
+            <MemberProfileForm
+              onSubmit={handleSubmit}
+              defaultValues={undefined}
+            />
           </div>
         )}
       </div>

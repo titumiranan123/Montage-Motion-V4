@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/incompatible-library */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect } from "react";
@@ -23,12 +25,12 @@ const Whychooseusform = ({
     handleSubmit,
     watch,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<whychooseus_Section>({
     defaultValues: initialData
       ? initialData
       : {
-          type: "home",
+          type: " ",
           tag: "",
           heading_part1: "",
           heading_part2: "",
@@ -82,18 +84,26 @@ const Whychooseusform = ({
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ">
-        {/* Section Type */}
-        <div>
-          <label className="block font-medium text-gray-200">
-            Section Type
+        <div className="space-y-2">
+          <label className=" font-medium text-gray-200 flex items-center gap-2">
+            Page Type *
           </label>
           <ServiceTypeSelect
             onChange={(type: string) => {
               setValue("type", type);
             }}
-            slice={0}
             value={watch("type")}
+            slice={1}
           />
+          <input
+            type="hidden"
+            {...register(`type`, {
+              required: "type is required",
+            })}
+          />
+          {errors.type && (
+            <p className="text-sm text-red-400 mt-1">{errors.type.message}</p>
+          )}
         </div>
 
         {/* Tag */}
@@ -105,6 +115,9 @@ const Whychooseusform = ({
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
             placeholder="Enter Tag"
           />
+          {errors?.tag && (
+            <p className="text-red-500 text-sm mt-1">{errors.tag.message}</p>
+          )}
         </div>
 
         {/* Heading */}
@@ -121,6 +134,11 @@ const Whychooseusform = ({
               className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
               placeholder="Enter first part of heading"
             />
+            {errors?.heading_part1 && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.heading_part1.message}
+              </p>
+            )}
           </div>
           {/* <div className="hidden">
             <label className="block font-medium text-gray-200">
@@ -139,11 +157,16 @@ const Whychooseusform = ({
         <div>
           <label className="block font-medium text-gray-200">Paragraph</label>
           <textarea
-            {...register("paragraph")}
+            {...register("paragraph", { required: "This field is required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
             rows={4}
             placeholder="Enter paragraph text"
           ></textarea>
+          {errors?.paragraph && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.paragraph.message}
+            </p>
+          )}
         </div>
 
         {/* Why Choose Us Items */}
@@ -151,7 +174,7 @@ const Whychooseusform = ({
           <h2 className="text-2xl font-semibold text-[#1E9ED2] mb-3">
             Why Choose us Cards
           </h2>
-          {fields.map((field, index) => (
+          {fields?.map((field, index) => (
             <div
               key={field.id}
               className="border border-gray-700 bg-gray-950 rounded-xl p-4 mb-4 space-y-3"
@@ -166,6 +189,11 @@ const Whychooseusform = ({
                   className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
                   placeholder="Enter title"
                 />
+                {errors?.whychooseus_items?.[index]?.title && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors?.whychooseus_items?.[index]?.title?.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -180,19 +208,31 @@ const Whychooseusform = ({
                   rows={3}
                   placeholder="Enter description"
                 ></textarea>
+                {errors?.whychooseus_items?.[index]?.description && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors?.whychooseus_items?.[index]?.description?.message}
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block font-medium text-gray-200">
-                    Image URL
+                    Image
                   </label>
                   <input
-                    {...register(`whychooseus_items.${index}.icon`)}
+                    {...register(`whychooseus_items.${index}.icon`, {
+                      required: "This field is required",
+                    })}
                     type="text"
-                    className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
+                    className="w-full p-3 hidden bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
                     placeholder="Enter image URL"
                   />
+                  {errors?.whychooseus_items?.[index]?.icon && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors?.whychooseus_items?.[index]?.icon?.message}
+                    </p>
+                  )}
                   <div className="mt-2">
                     <ImageUploader
                       value={watch(`whychooseus_items.${index}.icon`)}
@@ -207,11 +247,18 @@ const Whychooseusform = ({
                     Alt Text
                   </label>
                   <input
-                    {...register(`whychooseus_items.${index}.alt`)}
+                    {...register(`whychooseus_items.${index}.alt`, {
+                      required: "This field is required",
+                    })}
                     type="text"
                     className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mt-1 text-white focus:outline-none focus:ring-2 focus:ring-[#1E9ED2]"
                     placeholder="Enter alt text"
                   />
+                  {errors?.whychooseus_items?.[index]?.alt && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors?.whychooseus_items?.[index]?.alt?.message}
+                    </p>
+                  )}
                 </div>
               </div>
 

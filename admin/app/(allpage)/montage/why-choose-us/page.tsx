@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import axios from "axios";
 import Whychoosewrapper from "./Whychoosewrapper";
@@ -7,7 +8,7 @@ const Page = async ({ searchParams }: { searchParams: any }) => {
   const responsce = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/api/why-choose-us?type=${
       page ?? "home"
-    }`
+    }`,
   );
   console.log(responsce.data);
   return (

@@ -1,14 +1,8 @@
-// External Libraries
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import Swal from "sweetalert2";
-import Image from "next/image";
-import { FiTrash2, FiUpload } from "react-icons/fi";
+/* eslint-disable react-hooks/incompatible-library */
 
-// Internal Imports
-import { api_url } from "@/hook/Apiurl";
 import { MemberProfile } from "@/interface/interface";
 import ImageUploader from "@/component/ImageUploader";
+import { useForm } from "react-hook-form";
 
 interface MemberProfileFormProps {
   onSubmit: (data: MemberProfile) => void;
@@ -30,7 +24,7 @@ export function MemberProfileForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="p-6 w-full max-w-4xl mx-auto rounded-lg shadow-md bg-gray-800 h-[500px] overflow-y-auto"
+      className="p-6 w-full max-w-4xl mx-auto rounded-lg shadow-md bg-gray-800  h-[80vh] overflow-y-auto"
     >
       <h2 className="text-2xl font-bold mb-6 text-white">
         {defaultValues?.id ? "Edit Member Profile" : "Add New Member Profile"}
@@ -39,10 +33,6 @@ export function MemberProfileForm({
       <div className="space-y-6">
         {/* Personal Information Section */}
         <div className="">
-          <h3 className="text-lg font-semibold mb-4 text-white border-b border-gray-600 pb-2">
-            Personal Information
-          </h3>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name */}
             <div>
@@ -116,6 +106,15 @@ export function MemberProfileForm({
             value={watch(`photourl`)}
             onChange={(url) => setValue(`photourl`, url)}
           />
+          <input
+            className="hidden"
+            {...register("photourl", { required: "This field is required" })}
+          />
+          {errors?.photourl && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.photourl.message}
+            </p>
+          )}
         </div>
 
         {/* Form Actions */}

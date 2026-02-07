@@ -63,7 +63,7 @@ const Section = ({
       )}
 
       {/* Items */}
-      {items.map((entry) => {
+      {items?.map((entry) => {
         const fieldError =
           errors?.columns?.[colIndex]?.entries?.[entry.index]?.text;
 
@@ -222,6 +222,13 @@ export default function ComparisonForm({
             onChange={(url) => setValue("page", url)}
             value={watch("page")}
           />
+          <input
+            type="text"
+            {...register("page", { required: "This field is required" })}
+          />
+          {errors?.page && (
+            <p className="text-red-500 text-sm mt-1">{errors.page.message}</p>
+          )}
         </div>
 
         <div>
@@ -230,6 +237,9 @@ export default function ComparisonForm({
             {...register("tag", { required: "Tag is required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors?.tag && (
+            <p className="text-red-500 text-sm mt-1">{errors.tag.message}</p>
+          )}
         </div>
 
         <div className="col-span-2">
@@ -238,6 +248,11 @@ export default function ComparisonForm({
             {...register("heading_title", { required: "Tag is required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors?.heading_title && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.heading_title.message}
+            </p>
+          )}
         </div>
 
         <div className="col-span-2">
@@ -247,6 +262,11 @@ export default function ComparisonForm({
             rows={4}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors?.paragraph && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.paragraph.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -278,39 +298,47 @@ export default function ComparisonForm({
         watch={watch}
         errors={errors}
       />
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="px-6 py-2.5 rounded-lg bg-[#1FB5DD] text-white hover:bg-[#17A6CC] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1FB5DD] focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
-      >
-        {isSubmitting ? (
-          <span className="flex items-center justify-center">
-            <svg
-              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4z"
-              ></path>
-            </svg>
-            Submiting...
-          </span>
-        ) : (
-          "Submit"
-        )}
-      </button>
+      <div className=" flex justify-end w-full col-span-3 gap-5">
+        <button
+          className="py-2 px-4 border cursor-pointer border-cyan-500 rounded-lg"
+          onClick={() => setOpen(false)}
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="px-6 py-2.5 rounded-lg bg-[#1FB5DD] text-white hover:bg-[#17A6CC] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1FB5DD] focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer "
+        >
+          {isSubmitting ? (
+            <span className="flex items-center justify-center">
+              <svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4z"
+                ></path>
+              </svg>
+              Submiting...
+            </span>
+          ) : (
+            "Submit"
+          )}
+        </button>
+      </div>
     </form>
   );
 }

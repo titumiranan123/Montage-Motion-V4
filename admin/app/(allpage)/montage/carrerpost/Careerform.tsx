@@ -88,7 +88,7 @@ const defaultCareerPage: ICareerPage = {
   ],
 };
 
-const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
+const JobItem = ({ job, jobIndex, register, removeJob, errors }: any) => {
   const [showSalary, setShowSalary] = useState(!!job.salary?.amount);
 
   return (
@@ -121,6 +121,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             placeholder="e.g., Senior Video Editor, Frontend Developer"
             className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
           />
+          {errors?.jobposts?.[jobIndex]?.job_title && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.jobposts[jobIndex].job_title.message}
+            </p>
+          )}
         </div>
 
         {/* Positions Available */}
@@ -138,6 +143,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             min="1"
             className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
           />
+          {errors?.jobposts?.[jobIndex]?.positions_available && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.jobposts[jobIndex].positions_available.message}
+            </p>
+          )}
         </div>
 
         {/* Application Deadline */}
@@ -152,6 +162,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             })}
             className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
           />
+          {errors?.jobposts?.[jobIndex]?.deadline && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.jobposts[jobIndex].deadline.message}
+            </p>
+          )}
         </div>
 
         {/* Employment Type */}
@@ -160,7 +175,9 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             Employment Type *
           </label>
           <select
-            {...register(`jobposts.${jobIndex}.employment_type`)}
+            {...register(`jobposts.${jobIndex}.employment_type`, {
+              required: "Employment type is required",
+            })}
             className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
           >
             <option value="Full time">Full time</option>
@@ -169,6 +186,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             <option value="Contract">Contract</option>
             <option value="Temporary">Temporary</option>
           </select>
+          {errors?.jobposts?.[jobIndex]?.employment_type && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.jobposts[jobIndex].employment_type.message}
+            </p>
+          )}
         </div>
 
         {/* Work Arrangement */}
@@ -177,7 +199,9 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             Work Arrangement *
           </label>
           <select
-            {...register(`jobposts.${jobIndex}.work_arrangement`)}
+            {...register(`jobposts.${jobIndex}.work_arrangement`, {
+              required: "Work arrangement is required",
+            })}
             className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
           >
             <option value="On-site">On-site</option>
@@ -186,6 +210,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             <option value="In House">In House</option>
             <option value="Flexible">Flexible</option>
           </select>
+          {errors?.jobposts?.[jobIndex]?.work_arrangement && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.jobposts[jobIndex].work_arrangement.message}
+            </p>
+          )}
         </div>
 
         {/* Apply Link */}
@@ -206,6 +235,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             placeholder="https://your-application-form.com/apply"
             className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
           />
+          {errors?.jobposts?.[jobIndex]?.applylink && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.jobposts[jobIndex].applylink.message}
+            </p>
+          )}
         </div>
 
         {/* Job Description */}
@@ -225,6 +259,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
             placeholder="Describe the role, responsibilities, requirements, and what makes this position exciting..."
             className="w-full p-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200 resize-vertical"
           />
+          {errors?.jobposts?.[jobIndex]?.description && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.jobposts[jobIndex].description.message}
+            </p>
+          )}
         </div>
 
         {/* Salary Section */}
@@ -250,6 +289,7 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
                 <input
                   type="number"
                   {...register(`jobposts.${jobIndex}.salary.amount`, {
+                    required: "Salary amount is required when salary is shown",
                     valueAsNumber: true,
                     min: { value: 0, message: "Salary must be positive" },
                   })}
@@ -258,6 +298,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
                   placeholder="0.00"
                   className="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
                 />
+                {errors?.jobposts?.[jobIndex]?.salary?.amount && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.jobposts[jobIndex].salary.amount.message}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -265,12 +310,19 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
                   Currency *
                 </label>
                 <select
-                  {...register(`jobposts.${jobIndex}.salary.currency`)}
+                  {...register(`jobposts.${jobIndex}.salary.currency`, {
+                    required: "Currency is required when salary is shown",
+                  })}
                   className="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
                 >
                   <option value="$">USD ($)</option>
                   <option value="৳">BDT (৳)</option>
                 </select>
+                {errors?.jobposts?.[jobIndex]?.salary?.currency && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.jobposts[jobIndex].salary.currency.message}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -278,7 +330,9 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
                   Salary Unit *
                 </label>
                 <select
-                  {...register(`jobposts.${jobIndex}.salary.unit`)}
+                  {...register(`jobposts.${jobIndex}.salary.unit`, {
+                    required: "Salary unit is required when salary is shown",
+                  })}
                   className="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
                 >
                   <option value="/Month">Per Month</option>
@@ -286,6 +340,11 @@ const JobItem = ({ job, jobIndex, register, removeJob }: any) => {
                   <option value="/Year">Per Year</option>
                   <option value="/Project">Per Project</option>
                 </select>
+                {errors?.jobposts?.[jobIndex]?.salary?.unit && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.jobposts[jobIndex].salary.unit.message}
+                  </p>
+                )}
               </div>
             </div>
           )}
@@ -306,8 +365,7 @@ const CareerPageForm = ({
     register,
     control,
     handleSubmit,
-
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<ICareerPage>({
     defaultValues: initialData ?? defaultCareerPage,
   });
@@ -348,82 +406,173 @@ const CareerPageForm = ({
   };
 
   return (
-    <div className="h-[80vh]  bg-linear-to-br from-gray-900 to-gray-800 p-4">
-      <div className="max-w-6xl mx-auto h-[75vh] overflow-y-scroll">
+    <div className="h-[80vh] rounded-lg  bg-linear-to-br from-gray-900 to-gray-800 p-4">
+      <div className="w-6xl mx-auto h-[75vh] overflow-y-scroll">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-          {/* Page Information Card */}
-          <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-2 h-8 bg-[#1E9ED2] rounded-full"></div>
-                <h2 className="text-2xl font-bold text-white">
-                  Page Information
-                </h2>
+          <div className="p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-2 h-8 bg-[#1E9ED2] rounded-full"></div>
+              <h2 className="text-2xl font-bold text-white">
+                Page Information
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300">
+                  Page Type *
+                </label>
+                <select
+                  {...register("type", {
+                    required: "Page type is required",
+                  })}
+                  className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+                >
+                  <option value="career">Career</option>
+                </select>
+                {errors?.type && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.type.message}
+                  </p>
+                )}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-300">
-                    Page Type
-                  </label>
-                  <select
-                    {...register("type")}
-                    className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
-                  >
-                    <option value="career">Career</option>
-                  </select>
-                </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300">
+                  Tag Line *
+                </label>
+                <input
+                  {...register("tag", {
+                    required: "Tag line is required",
+                  })}
+                  placeholder="e.g., Join Our Team, We're Hiring"
+                  className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+                />
+                {errors?.tag && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.tag.message}
+                  </p>
+                )}
+              </div>
 
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-300">
-                    Tag Line
-                  </label>
-                  <input
-                    {...register("tag")}
-                    placeholder="e.g., Join Our Team, We're Hiring"
-                    className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
-                  />
-                </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300">
+                  Heading Part 1 *
+                </label>
+                <input
+                  {...register("heading_part1", {
+                    required: "Heading part 1 is required",
+                  })}
+                  placeholder="First part of main heading"
+                  className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+                />
+                {errors?.heading_part1 && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.heading_part1.message}
+                  </p>
+                )}
+              </div>
 
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-300">
-                    Heading Part 1
-                  </label>
-                  <input
-                    {...register("heading_part1")}
-                    placeholder="First part of main heading"
-                    className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
-                  />
-                </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300">
+                  Heading Part 2 *
+                </label>
+                <input
+                  {...register("heading_part2", {
+                    required: "Heading part 2 is required",
+                  })}
+                  placeholder="Second part of main heading"
+                  className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200"
+                />
+                {errors?.heading_part2 && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.heading_part2.message}
+                  </p>
+                )}
+              </div>
 
-                <div className="lg:col-span-2 space-y-2">
-                  <label className="block text-sm font-medium text-gray-300">
-                    Description Paragraph
-                  </label>
-                  <textarea
-                    {...register("paragraph")}
-                    placeholder="Describe your company culture, career growth opportunities, and what makes your workplace special..."
-                    rows={4}
-                    className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200 resize-vertical"
-                  />
-                </div>
+              <div className="lg:col-span-2 space-y-2">
+                <label className="block text-sm font-medium text-gray-300">
+                  Description Paragraph *
+                </label>
+                <textarea
+                  {...register("paragraph", {
+                    required: "Description paragraph is required",
+                    minLength: {
+                      value: 20,
+                      message: "Description should be at least 20 characters",
+                    },
+                  })}
+                  placeholder="Describe your company culture, career growth opportunities, and what makes your workplace special..."
+                  rows={4}
+                  className="w-full p-4 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-[#1E9ED2] focus:border-transparent transition-all duration-200 resize-vertical"
+                />
+                {errors?.paragraph && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.paragraph.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
-
           {/* Jobs Section */}
-          <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="p-8">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-8 bg-[#1E9ED2] rounded-full"></div>
-                  <h2 className="text-2xl font-bold text-white">
-                    Job Postings
-                  </h2>
-                  <span className="bg-[#1E9ED2] text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {jobFields.length} {jobFields.length === 1 ? "Job" : "Jobs"}
-                  </span>
-                </div>
+          <div className="p-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-8 bg-[#1E9ED2] rounded-full"></div>
+                <h2 className="text-2xl font-bold text-white">Job Postings</h2>
+                <span className="bg-[#1E9ED2] text-white px-3 py-1 rounded-full text-sm font-medium">
+                  {jobFields.length} {jobFields.length === 1 ? "Job" : "Jobs"}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  addJob({
+                    job_title: "",
+                    positions_available: 1,
+                    deadline: "",
+                    description: "",
+                    employment_type: "Full time",
+                    work_arrangement: "On-site",
+                    salary: {
+                      amount: 0,
+                      unit: "/Month",
+                      currency: "$",
+                    },
+                    applylink: "",
+                  })
+                }
+                className="px-6 py-3 bg-[#1E9ED2] hover:bg-[#1a8abc] text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 flex items-center gap-2 shadow-lg"
+              >
+                <span className="text-lg">+</span>
+                Add New Job
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {jobFields.map((job, jobIndex) => (
+                <JobItem
+                  key={job.id}
+                  job={job}
+                  jobIndex={jobIndex}
+                  control={control}
+                  register={register}
+                  removeJob={removeJob}
+                  errors={errors}
+                />
+              ))}
+            </div>
+
+            {jobFields.length === 0 && (
+              <div className="text-center py-12 bg-gray-900/20 rounded-xl border border-gray-700 border-dashed">
+                <div className="text-6xl mb-4">💼</div>
+                <h3 className="text-xl font-semibold text-gray-300 mb-2">
+                  No Job Postings Yet
+                </h3>
+                <p className="text-gray-400 mb-4">
+                  Start by adding your first job position
+                </p>
                 <button
                   type="button"
                   onClick={() =>
@@ -442,90 +591,29 @@ const CareerPageForm = ({
                       applylink: "",
                     })
                   }
-                  className="px-6 py-3 bg-[#1E9ED2] hover:bg-[#1a8abc] text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 flex items-center gap-2 shadow-lg"
+                  className="px-6 py-3 bg-[#1E9ED2] hover:bg-[#1a8abc] text-white font-semibold rounded-xl transition-all duration-200"
                 >
-                  <span className="text-lg">+</span>
-                  Add New Job
+                  Create First Job Posting
                 </button>
               </div>
-
-              <div className="space-y-6">
-                {jobFields.map((job, jobIndex) => (
-                  <JobItem
-                    key={job.id}
-                    job={job}
-                    jobIndex={jobIndex}
-                    control={control}
-                    register={register}
-                    removeJob={removeJob}
-                  />
-                ))}
-              </div>
-
-              {jobFields.length === 0 && (
-                <div className="text-center py-12 bg-gray-900/20 rounded-xl border border-gray-700 border-dashed">
-                  <div className="text-6xl mb-4">💼</div>
-                  <h3 className="text-xl font-semibold text-gray-300 mb-2">
-                    No Job Postings Yet
-                  </h3>
-                  <p className="text-gray-400 mb-4">
-                    Start by adding your first job position
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      addJob({
-                        job_title: "",
-                        positions_available: 1,
-                        deadline: "",
-                        description: "",
-                        employment_type: "Full time",
-                        work_arrangement: "On-site",
-                        salary: {
-                          amount: 0,
-                          unit: "/Month",
-                          currency: "$",
-                        },
-                        applylink: "",
-                      })
-                    }
-                    className="px-6 py-3 bg-[#1E9ED2] hover:bg-[#1a8abc] text-white font-semibold rounded-xl transition-all duration-200"
-                  >
-                    Create First Job Posting
-                  </button>
-                </div>
-              )}
-            </div>
+            )}
           </div>
-
           {/* Submit Section */}
-          <div className="bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-2xl p-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  Save Career Page
-                </h3>
-                <p className="text-gray-400 text-sm">
-                  {initialData
-                    ? "Update your career page and job postings"
-                    : "Create a new career page with job opportunities"}
-                </p>
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="px-8 py-4 bg-linear-to-r from-[#1E9ED2] to-[#1a8abc] hover:from-[#1a8abc] hover:to-[#1679a3] text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg flex items-center gap-2 min-w-50 justify-center"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Saving...
-                  </>
-                ) : (
-                  <>Save Career Page</>
-                )}
-              </button>
-            </div>
+          <div className="flex justify-end items-center p-8">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-8 py-4 bg-linear-to-r from-[#1E9ED2] to-[#1a8abc] hover:from-[#1a8abc] hover:to-[#1679a3] text-white font-bold rounded-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg flex items-center gap-2 min-w-50 justify-center"
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Saving...
+                </>
+              ) : (
+                <>Save Career Page</>
+              )}
+            </button>
           </div>
         </form>
       </div>

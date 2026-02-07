@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/incompatible-library */
 "use client";
 
 import React from "react";
@@ -47,7 +49,7 @@ const ProcessForm = ({
     control,
     setValue,
     watch,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<ProcessSchema>({
     defaultValues: initialData
       ? initialData
@@ -56,7 +58,7 @@ const ProcessForm = ({
           heading_part1: "",
           heading_part2: "",
           paragraph: "",
-          type: "home",
+          type: " ",
           image: "",
           alt: "",
           process_steps: [
@@ -71,7 +73,6 @@ const ProcessForm = ({
   });
 
   const onSubmit = async (data: ProcessSchema) => {
-    console.log("✅ Submitted Data:", data);
     try {
       const response = await api_url.post("/api/process", data);
       if (response.status === 201) {
@@ -92,24 +93,38 @@ const ProcessForm = ({
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ">
         {/* Process Type */}
-        <div>
-          <label className="block text-gray-200 mb-1">Process Type</label>
+        <div className="space-y-2">
+          <label className=" font-medium text-gray-200 flex items-center gap-2">
+            Page Type *
+          </label>
           <ServiceTypeSelect
-            onChange={(url) => {
-              setValue("type", url);
+            onChange={(type: string) => {
+              setValue("type", type);
             }}
             value={watch("type")}
+            slice={1}
           />
+          <input
+            type="hidden"
+            {...register(`type`, {
+              required: "type is required",
+            })}
+          />
+          {errors.type && (
+            <p className="text-sm text-red-400 mt-1">{errors.type.message}</p>
+          )}
         </div>
-
         {/* Tag */}
         <div>
           <label className="block text-gray-200 mb-1">Tag</label>
           <input
-            {...register("tag")}
+            {...register("tag", { required: "This field is required" })}
             placeholder="Enter section tag"
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
           />
+          {errors.tag && (
+            <p className="text-red-500 text-sm mt-1">{errors.tag.message}</p>
+          )}
         </div>
 
         {/* Headings */}
@@ -117,10 +132,17 @@ const ProcessForm = ({
           <div>
             <label className="block text-gray-200 mb-1">Heading (Part 1)</label>
             <input
-              {...register("heading_part1")}
+              {...register("heading_part1", {
+                required: "This field is required",
+              })}
               placeholder="Enter first part of heading"
               className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
             />
+            {errors?.heading_part1 && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.heading_part1.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -128,11 +150,16 @@ const ProcessForm = ({
         <div>
           <label className="block text-gray-200 mb-1">Paragraph</label>
           <textarea
-            {...register("paragraph")}
+            {...register("paragraph", { required: "This field is required" })}
             placeholder="Enter section paragraph"
             rows={4}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
           ></textarea>
+          {errors?.paragraph && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.paragraph.message}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -143,14 +170,29 @@ const ProcessForm = ({
               value={watch("image")}
               onChange={(url) => setValue(`image`, url)}
             />
+            <input
+              {...register("image", { required: "This field is required" })}
+              placeholder="Enter section  tag"
+              className="hidden"
+            />
+            {errors?.image && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.image.message}
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-gray-200 mb-1">Alt *</label>
             <input
-              {...register(`alt` as const)}
+              {...register(`alt` as const, {
+                required: "This field is required",
+              })}
               placeholder="Enter step title"
               className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
             />
+            {errors?.alt && (
+              <p className="text-red-500 text-sm mt-1">{errors.alt.message}</p>
+            )}
           </div>
         </div>
 
@@ -175,34 +217,67 @@ const ProcessForm = ({
                       setValue(`process_steps.${index}.icon`, url)
                     }
                   />
+                  <input
+                    {...register(`process_steps.${index}.icon`, {
+                      required: "This field is required",
+                    })}
+                    placeholder="Enter section  tag"
+                    className="hidden"
+                  />
+                  {errors?.process_steps?.[index]?.icon && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors?.process_steps?.[index]?.icon?.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-200 mb-1">Title</label>
                   <input
-                    {...register(`process_steps.${index}.title` as const)}
+                    {...register(`process_steps.${index}.title` as const, {
+                      required: "This field is required",
+                    })}
                     placeholder="Enter step title"
                     className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
                   />
+                  {errors?.process_steps?.[index]?.title && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors?.process_steps?.[index]?.title?.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
               <div className="mt-3">
                 <label className="block text-gray-200 mb-1">Description</label>
                 <textarea
-                  {...register(`process_steps.${index}.description` as const)}
+                  {...register(`process_steps.${index}.description` as const, {
+                    required: "This field is required",
+                  })}
                   placeholder="Enter step description"
                   rows={3}
                   className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
                 ></textarea>
+                {errors?.process_steps?.[index]?.description && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors?.process_steps?.[index]?.description?.message}
+                  </p>
+                )}
               </div>
               <div className="mt-3">
                 <label className="block text-gray-200 mb-1">Alt *</label>
                 <textarea
-                  {...register(`process_steps.${index}.alt` as const)}
+                  {...register(`process_steps.${index}.alt` as const, {
+                    required: "This field is required",
+                  })}
                   placeholder="Enter icon alt"
                   rows={3}
                   className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
                 ></textarea>
+                {errors?.process_steps?.[index]?.alt && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors?.process_steps?.[index]?.alt?.message}
+                  </p>
+                )}
               </div>
 
               <div className="mt-3 flex items-center justify-between">
