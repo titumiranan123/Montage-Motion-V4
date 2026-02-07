@@ -1,7 +1,7 @@
 CREATE TABLE
   service_sections (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
-    type VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL UNIQUE,
     tag TEXT NOT NULL,
     heading_part1 TEXT NOT NULL,
     heading_part2 TEXT,

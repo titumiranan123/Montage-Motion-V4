@@ -10,10 +10,16 @@ import {
   getComparisons,
   updateComparison,
 } from "./comparsion.controller";
+import auth from "../../midleware/authMidleware";
 
 const comparisonRoute = express.Router();
 
-comparisonRoute.post("/", validate(createComparisonSchema), createComparison);
+comparisonRoute.post(
+  "/",
+  auth("ADMIN", "MODARATOR"),
+  validate(createComparisonSchema),
+  createComparison,
+);
 
 comparisonRoute.patch(
   "/:id",

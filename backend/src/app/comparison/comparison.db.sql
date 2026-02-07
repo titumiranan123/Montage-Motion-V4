@@ -2,7 +2,7 @@
 CREATE TABLE
     comparisons (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
-        page TEXT NOT NULL,
+        page TEXT NOT NULL UNIQUE,
         tag TEXT NOT NULL,
         heading_title TEXT,
         paragraph TEXT

@@ -7,12 +7,23 @@ import {
   getSections,
   updateSection,
 } from "./industry.controller";
+import auth from "../../midleware/authMidleware";
 
 const industriesRoute = express.Router();
 
-industriesRoute.post("/", validate(createSectionSchema), createSection);
+industriesRoute.post(
+  "/",
+  auth("ADMIN", "MODARATOR"),
+  validate(createSectionSchema),
+  createSection,
+);
 industriesRoute.get("/", getSections);
-industriesRoute.patch("/:id", validate(updateSectionSchema), updateSection);
-industriesRoute.delete("/:id", deleteSection);
+industriesRoute.patch(
+  "/:id",
+  auth("ADMIN", "MODARATOR"),
+  validate(updateSectionSchema),
+  updateSection,
+);
+industriesRoute.delete("/:id", auth("ADMIN", "MODARATOR"), deleteSection);
 
 export default industriesRoute;

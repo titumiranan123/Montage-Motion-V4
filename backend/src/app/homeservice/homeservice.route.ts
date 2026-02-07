@@ -5,11 +5,16 @@ import {
   deleteServiceSection,
   getAllServiceSections,
 } from "./homeservice.controller";
+import auth from "../../midleware/authMidleware";
 
 const homeServiceRoute = Router();
 
-homeServiceRoute.post("/", createHomeService);
+homeServiceRoute.post("/", auth("ADMIN", "MODARATOR"), createHomeService);
 homeServiceRoute.get("/", getAllServiceSections);
-homeServiceRoute.delete("/:id", deleteServiceSection);
+homeServiceRoute.delete(
+  "/:id",
+  auth("ADMIN", "MODARATOR"),
+  deleteServiceSection,
+);
 
 export default homeServiceRoute;

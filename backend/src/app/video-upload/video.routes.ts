@@ -5,6 +5,7 @@ import {
   uploadVideoPart,
 } from "./video.controller";
 import multer from "multer";
+import auth from "../../midleware/authMidleware";
 
 export const memoryUpload = multer({
   storage: multer.memoryStorage(),
@@ -13,12 +14,20 @@ export const memoryUpload = multer({
 
 const videoRoute = express.Router();
 
-videoRoute.post("/uploadVideo/initiate", initiateVideoUpload);
+videoRoute.post(
+  "/uploadVideo/initiate",
+  auth("ADMIN", "MODARATOR"),
+  initiateVideoUpload,
+);
 videoRoute.post(
   "/uploadVideo/upload-part",
   memoryUpload.single("file"),
-  uploadVideoPart
+  uploadVideoPart,
 );
-videoRoute.post("/uploadVideo/complete", completeVideoUpload);
+videoRoute.post(
+  "/uploadVideo/complete",
+  auth("ADMIN", "MODARATOR"),
+  completeVideoUpload,
+);
 
 export default videoRoute;

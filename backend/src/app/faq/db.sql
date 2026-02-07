@@ -2,7 +2,7 @@
 CREATE TABLE
   faq_sections (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
-    type TEXT NOT NULL,
+    type TEXT NOT NULL UNIQUE,
     section_tag TEXT NOT NULL,
     section_title TEXT NOT NULL,
     section_description TEXT NOT NULL,

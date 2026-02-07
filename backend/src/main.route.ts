@@ -1,7 +1,6 @@
 import { Router } from "express";
 import dashboardRoute from "./app/website/web.route";
 import seoRoute from "./app/seo/seo.route";
-import campaignRoutes from "./app/campaign-aplication/campaign.route";
 
 import faqRoute from "./app/faq/faq.routes";
 import headerRoute from "./app/header/header.routes";
@@ -11,10 +10,8 @@ import recentRoute from "./app/work/work.route";
 import contactRoute from "./app/contact/conatct.routes";
 import AuthRoute from "./app/auth/auth.routes";
 import faqRouter from "./app/faq/faq.routes";
-import stateRouter from "./app/state/state.routes";
 
 import uploadRoute from "./app/upload/upload.route";
-import aboutRoute from "./app/about/about.route";
 import blogRoute from "./app/blogs/blog.route";
 import webRoute from "./app/homeapis/homeapi.routes";
 import memberRoute from "./app/member/member.route";
@@ -41,11 +38,8 @@ mainRoute.use("/api", recentRoute);
 mainRoute.use("/api", AuthRoute);
 mainRoute.use("/api", contactRoute);
 mainRoute.use("/api", faqRouter);
-mainRoute.use("/api", stateRouter);
-mainRoute.use("/api", aboutRoute);
 mainRoute.use("/api", blogRoute);
 mainRoute.use("/api", memberRoute);
-mainRoute.use("/api", campaignRoutes);
 mainRoute.use("/api", dashboardRoute);
 // public page route
 mainRoute.use("/api", webRoute);
