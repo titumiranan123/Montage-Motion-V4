@@ -12,7 +12,7 @@ const PodcastInsight = ({ data }: any) => {
   const [activeStep, setActivestep] = useState(0);
   return (
     <div className="flex justify-between lg:flex-row flex-col gap-8 container sectionGap">
-      <div className="max-w-124.75 w-full max-h-172">
+      <div className="max-w-124.75 w-full ">
         <div className="flex flex-col gap-1 justify-start items-start sectionGap max-w-167 w-full mx-auto">
           <p className=" text-(--text-primary) min-w-30.5 h-9.5 rounded-3xl py-2 px-5 text-center opensans">
             {data?.tag}

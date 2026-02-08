@@ -1,0 +1,90 @@
+/* Toolbar buttons */
+.jodit-toolbar__button {
+  background-color: #1a1d2e !important;
+  color: #ffffff !important;
+  border-radius: 4px;
+  border: 1px solid #333;
+  transition: all 0.2s ease;
+}
+
+.jodit-toolbar__button:hover {
+  background-color: #1fb5dd !important;
+  color: #000000 !important;
+}
+
+/* Active toolbar button */
+.jodit-toolbar__button_active {
+  background-color: #3357a3 !important;
+  color: #ffffff !important;
+}
+
+/* Editor content area */
+.jodit-wysiwyg {
+  caret-color: #1fb5dd; /* text cursor color */
+  min-height: 300px;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+
+/* Tables inside editor */
+.jodit-wysiwyg table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #555;
+}
+
+.jodit-wysiwyg th,
+.jodit-wysiwyg td {
+  border: 1px solid #555;
+  padding: 8px;
+  color: #fff;
+}
+
+/* Links */
+.jodit-wysiwyg a {
+  color: #1fb5dd;
+  text-decoration: underline;
+}
+
+/* Images inside editor */
+.jodit-wysiwyg img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 8px 0;
+}
+
+/* Headings in preview */
+.editor-preview h1,
+.editor-preview h2,
+.editor-preview h3 {
+  color: #1fb5dd;
+  margin-top: 16px;
+}
+
+/* Paragraphs in preview */
+.editor-preview p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* Lists in preview */
+.editor-preview ul,
+.editor-preview ol {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+/* Tables in preview */
+.editor-preview table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+}
+
+.editor-preview th,
+.editor-preview td {
+  border: 1px solid #555;
+  padding: 8px;
+}

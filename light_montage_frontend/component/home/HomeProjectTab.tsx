@@ -64,9 +64,9 @@ const HomeTab = ({ types }: { types: any }) => {
         overflow-x-auto px-3 gap-2
         scroll-hide ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
     >
-      {tabConfig?.slice(1)?.map((tb: any) => (
+      {tabConfig?.slice(1)?.map((tb: any, idx: number) => (
         <button
-          key={tb?.service_type}
+          key={idx}
           onClick={() => handleTabClick(tb?.service_type)}
           className={`py-2 px-3 opensans font-medium text-[14px]
             rounded-[12px] whitespace-nowrap h-[51px]

@@ -15,9 +15,8 @@ const OurFeatureProject = async ({ tab }: { tab: string }) => {
   try {
     category = await getData({ url: "api/website/service/type" });
 
-    const defaultType = tab ?? category?.data?.[0]?.service_type;
     data = await getData({
-      url: `api/works/website?type=${defaultType}&limit=6`,
+      url: `api/works/website?type=${tab && tab !== "all" ? tab : "home"}`,
     });
   } catch (error) {
     console.log(error);
@@ -38,7 +37,9 @@ const OurFeatureProject = async ({ tab }: { tab: string }) => {
         tag={workSection.tag}
         width="160"
       />
+      {/* <div data-aos="fade-up" data-aos-delay={500} className="w-full"> */}
       <HomeTab types={category?.data} />
+      {/* </div> */}
       <DynamicWorkContent data={data?.data} />
     </div>
   );

@@ -12,7 +12,7 @@ const ServiceDropdown = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isServicesActive = servicesData?.some((service: any) =>
-    path.startsWith(service.href)
+    path.startsWith(service.href),
   );
 
   return (

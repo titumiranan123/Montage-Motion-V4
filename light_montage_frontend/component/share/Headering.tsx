@@ -19,13 +19,19 @@ export const Heading: React.FC<headerProp> = ({
   return (
     <div className="flex flex-col gap-1 justify-center items-center max-w-5xl w-full mx-auto ">
       <p
+        data-aos="fade-up"
+        data-aos-delay={200}
         style={{ maxWidth: `${width}px` }}
         className={`  max-w-[238px] w-full h-[46px] flex justify-center items-center rounded-3xl text-[16px] leading-[140%]  font-normal  poppins glass-card ${isbackground ? "text-[#1FB5DD]" : "text-(--text-primary)"}`}
       >
         {tag}
       </p>
 
-      <p className="text-[40px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins">
+      <p
+        data-aos="fade-up"
+        data-aos-delay={300}
+        className="text-[40px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins"
+      >
         {title}
       </p>
       {/* 
@@ -35,7 +41,11 @@ export const Heading: React.FC<headerProp> = ({
         </p>
       )} */}
 
-      <p className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-4/9 mx-auto ">
+      <p
+        data-aos="fade-up"
+        data-aos-delay={400}
+        className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-4/9 mx-auto "
+      >
         {subtitle}
       </p>
       <style>{`

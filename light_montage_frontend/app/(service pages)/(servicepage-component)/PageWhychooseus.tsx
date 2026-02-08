@@ -5,6 +5,9 @@ import Gradientcard from "@/component/share/Gradientcard";
 import { Heading } from "@/component/share/Headering";
 
 const PageWhychooseus = ({ data }: { data: any }) => {
+  if (data?.length <= 0) {
+    return null;
+  }
   return (
     <div className="container  sectionGap">
       <Heading

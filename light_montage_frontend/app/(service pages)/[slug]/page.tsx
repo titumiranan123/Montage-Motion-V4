@@ -35,7 +35,6 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-  console.log(data?.data?.insight);
   return (
     <div className="min-h-screen text-black mt-4 ">
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
@@ -72,11 +71,6 @@ const ServicePage = async ({
         <PageWhychooseus data={data?.data?.whychooseus ?? []} />
       )}
 
-      {slug === "podcast-editing-service" && (
-        <>
-          <PodcastInsight />
-        </>
-      )}
       {data?.data?.faq && <HomeFaqSection data={data?.data?.faq} />}
       {data?.data?.contact && <PageContactsections />}
     </div>

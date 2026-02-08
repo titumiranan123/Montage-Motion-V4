@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const JobPost = ({ data }: { data: any }) => {
   return (
-    <div className="container sectionGap">
+    <div id="open-position" className="sectionarea sectionGap">
       <Heading
         subtitle={data.paragraph}
         title={data.heading_part1}

@@ -5,7 +5,7 @@ import Image from "next/image";
 import React from "react";
 import ShareButtons from "./ShareButtons";
 import BlogHeader from "./BlogHeader";
-
+import "./blogstyle.css";
 export async function generateMetadata({
   params,
 }: {
@@ -71,7 +71,13 @@ const SingleBlog = async ({ params }: { params: any }) => {
         <h3 className="text-(--text-primary) lg:text-[56px] md:text-[48px] text-[30px] md:leading-16 leading-[46px] poppins font-medium">
           {data?.title}
         </h3>
-        <BlogHeader />
+        <BlogHeader
+          data={{
+            updatedAt: "03 October, 2025",
+            readTime: "10 Mins",
+            author: "Jaber Hossain",
+          }}
+        />
       </div>
       <div className="flex justify-between lg:flex-row flex-col gap-16 lg:mt-16 mt-10">
         <div className="lg:max-w-[89px] lg:max-h-[210px] max-h-[87px] max-w-[280px] w-full">
@@ -95,11 +101,12 @@ const SingleBlog = async ({ params }: { params: any }) => {
             width={900}
             height={500}
             priority
+            className="rounded-xl"
           />
 
           <div className="mt-5 max-w-[764px]  mx-auto ">
             <div
-              className="text-(--text-primary) mt-10"
+              className="text-(--text-primary) mt-10 editor-preview "
               dangerouslySetInnerHTML={{ __html: data?.description }}
             ></div>
           </div>

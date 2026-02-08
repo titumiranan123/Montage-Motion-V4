@@ -62,7 +62,9 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
       return (
         <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, idx) => (
-            <ServiceCard key={idx} service={service} />
+            <div key={idx} data-aos="fade-up" data-aos-delay={200 + idx * 100}>
+              <ServiceCard service={service} />
+            </div>
           ))}
         </div>
       );
@@ -76,6 +78,8 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
             return (
               <div
                 key={idx}
+                data-aos="fade-up"
+                data-aos-delay={200 + idx * 100}
                 className={`${isSecondRow ? "col-span-3" : "col-span-2"}`}
               >
                 <ServiceCard service={service} isSecondRow={isSecondRow} />
@@ -94,6 +98,8 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
             return (
               <div
                 key={idx}
+                data-aos="fade-up"
+                data-aos-delay={200 + idx * 100}
                 className={isSmallCard ? "col-span-1" : "md:col-span-2"}
               >
                 <Gradientcard

@@ -70,8 +70,8 @@ const ContactSection = () => {
           ))}
         </div>
         <div
-          // data-aos="fade-up"
-          // data-aos-delay={400}
+          data-aos="fade-up"
+          data-aos-delay={400}
           className=" flex justify-between items-center  text-(--text-primary)  max-w-[622px] glassShadow  bg-white/40  backdrop-blur-sm w-full h-[604px] rounded-3xl "
         >
           <ContactForm />

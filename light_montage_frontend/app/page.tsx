@@ -25,7 +25,7 @@ const HomePage = async ({
   const { cat } = await searchParams;
   return (
     <div className="lg:mt-4">
-      <div className="headerbg lg:rounded-[40px] rounded-lg max-w-[1440px] px-2 2xl:px-[60px] mx-auto mb-10 min-h-screen">
+      <div className="headerbg lg:rounded-[40px] rounded-lg sectionarea mb-10 min-h-screen">
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />

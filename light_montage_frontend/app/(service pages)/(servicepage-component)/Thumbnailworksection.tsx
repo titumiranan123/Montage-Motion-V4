@@ -17,8 +17,8 @@ const Thumbnailworksection = ({ works }: { works: any }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 lg:mt-16">
         {works?.map((dt: any, idx: number) => (
           <div
-            // data-aos="fade-up"
-            // data-aos-delay={200 + idx * 100}
+            data-aos="fade-up"
+            data-aos-delay={200 + idx * 100}
             key={dt.id || idx}
           >
             {/* Thumbnail */}
@@ -45,7 +45,7 @@ const Thumbnailworksection = ({ works }: { works: any }) => {
               "
               />
             ) : (
-              <div className="aspect-video overflow-hidden rounded-xl">
+              <div className="aspect-auto overflow-hidden rounded-xl">
                 <ReactPlayer
                   url={dt.video_link}
                   playing={false}

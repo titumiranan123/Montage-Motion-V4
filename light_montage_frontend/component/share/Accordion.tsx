@@ -19,7 +19,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
   // FIX: height calculation outside render (no error now)
   useEffect(() => {
     const newHeights = contentRefs.current.map((el) =>
-      el ? el.scrollHeight : 0
+      el ? el.scrollHeight : 0,
     );
     setHeights(newHeights);
   }, [items]);
@@ -38,8 +38,8 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
       `}</style>
       {items?.map((item, index) => (
         <div
-          // data-aos="fade-up"
-          // data-aos-delay={100 + index * 100}
+          data-aos="fade-up"
+          data-aos-delay={100 + index * 100}
           className={`lg:max-w-[996px] min-h-[68px] w-full h-full rounded-3xl  border border-[#E8EAEA] ${
             index === openIndex ? "bgaccordion border-transparent" : ""
           }`}
@@ -53,7 +53,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
               onClick={() => handleToggle(index)}
             >
               <h3 className="font-semibold poppins leading-[30px] md:text-[24px] md:leading-[25px] text-[16px] flex items-center gap-2">
-                Q. {item.question}
+                Q. {item?.question}
               </h3>
               <div className="shrink-0 ml-4 border border-(--text-primary) rounded-full">
                 <svg
@@ -81,7 +81,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
             >
               <div className="px-6 pb-6 pt-0">
                 <p className="lg:text-[16px] font-normal lg:leading-[26px] text-sm opensans">
-                  {item.answer}
+                  {item?.answer}
                 </p>
               </div>
             </div>

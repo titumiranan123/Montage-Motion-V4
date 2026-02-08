@@ -18,7 +18,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
 
   return (
     <div className=" mt-4">
-      <div className="portfoliobg container min-h-screen rounded-[42px]">
+      <div className="portfoliobg sectionarea min-h-screen rounded-[42px]">
         <div className="pt-40"></div>
         <Heading
           subtitle="Turning raw footage and ideas into content that captures attention."

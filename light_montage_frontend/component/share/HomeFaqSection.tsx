@@ -4,9 +4,13 @@ import { Heading } from "./Headering";
 import Image from "next/image";
 import Accordion from "./Accordion";
 import Gradientcard from "./Gradientcard";
+import Link from "next/link";
 
 const HomeFaqSection = ({ data }: { data?: any }) => {
   const allFaq = data?.faqs;
+  if (data?.length <= 0) {
+    return null;
+  }
   return (
     <div id="faq" className="container sectionGap">
       <Heading
@@ -22,7 +26,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
           >
             <div className="flex justify-center  items-center flex-col h-full md:py-10 py-6 px-2 md:px-9">
               <Image
-                src={"/assets/faq.png"}
+                src={data?.contact_image}
                 alt="faq"
                 title="faqimage"
                 width={135}
@@ -30,24 +34,25 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
                 priority
               />
               <h2 className="md:mt-4 mt-2 mb-2 font-semibold poppins  text-(--text-primary)  md:text-[24px] text-[22px] text-center lg:text-left">
-                Have more questions ?
+                {data?.contact_heading}
               </h2>
               <p className="font-normal text-[16px] opensans leading-[140%]  text-(--text-primary)  text-center">
-                Still curious? Let’s talk it out. Book a quick call. We’ll walk
-                you through everything and help you figure out the best move for
-                your brand.
+                {data?.contact_description}
               </p>
               <div className="flex justify-between items-center flex-col  text-(--text-primary)  mt-12 mb-9 gap-2">
                 <h2 className="text-[24px] font-semibold leading-[100%] poppins">
-                  Safwan Wafif
+                  {data?.contact_name}
                 </h2>
                 <p className="text-[16px] font-normal leading-[140%] opensans">
-                  Project Co-ordinator
+                  {data?.contact_position}
                 </p>
               </div>
-              <button className="btn-color max-w-[348px] w-full h-14 rounded-2xl py-4 px-4 font-medium  opensans animated hover:scale-105">
+              <Link
+                href={data?.contact_link ?? "#"}
+                className="btn-color max-w-[348px] w-full h-14 rounded-2xl py-4 px-4 font-medium flex justify-center items-center opensans animated hover:scale-105"
+              >
                 Book a Call
-              </button>
+              </Link>
             </div>
           </Gradientcard>
         </div>
