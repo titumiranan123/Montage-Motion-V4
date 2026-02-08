@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/incompatible-library */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm, useFieldArray } from "react-hook-form";
@@ -30,8 +32,8 @@ type TabForm = {
 type IndustryForm = {
   page: string;
   tag: string;
-  heading_title?: string;
-  paragraph?: string;
+  heading_title: string;
+  paragraph: string;
   tabs: TabForm[];
 };
 
@@ -86,6 +88,7 @@ export default function IndustryFormPage({
     try {
       const res = await api_url.post("/api/industries", data);
       if (res.status === 200 || res.status === 201) {
+        setOpen(false);
         toast.success("Saved successfully");
       }
     } catch (err) {
@@ -115,36 +118,60 @@ export default function IndustryFormPage({
       {/* ================= HEADER ================= */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-gray-200 mb-1">Page</label>
+          <label className="block text-gray-200 mb-1">Page *</label>
           <ServiceTypeSelect
             value={watch("page")}
-            onChange={(val) => setValue("page", val)}
+            onChange={(val) => setValue("page", val, { shouldValidate: true })}
           />
+          {errors.page && (
+            <p className="text-red-400 text-sm mt-1">{errors.page.message}</p>
+          )}
         </div>
 
         <div>
-          <label className="block text-gray-200 mb-1">Tag</label>
+          <label className="block text-gray-200 mb-1">Tag *</label>
           <input
-            {...register("tag", { required: true })}
+            {...register("tag", { required: "Tag is required" })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors.tag && (
+            <p className="text-red-400 text-sm mt-1">{errors.tag.message}</p>
+          )}
         </div>
 
         <div className="col-span-2">
-          <label className="block text-gray-200 mb-1">Heading Title</label>
+          <label className="block text-gray-200 mb-1">Heading Title *</label>
           <input
-            {...register("heading_title")}
+            {...register("heading_title", {
+              required: "Heading title is required",
+            })}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors.heading_title && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.heading_title.message}
+            </p>
+          )}
         </div>
 
         <div className="col-span-2">
-          <label className="block text-gray-200 mb-1">Paragraph</label>
+          <label className="block text-gray-200 mb-1">Paragraph *</label>
           <textarea
-            {...register("paragraph")}
+            {...register("paragraph", {
+              required: "Paragraph is required",
+              minLength: {
+                value: 20,
+                message: "Paragraph should be at least 20 characters",
+              },
+            })}
             rows={4}
             className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
           />
+          {errors.paragraph && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.paragraph.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -167,55 +194,124 @@ export default function IndustryFormPage({
             )}
           </div>
 
-          <input
-            {...register(`tabs.${tabIndex}.tab_key`)}
-            placeholder="Tab Key"
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
-          />
+          <div>
+            <label className="block text-gray-200 mb-1">Tab Key *</label>
+            <input
+              {...register(`tabs.${tabIndex}.tab_key`, {
+                required: "Tab key is required",
+              })}
+              placeholder="Tab Key"
+              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
+            />
+            {errors.tabs?.[tabIndex]?.tab_key && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.tabs[tabIndex].tab_key.message}
+              </p>
+            )}
+          </div>
 
-          <input
-            {...register(`tabs.${tabIndex}.title`)}
-            placeholder="Title"
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
-          />
+          <div>
+            <label className="block text-gray-200 mb-1">Title *</label>
+            <input
+              {...register(`tabs.${tabIndex}.title`, {
+                required: "Title is required",
+              })}
+              placeholder="Title"
+              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
+            />
+            {errors.tabs?.[tabIndex]?.title && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.tabs[tabIndex].title.message}
+              </p>
+            )}
+          </div>
 
-          <textarea
-            {...register(`tabs.${tabIndex}.description`)}
-            placeholder="Description"
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg h-28"
-          />
+          <div>
+            <label className="block text-gray-200 mb-1">Description *</label>
+            <textarea
+              {...register(`tabs.${tabIndex}.description`, {
+                required: "Description is required",
+                minLength: {
+                  value: 50,
+                  message: "Description should be at least 50 characters",
+                },
+              })}
+              placeholder="Description"
+              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg h-28"
+            />
+            {errors.tabs?.[tabIndex]?.description && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.tabs[tabIndex].description.message}
+              </p>
+            )}
+          </div>
 
-          <ImageUploader
-            value={watch(`tabs.${tabIndex}.image`)}
-            onChange={(url) => setValue(`tabs.${tabIndex}.image`, url)}
-          />
+          <div>
+            <label className="block text-gray-200 mb-1">Image *</label>
+            <ImageUploader
+              value={watch(`tabs.${tabIndex}.image`)}
+              onChange={(url) =>
+                setValue(`tabs.${tabIndex}.image`, url, {
+                  shouldValidate: true,
+                })
+              }
+            />
+            <input
+              type="text"
+              {...register(`tabs.${tabIndex}.image`, {
+                required: "Image is required",
+              })}
+            />
+            {errors.tabs?.[tabIndex]?.image && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.tabs[tabIndex].image.message}
+              </p>
+            )}
+          </div>
 
-          <input
-            type="number"
-            {...register(`tabs.${tabIndex}.position`, {
-              valueAsNumber: true,
-            })}
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
-            placeholder="Position"
-          />
+          <div>
+            <label className="block text-gray-200 mb-1">CTA Label *</label>
+            <input
+              {...register(`tabs.${tabIndex}.cta.label`, {
+                required: "CTA label is required",
+              })}
+              placeholder="CTA Label"
+              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
+            />
+            {errors.tabs?.[tabIndex]?.cta?.label && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.tabs[tabIndex].cta.label.message}
+              </p>
+            )}
+          </div>
 
-          <input
-            {...register(`tabs.${tabIndex}.cta.label`)}
-            placeholder="CTA Label"
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
-          />
-
-          <input
-            {...register(`tabs.${tabIndex}.cta.link`)}
-            placeholder="CTA Link"
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
-          />
+          <div>
+            <label className="block text-gray-200 mb-1">CTA Link *</label>
+            <input
+              {...register(`tabs.${tabIndex}.cta.link`, {
+                required: "CTA link is required",
+                pattern: {
+                  value: /^https?:\/\/.+/,
+                  message:
+                    "Please enter a valid URL starting with http:// or https://",
+                },
+              })}
+              placeholder="CTA Link"
+              className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
+            />
+            {errors.tabs?.[tabIndex]?.cta?.link && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.tabs[tabIndex].cta.link.message}
+              </p>
+            )}
+          </div>
 
           {/* ================= OFFER POINTS ================= */}
           <OfferPoints
             control={control}
             register={register}
             tabIndex={tabIndex}
+            errors={errors}
           />
         </div>
       ))}
@@ -239,39 +335,47 @@ export default function IndustryFormPage({
         ➕ Add New Tab
       </button>
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="px-4 py-2 flex items-center gap-3 justify-center w-44 bg-[#1FB5DD] rounded-md disabled:cursor-not-allowed"
-      >
-        {isSubmitting ? (
-          <>
-            <svg
-              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            Saving ...
-          </>
-        ) : (
-          "Submit"
-        )}
-      </button>
+      <div className=" flex justify-end w-full col-span-3 gap-5">
+        <button
+          className="py-2 px-4 border cursor-pointer border-cyan-500 rounded-lg"
+          onClick={() => setOpen(false)}
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="px-6 py-2.5 rounded-lg bg-[#1FB5DD] text-white hover:bg-[#17A6CC] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1FB5DD] focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer "
+        >
+          {isSubmitting ? (
+            <span className="flex items-center justify-center">
+              <svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4z"
+                ></path>
+              </svg>
+              Submiting...
+            </span>
+          ) : (
+            "Submit"
+          )}
+        </button>
+      </div>
     </form>
   );
 }
@@ -282,10 +386,12 @@ function OfferPoints({
   control,
   register,
   tabIndex,
+  errors,
 }: {
   control: any;
   register: any;
   tabIndex: number;
+  errors: any;
 }) {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -294,25 +400,41 @@ function OfferPoints({
 
   return (
     <div className="space-y-2">
-      <h4 className="text-white">Offer Points</h4>
+      <h4 className="text-white">Offer Points *</h4>
+      {fields.length === 0 && (
+        <p className="text-red-400 text-sm">
+          At least one offer point is required
+        </p>
+      )}
 
-      {fields.map((_, index) => (
-        <div key={index} className="flex gap-2">
-          <input
-            {...register(`tabs.${tabIndex}.offer_points.${index}.text`)}
-            className="flex-1 p-3 bg-gray-900 border border-gray-700 rounded-lg"
-            placeholder={`Point ${index + 1}`}
-          />
-          <input
-            type="number"
-            {...register(`tabs.${tabIndex}.offer_points.${index}.position`, {
-              valueAsNumber: true,
-            })}
-            className="w-24 p-3 bg-gray-900 border border-gray-700 rounded-lg"
-          />
-          <button type="button" onClick={() => remove(index)}>
-            ❌
-          </button>
+      {fields.map((field, index) => (
+        <div key={field.id} className="space-y-2">
+          <div className="flex gap-2 items-start">
+            <div className="flex-1 space-y-1">
+              <input
+                {...register(`tabs.${tabIndex}.offer_points.${index}.text`, {
+                  required: "Offer point text is required",
+                })}
+                className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg"
+                placeholder={`Point ${index + 1}`}
+              />
+              {errors.tabs?.[tabIndex]?.offer_points?.[index]?.text && (
+                <p className="text-red-400 text-sm">
+                  {errors.tabs[tabIndex].offer_points[index].text.message}
+                </p>
+              )}
+            </div>
+
+            {fields.length > 1 && (
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="mt-3 text-red-400"
+              >
+                ❌
+              </button>
+            )}
+          </div>
         </div>
       ))}
 

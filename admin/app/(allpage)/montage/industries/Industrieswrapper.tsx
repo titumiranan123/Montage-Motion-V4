@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { ServiceFilter } from "@/utils/Servicefilter";
 import React, { useEffect, useState } from "react";
@@ -59,7 +60,7 @@ const Industrieswrapper = ({ data }: { data: any }) => {
             onClick={(e) => e.stopPropagation()}
             className="w-full flex justify-center items-center max-w-5xl"
           >
-            <IndustryFormPage data={data} setOpen={setIsModalOpen} />
+            <IndustryFormPage data={initialData} setOpen={setIsModalOpen} />
           </div>
         </div>
       )}

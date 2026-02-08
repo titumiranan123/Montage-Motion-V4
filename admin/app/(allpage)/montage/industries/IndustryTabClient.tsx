@@ -37,7 +37,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
         aria-label="Content categories"
         className="relative flex justify-start  lg:justify-center 
            items-center 
-          w-full px-2 overflow-x-auto scrollbar-hide  rounded-[12px] glassShadow   p-3 max-w-[520px] mx-auto"
+          w-full px-2 overflow-x-auto scrollbar-hide  rounded-xl glassShadow   p-3  mx-auto"
         onKeyDown={handleKeyDown}
       >
         {safeTabs?.map((tab: any, index: number) => (
@@ -47,7 +47,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
             aria-selected={activeTab === index}
             aria-controls={`${labelId}-${tab?.id}-panel`}
             onClick={() => setActiveTab(index)}
-            className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px] ${
+            className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-xl text-center transition-colors whitespace-nowrap h-12.75 ${
               activeTab === index ? "btn-color font-semibold" : ""
             }`}
           >
@@ -65,10 +65,10 @@ export function TabsClient({ tabs }: { tabs: any }) {
         {/* Content Card */}
         <Gradientcard
           borderClassName="lg:w-[918px] lg:max-w-full max-w-[918px]  mx-auto w-full p-px rounded-2xl"
-          className="lg:w-[916px] lg:max-w-full max-w-[916px]  mx-auto w-full rounded-2xl"
+          className="lg:w-229 lg:max-w-full max-w-229  mx-auto w-full rounded-2xl"
         >
           <div className="relative">
-            <div className="rounded-2xl  p-3   md:p-6 flex justify-between items-center lg:flex-row flex-col-reverse gap-4 lg:w-[916px] lg:max-w-full max-w-[916px]  mx-auto w-full relative ">
+            <div className="rounded-2xl  p-3   md:p-6 flex justify-between items-center lg:flex-row flex-col-reverse gap-4 lg:w-229 lg:max-w-full max-w-229  mx-auto w-full relative ">
               <div className=" text-(--text-primary)   w-full lg:w-1/2">
                 <h3 className="mb-3 text-xl font-semibold md:text-2xl poppins">
                   {activeTabData?.title}
@@ -113,7 +113,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
               <Image
                 src={activeTabData?.image}
                 alt={activeTabData?.title}
-                className="max-w-[1435px] w-full mx-auto"
+                className="max-w-358.75 w-full mx-auto"
                 width={1435}
                 height={10}
               />

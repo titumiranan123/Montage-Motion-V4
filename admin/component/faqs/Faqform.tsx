@@ -21,7 +21,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
     control,
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
     watch,
     setValue,
     reset,
@@ -117,21 +117,38 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             value={watch("type")}
             onChange={(v) => setValue("type", v)}
           />
+          {errors.type && (
+            <p className="text-red-400 text-sm mt-1">{errors.type.message}</p>
+          )}
         </div>
 
         <div className="flex flex-col space-y-3">
           <label className=" text-sm text-gray-300 ">Section Tag *</label>
           <input
-            {...register("section_tag", { required: "Required" })}
+            {...register("section_tag", {
+              required: "Section tag is required",
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.section_tag && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.section_tag.message}
+            </p>
+          )}
         </div>
         <div className="flex flex-col space-y-3 col-span-2">
           <label className=" text-sm text-gray-300 ">Section Title *</label>
           <input
-            {...register("section_title", { required: "Required" })}
+            {...register("section_title", {
+              required: "Section title is required",
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.section_title && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.section_title.message}
+            </p>
+          )}
         </div>
 
         <div className="md:col-span-2">
@@ -139,9 +156,20 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             Section Description*
           </label>
           <textarea
-            {...register("section_description", { required: "Required" })}
+            {...register("section_description", {
+              required: "Section description is required",
+              minLength: {
+                value: 20,
+                message: "Description should be at least 20 characters",
+              },
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400 min-h-30"
           />
+          {errors.section_description && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.section_description.message}
+            </p>
+          )}
         </div>
         {/* contact information  */}
         <div className="col-span-2 text-2xl">Contact Information</div>
@@ -150,52 +178,99 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             Contact Heading*
           </label>
           <input
-            {...register("contact_heading", { required: "Required" })}
+            {...register("contact_heading", {
+              required: "Contact heading is required",
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.contact_heading && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.contact_heading.message}
+            </p>
+          )}
         </div>
         <div>
           <label className="block text-sm text-gray-300 mb-1">
             Contact Description *
           </label>
           <input
-            {...register("contact_description", { required: "Required" })}
+            {...register("contact_description", {
+              required: "Contact description is required",
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.contact_description && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.contact_description.message}
+            </p>
+          )}
         </div>
         <div>
           <label className="block text-sm text-gray-300 mb-1">Name *</label>
           <input
-            {...register("contact_name", { required: "Required" })}
+            {...register("contact_name", {
+              required: "Contact name is required",
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.contact_name && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.contact_name.message}
+            </p>
+          )}
         </div>
         <div>
           <label className="block text-sm text-gray-300 mb-1">
             Designation *
           </label>
           <input
-            {...register("contact_position", { required: "Required" })}
+            {...register("contact_position", {
+              required: "Contact position is required",
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.contact_position && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.contact_position.message}
+            </p>
+          )}
         </div>
         <div>
           <label className="block text-sm text-gray-300 mb-1">
             Contact Link *
           </label>
           <input
-            {...register("contact_link", { required: "Required" })}
+            {...register("contact_link", {
+              required: "Contact link is required",
+              pattern: {
+                value: /^https?:\/\/.+/,
+                message:
+                  "Please enter a valid URL starting with http:// or https://",
+              },
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.contact_link && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.contact_link.message}
+            </p>
+          )}
         </div>
         <div>
           <label className="block text-sm text-gray-300 mb-1">
             Contact Alt *
           </label>
           <input
-            {...register("contact_alt", { required: "Required" })}
+            {...register("contact_alt", {
+              required: "Contact alt is required",
+            })}
             className="w-full p-2 rounded-md text-white border border-slate-400"
           />
+          {errors.contact_alt && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.contact_alt.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -206,6 +281,11 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             value={watch("contact_image")}
             onChange={(url) => setValue(`contact_image`, url)}
           />
+          {errors.contact_image && (
+            <p className="text-red-400 text-sm mt-1">
+              {errors.contact_image.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -236,16 +316,34 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             </div>
 
             <input
-              {...register(`faqs.${index}.question`, { required: true })}
+              {...register(`faqs.${index}.question`, {
+                required: "FAQ question is required",
+              })}
               placeholder="Question"
               className="w-full p-2 rounded-md text-white border border-slate-400 mb-2"
             />
+            {errors.faqs?.[index]?.question && (
+              <p className="text-red-400 text-sm mb-2">
+                {errors.faqs[index].question.message}
+              </p>
+            )}
 
             <textarea
-              {...register(`faqs.${index}.answer`, { required: true })}
+              {...register(`faqs.${index}.answer`, {
+                required: "FAQ answer is required",
+                minLength: {
+                  value: 10,
+                  message: "Answer should be at least 10 characters",
+                },
+              })}
               placeholder="Answer"
               className="w-full p-2 rounded-md text-white border border-slate-400 min-h-20"
             />
+            {errors.faqs?.[index]?.answer && (
+              <p className="text-red-400 text-sm mt-1">
+                {errors.faqs[index].answer.message}
+              </p>
+            )}
 
             <div className="mt-2 flex items-center">
               <input
@@ -257,6 +355,11 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             </div>
           </div>
         ))}
+        {fields.length === 0 && (
+          <p className="text-red-400 text-sm mb-2">
+            At least one FAQ item is required
+          </p>
+        )}
         <button
           type="button"
           onClick={addFaqItem}

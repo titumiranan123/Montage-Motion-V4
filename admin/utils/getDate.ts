@@ -13,7 +13,6 @@ export const getData = async ({
 }): Promise<any> => {
   try {
     const session: any = await getServerSession(authOptions);
-
     if (!session?.user?.token) {
       redirect("/signin");
     }

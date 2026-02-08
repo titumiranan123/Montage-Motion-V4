@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { ServiceFilter } from "@/utils/Servicefilter";
 import React, { useEffect, useState } from "react";

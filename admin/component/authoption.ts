@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -5,30 +6,36 @@ export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      credentials: {},
-      async authorize(credentials: any) {
-        let user = null;
-        if (credentials?.Login) {
-          const { email, password }: any = credentials;
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) return null;
 
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
-            {
-              method: "POST",
-              body: JSON.stringify({ email, password }),
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-          const response = await res.json();
-          if (res.ok && response) {
-            user = response.userdata;
-            return user;
-          }
-          return null;
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
+          },
+        );
+
+        const data = await res.json();
+
+        if (!res.ok || !data?.userdata) {
+          // ❌ throw Error for NextAuth
+          throw new Error("Invalid credentials");
         }
+        return data.userdata;
       },
     }),
   ],
+  session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -40,10 +47,14 @@ export const authOptions: NextAuthOptions = {
       session.user = token.user;
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return baseUrl + url;
+      if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
   },
   pages: {
     signIn: "/sign-in",
-    signOut: "/signout",
   },
-  secret: "kjljdflkjds",
+  secret: process.env.NEXTAUTH_SECRET,
 };

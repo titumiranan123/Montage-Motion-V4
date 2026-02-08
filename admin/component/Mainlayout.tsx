@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 import { Inter } from "next/font/google";
@@ -20,6 +21,13 @@ import {
   FiGlobe,
   FiMap,
   FiSettings,
+  FiLayers,
+  FiStar,
+  FiUsers,
+  FiHelpCircle,
+  FiClipboard,
+  FiTrendingUp,
+  FiBookOpen,
 } from "react-icons/fi";
 
 const inter = Inter({
@@ -35,6 +43,13 @@ export default function MainLayout({
   const [isOpen, setIsOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false }); // ❌ stop auto redirect
+    toast.success("Logout successful");
+    router.push("/signin");
+  };
   useEffect(() => setMobileMenuOpen(false), [pathname]);
   const menuItems = [
     {
@@ -47,17 +62,17 @@ export default function MainLayout({
         {
           href: "/montage/seo/page-content",
           label: "Page SEO Content",
-          icon: <FiGlobe />, // Manage on-page SEO meta data
+          icon: <FiFileText />,
         },
         {
           href: "/montage/seo/sitemap",
           label: "Sitemap Manager",
-          icon: <FiMap />, // Control and update XML sitemap
+          icon: <FiMap />,
         },
         {
           href: "/montage/seo/robots",
           label: "Robots.txt Manager",
-          icon: <FiSettings />, // Configure crawler access
+          icon: <FiSettings />,
         },
       ],
     },
@@ -67,7 +82,7 @@ export default function MainLayout({
         {
           href: "/montage/hyper-service",
           label: "Service page Management",
-          icon: <FiGlobe />,
+          icon: <FiLayers />,
         },
       ],
     },
@@ -77,50 +92,48 @@ export default function MainLayout({
         {
           href: "/montage/headers-section",
           label: "Header Section",
-          icon: <FiBriefcase />,
+          icon: <FiFile />,
         },
         {
           href: "/montage/works",
           label: "Work Section",
-          icon: <FiBriefcase />,
+          icon: <FiClipboard />,
         },
         {
           href: "/montage/page-service",
-          label: "Service  Section",
+          label: "Service Section",
           icon: <FiBriefcase />,
         },
-
         {
           href: "/montage/pricing-section",
           label: "Create Pricing",
-          icon: <FiBriefcase />,
+          icon: <FiTrendingUp />,
         },
-
+        { href: "/montage/insight", label: "Insight", icon: <FiStar /> },
         {
           href: "/montage/brand-section",
-          label: "Brand  Section",
-          icon: <FiBriefcase />,
+          label: "Brand Section",
+          icon: <FiGlobe />,
         },
-
         {
           href: "/montage/testimonials",
           label: "Testimonials Section",
-          icon: <FiBriefcase />,
+          icon: <FiStar />,
         },
         {
           href: "/montage/page-process",
-          label: "Process  Section",
-          icon: <FiBriefcase />,
+          label: "Process Section",
+          icon: <FiLayers />,
         },
         {
           href: "/montage/why-choose-us",
           label: "Why Choose us Section",
-          icon: <FiBriefcase />,
+          icon: <FiInfo />,
         },
         {
           href: "/montage/member-influncer",
           label: "Member List",
-          icon: <FiBriefcase />,
+          icon: <FiUsers />,
         },
         {
           href: "/montage/carrerpost",
@@ -129,24 +142,16 @@ export default function MainLayout({
         },
         {
           href: "/montage/comparison",
-          label: "Comparision",
-          icon: <FiBriefcase />,
+          label: "Comparison",
+          icon: <FiTrendingUp />,
         },
         {
           href: "/montage/industries",
           label: "Industries",
-          icon: <FiBriefcase />,
+          icon: <FiLayers />,
         },
-        {
-          href: "/montage/faqs",
-          label: "Faq Section",
-          icon: <FiBriefcase />,
-        },
-        {
-          href: "/montage/blogs",
-          label: "Blogs",
-          icon: <FiBriefcase />,
-        },
+        { href: "/montage/faqs", label: "Faq Section", icon: <FiHelpCircle /> },
+        { href: "/montage/blogs", label: "Blogs", icon: <FiBookOpen /> },
         { href: "/montage/contact", label: "Contact", icon: <FiMail /> },
       ],
     },
@@ -160,7 +165,7 @@ export default function MainLayout({
       className={`flex flex-col min-h-screen bg-black text-white ${inter.className}`}
     >
       {/* HEADER */}
-      <header className="sticky top-0 z-30 w-full bg-gradient-to-b from-black to-gray-900/90 border-b border-gray-800/40 shadow-md backdrop-blur-md transition-all">
+      <header className="sticky top-0 z-30 w-full bg-linear-to-b from-black to-gray-900/90 border-b border-gray-800/40 shadow-md backdrop-blur-md transition-all">
         <div className="flex items-center justify-between h-16 px-6 sm:px-8 max-w-screen-2xl mx-auto">
           {/* Left */}
           <div className="flex items-center space-x-4 sm:space-x-6">
@@ -200,7 +205,7 @@ export default function MainLayout({
       <div className="flex flex-1 w-full max-w-screen-2xl mx-auto transition-all duration-300">
         {/* DESKTOP SIDEBAR */}
         <aside
-          className={`hidden md:flex flex-col sticky top-16 h-[calc(100vh-4rem)] bg-gradient-to-b from-black to-gray-900/90 border-r border-gray-800/40 shadow-2xl transition-all duration-300 ${
+          className={`hidden md:flex flex-col sticky top-16 h-[calc(100vh-4rem)] bg-linear-to-b from-black to-gray-900/90 border-r border-gray-800/40 shadow-2xl transition-all duration-300 ${
             isOpen ? "w-80" : "w-16"
           }`}
         >
@@ -224,7 +229,7 @@ export default function MainLayout({
                       }`}
                     >
                       <span
-                        className={`flex-shrink-0 w-5 h-5 ${
+                        className={`shrink-0 w-5 h-5 ${
                           isOpen ? "mr-4" : "mx-auto"
                         } transition-all`}
                       >
@@ -246,14 +251,11 @@ export default function MainLayout({
             {/* FOOTER BUTTONS */}
             <div className="mt-auto space-y-4 border-t border-gray-800/40 pt-6">
               <button
-                onClick={async () => {
-                  await signOut();
-                  toast.success("Logout successful");
-                }}
+                onClick={() => handleLogout()}
                 className="flex items-center w-full px-4 py-3 rounded-xl text-gray-300 hover:bg-[#1FB5DD]/20 hover:text-[#1FB5DD] transition-all"
               >
                 <FiLogOut
-                  className={`w-5 h-5 flex-shrink-0 ${
+                  className={`w-5 h-5 shrink-0 ${
                     isOpen ? "mr-4" : "mx-auto"
                   } transition-all`}
                 />
@@ -286,7 +288,7 @@ export default function MainLayout({
             onClick={toggleMobileMenu}
           ></div>
           <div
-            className={`absolute left-0 top-0 h-full w-72 bg-gradient-to-b from-black to-gray-900/90 border-r border-gray-800/40 p-6 shadow-2xl transition-transform ${
+            className={`absolute left-0 top-0 h-full w-72 bg-linear-to-b from-black to-gray-900/90 border-r border-gray-800/40 p-6 shadow-2xl transition-transform ${
               mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
@@ -334,7 +336,7 @@ export default function MainLayout({
       </div>
 
       {/* FOOTER */}
-      <footer className="border-t border-gray-800/40 py-8 text-center bg-gradient-to-t from-gray-900/90 to-black">
+      <footer className="border-t border-gray-800/40 py-8 text-center bg-linear-to-t from-gray-900/90 to-black">
         <p className="text-gray-400 text-sm sm:text-base font-medium">
           © {new Date().getFullYear()} All Rights Reserved by Montage Motion.
         </p>
