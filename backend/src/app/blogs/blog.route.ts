@@ -21,7 +21,7 @@ router.post(
 );
 router.get("/blogs", getAllBlogs);
 router.get("/blogs/:id", getBlogById);
-router.put(
+router.post(
   "/blogs/:id",
   auth("ADMIN", "MODARATOR"),
   validate(BlogSchema.partial()),

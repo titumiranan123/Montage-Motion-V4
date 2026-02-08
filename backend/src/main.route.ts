@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import dashboardRoute from "./app/website/web.route";
 import seoRoute from "./app/seo/seo.route";
 
@@ -27,9 +27,17 @@ import homeServiceRoute from "./app/homeservice/homeservice.route";
 import comparisonRoute from "./app/comparison/comparison.routes";
 import industriesRoute from "./app/industry/industry.routes";
 import insightRoute from "./app/insight/insight.routes";
+import auth from "./midleware/authMidleware";
 
 const mainRoute = Router();
 
+mainRoute.use(
+  "/api/auth/verify",
+  auth("ADMIN", "MODARATOR"),
+  (_req: Request, _res: Response) => {
+    return "okey";
+  },
+);
 mainRoute.use("/api", faqRoute);
 mainRoute.use("/api", headerRoute);
 mainRoute.use("/api/pricing", pricingRoute);
