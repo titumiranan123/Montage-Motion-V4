@@ -7,10 +7,11 @@ export default function ComparisonCards({ data }: { data: any }) {
   return (
     <div className="mx-auto  container sectionGap">
       <Heading
-        subtitle="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing "
-        tag="Our Service"
-        title="Our Process for your Online Growth"
-        width="130"
+        subtitle={data?.paragraph}
+        tag={data?.tag}
+        title={data?.heading_title}
+        width="160"
+        isbackground={true}
       />
       <div className="grid gap-5 sm:gap-6 md:gap-8  grid-cols-1 md:grid-cols-3 lg:mt-16 mt-9">
         {data?.columns?.map((col: any, idx: number) => (

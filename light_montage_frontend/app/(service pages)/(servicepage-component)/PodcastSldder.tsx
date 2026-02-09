@@ -27,6 +27,7 @@ type Layout = {
   offscreenX: number;
 };
 import ReactPlayer from "react-player";
+import { Play } from "lucide-react";
 
 export default function PodcastSlider({ data }: { data: any[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -463,22 +464,12 @@ export default function PodcastSlider({ data }: { data: any[] }) {
                       url={item?.video_url}
                       light={item?.image_url}
                       playIcon={
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-black bg-opacity-50 rounded-full p-2">
-                            <svg
-                              className="w-8 h-8 text-white"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </div>
-                        </div>
+                        <button className="w-16 absolute top-[40%] left-[46%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
+                          <Play
+                            fill="#fff"
+                            className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+                          />
+                        </button>
                       }
                       ref={(player) => {
                         playerRefs.current[index] = player;

@@ -46,7 +46,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
           aria-label="Content categories"
           className="relative flex justify-start flex-nowrap  lg:justify-start 
            items-center 
-         px-2 overflow-x-scroll scrollbar-hide  rounded-[12px] glassShadow  bg-white/40 p-3 w-[520px] mx-auto"
+         px-2 overflow-x-scroll scrollbar-hide  rounded-[12px] glassShadow  bg-white/40 p-3 w-[520px] mx-auto border border-white"
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
@@ -59,7 +59,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
               aria-selected={activeTab === index}
               aria-controls={`${labelId}-${tab?.id}-panel`}
               onClick={() => setActiveTab(index)}
-              className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px] shrink-0  ${
+              className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px]  shrink-0  ${
                 activeTab === index ? "btn-color font-semibold" : ""
               }`}
             >

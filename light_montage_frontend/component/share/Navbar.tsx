@@ -33,9 +33,13 @@ const Navbar = () => {
           <CustomLink className="" href="/contact-us" title="Contact" />
         </div>
 
-        <button className="w-[155px] h-12 btn-color text-(--text-primary) py-4 px-5 rounded-[10px] lg:flex hidden justify-center items-center text-[16px] font-medium poppins cursor-pointer hover:scale-105 hover:-rotate-3 transition-all duration-300 ease-in-out ">
+        <Link
+          href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
+          target="_blank"
+          className="w-[155px] h-12 btn-color text-(--text-primary) py-4 px-5 rounded-[10px] lg:flex hidden justify-center items-center text-[16px] font-medium poppins cursor-pointer hover:scale-105  transition-all duration-300 ease-in-out "
+        >
           Start a project
-        </button>
+        </Link>
         <div className="flex lg:hidden">
           <MobileMenu />
         </div>

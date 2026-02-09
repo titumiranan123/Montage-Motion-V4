@@ -2,6 +2,7 @@
 import React from "react";
 import PodcastSldder from "./PodcastSldder";
 import TurstedBy from "@/component/home/TurstedBy";
+import Link from "next/link";
 
 const PodacstHeader = ({ data }: { data: any }) => {
   return (
@@ -24,21 +25,25 @@ const PodacstHeader = ({ data }: { data: any }) => {
         </p>
 
         <div className="w-full flex md:flex-row flex-col justify-center items-center gap-3 mt-10">
-          <button
+          <Link
+            href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
+            target="_blank"
             data-aos="fade-up"
             data-aos-delay={500}
             className="md:w-[155px] w-full  h-12 btn-color text-black py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium"
           >
             Start a project
-          </button>
-          <button
+          </Link>
+          <Link
+            href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
+            target="_blank"
             data-aos="fade-up"
             data-aos-delay={600}
             style={{}}
             className="md:w-[155px] w-full h-12 btn-secondary text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium"
           >
             Book a Call
-          </button>
+          </Link>
         </div>
       </div>
       <div data-aos="fade-up" data-aos-delay={700} className="">

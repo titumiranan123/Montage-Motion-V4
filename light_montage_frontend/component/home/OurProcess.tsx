@@ -8,10 +8,11 @@ export const OurProcess = ({ data }: { data: any }) => {
   return (
     <div className="mx-auto max-w-7xl px-2 sectionGap">
       <Heading
-        subtitle={data?.paragraph ?? ""}
-        tag={data?.tag ?? ""}
-        title={data?.heading_part1 ?? ""}
-        extratitle={data?.heading_part2 ?? ""}
+        subtitle={data?.paragraph}
+        title={data?.heading_part1}
+        tag={data?.tag}
+        isbackground={true}
+        width="160"
       />
       <div className=" flex lg:flex-row flex-col mt-9 md:mt-16 gap-12">
         <Image

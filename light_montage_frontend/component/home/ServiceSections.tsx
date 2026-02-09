@@ -52,6 +52,8 @@ const ServiceSections = ({ data }: { data: any }) => {
           subtitle={data?.paragraph}
           title={data?.heading_part1}
           tag={data?.tag}
+          isbackground={true}
+          width="160"
         />
         <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {data?.services?.map((dt: any, idx: number) => (

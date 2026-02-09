@@ -40,14 +40,14 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
+            className="md:w-[155px] w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Start a project
           </Link>
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
+            className="md:w-[155px] w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-[2px]"
           >
             Book a Call
           </Link>
