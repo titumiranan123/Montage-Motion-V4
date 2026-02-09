@@ -49,6 +49,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
               </div>
               <Link
                 href={data?.contact_link ?? "#"}
+                target="_blank"
                 className="btn-color max-w-[348px] w-full h-14 rounded-2xl py-4 px-4 font-medium flex justify-center items-center opensans animated hover:scale-105"
               >
                 Book a Call

@@ -1,6 +1,7 @@
 import api from "@/utils/api.json";
 import axios from "axios";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 const extractUrlTags = (xmlString: string) => {
   const urlTagRegex = /<url>([\s\S]*?)<\/url>/g;
   return xmlString.match(urlTagRegex) || [];

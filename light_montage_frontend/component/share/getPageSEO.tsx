@@ -11,7 +11,7 @@ export async function getPageSEO(slug: string): Promise<Metadata> {
 
   try {
     const res = await fetch(`${apiURL}/api/seo/${slug}`, {
-      next: { revalidate: 1 },
+      cache: "no-store",
     });
 
     if (!res.ok) return defaultSEO;
