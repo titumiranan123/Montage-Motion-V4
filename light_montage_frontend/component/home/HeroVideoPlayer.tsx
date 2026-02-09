@@ -33,14 +33,12 @@ const HeroVideoPlayer = ({
           />
         }
         playIcon={
-          <Image
-            src="/assets/playbutton.png"
-            width={80}
-            height={80}
-            alt="Play"
-            className="z-10"
-            priority
-          />
+          <button className="w-16 absolute top-[43%] left-[47%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
+            <Play
+              fill="#fff"
+              className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+            />
+          </button>
         }
         width="100%"
         height="100%"

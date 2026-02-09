@@ -61,13 +61,13 @@ const FaqSection = () => {
         isbackground={true}
         width="160"
       />
-      <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 gap-10">
-        <div data-aos="fade-up" className="" data-aos-delay={400}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 lg:gap-10 gap-2">
+        <div data-aos="fade-up" className="mx-auto w-full" data-aos-delay={400}>
           <Gradientcard
-            borderClassName="max-w-[422px] max-h-[751px] h-full w-full rounded-3xl p-[1px] "
-            className="max-w-[420px] max-h-[749px] h-full w-full rounded-3xl "
+            borderClassName="md:max-w-[422px] max-w-full max-h-[751px] h-full w-full rounded-3xl p-[1px] "
+            className="md:max-w-[420px] max-w-full max-h-[749px] h-full w-full rounded-3xl "
           >
-            <div className="flex justify-center  items-center flex-col h-full py-10 px-9">
+            <div className="flex justify-center  items-center flex-col h-full py-10 lg:px-9 px-4">
               <Image
                 src={"/assets/faq.png"}
                 alt="faq"
@@ -76,7 +76,7 @@ const FaqSection = () => {
                 height={135}
                 priority
               />
-              <h2 className="md:mt-4 mt-2 mb-2 font-semibold poppins  text-(--text-primary)  text-[24px]">
+              <h2 className="md:mt-4 mt-2 mb-2 font-semibold poppins  text-(--text-primary)  text-[24px] text-center">
                 Have more questions ?
               </h2>
               <p className="font-normal text-[16px] opensans leading-[140%]  text-(--text-primary)  text-center">

@@ -29,7 +29,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
   };
 
   return (
-    <div className="space-y-2">
+    <div data-aos="fade-up" data-aos-delay={300} className="space-y-2">
       <style>{`
       .bgaccordion{
         background: linear-gradient(179.93deg, #FFFFFF 0.07%, #CCF4FF 99.96%);
@@ -38,8 +38,6 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
       `}</style>
       {items?.map((item, index) => (
         <div
-          data-aos="fade-up"
-          data-aos-delay={100 + index * 100}
           className={`lg:max-w-[996px] min-h-[68px] w-full h-full rounded-3xl  border border-[#E8EAEA] ${
             index === openIndex ? "bgaccordion border-transparent" : ""
           }`}
