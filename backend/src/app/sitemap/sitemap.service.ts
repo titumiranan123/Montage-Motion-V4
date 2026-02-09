@@ -5,7 +5,7 @@ export const siteMapService = {
     await db.query(`DELETE FROM site_sitemap`);
     const result = await db.query(
       `INSERT INTO site_sitemap (content) VALUES ($1) RETURNING *`,
-      [content ?? ""]
+      [content ?? ""],
     );
     return result.rows[0];
   },
@@ -30,5 +30,10 @@ export const siteMapService = {
     </url>`;
     });
     return result?.rows[0]?.content + "\n" + blogUrlsXml;
+  },
+  async getSitemapforAdmin() {
+    const result = await db.query(`SELECT * FROM site_sitemap LIMIT 1`);
+
+    return result?.rows[0]?.content;
   },
 };

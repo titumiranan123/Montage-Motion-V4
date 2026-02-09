@@ -87,7 +87,7 @@ export const homeapiServices = {
       }
       let faq: any = [];
       if (tables.includes("faq")) {
-        const result = await faqService.getFaqSections({ page: type });
+        const result = await faqService.getFaqSections({ page: "home" });
         faq = result && result.length > 0 ? result[0] : [];
       }
       let industries: any = [];

@@ -8,7 +8,7 @@ export const siteController = asyncHandler(
     const data = req.body || {};
     const result = await siteMapService.createSitemap(data.sitemap_xml);
     responseHandler(res, 200, true, "Sitemap data saved", result);
-  }
+  },
 );
 export const getSiteMap = asyncHandler(async (req: Request, res: Response) => {
   const result = await siteMapService.getSitemap();
@@ -16,7 +16,7 @@ export const getSiteMap = asyncHandler(async (req: Request, res: Response) => {
 });
 export const getAdminSiteMap = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await siteMapService.getSitemap();
+    const result = await siteMapService.getSitemapforAdmin();
     responseHandler(res, 200, true, "Sitemap data fetched", result);
-  }
+  },
 );
