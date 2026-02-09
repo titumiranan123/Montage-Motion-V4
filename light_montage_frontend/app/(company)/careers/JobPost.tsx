@@ -12,6 +12,7 @@ const JobPost = ({ data }: { data: any }) => {
         title={data.heading_part1}
         extratitle={data.heading_part2}
         tag={data.tag}
+        width="160"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:mt-10 mt-8">
         {data?.jobposts?.map((job: any, idx: number) => (

@@ -68,9 +68,9 @@ const SingleBlog = async ({ params }: { params: any }) => {
   return (
     <div className=" max-w-[1200px] mx-auto  flex flex-col   mt-36 lg:mt-40 px-2">
       <div className="w-full">
-        <h3 className="text-(--text-primary) lg:text-[56px] md:text-[48px] text-[30px] md:leading-16 leading-[46px] poppins font-medium">
+        <h1 className="text-(--text-primary) lg:text-[56px] md:text-[48px] text-[28px] md:leading-16 leading-[46px] poppins font-medium">
           {data?.title}
-        </h3>
+        </h1>
         <BlogHeader
           data={{
             updatedAt: "03 October, 2025",

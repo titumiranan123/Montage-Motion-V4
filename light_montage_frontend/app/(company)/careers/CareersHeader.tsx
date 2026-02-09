@@ -4,7 +4,7 @@ import React from "react";
 
 const CareersHeader = () => {
   return (
-    <div className="relative sectionarea rounded-xl md:rounded-[40px]   overflow-hidden lg:h-screen">
+    <div className="relative sectionarea rounded-xl md:rounded-[40px]   overflow-hidden lg:h-screen pt-14">
       <div className="bg-[#1FB5DD] w-[600px] h-[600px] absolute xl:-top-[5px] xl:-right-[427px] -top-[215px] -right-[580px] blur-[70px] xl:blur-[205px]  "></div>
       <div className="bg-[#1FB5DD] w-[600px] h-[600px] absolute xl:-top-[5px] xl:-left-[427px] -top-[215px] -left-[580px] xl:blur-[185px] blur-[70px] "></div>
       <div

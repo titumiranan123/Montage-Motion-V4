@@ -6,6 +6,7 @@ import ContactSection from "@/component/share/ContactSection";
 import { Heading } from "@/component/share/Headering";
 import { getData } from "@/utils/getData";
 import VideoPlayer from "@/component/home/VideoPlayer";
+import CalendlyContact from "../contact-us/CalendlyContact";
 export async function generateMetadata() {
   return await getPageSEO("portfolio");
 }
@@ -93,6 +94,9 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
             }
           })}
         </div>
+      </div>
+      <div className="sectionGap">
+        <CalendlyContact />
       </div>
       <ContactSection />
       <style>

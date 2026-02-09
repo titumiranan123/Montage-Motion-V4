@@ -56,7 +56,7 @@ const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
           mt-5 transition-all duration-300
           overflow-x-auto 
           px-3 gap-2
-          scroll-hide ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+          scroll-horizontal ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
     >
       <button
         onClick={() => handleTabClick("all")}

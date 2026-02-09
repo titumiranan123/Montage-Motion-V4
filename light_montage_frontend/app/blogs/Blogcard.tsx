@@ -47,10 +47,10 @@ const Blogcard = ({
               })}
             </p>
           </div>
-          <h3 className=" md:text-[24px] md:leading-8 text-[22px] font-semibold leading-[26px] mt-2 poppins">
-            {title.slice(0, 60)} {title.length > 60 ? ". . . . ." : ""}
+          <h3 className=" md:text-[24px] md:leading-8 text-[22px] font-semibold leading-[26px] mt-2 poppins line-clamp-2">
+            {title}
           </h3>
-          <p className="text-[14px] md:text-[16px] opensans font-normal mt-2 transform-gpu">
+          <p className="text-[14px] md:text-[16px] opensans font-normal mt-2 transform-gpu line-clamp-2">
             {" "}
             {short_description}{" "}
           </p>

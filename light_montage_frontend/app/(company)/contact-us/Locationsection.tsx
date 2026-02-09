@@ -10,6 +10,7 @@ const Locationsection = () => {
         tag="Our Location"
         title="Visit Our Office"
         subtitle="Let's connect where ideas trun into visuals, Drop by and meet the team behind Montage Motion"
+        width="160"
       />
       <div
         data-aos="fade-up"

@@ -16,7 +16,7 @@ const Blogs = async ({ searchParams }: { searchParams: any }) => {
   });
   const data = result.data;
   return (
-    <div className="relative  container lg:mt-40 mt-16 min-h-screen header-background pagelogo">
+    <div className="relative  container lg:mt-44 mt-40 min-h-screen header-background pagelogo">
       <Heading
         tag="Blogs"
         width="120"

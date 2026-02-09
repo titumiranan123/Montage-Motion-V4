@@ -11,7 +11,7 @@ export async function generateMetadata() {
 const Careers = async () => {
   const data = await getData({ url: `api/jobpost` });
   return (
-    <div className="mt-5 ">
+    <div className="lg:mt-5 mt-2">
       <CareersHeader />
       <OurStory />
       <JobPost data={data?.data ?? []} />

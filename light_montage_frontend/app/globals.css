@@ -84,6 +84,10 @@ body {
   /* box-shadow: 0px 0px 12px 0px #ffffff99 inset; */
   color: white !important;
 }
+.scroll-horizontal::-webkit-scrollbar {
+  height: 6px;
+}
+
 .glassShadow {
   box-shadow:
     inset 1px 1px 1px 0 rgba(255, 255, 255, 0.6),
