@@ -12,6 +12,7 @@ const WhyChooseUs = ({ data }: { data: any }) => {
         tag={data?.tag}
         title={data?.heading_part1 ?? data?.heading_part2}
         width="180"
+        className="max-w-2xl!"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mt-20 mt-10 gap-10 ">
         {data?.whychooseus_items?.map((dt: any, idx: number) => (

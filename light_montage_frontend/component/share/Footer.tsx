@@ -13,8 +13,8 @@ const Footer: React.FC = () => {
       }
       `}</style>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9  text-(--text-primary)  lg:mt-12 mt-9 md:gap-16 gap-8 md:mb-8 mb-6">
-          <div className="col-span-3 max-w-[312px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9  text-(--text-primary)  lg:mt-12 mt-9 md:gap-10 gap-8 md:mb-8 mb-6">
+          <div className="col-span-3 max-w-[402px]">
             <Link
               href={"/"}
               className="block md:w-[235px] md:h-[92px] w-[143px] h-14 box-border animated hover:scale-105 "
@@ -30,7 +30,11 @@ const Footer: React.FC = () => {
               />
             </Link>
             <p className="text-[16px] leading-[150%] opensans font-normal mt-10">
-              Subscribe our newsletter to stay updated and get special offers.
+              Montage Motion is the reliable digital solutions provider. We
+              provide services for Documentary, Fiction, Video Editing. Audio
+              Editing, 2D/3D Animation, Graphic Design. Our Video Production,
+              Influencer Marketing service will reach your brand to the target
+              customers and increase more sales and brand deals.
             </p>
             <div className="max-w-[305px] hidden lg:mt-10 mt-6 max-h-[52px]  h-full rounded-2xl border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2  items-center justify-around">
               <input

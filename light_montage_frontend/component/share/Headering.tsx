@@ -7,6 +7,7 @@ interface headerProp {
   extratitle?: string;
   isbackground?: boolean;
   width?: string;
+  className?: string;
 }
 
 export const Heading: React.FC<headerProp> = ({
@@ -15,9 +16,12 @@ export const Heading: React.FC<headerProp> = ({
   tag,
   width = 400,
   isbackground,
+  className,
 }) => {
   return (
-    <div className="flex flex-col gap-1 justify-center items-center max-w-5xl w-full mx-auto ">
+    <div
+      className={`flex flex-col gap-1 justify-center items-center max-w-7xl w-full mx-auto ${className}`}
+    >
       <p
         data-aos="fade-up"
         data-aos-delay={200}
@@ -42,9 +46,9 @@ export const Heading: React.FC<headerProp> = ({
       )} */}
 
       <p
-        data-aos="fade-up"
-        data-aos-delay={400}
-        className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-4/9 mx-auto "
+        // data-aos="fade-up"
+        // data-aos-delay={400}
+        className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-8/9 mx-auto "
       >
         {subtitle}
       </p>

@@ -11,10 +11,10 @@ import { Bullet } from "./BulletPoint";
 const PodcastInsight = ({ data }: any) => {
   const [activeStep, setActivestep] = useState(0);
   return (
-    <div className="flex justify-between lg:flex-row flex-col gap-8 container sectionGap">
+    <div className="flex justify-between lg:flex-row flex-col gap-8 container sectionGap items-start">
       <div className="max-w-124.75 w-full ">
-        <div className="flex flex-col gap-1 justify-start items-start sectionGap max-w-167 w-full mx-auto">
-          <p className=" text-(--text-primary) min-w-30.5 h-9.5 rounded-3xl py-2 px-5 text-center opensans">
+        <div className="flex flex-col gap-1 justify-start items-start  max-w-167 w-full mx-auto">
+          <p className=" text-[#1FB5DD] min-w-30.5 h-9.5 rounded-3xl py-2 px-5 text-center opensans glass-card flex justify-center items-center backdrop-blur-[2px]!">
             {data?.tag}
           </p>
           <p className="poppins md:text-[56px] md:leading-[120%] font-semibold text-left text-(--text-primary) text-[32px]">
@@ -41,8 +41,8 @@ const PodcastInsight = ({ data }: any) => {
         />
 
         <Gradientcard
-          className="max-w-110 max-h-112.5 w-full h-full px-2 py-3 md:py-10 md:px-9 rounded-3xl text-(--text-primary)    purposebg"
-          borderClassName="max-w-[440px] max-h-[450px] w-full h-full borderbg rounded-3xl md:-translate-x-32 md:-translate-y-80 p-px"
+          className="max-w-110 max-h-112.5 w-full h-full px-2 py-3 md:py-10 md:px-9 rounded-3xl text-(--text-primary)     purposebg"
+          borderClassName="max-w-[440px] max-h-[450px] w-full h-full borderbg rounded-3xl absolute top-[147px] -left-[90px]  p-px"
         >
           <div>
             <h2 className="text-[24px] leading-[30px] font-semibold poppins">

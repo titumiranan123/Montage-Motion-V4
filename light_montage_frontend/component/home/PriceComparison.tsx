@@ -12,6 +12,7 @@ export default function ComparisonCards({ data }: { data: any }) {
         title={data?.heading_title}
         width="160"
         isbackground={true}
+        className="max-w-2xl!"
       />
       <div className="grid gap-5 sm:gap-6 md:gap-8  grid-cols-1 md:grid-cols-3 lg:mt-16 mt-9">
         {data?.columns?.map((col: any, idx: number) => (

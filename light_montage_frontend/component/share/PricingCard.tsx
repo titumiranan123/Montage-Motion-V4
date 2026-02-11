@@ -43,7 +43,7 @@ const PricingCard: React.FC<priceProp> = ({ price, idx }) => {
                 <Bullet key={i} text={b?.feature} />
               ))}
             </div>
-            <button className="max-w-[348px]   w-full  h-12 btn-color text-black py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium hover:scale-105 hover:-rotate-2 duration-300 delay-75 transition-all ease-in-out">
+            <button className="max-w-[348px]   w-full  h-12 btn-color text-black py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium hover:scale-105  duration-300 delay-75 transition-all ease-in-out">
               Start a project
             </button>
           </div>

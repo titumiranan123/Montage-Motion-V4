@@ -31,7 +31,7 @@ export const PageProcesssection = ({ data }: { data: any }) => {
             <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
               <Gradientcard
                 isHover={true}
-                className="contact-card flex justify-between items-center text-(--text-primary) max-w-[700px] w-full h-[170px] rounded-3xl"
+                className="contact-card flex justify-between items-start text-(--text-primary) max-w-[700px] w-full h-[170px] rounded-3xl"
                 borderClassName="max-w-[698px] w-full h-[172px] rounded-[24px] p-[1px] transition-transform duration-200 ease-in-out hover:scale-[104%]"
               >
                 <Image

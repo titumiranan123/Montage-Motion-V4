@@ -34,9 +34,9 @@ export default function IndustryWeWork({ data }: { data?: any }) {
       }
       `}</style>
       <Heading
-        subtitle="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-        tag="Our Works"
-        title="Industries We Work With"
+        subtitle={data?.paragraph}
+        tag={data?.tag}
+        title={data?.heading_title}
         width="140"
       />
       <TabsClient tabs={tabs} />
