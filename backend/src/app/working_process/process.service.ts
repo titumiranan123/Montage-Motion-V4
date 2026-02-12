@@ -36,8 +36,8 @@ export const processService = {
       if (data.process_steps?.length) {
         for (const step of data.process_steps) {
           await db.query(
-            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden)
-             VALUES ($1, $2, $3, $4, $5, $6)`,
+            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden,order_index)
+             VALUES ($1, $2, $3, $4, $5, $6,$7)`,
             [
               process.id,
               step.icon,
@@ -45,6 +45,7 @@ export const processService = {
               step.title,
               step.description,
               step.isHiden ?? false,
+              step.order_index,
             ],
           );
         }
@@ -87,8 +88,8 @@ export const processService = {
 
         for (const step of data.process_steps) {
           await db.query(
-            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden)
-             VALUES ($1, $2, $3, $4, $5, $6)`,
+            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden,order_index)
+             VALUES ($1, $2, $3, $4, $5, $6,$7)`,
             [
               process.id,
               step.icon,
@@ -96,6 +97,7 @@ export const processService = {
               step.title,
               step.description,
               step.isHiden ?? false,
+              step.order_index,
             ],
           );
         }

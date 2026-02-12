@@ -1,5 +1,4 @@
 import { db } from "../../db/db";
-import { BrandImageService } from "../brand_images/brandimage.service";
 import { comparisonService } from "../comparison/comparison.services";
 import { faqService } from "../faq/faq.services";
 import { pageHeaderService } from "../header/header.services";
@@ -22,12 +21,19 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
     }
 
     case "our_clients": {
-      const result = await BrandImageService.getAllBrandImage("home");
-      return { sectionName, data: result?.[0] || null };
+      const brand = await db.query(
+        `SELECT image, alt, width,height FROM brandimage WHERE type = $1 AND ishide = false ORDER BY sortorder ASC`,
+        ["home"],
+      );
+
+      return { sectionName, data: brand.rows || null };
     }
 
     case "work": {
-      const works = await VideosService.getAllVideosForSite({ type, limit: 6 });
+      const works = await VideosService.getAllVideosForServicespage({
+        type,
+        limit: 6,
+      });
       return { sectionName, data: works || [] };
     }
 

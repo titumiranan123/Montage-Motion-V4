@@ -7,6 +7,7 @@ import {
   updateVideosById,
   updateVideosPosition,
   deleteVideoById,
+  createWorkheader,
 } from "./work.contrller";
 import { validate } from "../../midleware/validate";
 import { VideoSchema } from "./wok.zod";
@@ -18,17 +19,18 @@ router.post(
   "/works",
   auth("ADMIN", "MODARATOR"),
   validate(VideoSchema),
-  createVideo
+  createVideo,
 );
 
 router.get("/works/", auth("ADMIN", "MODARATOR"), getAllVideos);
 router.get("/works/website", getAllVideosForWebsite);
 router.get("/works/:id", getVideosById);
 router.post("/works/:id", auth("ADMIN", "MODARATOR"), updateVideosById);
+router.post("/work-header", auth("ADMIN", "MODARATOR"), createWorkheader);
 router.patch(
   "/works/positions",
   auth("ADMIN", "MODARATOR"),
-  updateVideosPosition
+  updateVideosPosition,
 );
 router.delete("/works/:id", auth("ADMIN", "MODARATOR"), deleteVideoById);
 

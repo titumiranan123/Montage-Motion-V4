@@ -15,6 +15,18 @@ export const createVideo = asyncHandler(async (req: Request, res: Response) => {
     ? responseHandler(res, 201, true, "Work created successfully", result)
     : responseHandler(res, 400, false, "Work creation failed");
 });
+export const createWorkheader = asyncHandler(
+  async (req: Request, res: Response) => {
+    if (!req.body) {
+      return responseHandler(res, 400, false, "Invalid input data");
+    }
+
+    const result = await VideosService.addHeader(req.body);
+    return result
+      ? responseHandler(res, 201, true, "Work created successfully", result)
+      : responseHandler(res, 400, false, "Work creation failed");
+  },
+);
 
 // READ ALL
 export const getAllVideos = asyncHandler(
@@ -23,17 +35,17 @@ export const getAllVideos = asyncHandler(
     return result
       ? responseHandler(res, 200, true, "Works retrieved successfully", result)
       : responseHandler(res, 404, false, "No videos found");
-  }
+  },
 );
 
 // READ ALL (Website / Query based)
 export const getAllVideosForWebsite = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await VideosService.getAllVideosforWebsite(req.query);
+    const result = await VideosService.getAllVideosForServicespage(req.query);
     return result
       ? responseHandler(res, 200, true, "Works retrieved successfully", result)
       : responseHandler(res, 404, false, "No videos found for query");
-  }
+  },
 );
 
 // READ BY ID
@@ -48,7 +60,7 @@ export const getVideosById = asyncHandler(
     return result
       ? responseHandler(res, 200, true, "Work retrieved successfully", result)
       : responseHandler(res, 404, false, "Work not found");
-  }
+  },
 );
 
 // UPDATE BY ID
@@ -63,7 +75,7 @@ export const updateVideosById = asyncHandler(
     return result
       ? responseHandler(res, 200, true, "Work updated successfully", result)
       : responseHandler(res, 400, false, "Work update failed");
-  }
+  },
 );
 
 // UPDATE POSITIONS (multiple)
@@ -80,10 +92,10 @@ export const updateVideosPosition = asyncHandler(
           200,
           true,
           "Video positions updated successfully",
-          result
+          result,
         )
       : responseHandler(res, 400, false, "Video position update failed");
-  }
+  },
 );
 
 // DELETE BY ID
@@ -98,5 +110,5 @@ export const deleteVideoById = asyncHandler(
     return result
       ? responseHandler(res, 200, true, "Work deleted successfully", result)
       : responseHandler(res, 404, false, "Work not found or delete failed");
-  }
+  },
 );

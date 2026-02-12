@@ -4,6 +4,7 @@ export interface ProcessStep {
   description: string;
   isHiden: boolean;
   alt: string;
+  order_index: number;
 }
 
 export type ProcessType =

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
+import { IWorkHeader } from "./wok.zod";
 import { IVideo } from "./work.interface";
 
 export const VideosService = {
@@ -12,7 +13,6 @@ export const VideosService = {
         [data.type],
       );
       const newPosition = last.rows.length > 0 ? last.rows[0].position + 1 : 1;
-
       const result = await db.query(
         `INSERT INTO works (title, description, thumbnail, video_link, is_visible, is_feature, position, type)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -35,16 +35,70 @@ export const VideosService = {
       throw error;
     }
   },
+  // create header
+  async addHeader(data: IWorkHeader) {
+    try {
+      // Check existing by type
+      const existing = await db.query(
+        `SELECT id FROM work_header WHERE type = $1 LIMIT 1`,
+        [data.type],
+      );
 
+      if (existing?.rowCount ?? 0 > 0) {
+        // UPDATE (type not updated)
+        const updateRes = await db.query(
+          `UPDATE work_header
+           SET tag = $1,
+               heading_part1 = $2,
+               heading_part2 = $3,
+               paragraph = $4
+           WHERE type = $5
+           RETURNING *`,
+          [
+            data.tag,
+            data.heading_part1,
+            data.heading_part2,
+            data.paragraph,
+            data.type,
+          ],
+        );
+
+        return updateRes.rows[0];
+      } else {
+        // INSERT
+        const insertRes = await db.query(
+          `INSERT INTO work_header (type, tag, heading_part1, heading_part2, paragraph)
+           VALUES ($1, $2, $3, $4, $5)
+           RETURNING *`,
+          [
+            data.type,
+            data.tag,
+            data.heading_part1,
+            data.heading_part2,
+            data.paragraph,
+          ],
+        );
+
+        return insertRes.rows[0];
+      }
+    } catch (error) {
+      errorLogger.error("Add Header Error:", error);
+      throw error;
+    }
+  },
   // READ all videos
   async getAllVideos({ type, limit = 10 }: { type?: string; limit?: number }) {
     let query = `SELECT * FROM works`;
+    let headerQuery = `SELECT * FROM work_header`;
     const params: any[] = [];
+    const workParams: any[] = [];
 
     // Dynamic WHERE
     if (type) {
       params.push(type);
+      workParams.push(type);
       query += ` WHERE type = $${params.length}`;
+      headerQuery += ` WHERE type = $${params.length}`;
     }
 
     // Order
@@ -56,9 +110,14 @@ export const VideosService = {
       query += ` LIMIT $${params.length}`;
     }
 
+    const workheader = await db.query(headerQuery, workParams);
+
     const result = await db.query(query, params);
 
-    return result.rows;
+    return {
+      ...workheader?.rows?.[0],
+      works: result.rows,
+    };
   },
   async getAllVideosForSite({
     type,
@@ -121,7 +180,48 @@ export const VideosService = {
     const result = await db.query(baseQuery, values);
     return result.rows;
   },
+  async getAllVideosForServicespage({
+    type,
+    limit = 10,
+  }: {
+    type?: string;
+    limit?: number;
+  }) {
+    const params: any[] = [];
 
+    // ---------- HEADER QUERY ----------
+    let headerQuery = `SELECT * FROM work_header`;
+    if (type) {
+      params.push(type);
+      headerQuery += ` WHERE type = $${params.length}`;
+    }
+
+    const headerResult = await db.query(headerQuery, params);
+    const header = headerResult.rows[0] || null;
+
+    // ---------- WORK QUERY ----------
+    let workQuery = `SELECT thumbnail, video_link FROM works`;
+    const workParams: any[] = [];
+
+    if (type) {
+      workParams.push(type);
+      workQuery += ` WHERE type = $${workParams.length}`;
+    }
+
+    workQuery += ` ORDER BY position ASC`;
+
+    if (limit) {
+      workParams.push(limit);
+      workQuery += ` LIMIT $${workParams.length}`;
+    }
+
+    const workResult = await db.query(workQuery, workParams);
+
+    return {
+      ...header,
+      work: workResult.rows,
+    };
+  },
   // READ by id
   async getVideosById(id: string) {
     const result = await db.query(`SELECT * FROM works WHERE id = $1`, [id]);

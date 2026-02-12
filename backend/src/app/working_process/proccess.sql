@@ -22,5 +22,6 @@ CREATE TABLE
     alt TEXT,
     title TEXT NOT NULL,
     description TEXT,
+    order_index NUMBER DEFAULT 0 NOT NULL,
     isHiden BOOLEAN DEFAULT FALSE
   );

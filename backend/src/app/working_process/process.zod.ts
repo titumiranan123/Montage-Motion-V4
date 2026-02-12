@@ -6,6 +6,7 @@ export const ProcessStepSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
   isHiden: z.boolean().default(false),
+  order_index: z.number().default(0),
 });
 
 export const ProcessSchemaZod = z.object({

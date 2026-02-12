@@ -1,5 +1,11 @@
 import { z } from "zod";
-
+export const workHeader = z.object({
+  type: z.string(),
+  tag: z.string().min(1, "Tag is required"),
+  heading_part1: z.string().min(1, "Heading is required"),
+  heading_part2: z.string().optional(),
+  paragraph: z.string().optional(),
+});
 export const VideoSchema = z.object({
   id: z.string().nullable().optional(),
   title: z.string().nullable().optional(),
@@ -14,3 +20,4 @@ export const VideoSchema = z.object({
 
 // export Type from Schema
 export type VideoSchemaType = z.infer<typeof VideoSchema>;
+export type IWorkHeader = z.infer<typeof workHeader>;

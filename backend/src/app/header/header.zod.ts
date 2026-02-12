@@ -7,7 +7,7 @@ export const HeaderMediaSchema = z.object({
   header_id: z.string().uuid().optional(),
   image_url: z.string().url({ message: "Invalid image URL" }),
   alt: z.string().min(1, { message: "Alt text is required" }),
-  video_url: z.string().url({ message: "Invalid video URL" }),
+  video_url: z.string().optional().nullable(),
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional(),
 });
