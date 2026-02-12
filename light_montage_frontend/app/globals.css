@@ -150,7 +150,7 @@ body {
     @apply max-w-[1440px] lg:px-20! md:px-5 px-4 mx-auto;
   }
   .sectionGap {
-    @apply lg:mt-[120px] md:mt-20 mt-16;
+    @apply lg:mt-30 md:mt-20 mt-16;
   }
   .animated {
     @apply transition-transform duration-200 ease-in-out;

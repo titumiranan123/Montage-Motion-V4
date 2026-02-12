@@ -39,7 +39,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
       >
         <div className="flex-1">
           <h2 className="text-[24px] font-semibold">{service.service_title}</h2>
-          <p className="text-[16px] font-normal leading-[140%] text-(--text-primary)">
+          <p className="text-[16px] font-normal leading-[140%] text-(--text-primary) mt-2">
             {service.service_description}
           </p>
         </div>

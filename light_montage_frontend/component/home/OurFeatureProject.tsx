@@ -4,12 +4,6 @@ import { getData } from "@/utils/getData";
 import HomeTab from "./HomeProjectTab";
 
 const OurFeatureProject = async ({ tab }: { tab: string }) => {
-  const workSection = {
-    title: "Our Featured Projects",
-    subtitle:
-      "Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing",
-    tag: "Our Works",
-  };
   let category;
   let data;
   try {
@@ -23,7 +17,7 @@ const OurFeatureProject = async ({ tab }: { tab: string }) => {
     category = [];
     data = [];
   }
-
+  console.log(data?.data);
   return (
     <div className="container bgwork rounded-[40px] lg:py-[60px] lg:mt-[50px] md:mt-10 mt-6">
       <style>{`
@@ -32,15 +26,15 @@ const OurFeatureProject = async ({ tab }: { tab: string }) => {
       }
       `}</style>
       <Heading
-        subtitle={workSection.subtitle}
-        title={workSection.title}
-        tag={workSection.tag}
+        subtitle={data?.data?.paragraph}
+        title={data?.data?.heading_part1}
+        tag={data?.data?.tag}
         width="160"
       />
       {/* <div data-aos="fade-up" data-aos-delay={500} className="w-full"> */}
       <HomeTab types={category?.data} />
       {/* </div> */}
-      <DynamicWorkContent data={data?.data} />
+      <DynamicWorkContent data={data?.data?.work} />
     </div>
   );
 };

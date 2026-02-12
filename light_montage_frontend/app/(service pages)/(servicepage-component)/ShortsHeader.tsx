@@ -1,37 +1,55 @@
 import React from "react";
 import TurstedBy from "@/component/home/TurstedBy";
 import VerticalMarqueeSlider from "./VerticalMarqueeSlider";
+import Link from "next/link";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ShortsHeader = ({ data }: { data: any }) => {
   return (
-    <div className="flex lg:flex-row flex-col-reverse lg:justify-between items-center  rounded-[40px] sectionarea   overflow-hidden relative lg:h-[704px] h-[1300px] lg:gap-4 gap-4 ">
-      <div className="flex z-20 justify-center items-start  flex-col lg:w-[514px] w-full lg:mt-18 mt-10">
+    <div className="flex lg:flex-row flex-col-reverse lg:justify-between items-center  rounded-[40px] sectionarea   overflow-hidden relative lg:h-[704px] h-full lg:gap-24 gap-4 ">
+      <div className="flex z-20 justify-center items-start  flex-col   w-full lg:mt-18 mt-10 ">
         <TurstedBy />
-        <h1 className="lg:text-[62px] lg:leading-[72px] text-[48px] leading-14 font-medium text-(--text-primary) poppins md:text-left text-center lg:mt-4 mt-3">
+        <h1
+          data-aos="fade-up"
+          data-aos-delay={200}
+          className="lg:text-[62px] lg:leading-[72px] text-[40px] leading-14 font-medium text-(--text-primary) poppins md:text-left  lg:mt-4 mt-3"
+        >
           {data?.page_title}
         </h1>
-        <p className="text-(--text-primary) text-[14px] font-normal md:text-[16px] opensans text-center md:text-left lg:mt-6 mt-6 mb-10">
+        <p
+          data-aos="fade-up"
+          data-aos-delay={300}
+          className="text-(--text-primary) text-[14px] font-normal md:text-[16px] opensans  md:text-left lg:mt-6 mt-6 mb-10"
+        >
           {data?.description}
         </p>
-        <div className="w-full flex md:flex-row flex-col gap-3">
-          <button className="md:w-[155px] w-full  h-12 btn-color text-black py-4 px-5 rounded-2xl flex justify-center items-center font-popins font-normal">
+        <div
+          data-aos="fade-up"
+          data-aos-delay={400}
+          className="w-full flex justify-start items-center md:flex-row flex-col gap-3 "
+        >
+          <Link
+            target="_blank"
+            href={`${data?.cta_primary_link}`}
+            className="md:w-[155px] w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
+          >
             Start a project
-          </button>
-          <button
-            style={{}}
-            className="md:w-[155px] w-full h-12 btn-secondary text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center font-popins font-normal"
+          </Link>
+          <Link
+            target="_blank"
+            href={`${data?.cta_primary_link}`}
+            className="md:w-[155px] w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
           >
             Book a Call
-          </button>
+          </Link>
         </div>
       </div>
-      <div className="lg:w-[50%] mt-32 mx-auto w-full relative">
-        <VerticalMarqueeSlider data={data?.media} />
+      <div className=" mt-32 relative md:h-[600px]">
+        <VerticalMarqueeSlider data={data?.media} type={data?.type} />
         {/* Top Fade (White) */}
-        <div className="absolute bg-linear-to-b from-white to-transparent h-40 left-0 top-0 w-full   pointer-events-none "></div>
+        <div className="absolute bg-linear-to-b from-white to-transparent h-40 sm:-left-10 left-0 -top-2 w-full sm:w-screen   pointer-events-none "></div>
         {/* Bottom Fade (White) */}
-        <div className="absolute bg-linear-to-t from-white to-transparent h-40  left-0 bottom-0 w-full glasx pointer-events-none"></div>
+        <div className="absolute bg-linear-to-t from-white to-transparent h-40  sm:-left-10 left-0 -bottom-2 w-full sm:w-screen glasx pointer-events-none"></div>
       </div>
     </div>
   );

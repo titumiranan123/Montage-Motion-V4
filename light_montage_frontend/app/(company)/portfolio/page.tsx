@@ -13,8 +13,12 @@ export async function generateMetadata() {
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
   const category = await getData({ url: "api/website/service/type" });
   const { cat } = await searchParams;
+  const matchedCategory = category?.data?.find(
+    (item: any) => item.service_type === cat || item.href === cat,
+  );
+
   const data = await getData({
-    url: `api/works/website?type=${cat && cat !== "all" ? cat : "home"}`,
+    url: `api/works/website?type=${cat && cat !== "all" ? matchedCategory?.service_type : "home"}`,
   });
 
   return (
@@ -28,15 +32,18 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
           width="160"
         />
 
-        <Portfoliotab tab={cat} types={category?.data} />
+        <Portfoliotab
+          tab={matchedCategory?.service_type}
+          types={category?.data}
+        />
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
-          {data?.data?.map((work: any, idx: number) => {
+          {data?.data?.work?.map((work: any, idx: number) => {
             if (work?.type === "shortsreels-editing") {
               return (
                 <div
                   key={idx}
-                  data-aos="fade-up"
-                  data-aos-delay={100 + idx * 100}
+                  // data-aos="fade-up"
+                  // data-aos-delay={100 + idx * 100}
                   className=""
                 >
                   <VideoPlayer
@@ -49,8 +56,8 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
             } else if (work.video_link === "" || work.video_link === null) {
               return (
                 <div
-                  data-aos="fade-up"
-                  data-aos-delay={200 + idx * 100}
+                  // data-aos="fade-up"
+                  // data-aos-delay={200 + idx * 100}
                   key={work.id || idx}
                   className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[410px] w-full h-full max-h-[308px] rounded-[13px]"
                 >
@@ -81,8 +88,8 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
               return (
                 <div
                   key={idx}
-                  data-aos="fade-up"
-                  data-aos-delay={100 + idx * 100}
+                  // data-aos="fade-up"
+                  // data-aos-delay={100 + idx * 100}
                   className=" rounded-lg   overflow-hidden"
                 >
                   <VideoPlayer

@@ -14,19 +14,19 @@ export const PageProcesssection = ({ data }: { data: any }) => {
         extratitle={data?.heading_part2 ?? ""}
         width="160"
       />
-      <div className=" flex lg:flex-row flex-col px-2 lg:px-0 mt-9 md:mt-16 gap-12">
-        <Image
-          src={data?.image ?? ""}
-          alt="process "
-          width={638}
-          height={898}
-          data-aos="fade-right"
-          data-aos-delay={200}
-          className="max-w-[638px] w-full max-h-[898px] h-full"
-          priority
-        />
+      <div className=" flex lg:flex-row items-stretch flex-col px-2 lg:px-0 mt-9 md:mt-16 gap-12 lg:max-h-[898px]">
+        <div data-aos="fade-right" data-aos-delay={200} className="flex-1 flex">
+          <Image
+            src={data?.image ?? ""}
+            alt="process"
+            width={638}
+            height={898}
+            className="max-w-[638px] bg-cover w-full max-h-[898px] h-full"
+            priority
+          />
+        </div>
 
-        <div className=" flex flex-col  gap-2">
+        <div className=" flex-1 flex flex-col  gap-2">
           {data?.process_steps?.map((dt: any, idx: number) => (
             <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
               <Gradientcard
@@ -42,10 +42,13 @@ export const PageProcesssection = ({ data }: { data: any }) => {
                   height={36}
                 />
                 <div className="w-full">
-                  <h3 className="font-semibold poppins text-[24px] ">
+                  <h3
+                    title={dt?.title}
+                    className="font-semibold line-clamp-2 poppins text-[24px] "
+                  >
                     {dt?.title ?? ""}
                   </h3>
-                  <p className=" font-normal text-[16px]">
+                  <p className=" font-normal line-clamp-3 text-[16px]">
                     {dt?.description ?? ""}
                   </p>
                 </div>

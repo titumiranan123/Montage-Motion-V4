@@ -24,7 +24,11 @@ const SaasInshight = () => {
           height={409}
         />
         <div className="md:w-1/2 w-full">
-          <p className="glassShadowithoutinset bg-white/40  backdrop-blur-2xl w-[138px]  h-[46px] flex justify-center items-center rounded-3xl text-[14px] leading-[120%] text-(--text-primary) font-normal  poppins">
+          <p
+            data-aos="fade-up"
+            data-aos-delay={200}
+            className="glassShadowithoutinset bg-white/40  backdrop-blur-2xl w-[138px]  h-[46px] flex justify-center items-center rounded-3xl text-[14px] leading-[120%] text-(--text-primary) font-normal  poppins"
+          >
             Insight
           </p>
           <h2
@@ -45,19 +49,21 @@ const SaasInshight = () => {
             without wasting time on unnecessary details.
           </p>
           <div className="w-full flex md:flex-row flex-col gap-3 mt-10">
-            <button
+            <Link
+              href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
+              target="_blank"
               data-aos="fade-up"
               data-aos-delay={500}
               className="md:w-[205px] w-full  h-12 btn-color btn-color py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium"
             >
               Get an Estimate
-            </button>
+            </Link>
             <Link
               href={"/portfolio"}
               data-aos="fade-up"
               data-aos-delay={600}
               style={{}}
-              className="md:w-[155px] w-full h-12 btn-secondary text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium  bg-white/40 backdrop-blur-[21px] glassShadow"
+              className="md:w-[155px] w-full h-12 btn-secondary text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium  bg-white/40 backdrop-blur-[21px]  border "
             >
               Our Works
             </Link>

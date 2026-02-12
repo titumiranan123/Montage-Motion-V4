@@ -29,31 +29,31 @@ const ServiceDropdown = () => {
       {/* Dropdown Panel */}
       <div
         style={{ zIndex: 9999 }}
-        className="absolute top-6 -left-[330px] w-[1000px] transform translate-y-5 group-hover:translate-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50 bg-white"
+        className="absolute top-6 -left-[330px] w-[1000px] transform translate-y-5 group-hover:translate-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50 "
       >
-        <div className="grid grid-cols-3 lg:grid-cols-3 border   border-(--text-primary)/20 rounded-3xl  backdrop-blur-2xl ">
+        <div className="grid grid-cols-3 lg:grid-cols-3 border   border-(--text-primary)/20 rounded-3xl bg-white backdrop-blur-2xl ">
           {/* Design Section */}
           <ServiceColumn
             title="Video Editing"
             iconColor="text-primary-40"
             links={[
               {
-                href: "/podcast-editing-service",
+                href: "/podcast-editing-services",
                 label: "Podcast Video Editing",
               },
 
               {
-                href: "/short-form-video-editing",
+                href: "/shorts-editing",
                 label: "Short-Form & Reels Editing",
               },
               {
-                href: "/talking-head-video",
+                href: "/talking-head-video-editing-services",
                 label: "Talking Head Video Editing",
               },
 
               {
-                href: "/saas-explainer-video",
-                label: "Video Editing Service",
+                href: "/saas-explainer",
+                label: "SaaS Editing Service",
               },
             ]}
           />
@@ -63,10 +63,12 @@ const ServiceDropdown = () => {
             title="Video Creation"
             iconColor="text-primary-40"
             links={[
-              { href: "/saas-explainer-video", label: "Explainer Video " },
-              { href: "/saas-explainer-video", label: "Motion Video" },
               {
-                href: "/saas-explainer-video",
+                href: "/promo-video-editing-service",
+                label: "Promo Video Editing ",
+              },
+              {
+                href: "/promo-video-editing-service",
                 label: "Promotional Video",
               },
             ]}
@@ -77,10 +79,10 @@ const ServiceDropdown = () => {
             title="Design"
             iconColor="text-primary-40"
             links={[
-              { href: "/thumbnail-design", label: "Graphics Design" },
-              { href: "/thumbnail-design", label: "Logo Design" },
-              { href: "/thumbnail-design", label: "Branding" },
-              { href: "/thumbnail-design", label: "UI/UX" },
+              { href: "/thumbnail-design-services", label: "Graphics Design" },
+              { href: "/thumbnail-design-services", label: "Logo Design" },
+              { href: "/thumbnail-design-services", label: "Branding" },
+              { href: "/thumbnail-design-services", label: "UI/UX" },
             ]}
             borderNone={true}
           />
@@ -120,7 +122,7 @@ const ServiceColumn: React.FC<ServiceColumnProps> = ({
     >
       <div className="flex items-center justify-between gap-2 text-lg font-medium text-primary py-4 px-6">
         <span className=" text-(--text-primary) ">{title}</span>
-        <div className="size-9 rounded-full bg-(--text-primary) flex items-center justify-center ">
+        <div className="size-9 rounded-full btn-color flex items-center justify-center ">
           <ChevronDown className="w-6 h-6 text-white" />
         </div>
       </div>

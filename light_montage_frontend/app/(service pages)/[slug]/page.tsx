@@ -36,7 +36,7 @@ const ServicePage = async ({
     url: `api/website/services/data?type=${slug}`,
   });
   return (
-    <div className="min-h-screen text-black mt-4 ">
+    <div className="lg:min-h-screen text-black mt-4 ">
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
       {data?.data?.home_hero && <PageHomeHero data={data?.data?.home_hero} />}
       {data?.data?.podcast_hero && (
@@ -45,7 +45,9 @@ const ServicePage = async ({
       {data?.data?.our_clients && (
         <PartnersSection data={data?.data?.our_clients} />
       )}
-      {data?.data?.work && <Thumbnailworksection works={data?.data?.work} />}
+      {data?.data?.work && (
+        <Thumbnailworksection works={data?.data?.work} slug={slug} />
+      )}
       {slug === "saas-explainer" && (
         <>
           <SaasInshight />
@@ -70,7 +72,6 @@ const ServicePage = async ({
       {data?.data?.whychooseus && (
         <PageWhychooseus data={data?.data?.whychooseus ?? []} />
       )}
-
       {data?.data?.faq && <HomeFaqSection data={data?.data?.faq} />}
       {data?.data?.contact && <PageContactsections />}
     </div>

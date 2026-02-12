@@ -84,7 +84,7 @@ const ServiceSections = ({ data }: { data: any }) => {
                   className="w-full h-full md:py-6 py-4 md:px-5 px-4 bg-white flex flex-col justify-center rounded-3xl"
                   borderClassName="w-full h-full rounded-[24px] p-[1px] animated !duration-100"
                 >
-                  <div className="flex justify-between items-start flex-col text-(--text-primary) gap-[111px] h-full">
+                  <div className="flex justify-between items-start flex-col text-(--text-primary) lg:gap-[111px] h-full">
                     <div>
                       <Image
                         src={dt?.icon}

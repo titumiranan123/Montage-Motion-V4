@@ -8,7 +8,7 @@ const PartnersSection = ({ data }: { data: any[] }) => {
     <section
       data-aos="fade-up"
       data-aos-delay={500}
-      className="relative w-full  max-w-7xl px-6 mx-auto py-6 overflow-hidden "
+      className="relative w-full mt-10  max-w-7xl px-6 mx-auto py-6 overflow-hidden "
     >
       <div className=" mx-auto w-full flex flex-col items-center justify-center">
         <Marquee
@@ -18,18 +18,18 @@ const PartnersSection = ({ data }: { data: any[] }) => {
           gradientWidth={100}
           className="flex items-center"
         >
-          {data.map((partner, index) => (
+          {data?.map((partner, index) => (
             <div
               key={partner.id || index}
               className="lg:-mx-2.5 -mx-5 pointer-events-none select-none flex items-center justify-center "
             >
               <Image
-                src={partner.image}
-                alt={partner.alt || `Partner logo ${index + 1}`}
+                src={partner?.image}
+                alt={partner?.alt || `Partner logo ${index + 1}`}
                 style={{
-                  backgroundColor: partner.bg || "transparent",
-                  width: partner.width || "auto",
-                  height: partner.height || "40px",
+                  backgroundColor: partner?.bg || "transparent",
+                  width: partner?.width || "auto",
+                  height: partner?.height || "40px",
                   maxWidth: "140px",
                   maxHeight: "40px",
                   objectFit: "contain",

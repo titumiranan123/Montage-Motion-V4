@@ -31,18 +31,18 @@ const PodcastInsight = ({ data }: any) => {
           />
         </div>
       </div>
-      <div className="relative">
+      <div className="relative lg:pb-10 pb-48">
         <Image
           src={data?.steps?.[activeStep]?.image}
           width={544}
           height={506}
-          className="rounded-[13px] "
+          className="rounded-[13px] lg:w-[544px] lg:h-[506px] w-[280px] ms-24 lg:ms-0"
           alt="greatpodcast"
         />
 
         <Gradientcard
-          className="max-w-110 max-h-112.5 w-full h-full px-2 py-3 md:py-10 md:px-9 rounded-3xl text-(--text-primary)     purposebg"
-          borderClassName="max-w-[440px] max-h-[450px] w-full h-full borderbg rounded-3xl absolute top-[147px] -left-[90px]  p-px"
+          className="max-w-110 max-h-112.5  w-full h-[390px] lg:h-full px-2 py-3 md:py-10 md:px-9 rounded-3xl text-(--text-primary)     purposebg"
+          borderClassName="max-w-[440px]  lg:max-h-[450px] w-full h-full borderbg rounded-3xl absolute md:top-[147px] top-10 -left-2 md:-left-[90px]  p-px"
         >
           <div>
             <h2 className="text-[24px] leading-[30px] font-semibold poppins">

@@ -1,31 +1,37 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
+import VideoPlayer from "@/component/home/VideoPlayer";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
-import ReactPlayer from "react-player";
+import Link from "next/link";
 
-const Thumbnailworksection = ({ works }: { works: any }) => {
+const Thumbnailworksection = ({
+  works,
+  slug,
+}: {
+  works: any;
+  slug: string;
+}) => {
   return (
     <div className="sectionarea overflow-hidden sectionGap">
       <Heading
-        subtitle="SaaS explainer videos, product demos, feature announcements, and onboarding tutorials that convert prospects into users. Clean edits focus attention where it matters most. "
-        tag="Our Works"
-        title="What We Create"
+        subtitle={works?.paragraph}
+        tag={works?.tag}
+        title={works?.heading_part1}
         width="180"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 lg:mt-16">
-        {works?.map((dt: any, idx: number) => (
+        {works?.work?.map((dt: any, idx: number) => (
           <div
             data-aos="fade-up"
             data-aos-delay={200 + idx * 100}
-            key={dt.id || idx}
+            key={dt?.id || idx}
           >
             {/* Thumbnail */}
-            {dt.video_link === "" || dt.video_link === null ? (
+            {dt?.video_link === "" || dt?.video_link === null ? (
               <Image
-                src={dt.thumbnail}
-                alt={dt.title || "Graphic work"}
+                src={dt?.thumbnail}
+                alt={dt?.title || "Graphic work"}
                 width={410}
                 height={308}
                 className="  z-10 
@@ -46,39 +52,19 @@ const Thumbnailworksection = ({ works }: { works: any }) => {
               />
             ) : (
               <div className="aspect-auto overflow-hidden rounded-xl">
-                <ReactPlayer
-                  url={dt.video_link}
-                  playing={false}
-                  light={<img src={dt.thumbnail} alt="" />}
-                  width={"100%"}
-                  height={"100%"}
-                  controls={true}
-                  playIcon={
-                    <div className="flex items-center justify-center w-[68px] h-12">
-                      <Image
-                        src="/assets/icon/playsmall.png"
-                        width={68}
-                        height={48}
-                        alt="Play"
-                        className=""
-                        priority
-                      />
-                    </div>
-                  }
-                  config={{
-                    youtube: {
-                      playerVars: {
-                        modestbranding: 1,
-                        showinfo: 0,
-                        rel: 0,
-                      },
-                    },
-                  }}
-                />
+                <VideoPlayer thumbnail={dt?.thumbnail} link={dt?.video_link} />
               </div>
             )}
           </div>
         ))}
+      </div>
+      <div className="mt-16 flex justify-center items-center ">
+        <Link
+          href={`/portfolio?cat=${slug}`}
+          className="btn-color py-4 px-6 hover:scale-105 active:scale-90 rounded-lg text-base font-medium "
+        >
+          View More
+        </Link>
       </div>
     </div>
   );

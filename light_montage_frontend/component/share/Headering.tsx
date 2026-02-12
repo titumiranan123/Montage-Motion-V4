@@ -20,7 +20,7 @@ export const Heading: React.FC<headerProp> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col gap-1 justify-center items-center max-w-7xl w-full mx-auto ${className}`}
+      className={`flex flex-col gap-1 justify-center items-center max-w-4xl w-full mx-auto ${className}`}
     >
       <p
         data-aos="fade-up"
@@ -34,7 +34,7 @@ export const Heading: React.FC<headerProp> = ({
       <p
         data-aos="fade-up"
         data-aos-delay={300}
-        className="text-[40px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins"
+        className="text-[36px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins"
       >
         {title}
       </p>
@@ -46,8 +46,8 @@ export const Heading: React.FC<headerProp> = ({
       )} */}
 
       <p
-        // data-aos="fade-up"
-        // data-aos-delay={400}
+        data-aos="fade-up"
+        data-aos-delay={400}
         className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-8/9 mx-auto "
       >
         {subtitle}

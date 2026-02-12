@@ -37,6 +37,7 @@ const ServicepageTestimonial: React.FC<TestimonialSectionProps> = ({
   description,
   data,
 }) => {
+  console.log(title, description);
   const video_message =
     data?.filter((item: any) => item.category !== "message") || [];
   const messageTesti =

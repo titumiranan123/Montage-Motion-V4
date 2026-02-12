@@ -85,13 +85,7 @@ const Footer: React.FC = () => {
             <div className="flex flex-col gap-1 mt-4 opensans">
               <Link
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"/advertising"}
-              >
-                Advertising
-              </Link>
-              <Link
-                className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"/talking-head-editing-service"}
+                href={"/talking-head-video-editing-services"}
               >
                 Talking Head Video Editing
               </Link>
@@ -103,21 +97,15 @@ const Footer: React.FC = () => {
               </Link>
               <Link
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"/shorts-editing-service"}
+                href={"/shorts-editing"}
               >
                 Shorts / Reels Video Editing
               </Link>
               <Link
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"/graphic-design"}
+                href={"/thumbnail-design-services"}
               >
-                Graphic Design
-              </Link>
-              <Link
-                className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"/custom-website-design"}
-              >
-                Custom Website Design
+                Thumbnail Design
               </Link>
             </div>
           </div>
