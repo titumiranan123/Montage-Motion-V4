@@ -87,6 +87,11 @@ body {
 .scroll-horizontal::-webkit-scrollbar {
   height: 6px;
 }
+.scroll-horizontal::-webkit-scrollbar-thumb {
+  height: 6px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #1fb5dd 0%, #2b6ab2 100%);
+}
 
 .glassShadow {
   box-shadow:
@@ -141,13 +146,13 @@ body {
 
 @layer components {
   .sectionarea {
-    @apply max-w-[1400px]  mx-auto xl:p-[60px] p-2.5;
+    @apply max-w-350  mx-auto xl:p-15 p-2.5;
   }
   .animated {
     @apply transition-all duration-300 ease-in-out;
   }
   .container {
-    @apply max-w-[1440px] lg:px-20! md:px-5 px-4 mx-auto;
+    @apply max-w-360 lg:px-20! md:px-5 px-4 mx-auto;
   }
   .sectionGap {
     @apply lg:mt-30 md:mt-20 mt-16;
@@ -341,10 +346,10 @@ button:hover {
 } */
 @layer {
   .container {
-    @apply max-w-[1440px] lg:px-[120px] md:px-[60px] px-4 mx-auto;
+    @apply max-w-360 lg:px-30 md:px-15 px-4 mx-auto;
   }
   .sectionGap {
-    @apply lg:mt-[120px] md:mt-20 mt-16;
+    @apply lg:mt-30 md:mt-20 mt-16;
   }
 }
 

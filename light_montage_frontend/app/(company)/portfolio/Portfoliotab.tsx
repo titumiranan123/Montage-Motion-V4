@@ -50,7 +50,7 @@ const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       className={`glassShadow bg-white/40 backdrop-blur-2xl
-        max-w-[594px] h-[75px]
+        max-w-148.5 h-18.75
           flex justify-start items-center
           mx-auto rounded-[12px]
           mt-5 transition-all duration-300
@@ -61,7 +61,7 @@ const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
       <button
         onClick={() => handleTabClick("all")}
         className={`py-2 px-3 text-(--text-primary) opensans font-medium text-[14px]
-      rounded-[12px]  whitespace-nowrap h-[51px]
+      rounded-[12px]  whitespace-nowrap h-12.75
       ${tab === "all" || tab === undefined ? "btn-color px-6 font-semibold" : ""}`}
       >
         All
@@ -71,7 +71,7 @@ const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
           key={tb?.service_type}
           onClick={() => handleTabClick(tb?.service_type)}
           className={`py-2 px-3 text-(--text-primary) opensans font-medium text-[14px]
-      rounded-[12px] whitespace-nowrap h-[51px]
+      rounded-[12px] whitespace-nowrap h-12.75
       ${tab === tb?.service_type ? "btn-color font-semibold" : ""}`}
         >
           {tb?.service_title}

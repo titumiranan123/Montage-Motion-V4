@@ -1,20 +1,21 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
 
 import VideoPlayer from "./VideoPlayer";
+import ReactPlayer from "react-player";
+import { Play } from "lucide-react";
 
 interface DynamicWorkContentProps {
   data: any;
 }
 
-const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
-  data,
-}) => {
+const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ data }) => {
   // Handle no data state
   if (!data || data.length === 0) {
     return (
-      <div className="p-6 text-(--text-primary) flex items-center justify-center min-h-[400px]">
+      <div className="p-6 text-(--text-primary) flex items-center justify-center min-h-100">
         <div className="text-center">
           <div className="mb-6">
             <svg
@@ -55,12 +56,31 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
-              className=""
+              className={` aspect-9/16!  rounded-lg overflow-hidden relative`}
             >
-              <VideoPlayer
-                thumbnail={work?.thumbnail}
-                link={work?.video_link}
-                className="aspect-9/16! "
+              <ReactPlayer
+                url={work.video_link}
+                width="100%"
+                height="100%"
+                controls
+                playsinline
+                playIcon={
+                  <button className="w-16 absolute top-[42%] left-[44%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
+                    <Play
+                      fill="#fff"
+                      className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+                    />
+                  </button>
+                }
+                light={
+                  <Image
+                    src={work?.thumbnail}
+                    alt="Intro video thumbnail"
+                    fill
+                    priority
+                    className="object-cover"
+                  />
+                }
               />
             </div>
           );
@@ -70,7 +90,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
               data-aos="fade-up"
               data-aos-delay={200 + idx * 100}
               key={work.id || idx}
-              className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[410px] w-full h-full max-h-[308px] rounded-[13px]"
+              className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-102.5 w-full h-full max-h-77 rounded-[13px]"
             >
               {/* Title */}
               {work.title && (
@@ -101,9 +121,10 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = async ({
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
-              className=" rounded-lg   overflow-hidden"
+              className=" rounded-lg  overflow-hidden"
             >
               <VideoPlayer
+                className=""
                 thumbnail={work?.thumbnail}
                 link={work?.video_link}
               />

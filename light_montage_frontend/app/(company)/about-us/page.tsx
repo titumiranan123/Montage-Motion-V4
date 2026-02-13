@@ -18,10 +18,11 @@ const AboutUs = async () => {
   const data = await getData({
     url: `api/website/data?type=about&table=brand,members,faq`,
   });
+
   return (
     <div className=" mt-2 md:pt-0 ">
       {data?.data?.header && (
-        <div className="headerbg rounded-[40px] max-w-[1440px] px-2 xl:px-[60px] mx-auto pb-[60px] pt-16 mb-10">
+        <div className="headerbg rounded-[40px] max-w-360 px-2 xl:px-15 mx-auto pb-15 pt-16 mb-10">
           <HeaderService mainIntro={data?.data?.header || null} />
         </div>
       )}

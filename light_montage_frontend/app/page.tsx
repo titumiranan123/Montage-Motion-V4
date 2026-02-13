@@ -29,7 +29,7 @@ const HomePage = async ({
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />
-      <OurFeatureProject tab={cat ?? []} />
+      <OurFeatureProject tab={cat ?? []} header={data?.works} />
       <ServiceSections data={data?.services ?? []} />
       <TestimonialSection
         title="What Our Clients Say"

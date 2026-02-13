@@ -37,7 +37,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
           types={category?.data}
         />
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
-          {data?.data?.work?.map((work: any, idx: number) => {
+          {data?.data?.map((work: any, idx: number) => {
             if (work?.type === "shortsreels-editing") {
               return (
                 <div
@@ -59,7 +59,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
                   // data-aos="fade-up"
                   // data-aos-delay={200 + idx * 100}
                   key={work.id || idx}
-                  className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-[410px] w-full h-full max-h-[308px] rounded-[13px]"
+                  className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-102.5 w-full h-full max-h-77 rounded-[13px]"
                 >
                   {/* Title */}
                   {work.title && (
