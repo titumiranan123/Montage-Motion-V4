@@ -78,7 +78,7 @@ export const localLogin = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const makeAdmin = asyncHandler(async (req: Request, res: Response) => {
-  const result = await authService.makeAdmin(req.params.id);
+  const result = await authService.makeAdmin(req.params.id as string);
   if (result) {
     responseHandler(res, 200, true, "User updated successfully");
     return;
@@ -92,7 +92,7 @@ export const makeAdmin = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
-  const result = await authService.deleteUser(req.params.id);
+  const result = await authService.deleteUser(req.params.id as string);
   if (result) {
     responseHandler(res, 200, true, "User deleted successfully");
     return;

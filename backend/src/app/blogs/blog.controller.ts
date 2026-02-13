@@ -29,7 +29,7 @@ export const getAllBlogs = asyncHandler(
 );
 
 export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
-  const blog = await BlogService.getBlogById(req.params.id);
+  const blog = await BlogService.getBlogById(req.params.id as string);
   if (!blog) {
     return responseHandler(res, 404, false, "Blog not found");
   }
@@ -37,7 +37,10 @@ export const getBlogById = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const updateBlog = asyncHandler(async (req: Request, res: Response) => {
-  const updatedBlog = await BlogService.updateBlog(req.params.id, req.body);
+  const updatedBlog = await BlogService.updateBlog(
+    req.params.id as string,
+    req.body,
+  );
   if (!updatedBlog) {
     return responseHandler(
       res,
@@ -66,7 +69,7 @@ export const updateBlogPosition = asyncHandler(
 );
 
 export const deleteBlog = asyncHandler(async (req: Request, res: Response) => {
-  const deleted = await BlogService.deleteBlog(req.params.id);
+  const deleted = await BlogService.deleteBlog(req.params.id as string);
   if (!deleted) {
     return responseHandler(
       res,

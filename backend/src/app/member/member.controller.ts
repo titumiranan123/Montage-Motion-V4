@@ -19,7 +19,7 @@ export const MemberController = {
     const id = req.params.id;
     if (!id) return responseHandler(res, 400, false, "Member ID is required");
 
-    const member = await MemberService.getMembersById(id);
+    const member = await MemberService.getMembersById(id as string);
     if (!member || member.length === 0) {
       return responseHandler(res, 404, false, "Member not found");
     }
@@ -30,7 +30,7 @@ export const MemberController = {
     const id = req.params.id;
     if (!id) return responseHandler(res, 400, false, "Member ID is required");
 
-    const updated = await MemberService.updateMember(id, req.body);
+    const updated = await MemberService.updateMember(id as string, req.body);
     return responseHandler(res, 200, true, "Member updated", updated);
   }),
 
@@ -38,7 +38,7 @@ export const MemberController = {
     const id = req.params.id;
     if (!id) return responseHandler(res, 400, false, "Member ID is required");
 
-    const deleted = await MemberService.deleteMember(id);
+    const deleted = await MemberService.deleteMember(id as string);
     if (!deleted) return responseHandler(res, 404, false, "Member not found");
 
     return responseHandler(res, 200, true, "Member deleted", deleted);

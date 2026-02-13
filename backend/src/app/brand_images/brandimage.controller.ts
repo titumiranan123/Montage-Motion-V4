@@ -13,9 +13,9 @@ export const createBrandImage = asyncHandler(
       201,
       true,
       "Brand image created successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 // Get All Brand Images (✅ includes ?type= query filter)
@@ -24,36 +24,39 @@ export const getAllBrandImages = asyncHandler(
     const type = req.query.type as string | undefined;
     const result = await BrandImageService.getAllBrandImage(type);
     return responseHandler(res, 200, true, "All brand images fetched", result);
-  }
+  },
 );
 
 // Get Brand Image By ID
 export const getBrandImageById = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id;
-    const result = await BrandImageService.getBrandImageById(id);
+    const result = await BrandImageService.getBrandImageById(id as string);
     if (!result)
       return responseHandler(res, 404, false, "Brand image not found");
     return responseHandler(res, 200, true, "Brand image fetched", result);
-  }
+  },
 );
 
 // Update Brand Image
 export const updateBrandImage = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id;
-    const result = await BrandImageService.updateBrandImage(id, req.body);
+    const result = await BrandImageService.updateBrandImage(
+      id as string,
+      req.body,
+    );
     return responseHandler(res, 200, true, "Brand image updated", result);
-  }
+  },
 );
 
 // Delete Brand Image
 export const deleteBrandImage = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id;
-    const result = await BrandImageService.deleteBrandImage(id);
+    const result = await BrandImageService.deleteBrandImage(id as string);
     if (!result)
       return responseHandler(res, 404, false, "Brand image not found");
     return responseHandler(res, 200, true, "Brand image deleted", result);
-  }
+  },
 );

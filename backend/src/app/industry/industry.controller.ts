@@ -33,7 +33,10 @@ export const getSections = asyncHandler(async (req: Request, res: Response) => {
 export const updateSection = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const result = await industryTabsService.updateSection(id, req.body);
+    const result = await industryTabsService.updateSection(
+      id as string,
+      req.body,
+    );
     return responseHandler(
       res,
       200,
@@ -47,7 +50,7 @@ export const updateSection = asyncHandler(
 export const deleteSection = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const result = await industryTabsService.deleteSection(id);
+    const result = await industryTabsService.deleteSection(id as string);
     return responseHandler(
       res,
       200,

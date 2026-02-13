@@ -14,9 +14,9 @@ export const upsertCareerPage = asyncHandler(
       201,
       true,
       "Career page saved successfully ✅",
-      result
+      result,
     );
-  }
+  },
 );
 
 /**
@@ -30,9 +30,9 @@ export const getCareerPageByType = asyncHandler(
       200,
       true,
       "Career page fetched successfully ✅",
-      result
+      result,
     );
-  }
+  },
 );
 
 /**
@@ -41,15 +41,15 @@ export const getCareerPageByType = asyncHandler(
 export const deleteCareerPage = asyncHandler(
   async (req: Request, res: Response) => {
     const type = req.params.type;
-    const result = await careerPageService.deleteCareerPage(type);
+    const result = await careerPageService.deleteCareerPage(type as string);
     return responseHandler(
       res,
       200,
       true,
       "Career page and all related job posts deleted successfully 🗑️",
-      result
+      result,
     );
-  }
+  },
 );
 
 /**
@@ -58,13 +58,13 @@ export const deleteCareerPage = asyncHandler(
 export const deleteSingleJob = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id;
-    const result = await careerPageService.deleteSingleJob(id);
+    const result = await careerPageService.deleteSingleJob(id as string);
     return responseHandler(
       res,
       200,
       true,
       "Job post deleted successfully 🗑️",
-      result
+      result,
     );
-  }
+  },
 );

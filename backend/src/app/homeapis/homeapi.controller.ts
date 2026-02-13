@@ -47,7 +47,9 @@ export const getAllBlogs = asyncHandler(
 );
 export const getSingleBlogs = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await homeapiServices.getSingleBlogs(req.params.slug);
+    const result = await homeapiServices.getSingleBlogs(
+      req.params.slug as string,
+    );
     return responseHandler(res, 200, true, "Blogs fetched", result);
   },
 );

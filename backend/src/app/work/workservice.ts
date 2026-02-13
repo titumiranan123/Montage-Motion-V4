@@ -154,7 +154,7 @@ export const VideosService = {
     type?: string;
     limit?: number;
   }) {
-    let baseQuery = `SELECT * FROM works`;
+    let baseQuery = `SELECT thumbnail, type,video_link FROM works`;
     const conditions: string[] = [];
     const values: any[] = [];
 

@@ -11,7 +11,7 @@ export const createFaq = asyncHandler(async (req: Request, res: Response) => {
 
 export const updateFaq = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await faqService.updateFaqSection(id, req.body);
+  const result = await faqService.updateFaqSection(id as string, req.body);
   return responseHandler(res, 200, true, "FAQ updated successfully", result);
 });
 
@@ -23,6 +23,6 @@ export const getAllFaqs = asyncHandler(async (req: Request, res: Response) => {
 
 export const deleteFaq = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await faqService.deleteFaqSection(id);
+  const result = await faqService.deleteFaqSection(id as string);
   return responseHandler(res, 200, true, "FAQ deleted successfully", result);
 });

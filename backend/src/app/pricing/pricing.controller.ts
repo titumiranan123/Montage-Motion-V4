@@ -14,9 +14,9 @@ export const createPackage = asyncHandler(
       201,
       true,
       "Pricing package created successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 /**
@@ -25,16 +25,16 @@ export const createPackage = asyncHandler(
 export const getAllPackages = asyncHandler(
   async (req: Request, res: Response) => {
     const result = await pricingPageService.getPagePricePlanByType(
-      req.query as { type: string }
+      req.query as { type: string },
     );
     return responseHandler(
       res,
       200,
       true,
       "All pricing packages fetched successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 /**
@@ -43,13 +43,13 @@ export const getAllPackages = asyncHandler(
 export const deletePackage = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id;
-    const result = await pricingPageService.deletePagePricePlan(id);
+    const result = await pricingPageService.deletePagePricePlan(id as string);
     return responseHandler(
       res,
       200,
       true,
       "Pricing package deleted successfully",
-      result
+      result,
     );
-  }
+  },
 );

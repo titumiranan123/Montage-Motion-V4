@@ -38,7 +38,9 @@ export const getAllContact = asyncHandler(
 );
 export const deleteContactById = asyncHandler(
   async (req: Request, res: Response, _next: NextFunction) => {
-    const result = await contactService.deleteContactById(req.params.id);
+    const result = await contactService.deleteContactById(
+      req.params.id as string,
+    );
     if (result) {
       return responseHandler(
         res,

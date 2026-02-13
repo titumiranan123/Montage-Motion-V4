@@ -36,7 +36,7 @@ export const testimonialController = {
       return responseHandler(res, 400, false, "Testimonial ID is required");
     }
 
-    const result = await testimonialService.getTestimonialById(id);
+    const result = await testimonialService.getTestimonialById(id as string);
 
     if (!result) {
       return responseHandler(res, 404, false, "Testimonial not found");
@@ -75,7 +75,7 @@ export const testimonialController = {
       return responseHandler(res, 400, false, "Testimonial ID is required");
     }
 
-    const result = await testimonialService.updateTestimonial(id, {
+    const result = await testimonialService.updateTestimonial(id as string, {
       ...req.body,
       message: req.body.message ?? "",
       video_message: req.body.video_message ?? "",
@@ -95,12 +95,12 @@ export const testimonialController = {
       return responseHandler(res, 400, false, "Testimonial ID is required");
     }
 
-    const existing = await testimonialService.getTestimonialById(id);
+    const existing = await testimonialService.getTestimonialById(id as string);
     if (!existing) {
       return responseHandler(res, 404, false, "Testimonial not found");
     }
 
-    const result = await testimonialService.deleteTestimonialById(id);
+    const result = await testimonialService.deleteTestimonialById(id as string);
     return responseHandler(res, 200, true, "Testimonial deleted", result);
   }),
 };

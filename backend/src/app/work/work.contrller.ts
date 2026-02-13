@@ -41,7 +41,7 @@ export const getAllVideos = asyncHandler(
 // READ ALL (Website / Query based)
 export const getAllVideosForWebsite = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await VideosService.getAllVideosForServicespage(req.query);
+    const result = await VideosService.getAllVideosforWebsite(req.query);
     return result
       ? responseHandler(res, 200, true, "Works retrieved successfully", result)
       : responseHandler(res, 404, false, "No videos found for query");
@@ -56,7 +56,7 @@ export const getVideosById = asyncHandler(
       return responseHandler(res, 400, false, "ID is required");
     }
 
-    const result = await VideosService.getVideosById(id);
+    const result = await VideosService.getVideosById(id as string);
     return result
       ? responseHandler(res, 200, true, "Work retrieved successfully", result)
       : responseHandler(res, 404, false, "Work not found");
@@ -71,7 +71,7 @@ export const updateVideosById = asyncHandler(
       return responseHandler(res, 400, false, "Invalid ID or input data");
     }
 
-    const result = await VideosService.updateVideo(id, req.body);
+    const result = await VideosService.updateVideo(id as string, req.body);
     return result
       ? responseHandler(res, 200, true, "Work updated successfully", result)
       : responseHandler(res, 400, false, "Work update failed");
@@ -106,7 +106,7 @@ export const deleteVideoById = asyncHandler(
       return responseHandler(res, 400, false, "ID is required");
     }
 
-    const result = await VideosService.deleteVideo(id);
+    const result = await VideosService.deleteVideo(id as string);
     return result
       ? responseHandler(res, 200, true, "Work deleted successfully", result)
       : responseHandler(res, 404, false, "Work not found or delete failed");

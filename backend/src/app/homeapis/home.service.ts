@@ -46,7 +46,7 @@ export const homeapiServices = {
       const result = await db.query(query, values);
       // const seo = await seoMetaService.getSeoMetaByPage(type);
       const worksService = await client.query(
-        `SELECT thumbnail, video_link FROM Works WHERE type = $1 AND is_visible = true ORDER BY position ASC   LIMIT 6`,
+        `SELECT tag,heading_part1,paragraph FROM work_header WHERE type = $1 `,
         [type],
       );
 
@@ -157,9 +157,9 @@ export const homeapiServices = {
       await client.query("COMMIT");
       // console.log("pricing", pricing);
       return {
-        header: result.rows[0] || null,
-        works: worksService.rows || [],
-        testimonial: testimonialService.rows || [],
+        header: result?.rows[0] || null,
+        works: worksService.rows?.[0] || [],
+        testimonial: testimonialService?.rows || [],
         brand: brandImages,
         pricing: pricing,
         services: services,

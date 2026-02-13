@@ -35,7 +35,7 @@ export const getSections = asyncHandler(async (req: Request, res: Response) => {
 export const updateSection = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    await updateSectionById(id, req.body);
+    await updateSectionById(id as string, req.body);
     return responseHandler(
       res,
       200,
@@ -49,7 +49,7 @@ export const updateSection = asyncHandler(
 export const deleteSection = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    await deleteSectionById(id);
+    await deleteSectionById(id as string);
     return responseHandler(
       res,
       200,

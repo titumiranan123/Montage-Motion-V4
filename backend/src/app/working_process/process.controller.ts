@@ -13,9 +13,9 @@ export const createProcess = asyncHandler(
       201,
       true,
       "Process created successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 // Get All Processes
@@ -23,43 +23,46 @@ export const getAllProcesses = asyncHandler(
   async (req: Request, res: Response) => {
     const result = await processService.getAllProcesses(req.query);
     return responseHandler(res, 200, true, "All processes fetched", result);
-  }
+  },
 );
 
 // Get Process By ID
 export const getProcessById = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await processService.getProcessById(req.params.id);
+    const result = await processService.getProcessById(req.params.id as string);
     if (!result) return responseHandler(res, 404, false, "Process not found");
     return responseHandler(res, 200, true, "Process fetched", result);
-  }
+  },
 );
 
 // Update Process
 export const updateProcess = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await processService.updateProcess(req.params.id, req.body);
+    const result = await processService.updateProcess(
+      req.params.id as string,
+      req.body,
+    );
     return responseHandler(
       res,
       200,
       true,
       "Process updated successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 // Delete Process
 export const deleteProcess = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await processService.deleteProcess(req.params.id);
+    const result = await processService.deleteProcess(req.params.id as string);
     if (!result) return responseHandler(res, 404, false, "Process not found");
     return responseHandler(
       res,
       200,
       true,
       "Process deleted successfully",
-      result
+      result,
     );
-  }
+  },
 );

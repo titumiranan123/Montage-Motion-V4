@@ -18,9 +18,9 @@ export const createOrUpdateWhyChooseUsSection = asyncHandler(
       201,
       true,
       "Why Choose Us section created or updated successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 // ✅ Get All
@@ -32,23 +32,23 @@ export const getAllWhyChooseUsSections = asyncHandler(
       200,
       true,
       "All Why Choose Us sections fetched successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 // ✅ Get by ID
 export const getWhyChooseUsSectionById = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id; // UUID → keep as string
-    const result = await whychooseusSectionService.getSectionById(id);
+    const result = await whychooseusSectionService.getSectionById(id as string);
 
     if (!result)
       return responseHandler(
         res,
         404,
         false,
-        "Why Choose Us section not found"
+        "Why Choose Us section not found",
       );
 
     return responseHandler(
@@ -56,39 +56,42 @@ export const getWhyChooseUsSectionById = asyncHandler(
       200,
       true,
       "Why Choose Us section fetched successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 // ✅ Update
 export const updateWhyChooseUsSection = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id; // UUID
-    const result = await whychooseusSectionService.updateSection(id, req.body);
+    const result = await whychooseusSectionService.updateSection(
+      id as string,
+      req.body,
+    );
 
     return responseHandler(
       res,
       200,
       true,
       "Why Choose Us section updated successfully",
-      result
+      result,
     );
-  }
+  },
 );
 
 // ✅ Delete
 export const deleteWhyChooseUsSection = asyncHandler(
   async (req: Request, res: Response) => {
     const id = req.params.id; // UUID
-    const result = await whychooseusSectionService.deleteSection(id);
+    const result = await whychooseusSectionService.deleteSection(id as string);
 
     if (!result)
       return responseHandler(
         res,
         404,
         false,
-        "Why Choose Us section not found"
+        "Why Choose Us section not found",
       );
 
     return responseHandler(
@@ -96,7 +99,7 @@ export const deleteWhyChooseUsSection = asyncHandler(
       200,
       true,
       "Why Choose Us section deleted successfully",
-      result
+      result,
     );
-  }
+  },
 );

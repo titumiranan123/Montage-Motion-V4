@@ -19,7 +19,10 @@ export const createComparison = asyncHandler(
 export const updateComparison = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const result = await comparisonService.updateComparison(id, req.body);
+    const result = await comparisonService.updateComparison(
+      id as string,
+      req.body,
+    );
     return responseHandler(
       res,
       200,
@@ -47,7 +50,7 @@ export const getComparisons = asyncHandler(
 export const deleteComparison = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const result = await comparisonService.deleteComparison(id);
+    const result = await comparisonService.deleteComparison(id as string);
     return responseHandler(
       res,
       200,
