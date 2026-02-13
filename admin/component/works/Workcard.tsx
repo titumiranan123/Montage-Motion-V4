@@ -75,6 +75,7 @@ const VideoCard = ({
           });
         }
       } catch (error) {
+        console.log(error);
         Swal.fire({
           title: "Error!",
           text: "Failed to delete the video",
@@ -85,7 +86,7 @@ const VideoCard = ({
   };
 
   return (
-    <div className="flex bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-200 w-[500px] z-10">
+    <div className="flex bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-200 w-125 z-10">
       {/* Drag Handle */}
       <div className="flex items-center justify-center px-3 bg-gray-50 cursor-move hover:bg-gray-100 border-r border-gray-200 w-10">
         <FiMove className="text-gray-400" size={20} />
@@ -95,7 +96,7 @@ const VideoCard = ({
       {video.video_link === "" || video.video_link === null ? (
         <Image src={video?.thumbnail} alt="" width={256} height={145} />
       ) : (
-        <div className="relative w-64 h-36 flex-shrink-0 bg-black">
+        <div className="relative w-64 h-36 shrink-0 bg-black">
           <ReactPlayer
             url={video.video_link}
             playing={false}
@@ -155,7 +156,7 @@ const VideoCard = ({
           </div> */}
 
           {/* Status Badges */}
-          <div className="flex gap-2 flex-shrink-0">
+          <div className="flex gap-2 shrink-0">
             {onToggleVisibility && (
               <button
                 onClick={() => onToggleVisibility(video.id!, !video.is_visible)}
