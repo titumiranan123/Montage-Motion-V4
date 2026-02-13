@@ -33,7 +33,6 @@ const RobotsTxtForm = ({ data }: any) => {
       const res = await api_url.post("/api/robots", {
         robotTxt: data.robots_txt,
       });
-      console.log(res);
       if (res.status === 200) {
         toast.success("Robots file saved successfully!");
       }

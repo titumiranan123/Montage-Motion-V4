@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { authOptions } from "@/component/authoption";
 import NextAuth from "next-auth";
 

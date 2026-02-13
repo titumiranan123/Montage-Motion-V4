@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import Gradientcard from "./Gradientcard";
@@ -16,14 +17,14 @@ const SingleService = ({ data }: { data: any }) => {
         {data?.services?.map((dt: any, idx: number) => (
           <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
             <Gradientcard
-              className="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px] "
+              className="max-w-[384px] w-full max-h-122 h-full rounded-3xl "
               borderClassName="max-w-[384px] w-full max-h-[488px] h-full rounded-[24px]  p-[1px]"
             >
               <div className=" text-[#E4E8F7] flex justify-center items-start flex-col p-4">
-                <h2 className="md:text-[24px] text-[20px] poppins font-[600]">
+                <h2 className="md:text-[24px] text-[20px] poppins font-semibold">
                   {dt.service_title}
                 </h2>
-                <p className="md:text-[16px] text-[14px] font-[400] leading-[140%] text-[#E4E8F7] mt-2 opensans">
+                <p className="md:text-[16px] text-[14px] font-normal leading-[140%] text-[#E4E8F7] mt-2 opensans">
                   {dt.service_description}
                 </p>
                 <Image
@@ -32,7 +33,7 @@ const SingleService = ({ data }: { data: any }) => {
                   width={344}
                   height={276}
                   priority
-                  className="max-w-[344px] w-full max-h-[276px] h-full md:mt-8 mt-4"
+                  className="max-w-86 w-full max-h-69 h-full md:mt-8 mt-4"
                 />
               </div>
             </Gradientcard>

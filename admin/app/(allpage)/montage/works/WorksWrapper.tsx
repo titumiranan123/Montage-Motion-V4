@@ -9,6 +9,8 @@ import VideoCard from "@/component/works/Workcard";
 import Workform from "@/component/works/Workform";
 import { ServiceFilter } from "@/utils/Servicefilter";
 import { useRouter } from "next/navigation";
+import WorkHeaderForm from "./Headerform";
+import Heading from "../page-service/Headering";
 
 interface IVideo {
   id?: string;
@@ -28,12 +30,14 @@ export const WorkWrapper = ({ data }: { data: any }) => {
   const router = useRouter();
   const [hasChanges, setHasChanges] = useState(false);
   const [parent, tapes, setTapes] = useDragAndDrop<HTMLDivElement, IVideo>(
-    data,
+    data?.works,
   );
+  const [WorkEdit, setWorkEditData] = useState<any | null>();
+  const [isHeaderModal, setWorkHeaderModal] = useState(false);
 
   useEffect(() => {
     if (data) {
-      setTapes(data);
+      setTapes(data?.works);
     }
   }, [data, setTapes]);
 
@@ -122,6 +126,15 @@ export const WorkWrapper = ({ data }: { data: any }) => {
           <div className="flex gap-4">
             <button
               onClick={() => {
+                setWorkEditData(null);
+                setWorkHeaderModal(true);
+              }}
+              className="bg-[#1FB5DD] text-white px-4 py-2 rounded"
+            >
+              + Add Work Header
+            </button>
+            <button
+              onClick={() => {
                 setEditData(null);
                 setWorkModal(true);
               }}
@@ -132,24 +145,49 @@ export const WorkWrapper = ({ data }: { data: any }) => {
           </div>
         </div>
       </div>
-
-      {/* Grid */}
-      {tapes.length > 0 ? (
-        <div ref={parent} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {tapes.map((item) => (
-            <VideoCard
-              key={item.id}
-              video={item}
-              onEdit={() => {
-                setEditData(item);
-                setWorkModal(true);
-              }}
-            />
-          ))}
+      <div>
+        <Heading
+          subtitle={data?.paragraph}
+          title={data?.heading_part1}
+          extratitle={data?.heading_part2}
+          tag={data?.tag}
+        />
+        <div className="mx-auto mt-10 flex justify-center items-center">
+          <button
+            className="py-2 px-3 rounded-lg border border-[#1FB5DD]"
+            onClick={() => {
+              setWorkEditData({
+                type: data?.type,
+                tag: data?.tag,
+                heading_part1: data?.heading_part1,
+                paragraph: data?.paragraph,
+              });
+              setWorkHeaderModal(true);
+            }}
+          >
+            Edit Header
+          </button>
         </div>
-      ) : (
-        <p>No items found.</p>
-      )}
+        <div className="mt-10">
+          {/* Grid */}
+          {tapes?.length > 0 ? (
+            <div ref={parent} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {tapes?.map((item) => (
+                <VideoCard
+                  key={item.id}
+                  video={item}
+                  onEdit={() => {
+                    setEditData(item);
+                    setWorkModal(true);
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <p>No items found.</p>
+          )}
+        </div>
+      </div>
 
       {/* Modal */}
       {isWork && (
@@ -163,6 +201,20 @@ export const WorkWrapper = ({ data }: { data: any }) => {
               initialData={editData}
               onCancel={() => setWorkModal(false)}
               onSubmit={handleSubmit}
+            />
+          </div>
+        </div>
+      )}
+      {isHeaderModal && (
+        <div
+          style={{ zIndex: 999 }}
+          onClick={() => setWorkHeaderModal(false)}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm bg-opacity-50 flex justify-center items-start p-8"
+        >
+          <div onClick={(e) => e.stopPropagation()} className="w-5xl">
+            <WorkHeaderForm
+              initialData={WorkEdit}
+              setIsModalOpent={setWorkHeaderModal}
             />
           </div>
         </div>

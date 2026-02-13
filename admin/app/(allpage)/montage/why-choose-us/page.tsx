@@ -10,7 +10,6 @@ const Page = async ({ searchParams }: { searchParams: any }) => {
       page ?? "home"
     }`,
   );
-  console.log(responsce.data);
   return (
     <main className="min-h-screen  py-10">
       <Whychoosewrapper

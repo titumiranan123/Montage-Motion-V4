@@ -12,7 +12,6 @@ export default async function ComparisonPage({
   // console.log(
   //   data?.columns?.[2].entries.filter((en) => en.entry_type === "item"),
   // );
-  console.log(data?.[0]);
   return (
     <div className="w-full">
       <ComparisonWrapper data={data?.[0]} />

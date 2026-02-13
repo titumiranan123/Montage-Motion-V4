@@ -29,7 +29,7 @@ export const SECTION_NAMES = [
   "comparison",
 
   "insight",
-  "podcast_insight",
+  // "podcast_insight",
 
   "whychooseus",
   "faq",
@@ -44,7 +44,7 @@ export type sectionName = (typeof SECTION_NAMES)[number];
 const SECTION_GROUPS: Record<string, sectionName[]> = {
   hero: ["short_hero", "home_hero", "podcast_hero"],
   serviceType: ["service", "shorts_service"],
-  insights: ["insight", "podcast_insight"],
+  insights: ["insight"],
 };
 
 const getGroupBySection = (section: sectionName) => {

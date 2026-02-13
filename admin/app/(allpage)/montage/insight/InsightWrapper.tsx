@@ -17,7 +17,6 @@ const ComparisonWrapper = ({ data }: { data: any }) => {
       router.push("?page=home");
     }
   }, [router, searchParams]);
-  console.log("data", data);
   return (
     <div className="text-gray-100 p-4 md:p-8">
       {/* Header */}

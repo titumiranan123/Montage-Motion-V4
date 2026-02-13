@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
 import { Bullet } from "./BulletPoint";
@@ -5,9 +6,8 @@ interface priceProp {
   price: any;
 }
 const PricingCard: React.FC<priceProp> = ({ price }) => {
-  console.log(price.features);
   return (
-    <div className="max-w-[398px] max-h-[716px] w-full h-full pricing-border p-[1px] rounded-[24px]">
+    <div className="max-w-99.5 max-h-179 w-full h-full pricing-border p-px rounded-3xl">
       <style>
         {`
     .pricing-border{
@@ -23,11 +23,11 @@ const PricingCard: React.FC<priceProp> = ({ price }) => {
         `}
       </style>
       <div
-        className={`relative rounded-[24px] text-[#E4E8F7] p-6 sm:p-8 bg-black h-full pricing flex flex-col w-full overflow-hidden`}
+        className={`relative rounded-3xl text-[#E4E8F7] p-6 sm:p-8 bg-black h-full pricing flex flex-col w-full overflow-hidden`}
       >
         <div>
-          <h2 className="font-[600] poppins text-[24px]">{price?.name}</h2>
-          <p className="text-[16px] font-[400] opensans">
+          <h2 className="font-semibold poppins text-[24px]">{price?.name}</h2>
+          <p className="text-[16px] font-normal opensans">
             {price?.description}
           </p>
         </div>
@@ -57,7 +57,7 @@ const PricingCard: React.FC<priceProp> = ({ price }) => {
               <Bullet key={i} text={b?.feature} />
             ))}
           </div>
-          <button className="max-w-[348px]   w-full  h-[48px] btn-color text-black py-4 px-5 rounded-[16px] flex justify-center items-center poppins font-[500]">
+          <button className="max-w-87   w-full  h-12 btn-color text-black py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium">
             Start a project
           </button>
         </div>

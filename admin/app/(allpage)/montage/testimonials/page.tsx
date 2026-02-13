@@ -9,7 +9,6 @@ const Testimonail = async ({
 }) => {
   const { page } = await searchParams;
   const data = await getData({ slug: `testimonials?type=${page}` });
-  console.log(data);
   return (
     <div>
       <TestimonialWrapper data={data} />

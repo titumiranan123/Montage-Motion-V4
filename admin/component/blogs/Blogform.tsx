@@ -131,7 +131,6 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
     try {
       const url = data?.id ? `/api/blogs/${data?.id}` : "/api/blogs";
       const res = await api_url.post(url, data);
-      console.log(res);
       if (res.status === 200 || res.status === 201) {
         onCancel(false);
         toast.success("Blog Created");

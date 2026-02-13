@@ -67,7 +67,6 @@ export const getData = async ({
     const result = await response.json();
     return result.data ?? result;
   } catch (error) {
-    console.log(`${process.env.NEXT_PUBLIC_API_URL}/api/${slug}`);
     console.log(error);
     return [];
   }

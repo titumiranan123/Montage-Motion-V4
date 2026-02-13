@@ -286,9 +286,7 @@ const HeaderForm: React.FC<IHeaderFormProps> = ({
                         Hero Video URL *
                       </label>
                       <input
-                        {...register(`media.${index}.video_url`, {
-                          required: "Video URL is required",
-                        })}
+                        {...register(`media.${index}.video_url`)}
                         className="w-full px-4 py-2.5 bg-gray-800 rounded-lg text-white border border-gray-700 focus:ring-2 focus:ring-[#1FB5DD] focus:border-transparent"
                         placeholder="Enter video URL"
                       />

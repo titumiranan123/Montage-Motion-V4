@@ -22,7 +22,6 @@ export const ServiceFilter = ({
     queryKey: ["categories"],
     queryFn: getDataCategory,
   });
-  console.log(data?.[0]);
   // Set default page if missing
   useEffect(() => {
     if (!currentPage) {

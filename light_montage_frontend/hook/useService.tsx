@@ -6,7 +6,6 @@ const useService = () => {
     queryKey: ["service"],
     queryFn: async () => {
       const response = await api_url.get("/api/service");
-      console.log(response);
       return response.data;
     },
     select: (data) => data.data,

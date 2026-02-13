@@ -77,7 +77,6 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
     }
   };
   const onSubmit = async (data: IFaqSection) => {
-    console.log("type", data);
     try {
       const url = data.id ? `/api/faq/${data.id}` : "/api/faq";
 

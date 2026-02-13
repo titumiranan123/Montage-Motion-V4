@@ -10,6 +10,7 @@ import { api_url } from "@/hook/Apiurl";
 import toast from "react-hot-toast";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { useRouter } from "next/navigation";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 // ✅ Tailwind custom toggle (no Headless UI)
 interface ToggleSwitchProps {
@@ -62,19 +63,40 @@ const ProcessForm = ({
           image: "",
           alt: "",
           process_steps: [
-            { icon: "", title: "", description: "", isHiden: false, alt: "" },
+            {
+              icon: "",
+              title: "",
+              description: "",
+              isHiden: false,
+              alt: "",
+              order_index: 0,
+            },
           ],
         },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, move } = useFieldArray({
     control,
     name: "process_steps",
   });
-
+  const moveService = (index: number, direction: "up" | "down") => {
+    if (direction === "up" && index > 0) {
+      move(index, index - 1);
+    } else if (direction === "down" && index < fields.length - 1) {
+      move(index, index + 1);
+    }
+  };
   const onSubmit = async (data: ProcessSchema) => {
+    const processWithOrder = data?.process_steps.map((service, index) => ({
+      ...service,
+      order_index: index,
+    }));
+    const formdata = {
+      ...data,
+      process_steps: processWithOrder,
+    };
     try {
-      const response = await api_url.post("/api/process", data);
+      const response = await api_url.post("/api/process", formdata);
       if (response.status === 201) {
         router.refresh();
         toast.success(response.data.message);
@@ -102,7 +124,7 @@ const ProcessForm = ({
               setValue("type", type);
             }}
             value={watch("type")}
-            slice={1}
+            slice={0}
           />
           <input
             type="hidden"
@@ -162,7 +184,7 @@ const ProcessForm = ({
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className=" grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-200 mb-1">Image</label>
 
@@ -205,8 +227,37 @@ const ProcessForm = ({
           {fields.map((field, index) => (
             <div
               key={field.id}
-              className="border border-gray-700 rounded-xl p-5 mb-4 bg-gray-950"
+              className="border border-gray-700 rounded-xl p-5 mb-4 bg-gray-950 relative"
             >
+              {/* Move buttons in top-right corner */}
+              <div className="absolute right-4 top-4 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => moveService(index, "up")}
+                  disabled={index === 0}
+                  className={`p-2 rounded ${
+                    index === 0
+                      ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                      : "bg-gray-700 hover:bg-gray-600"
+                  }`}
+                  title="Move up"
+                >
+                  <ArrowUp size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => moveService(index, "down")}
+                  disabled={index === fields.length - 1}
+                  className={`p-2 rounded ${
+                    index === fields.length - 1
+                      ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                      : "bg-gray-700 hover:bg-gray-600"
+                  }`}
+                  title="Move down"
+                >
+                  <ArrowDown size={16} />
+                </button>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-200 mb-1">Icon</label>

@@ -17,7 +17,6 @@ const OurFeatureProject = async ({ tab }: { tab: string }) => {
     category = [];
     data = [];
   }
-  console.log(data?.data);
   return (
     <div className="container bgwork rounded-[40px] lg:py-[60px] lg:mt-[50px] md:mt-10 mt-6">
       <style>{`

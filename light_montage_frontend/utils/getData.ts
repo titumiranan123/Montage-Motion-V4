@@ -11,7 +11,6 @@ export const getData = async ({
     });
 
     if (!response.ok) {
-      console.log(response);
       return null;
     }
 

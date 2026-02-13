@@ -57,7 +57,6 @@ const ServiceForm = ({
   };
 
   const onSubmit = async (data: PageService) => {
-    console.log("✅ Form Submitted:", data);
     try {
       const response = await api_url.post("/api/our-service", data);
       if (response.status === 200 || response.status === 201) {
