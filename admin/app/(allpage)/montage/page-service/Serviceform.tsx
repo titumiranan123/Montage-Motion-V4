@@ -63,8 +63,11 @@ const ServiceForm = ({
         setIsModalOpent(false);
         toast.success(response?.data?.message);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.errorDetails?.[0]?.message ?? "falied to save",
+      );
+      console.log(error?.response?.data?.errorDetails?.[0]?.message);
     }
   };
 

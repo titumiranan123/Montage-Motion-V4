@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
         );
 
         const data = await res.json();
-
+        console.log("adfkaf ================>", data);
         if (!res.ok || !data?.userdata) {
           // ❌ throw Error for NextAuth
           throw new Error("Invalid credentials");
