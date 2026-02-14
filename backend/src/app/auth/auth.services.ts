@@ -23,7 +23,7 @@ export const authService = {
         throw new ApiError(
           httpStatus.BAD_REQUEST,
           "MISSING_FIELDS",
-          "Name, email, and password are required."
+          "Name, email, and password are required.",
         );
       }
 
@@ -32,20 +32,20 @@ export const authService = {
         throw new ApiError(
           httpStatus.BAD_REQUEST,
           "USER_ALREADY_EXISTS",
-          "User already exists with this email."
+          "User already exists with this email.",
         );
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
       const verificationToken = generateVerificationCode();
       const verificationTokenExpiresAt = new Date(
-        Date.now() + 24 * 60 * 60 * 1000
+        Date.now() + 24 * 60 * 60 * 1000,
       );
 
       // Create user
       const userResult = await client.query(
         `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *`,
-        [name, email, hashedPassword]
+        [name, email, hashedPassword],
       );
 
       const userId = userResult.rows[0].id;
@@ -55,7 +55,7 @@ export const authService = {
         `INSERT INTO user_dynamic_data 
          (user_id, verification_token, verification_token_expires_at, updated_at) 
          VALUES ($1, $2, $3, $4)`,
-        [userId, verificationToken, verificationTokenExpiresAt, new Date()]
+        [userId, verificationToken, verificationTokenExpiresAt, new Date()],
       );
 
       await client.query("COMMIT");
@@ -71,7 +71,7 @@ export const authService = {
         : new ApiError(
             httpStatus.INTERNAL_SERVER_ERROR,
             "USER_CREATION_FAILED",
-            "Failed to create user"
+            "Failed to create user",
           );
     } finally {
       client.release();
@@ -88,14 +88,14 @@ export const authService = {
          WHERE verification_token = $1 
          AND verification_token_expires_at > NOW() 
          FOR UPDATE LIMIT 1`,
-        [code]
+        [code],
       );
 
       if (result.rowCount === 0) {
         throw new ApiError(
           httpStatus.BAD_REQUEST,
           "INVALID_OR_EXPIRED_TOKEN",
-          "Invalid or expired verification code"
+          "Invalid or expired verification code",
         );
       }
 
@@ -103,14 +103,14 @@ export const authService = {
 
       const updatedUser = await client.query(
         `UPDATE users SET verified = true WHERE id = $1 RETURNING id, name, email, verified`,
-        [userId]
+        [userId],
       );
 
       await client.query(
         `UPDATE user_dynamic_data 
          SET verification_token = NULL, verification_token_expires_at = NULL 
          WHERE user_id = $1`,
-        [userId]
+        [userId],
       );
 
       await client.query("COMMIT");
@@ -123,7 +123,7 @@ export const authService = {
         : new ApiError(
             httpStatus.INTERNAL_SERVER_ERROR,
             "VERIFICATION_FAILED",
-            "Email verification failed"
+            "Email verification failed",
           );
     } finally {
       client.release();
@@ -132,7 +132,7 @@ export const authService = {
 
   async login(
     data: { email: string; password: string },
-    logData: Partial<UserLoginHistory>
+    logData: Partial<UserLoginHistory>,
   ) {
     const client = await db.connect();
     let loginSuccessful = false;
@@ -140,14 +140,14 @@ export const authService = {
     try {
       const result = await client.query(
         `SELECT * FROM users WHERE email = $1`,
-        [data.email]
+        [data.email],
       );
 
       if (result.rowCount === 0) {
         throw new ApiError(
           httpStatus.NOT_FOUND,
           "USER_NOT_FOUND",
-          "No account found with this email"
+          "No account found with this email",
         );
       }
 
@@ -160,20 +160,20 @@ export const authService = {
 
       const isPasswordValid = await bcrypt.compare(
         data.password,
-        user.password
+        user.password,
       );
       if (!isPasswordValid) {
         throw new ApiError(
           httpStatus.UNAUTHORIZED,
           "INVALID_CREDENTIALS",
-          "Invalid email or password"
+          "Invalid email or password",
         );
       }
 
       const token = jwt.sign(
         { id: user.id, email: user.email, role: user.role },
         config.jwt_secret as string,
-        { expiresIn: "24h" }
+        { expiresIn: "24h" },
       );
 
       loginSuccessful = true;
@@ -207,7 +207,7 @@ export const authService = {
         : new ApiError(
             httpStatus.INTERNAL_SERVER_ERROR,
             "LOGIN_FAILED",
-            "Login failed. Please try again."
+            "Login failed. Please try again.",
           );
     } finally {
       if (!loginSuccessful && data.email) {
@@ -232,7 +232,7 @@ export const authService = {
   async allUsers() {
     try {
       const res = await db.query(
-        "SELECT id, name, email, role, verified, status, created_at FROM users ORDER BY created_at DESC"
+        "SELECT id, name, email, role, verified, status, created_at FROM users ORDER BY created_at DESC",
       );
       return res.rows;
     } catch (error: any) {
@@ -240,7 +240,7 @@ export const authService = {
       throw new ApiError(
         httpStatus.INTERNAL_SERVER_ERROR,
         "FETCH_USERS_FAILED",
-        "Failed to fetch users"
+        "Failed to fetch users",
       );
     }
   },
@@ -252,14 +252,14 @@ export const authService = {
 
       const result = await client.query(
         `UPDATE users SET role = 'ADMIN' WHERE id = $1 RETURNING id, name, email, role`,
-        [id]
+        [id],
       );
 
       if (result.rowCount === 0) {
         throw new ApiError(
           httpStatus.NOT_FOUND,
           "USER_NOT_FOUND",
-          "User not found"
+          "User not found",
         );
       }
 
@@ -273,7 +273,7 @@ export const authService = {
         : new ApiError(
             httpStatus.INTERNAL_SERVER_ERROR,
             "MAKE_ADMIN_FAILED",
-            "Failed to update user role"
+            "Failed to update user role",
           );
     } finally {
       client.release();
@@ -319,14 +319,14 @@ export const authService = {
 
       const result = await client.query(
         `DELETE FROM users WHERE id = $1 RETURNING id`,
-        [id]
+        [id],
       );
 
       if (result.rowCount === 0) {
         throw new ApiError(
           httpStatus.NOT_FOUND,
           "USER_NOT_FOUND",
-          "User not found"
+          "User not found",
         );
       }
 
@@ -340,7 +340,7 @@ export const authService = {
         : new ApiError(
             httpStatus.INTERNAL_SERVER_ERROR,
             "DELETE_USER_FAILED",
-            "Failed to delete user"
+            "Failed to delete user",
           );
     } finally {
       client.release();

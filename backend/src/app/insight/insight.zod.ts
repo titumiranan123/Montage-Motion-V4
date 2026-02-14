@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const StepSchema = z.object({
-  step_order: z.number().int().min(1),
+  step_order: z.number().nullable(),
   title: z.string().min(1),
   heading: z.string().min(1),
   description: z.string().min(1),

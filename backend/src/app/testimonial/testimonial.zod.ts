@@ -8,15 +8,7 @@ export const testimonialSchema = z.object({
   image: z.string().url("Image must be a valid URL"),
   video_message: z.string().optional(),
   message: z.string().optional(),
-  position: z.number().optional(),
+  position: z.number().nullable().optional(),
   category: z.enum(["message", "video_message"]),
-  type: z.enum([
-    "home",
-    "shorts",
-    "talkinghead",
-    "podcast",
-    "saas",
-    "thumbnail",
-    "about",
-  ]),
+  type: z.string(),
 });

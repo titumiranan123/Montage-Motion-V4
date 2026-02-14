@@ -28,7 +28,7 @@ export const SectionSchema = z.object({
 export type SectionItem = z.infer<typeof SectionSchema>;
 
 export const ServiceItemSchema = z.object({
-  id: z.string().optional(),
+  id: z.string().nullable().optional(),
   service_title: z.string().min(1, "Service title is required"),
   service_description: z.string(),
   image: z.string().min(1, "Image URL is required"),
@@ -36,7 +36,7 @@ export const ServiceItemSchema = z.object({
   icon: z.string().nullable().optional(),
   icon_alt: z.string().nullable().optional(),
   href: z.string().nullable().optional(),
-  order_index: z.number(),
+  order_index: z.number().nullable().optional(),
   service_type: z.string().nullable().optional(),
   page_active: z.boolean().default(false),
   available_section: z.array(SectionSchema).nullable().optional(),

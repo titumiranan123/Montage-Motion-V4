@@ -6,7 +6,7 @@ export const BrandImageSchema = z.object({
   alt: z.string({ error: "Page type is required" }),
   height: z.string().optional(),
   width: z.string().optional(),
-  sortOrder: z.number().optional(),
+  sortOrder: z.number().nullable().optional(),
   image: z.string({ error: "Image url is required" }).url("Invalid image url"),
   ishide: z.boolean().default(true),
 });

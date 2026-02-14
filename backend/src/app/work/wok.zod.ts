@@ -14,7 +14,7 @@ export const VideoSchema = z.object({
   video_link: z.string().nullable().optional(),
   isVisible: z.boolean().optional(),
   isFeature: z.boolean().optional(),
-  position: z.number().optional(),
+  position: z.number().nullable().optional(),
   type: z.string(),
 });
 

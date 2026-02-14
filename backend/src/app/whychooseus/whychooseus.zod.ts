@@ -7,7 +7,7 @@ export const whychooseusItemSchema = z.object({
   description: z.string().optional(),
   icon: z.string().min(1, "Image URL is required"),
   alt: z.string().optional(),
-  position: z.number().optional(),
+  position: z.number().nullable().optional(),
 });
 
 // ✅ Schema for the full "Why Choose Us" section

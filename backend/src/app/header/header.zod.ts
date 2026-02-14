@@ -3,7 +3,7 @@ import { z } from "zod";
  *  Media Item Schema (matches IHeaderMedia)
  *  ─────────────────────────────────────────────── */
 export const HeaderMediaSchema = z.object({
-  id: z.string().uuid().optional(),
+  id: z.string().uuid().nullable().optional(),
   header_id: z.string().uuid().optional(),
   image_url: z.string().url({ message: "Invalid image URL" }),
   alt: z.string().min(1, { message: "Alt text is required" }),

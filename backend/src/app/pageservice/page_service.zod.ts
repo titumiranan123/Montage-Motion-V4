@@ -35,7 +35,7 @@ export const ServiceItemSchema = z.object({
   icon: z.string().nullable().optional(),
   icon_alt: z.string().nullable().optional(),
   href: z.string().nullable().optional(),
-  position: z.number(),
+  position: z.number().nullable().optional(),
   service_type: z.string().nullable().optional(),
   page_active: z.boolean().default(false),
   available_section: z.array(SectionSchema).nullable().optional(),

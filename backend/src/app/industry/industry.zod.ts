@@ -20,7 +20,7 @@ export const tabSchema = z.object({
   image: z.string().url(),
   offer_points: z.array(offerPointSchema).min(1),
   cta: ctaSchema,
-  position: z.number().int().min(1),
+  position: z.number().nullable().optional(),
 });
 
 // Section create schema
