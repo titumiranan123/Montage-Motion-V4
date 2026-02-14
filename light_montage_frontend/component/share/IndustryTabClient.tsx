@@ -46,7 +46,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
           aria-label="Content categories"
           className="relative flex justify-start flex-nowrap  lg:justify-start 
            items-center 
-         px-2 overflow-x-scroll scrollbar-hide  rounded-[12px] glassShadow  bg-white/40 p-3 w-[520px] mx-auto border border-white"
+         px-2 overflow-x-scroll scroll-horizontal  rounded-[12px] glassShadow  bg-white/40 p-3 w-130 mx-auto border border-white"
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
@@ -59,7 +59,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
               aria-selected={activeTab === index}
               aria-controls={`${labelId}-${tab?.id}-panel`}
               onClick={() => setActiveTab(index)}
-              className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-[12px] text-center transition-colors whitespace-nowrap h-[51px]  shrink-0  ${
+              className={`p-3 text-(--text-primary) opensans font-normal text-[16px] leading-[120%] rounded-[12px] text-center transition-colors  whitespace-nowrap h-12.75  shrink-0  ${
                 activeTab === index ? "btn-color font-semibold" : ""
               }`}
             >
@@ -79,10 +79,10 @@ export function TabsClient({ tabs }: { tabs: any }) {
         {/* Content Card */}
         <Gradientcard
           borderClassName="lg:w-[918px] lg:max-w-full max-w-[918px]  mx-auto w-full p-px rounded-2xl z-10"
-          className="lg:w-[916px] lg:max-w-full max-w-[916px]  mx-auto w-full rounded-2xl"
+          className="lg:w-229 lg:max-w-full max-w-229  mx-auto w-full rounded-2xl"
         >
           <div className="relative">
-            <div className="rounded-2xl  p-3   md:p-6 flex justify-between items-center lg:flex-row flex-col-reverse gap-4 lg:w-[916px] lg:max-w-full max-w-[916px]  mx-auto w-full relative ">
+            <div className="rounded-2xl  p-3   md:p-6 flex justify-between items-center lg:flex-row flex-col-reverse gap-4 lg:w-229 lg:max-w-full max-w-229  mx-auto w-full relative ">
               <div className=" text-(--text-primary)   w-full lg:w-1/2">
                 <h3 className="mb-1 text-xl font-semibold md:text-2xl poppins">
                   {activeTabData?.title}
@@ -132,7 +132,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
               <Image
                 src={activeTabData?.image}
                 alt={activeTabData?.title}
-                className="max-w-[1435px] w-full mx-auto"
+                className="max-w-358.75 w-full mx-auto"
                 width={1435}
                 height={10}
               />
@@ -140,7 +140,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
           </div>
         </Gradientcard>
       </div>
-      <div className="bg-[#BAE8F4]/40  -mt-10 max-w-[788px] w-full mx-auto h-7.5 rounded-[20px]"></div>
+      <div className="bg-[#BAE8F4]/40  -mt-10 max-w-197 w-full mx-auto h-7.5 rounded-[20px]"></div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ContactForm from "./ContactForm";
 import { Heading } from "../share/Headering";
+import Link from "next/link";
 
 const ContactSection = () => {
   return (
@@ -26,32 +27,37 @@ const ContactSection = () => {
               title: "Email Us",
               value: "hello@montagemotion.com",
               icon: "/assets/icon/gmail.png",
+              href: "mailto:hello@montagemotion.com",
             },
             {
               title: "Call Us",
-              value: "+880 1786-546949",
+              value: "+8801786546949",
               icon: "/assets/icon/whatsapp.png",
+              href: "tel:+8801862938306",
             },
             {
               title: "Work at Montage Motion",
               value: "See current job opportunities",
               icon: "/assets/currentjob.png",
+              href: "/careers",
             },
             {
               title: "Visit Us",
               value: "Learn more about our services",
               icon: "/assets/icon/users.png",
+              href: "/about-us",
             },
           ].map((item, idx) => (
-            <div
+            <Link
+              href={`${item?.href}`}
               className="w-full "
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
             >
-              <div className="contact-card flex justify-between items-center text-(--text-primary)  max-w-[622px] w-full h-[139px] rounded-3xl glassShadow  bg-white/40  backdrop-blur-2xl animated hover:scale-[104%] md:px-5 md:py-6 px-1 py-1">
+              <div className="contact-card flex justify-between items-center text-(--text-primary)  max-w-155.5 w-full h-34.75 rounded-3xl glassShadow  bg-white/40  backdrop-blur-2xl animated hover:scale-[104%] md:px-5 md:py-6 px-1 py-1">
                 <div>
-                  <h3 className="text-[20px] md:text-[24px] md:leading-[30px] font-semibold poppins">
+                  <h3 className="text-[20px] md:text-[24px] md:leading-7.5 font-semibold poppins">
                     {item.title}
                   </h3>
                   <p className="text-[14px] md:text-[16px] md:leading-[140%] font-normal opensans">
@@ -66,13 +72,13 @@ const ContactSection = () => {
                   height={36}
                 />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div
           data-aos="fade-up"
           data-aos-delay={400}
-          className=" flex justify-between items-center  text-(--text-primary)  max-w-[622px] glassShadow  bg-white/40  backdrop-blur-sm w-full h-[604px] rounded-3xl "
+          className=" flex justify-between items-center  text-(--text-primary)  max-w-155.5 glassShadow  bg-white/40  backdrop-blur-sm w-full h-151 rounded-3xl "
         >
           <ContactForm />
         </div>

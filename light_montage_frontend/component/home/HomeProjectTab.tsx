@@ -57,19 +57,19 @@ const HomeTab = ({ types }: { types: any }) => {
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       className={`glassShadow bg-white/40 backdrop-blur-2xl
-        max-w-[594px] h-[75px]
+        max-w-148.5 h-18.75
         flex justify-start items-center
         mx-auto rounded-[12px]
         mt-5 transition-all duration-300
         overflow-x-auto px-3 gap-2
-        scroll-hide ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+        scroll-horizontal ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
     >
       {tabConfig?.slice(1)?.map((tb: any, idx: number) => (
         <button
           key={idx}
           onClick={() => handleTabClick(tb?.service_type)}
           className={`py-2 px-3 opensans font-medium text-[14px]
-            rounded-[12px] whitespace-nowrap h-[51px]
+            rounded-[12px] whitespace-nowrap h-12.75
             ${cat === tb?.service_type ? "btn-color font-semibold" : ""}`}
         >
           {tb?.service_title}

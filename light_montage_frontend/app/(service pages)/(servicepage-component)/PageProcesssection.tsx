@@ -13,8 +13,9 @@ export const PageProcesssection = ({ data }: { data: any }) => {
         title={data?.heading_part1 ?? ""}
         extratitle={data?.heading_part2 ?? ""}
         width="160"
+        isbackground={true}
       />
-      <div className=" flex lg:flex-row items-stretch flex-col px-2 lg:px-0 mt-9 md:mt-16 gap-12 lg:max-h-[898px]">
+      <div className=" flex lg:flex-row items-stretch flex-col px-2 lg:px-0 mt-9 md:mt-16 gap-12 lg:max-h-224.5">
         <div data-aos="fade-right" data-aos-delay={200} className="flex-1 flex">
           <Image
             src={data?.image ?? ""}

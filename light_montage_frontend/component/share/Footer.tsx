@@ -6,7 +6,7 @@ import CustomLink from "./CustomLink";
 const Footer: React.FC = () => {
   return (
     <div className="bg">
-      <div className="container lg:pb-[104px] sectionGap">
+      <div className="container lg:pb-26 sectionGap">
         <style>{`
       .bg{
         background:   linear-gradient(179.93deg, #FFFFFF 0.07%, #CCF4FF 99.96%);
@@ -14,14 +14,14 @@ const Footer: React.FC = () => {
       `}</style>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9  text-(--text-primary)  lg:mt-12 mt-9 md:gap-10 gap-8 md:mb-8 mb-6">
-          <div className="col-span-3 max-w-[402px]">
+          <div className="col-span-3 max-w-100.5">
             <Link
               href={"/"}
-              className="block md:w-[235px] md:h-[92px] w-[143px] h-14 box-border animated hover:scale-105 "
+              className="block md:w-58.75 md:h-23 w-35.75 h-14 box-border animated hover:scale-105 "
             >
               <Image
                 src={"/assets/icon/logo.png"}
-                className="md:w-[235px] md:h-[92px] w-[143px] h-14"
+                className="md:w-58.75 md:h-23 w-35.75 h-14"
                 alt="logo"
                 priority
                 title="logo"
@@ -30,13 +30,11 @@ const Footer: React.FC = () => {
               />
             </Link>
             <p className="text-[16px] leading-[150%] opensans font-normal mt-10">
-              Montage Motion is the reliable digital solutions provider. We
-              provide services for Documentary, Fiction, Video Editing. Audio
-              Editing, 2D/3D Animation, Graphic Design. Our Video Production,
-              Influencer Marketing service will reach your brand to the target
-              customers and increase more sales and brand deals.
+              Montage Motion delivers documentary and fiction production,
+              editing, animation, design, and influencer marketing that connects
+              your brand with the right audience and drives sales.
             </p>
-            <div className="max-w-[305px] hidden lg:mt-10 mt-6 max-h-[52px]  h-full rounded-2xl border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2  items-center justify-around">
+            <div className="max-w-76.25 hidden lg:mt-10 mt-6 max-h-13  h-full rounded-2xl border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2  items-center justify-around">
               <input
                 type="text"
                 placeholder="Enter your email"
@@ -48,7 +46,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className="w-full mx-auto col-span-2">
-            <h2 className="font-semibold poppins text-[24px] leading-[30px]">
+            <h2 className="font-semibold poppins text-[24px] leading-7.5">
               Important Links{" "}
             </h2>
             <div className="flex flex-col gap-1 mt-4 opensans">
@@ -79,7 +77,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className=" col-span-2">
-            <h2 className="font-semibold poppins text-[24px] leading-[30px]">
+            <h2 className="font-semibold poppins text-[24px] leading-7.5">
               Services
             </h2>
             <div className="flex flex-col gap-1 mt-4 opensans">
@@ -110,7 +108,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className=" col-span-2">
-            <h2 className="font-semibold text-[24px] leading-[30px] poppins">
+            <h2 className="font-semibold text-[24px] leading-7.5 poppins">
               Contact Info
             </h2>
             <div className="flex flex-col gap-1 mt-4 opensans">

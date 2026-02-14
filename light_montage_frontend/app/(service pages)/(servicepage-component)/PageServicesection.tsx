@@ -147,7 +147,12 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
 
   return (
     <div className="sectionarea sectionGap">
-      <Heading subtitle={paragraph} title={heading_part1} tag={tag} />
+      <Heading
+        subtitle={paragraph}
+        title={heading_part1}
+        tag={tag}
+        isbackground={true}
+      />
       {renderGrid()}
     </div>
   );

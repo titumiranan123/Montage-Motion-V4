@@ -17,12 +17,13 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
         subtitle={data?.section_description}
         tag={data?.section_tag}
         title={data?.section_title}
+        isbackground={true}
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 lg:gap-10">
         <div data-aos="fade-up" className="" data-aos-delay={400}>
           <Gradientcard
             borderClassName="max-w-[422px] max-h-[751px] h-full w-full rounded-3xl p-[1px] "
-            className="max-w-[420px] max-h-[749px] h-full w-full rounded-3xl "
+            className="max-w-105 max-h-187.25 h-full w-full rounded-3xl "
           >
             <div className="flex justify-center  items-center flex-col h-full md:py-10 py-6 px-2 md:px-9">
               <Image
@@ -50,7 +51,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
               <Link
                 href={data?.contact_link ?? "#"}
                 target="_blank"
-                className="btn-color max-w-[348px] w-full h-14 rounded-2xl py-4 px-4 font-medium flex justify-center items-center opensans animated hover:scale-105"
+                className="btn-color max-w-87 w-full h-14 rounded-2xl py-4 px-4 font-medium flex justify-center items-center opensans animated hover:scale-105"
               >
                 Book a Call
               </Link>

@@ -10,6 +10,7 @@ const PagePricing = ({ pricing }: { pricing: any }) => {
         extratitle={pricing?.heading_part2}
         tag={pricing?.tag}
         subtitle={pricing?.paragraph}
+        isbackground={true}
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 md:mt-10">
         {pricing?.packages?.map((price: any, idx: number) => (
