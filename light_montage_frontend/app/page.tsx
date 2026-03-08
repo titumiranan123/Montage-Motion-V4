@@ -14,22 +14,18 @@ import { getData } from "@/utils/getData";
 export async function generateMetadata() {
   return await getPageSEO("home");
 }
-const HomePage = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{ cat: string }>;
-}) => {
+const HomePage = async () => {
   const { data } = await getData({
     url: `api/website/data?type=home&table=brand,services,process,whychooseus,industries,comparision,faq`,
   });
-  const { cat } = await searchParams;
+  const categoryRes = await getData({ url: "api/website/service/type" });
   return (
-    <div className="lg:mt-4">
+    <div className="lg:mt-4 w-full mx-auto">
       <div className="headerbg lg:rounded-[40px] rounded-lg sectionarea mb-10 min-h-screen">
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />
-      <OurFeatureProject tab={cat ?? []} header={data?.works} />
+      <OurFeatureProject header={data?.works} category={categoryRes?.data} />
       <ServiceSections data={data?.services ?? []} />
       <TestimonialSection
         title="What Our Clients Say"

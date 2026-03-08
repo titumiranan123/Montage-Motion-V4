@@ -1,27 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Play } from "lucide-react";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 
-interface Testimonial {
-  id?: string;
-  name: string;
-  designation: string;
-  image: string;
-  thumbnail?: string;
-  video_message?: string;
-  message?: string;
-  position?: number;
-  category: "message" | "video_message";
-  type: string;
-}
-
-const TestimonialVideocard = ({
-  testimonial,
-}: {
-  testimonial: Testimonial;
-}) => {
+const TestimonialVideocard = ({ testimonial }: { testimonial: any }) => {
   return (
-    <div className="md:w-[410px]  w-[300px]  h-[791px] mx-auto p-6 rounded-3xl  flex flex-col  gap-4 glassShadow  bg-white/40  backdrop-blur-2xl">
+    <div className="md:w-102.5  w-75  h-197.75 mx-auto md:p-6 p-1 rounded-3xl  flex flex-col  gap-4 glassShadow  bg-white/40  backdrop-blur-2xl">
       {/* Video Player Section */}
       <div className="md:w-[355.67px] h-[660.43px] rounded-[13px] overflow-hidden relative">
         <ReactPlayer

@@ -77,10 +77,10 @@ export default function OurStory() {
             alt={storyCards[activeIndex].title}
             width={590}
             height={620}
-            className="w-[590px] h-[620px] rounded-[13px] object-cover"
+            className="w-147.5 h-155 rounded-[13px] object-cover"
           />
         </div>
-        <div className="relative w-6 md:flex hidden items-start justify-center select-none lg:sticky lg:top-32 h-[600px]">
+        <div className="relative w-6 md:flex hidden items-start justify-center select-none lg:sticky lg:top-32 h-150">
           <div className="relative h-full w-6 rounded-full overflow-visible">
             {/* Background beam */}
             <div
@@ -107,7 +107,7 @@ export default function OurStory() {
                   Number(capPosition) === 0 ? capPosition + 0 : capPosition - 6
                 }%`,
               }}
-              className="absolute top-5 left-1/2 -translate-x-1/2 w-[18px] h-[38px] rounded-[25px] bg-[#1FB5DD]  pointer-events-none"
+              className="absolute top-5 left-1/2 -translate-x-1/2 w-4.5 h-9.5 rounded-[25px] bg-[#1FB5DD]  pointer-events-none"
               aria-label="Progress indicator"
             />
           </div>
@@ -123,7 +123,7 @@ export default function OurStory() {
             >
               <Gradientcard
                 isHover={activeIndex !== index}
-                className="max-w-[582px] min-h-[250px] rounded-3xl py-6 px-4"
+                className="max-w-145.5 min-h-62.5 rounded-3xl py-6 px-4"
                 borderClassName={`max-w-[582px]  min-h-[250px] rounded-[24px] p-[1px] ${
                   activeIndex === index ? "scale-105" : "scale-100"
                 }`}

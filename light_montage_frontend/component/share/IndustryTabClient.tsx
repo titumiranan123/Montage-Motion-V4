@@ -36,17 +36,32 @@ export function TabsClient({ tabs }: { tabs: any }) {
   };
 
   const activeTabData = safeTabs[activeTab];
+  // const scroll = (direction: "left" | "right") => {
+  //   if (!containerRef.current) return;
+  //   const scrollAmount = 200;
+  //   containerRef.current.scrollBy({
+  //     left: direction === "left" ? -scrollAmount : scrollAmount,
+  //     behavior: "smooth",
+  //   });
+  // };
   return (
     <div className="space-y-6  w-full lg:mt-16 mt-8 ">
       {/* Tabs Navigation */}
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full flex max-w-290 mx-auto items-center">
+        {/* <button
+          type="button"
+          onClick={() => scroll("left")}
+          className="p-px w-8 h-8 flex justify-center items-center rounded-full btn-color  shadow hover:bg-gray-100 transition"
+        >
+          <ChevronRight className="rotate-180  " size={20} />
+        </button> */}
         <div
           ref={containerRef}
           role="tablist"
           aria-label="Content categories"
           className="relative flex justify-start flex-nowrap  lg:justify-start 
            items-center 
-         px-2 overflow-x-scroll scroll-horizontal  rounded-[12px] glassShadow  bg-white/40 p-3 w-130 mx-auto border border-white"
+         px-2 overflow-x-scroll scroll-hide   rounded-[12px] glassShadow  bg-white/40 p-3 w-162! h-18.75 mx-auto border border-white"
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
@@ -67,6 +82,13 @@ export function TabsClient({ tabs }: { tabs: any }) {
             </button>
           ))}
         </div>
+        {/* <button
+          type="button"
+          onClick={() => scroll("right")}
+          className="p-2 rounded-full btn-color  shadow hover:bg-gray-100 transition"
+        >
+          <ChevronRight size={20} />
+        </button> */}
       </div>
       <div
         role="tabpanel"

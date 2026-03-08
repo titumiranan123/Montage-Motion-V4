@@ -16,7 +16,7 @@ const TestimonialMessagecard = ({
   testimonial: testimonial;
 }) => {
   return (
-    <div className="md:w-[588px] w-[300px]  h-[299px] mx-auto p-3 glassShadow  bg-white/40  backdrop-blur-2xl rounded-3xl">
+    <div className="md:w-114.5 w-75  h-74.75 mx-auto p-3 glassShadow  bg-white/40  backdrop-blur-sm rounded-3xl">
       <div
         // style={{ boxShadow: "0px 4px 60px 0px #1FB5DD29 inset" }}
         className=" md:p-4  w-full h-auto p-4  flex flex-col gap-4"
@@ -31,25 +31,27 @@ const TestimonialMessagecard = ({
         />
 
         <p
-          className=" text-(--text-primary)  opensans h-[95px] w-[95%] duration-300 delay-100 transition-all ease-in-out overflow-hidden hover:overflow-y-scroll"
+          className=" text-(--text-primary)  opensans h-23.75 w-[95%] duration-300 delay-100 transition-all ease-in-out overflow-hidden hover:overflow-y-scroll"
           title={`${testimonial.message}`}
         >
           {testimonial.message}
         </p>
-        <div className="flex justify-start gap-10 h-[90px] items-center">
-          <Image
-            className="rounded-full w-16  mt-5 h-16 overflow-hidden"
-            src={testimonial.image}
-            alt=""
-            width={64}
-            height={64}
-            priority
-          />
-          <div className="  text-(--text-primary)  flex flex-col md:gap-4 gap-2">
-            <h2 className="font-bold text-[20px] poppins">
+        <div className="flex justify-start gap-10 h-22.5 items-center">
+          <div className="lg:w-16   overflow-hidden lg:h-16 h-10 w-10">
+            <Image
+              className="rounded-full lg:w-16   lg:h-16 h-10 w-10 "
+              src={testimonial.image}
+              alt=""
+              width={64}
+              height={64}
+              priority
+            />
+          </div>
+          <div className="  text-(--text-primary)  flex flex-col md:gap-4 gap-0">
+            <h2 className="font-bold text-base lg:text-[20px] poppins">
               {testimonial.name}
             </h2>
-            <p className="text-[14px] font-normal md:-mt-5 opensans">
+            <p className="lg:text-[14px] text-xs font-normal md:-mt-3 opensans">
               {testimonial.designation}
             </p>
           </div>

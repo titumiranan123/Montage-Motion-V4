@@ -7,9 +7,9 @@ const TurstedBy = ({ isCenter }: { isCenter?: boolean }) => {
       data-aos-delay={100}
       className={`flex items-center justify-center ${
         isCenter ? "justify-center " : "justify-center md:justify-start"
-      }  w-full  text-(--text-primary)  gap-5  bg-white/20  glassShadow backdrop-blur-lg py-4 px-3 rounded-full md:max-w-[300px] max-w-[260px]`}
+      }  w-full  text-(--text-primary)  gap-5  bg-white/20  glassShadow backdrop-blur-lg py-4 px-3 rounded-full md:max-w-75 max-w-65`}
     >
-      <div className="flex w-[70px] h-5 items-center  -space-x-1.5">
+      <div className="flex w-17.5 h-5 items-center  -space-x-1.5">
         <Image
           src={"/assets/hero_client-1.png"}
           alt="image-1"

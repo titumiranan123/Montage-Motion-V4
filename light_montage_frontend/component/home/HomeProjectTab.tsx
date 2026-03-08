@@ -1,32 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-
-const HomeTab = ({ types }: { types: any }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
+const serviceShortNames: Record<string, string> = {
+  home: "Home",
+  "thumbnail-design": "Thumbnail",
+  "shortsreels-editing": "Shorts/Reels",
+  "saas-explainer": "SaaS",
+  "podcast-video-editing": "Podcast",
+  "talking-head-video-editing": "Talking-head",
+  "promo-video-editing": "Promo",
+};
+const HomeTab = ({
+  types,
+  setActiveTab,
+  activeTab,
+}: {
+  types: any;
+  activeTab: string;
+  setActiveTab: (p: string) => void;
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  const cat = searchParams.get("cat");
-
-  /* ✅ FIRST LOAD: set default query */
   useEffect(() => {
-    if (!cat) {
-      router.replace(`?cat=${types?.[1]?.service_type}`, {
-        scroll: false,
-      });
+    if (!activeTab) {
+      setActiveTab(types?.[1]?.service_type);
+      // router.replace(`?cat=${types?.[1]?.service_type}`, {
+      //   scroll: false,
+      // });
     }
-  }, [cat, router, types]);
+  }, [activeTab, setActiveTab, types]);
 
   const handleTabClick = (href: string) => {
     if (!isDragging) {
-      router.replace(`?cat=${href}`, { scroll: false });
+      setActiveTab(href);
+      // router.replace(`?cat=${href}`, { scroll: false });
     }
   };
 
@@ -58,7 +69,7 @@ const HomeTab = ({ types }: { types: any }) => {
       onMouseMove={handleMouseMove}
       className={`glassShadow bg-white/40 backdrop-blur-2xl
         max-w-148.5 h-18.75
-        flex justify-start items-center
+        flex justify-start lg:justify-center items-center
         mx-auto rounded-[12px]
         mt-5 transition-all duration-300
         overflow-x-auto px-3 gap-2
@@ -70,9 +81,9 @@ const HomeTab = ({ types }: { types: any }) => {
           onClick={() => handleTabClick(tb?.service_type)}
           className={`py-2 px-3 opensans font-medium text-[14px]
             rounded-[12px] whitespace-nowrap h-12.75
-            ${cat === tb?.service_type ? "btn-color font-semibold" : ""}`}
+            ${activeTab === tb?.service_type ? "btn-color font-semibold" : ""}`}
         >
-          {tb?.service_title}
+          {serviceShortNames[tb?.service_type] ?? tb?.service_title}
         </button>
       ))}
     </div>

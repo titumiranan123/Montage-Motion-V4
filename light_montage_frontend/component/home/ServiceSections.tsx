@@ -73,7 +73,7 @@ const ServiceSections = ({ data }: { data: any }) => {
                     width={344}
                     height={276}
                     priority
-                    className="max-w-86 w-full max-h-69 h-full md:mt-8 mt-4"
+                    className="max-w-92.5 w-full max-h-69 h-full md:mt-8 mt-4 rounded-[13px] overflow-hidden"
                   />
                 </div>
               </div>

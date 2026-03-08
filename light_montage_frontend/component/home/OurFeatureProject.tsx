@@ -1,30 +1,22 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import DynamicWorkContent from "./DynamicWorkContent";
 import { Heading } from "../share/Headering";
-import { getData } from "@/utils/getData";
 import HomeTab from "./HomeProjectTab";
+import useWorks from "@/hook/useWorks";
 
-const OurFeatureProject = async ({
-  tab,
+const OurFeatureProject = ({
+  category,
   header,
 }: {
-  tab: string;
+  category: any;
   header: any;
 }) => {
-  let category;
-  let data;
-  try {
-    category = await getData({ url: "api/website/service/type" });
+  const [activeTab, setActiveTab] = useState("");
+  const { data } = useWorks(activeTab);
 
-    data = await getData({
-      url: `api/works/website?type=${tab && tab !== "all" ? tab : "home"}`,
-    });
-  } catch (error) {
-    console.log(error);
-    category = [];
-    data = [];
-  }
-  console.log(data?.data);
   return (
     <div className="container bgwork rounded-[40px] lg:py-15 lg:mt-12.5 md:mt-10 mt-6">
       <style>{`
@@ -38,10 +30,12 @@ const OurFeatureProject = async ({
         tag={header?.tag}
         width="160"
       />
-      {/* <div data-aos="fade-up" data-aos-delay={500} className="w-full"> */}
-      <HomeTab types={category?.data} />
-      {/* </div> */}
-      <DynamicWorkContent data={data?.data} />
+      <HomeTab
+        types={category}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+      <DynamicWorkContent data={data} />
     </div>
   );
 };

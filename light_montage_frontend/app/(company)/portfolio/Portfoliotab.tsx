@@ -3,7 +3,15 @@
 
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
-
+const serviceShortNames: Record<string, string> = {
+  home: "Home",
+  "thumbnail-design": "Thumbnail",
+  "shortsreels-editing": "Shorts/Reels",
+  "saas-explainer": "SaaS",
+  "podcast-video-editing": "Podcast",
+  "talking-head-video-editing": "Talking-head",
+  "promo-video-editing": "Promo",
+};
 const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -58,14 +66,14 @@ const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
           px-3 gap-2
           scroll-horizontal ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
     >
-      <button
+      {/* <button
         onClick={() => handleTabClick("all")}
         className={`py-2 px-3 text-(--text-primary) opensans font-medium text-[14px]
       rounded-[12px]  whitespace-nowrap h-12.75
       ${tab === "all" || tab === undefined ? "btn-color px-6 font-semibold" : ""}`}
       >
         All
-      </button>
+      </button> */}
       {tabConfig?.slice(1)?.map((tb: any) => (
         <button
           key={tb?.service_type}
@@ -74,7 +82,7 @@ const Portfoliotab = ({ tab, types }: { tab: string; types: any }) => {
       rounded-[12px] whitespace-nowrap h-12.75
       ${tab === tb?.service_type ? "btn-color font-semibold" : ""}`}
         >
-          {tb?.service_title}
+          {serviceShortNames[tb?.service_type] ?? tb?.service_title}
         </button>
       ))}
     </div>

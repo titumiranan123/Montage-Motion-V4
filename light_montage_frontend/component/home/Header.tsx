@@ -10,7 +10,7 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
   return (
     <div className="flex   lg:pt-30 pt-34 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
       {/* header content left side */}
-      <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-[780px] mx-auto">
+      <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-195 mx-auto">
         <div
           data-aos="fade-up"
           data-aos-delay="100"
@@ -40,14 +40,14 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
+            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Start a project
           </Link>
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-[2px]"
+            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-[2px]"
           >
             Book a Call
           </Link>

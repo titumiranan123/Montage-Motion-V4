@@ -1,34 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import useService from "@/hook/useService";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const MobileMenu = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const path = usePathname();
-  const servicesData = [
-    {
-      href: "/podcast-editing-service",
-      label: "Podcast Video Editing",
-    },
-
-    {
-      href: "/short-form-video-editing",
-      label: "Short-Form & Reels Editing",
-    },
-    {
-      href: "/talking-head-video",
-      label: "Talking Head Video Editing",
-    },
-
-    {
-      href: "/saas-explainer-video",
-      label: "Video Editing Service",
-    },
-  ];
+  const { data: servicesData } = useService();
   const isServicesActive = servicesData?.some((service: any) =>
     path.startsWith(service.href),
   );
@@ -40,52 +22,47 @@ const MobileMenu = () => {
     setIsServicesOpen((prev) => !prev);
   };
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <button
         onClick={toggleMobileMenu}
         className=" w-10 h-10 btn-color   rounded-2xl flex flex-col justify-center items-center lg:hidden   poppins  font-normal gap-1"
       >
-        <button
-          onClick={toggleMobileMenu}
-          className=" w-10 h-10 btn-color   rounded-2xl flex flex-col justify-center items-center lg:hidden   poppins  font-normal gap-1"
-        >
-          <span className="w-3 ms-1 h-0.5 bg-white"></span>
-          <span className="w-4.75 h-0.5 bg-white"></span>
-          <span className="w-3 h-0.5 -ms-1 bg-white"></span>
-        </button>
+        <span className="w-3 ms-1 h-0.5 bg-white"></span>
+        <span className="w-4.75 h-0.5 bg-white"></span>
+        <span className="w-3 h-0.5 -ms-1 bg-white"></span>
       </button>
+
       {/* Mobile Navigation Menu */}
       <div
-        className={`lg:hidden fixed inset-0 bg-black  text-(--text-primary)  z-40 px-6 pt-24 pb-10 min-h-screen transition-all duration-300 ease-in-out ${
+        className={`lg:hidden fixed left-0 w-full -top-10! bg-black  text-(--text-primary)  z-40 px-6 pt-24 pb-10 min-h-screen transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full hidden"
         }`}
       >
-        <div>
-          <button
-            onClick={toggleMobileMenu}
-            className="absolute top-4 right-4  text-(--text-primary)  focus:outline-none"
-            aria-label="Close menu"
+        <button
+          onClick={toggleMobileMenu}
+          className="absolute top-4 right-4  text-(--text-primary)  focus:outline-none"
+          aria-label="Close menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-6 h-6  text-white"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-6 h-6  text-(--text-primary) "
-            >
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-        <div className="flex flex-col justify-center items-center space-y-2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <div className="flex flex-col justify-start items-center space-y-2">
           <Link
             href="/"
             onClick={toggleMobileMenu}
-            className={`poppins text-[24px] border-white/10 ${
+            className={`poppins text-lg border-white/10 ${
               path === "/"
                 ? " text-(--text-primary)  font-semibold"
                 : "text-gray-200 font-normal"
@@ -94,7 +71,7 @@ const MobileMenu = () => {
             Home
           </Link>
 
-          <div className="poppins text-[24px] border-white/10">
+          <div className="poppins text-lg border-white/10">
             <button
               onClick={toggleServicesMenu}
               className="flex items-center justify-center gap-2 w-full"
@@ -103,16 +80,16 @@ const MobileMenu = () => {
               <span
                 className={
                   isServicesActive
-                    ? "font-semibold  text-(--text-primary) "
+                    ? "font-semibold  text-white "
                     : "text-gray-200 font-medium"
                 }
               >
                 Services
               </span>
               {!isServicesOpen ? (
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="w-4 h-4 text-white" />
               ) : (
-                <ChevronUp className="w-4 h-4" />
+                <ChevronUp className="w-4 h-4 text-white" />
               )}
             </button>
             <div
@@ -140,7 +117,7 @@ const MobileMenu = () => {
           <Link
             href="/portfolio"
             onClick={toggleMobileMenu}
-            className={`poppins text-[24px] border-white/10 ${
+            className={`poppins text-lg border-white/10 ${
               path === "/portfolio"
                 ? " text-(--text-primary)  font-bold"
                 : "text-gray-200"
@@ -151,7 +128,7 @@ const MobileMenu = () => {
           <Link
             href="/blog"
             onClick={toggleMobileMenu}
-            className={`poppins text-[24px] border-white/10 ${
+            className={`poppins text-lg border-white/10 ${
               path === "/blog"
                 ? " text-(--text-primary)  font-bold"
                 : "text-gray-200"
@@ -162,7 +139,7 @@ const MobileMenu = () => {
           <Link
             href="/careers"
             onClick={toggleMobileMenu}
-            className={`poppins text-[24px] border-white/10 ${
+            className={`poppins text-lg border-white/10 ${
               path === "/careers"
                 ? " text-(--text-primary)  font-bold"
                 : "text-gray-200"
@@ -173,7 +150,7 @@ const MobileMenu = () => {
           <Link
             href="/about-us"
             onClick={toggleMobileMenu}
-            className={`poppins text-[24px] border-white/10 ${
+            className={`poppins text-lg border-white/10 ${
               path === "/about-us"
                 ? " text-(--text-primary)  font-bold"
                 : "text-gray-200"
@@ -184,7 +161,7 @@ const MobileMenu = () => {
           <Link
             href="/contact-us"
             onClick={toggleMobileMenu}
-            className={`poppins text-[24px] border-white/10 ${
+            className={`poppins text-lg border-white/10 ${
               path === "/contact-us"
                 ? " text-(--text-primary)  font-bold"
                 : "text-gray-200"
@@ -193,7 +170,7 @@ const MobileMenu = () => {
             Contact
           </Link>
 
-          <button className="w-[155px] h-12 btn-color text-black py-4 px-5 rounded-2xl lg:flex hidden justify-center items-center text-[16px] font-medium poppins cursor-pointer hover:scale-105 hover:-rotate-3 transition-all duration-300 ease-in-out ">
+          <button className="w-38.75 h-12 btn-color text-black py-4 px-5 rounded-2xl lg:flex hidden justify-center items-center text-[16px] font-medium poppins cursor-pointer hover:scale-105 hover:-rotate-3 transition-all duration-300 ease-in-out ">
             Start a project
           </button>
         </div>

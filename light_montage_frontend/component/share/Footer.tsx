@@ -50,12 +50,6 @@ const Footer: React.FC = () => {
               Important Links{" "}
             </h2>
             <div className="flex flex-col gap-1 mt-4 opensans">
-              <a
-                className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"#faq"}
-              >
-                FAQ
-              </a>
               <Link
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
                 href={"/terms-and-conditions"}
@@ -120,9 +114,9 @@ const Footer: React.FC = () => {
               </a>
               <Link
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"tel:+8801862938306"}
+                href={"tel:+8801786546949"}
               >
-                +8801862938306
+                +8801786546949
               </Link>
               <p className="text-[16px] font-normal leading-[150%] hover:scale-105 animated">
                 DOHS, Mirpur, Dhaka
@@ -140,7 +134,7 @@ const Footer: React.FC = () => {
           <CustomLink className="" href="/careers" title="Careers" />
           <CustomLink className="" href="/blog" title="Blogs" />
           <CustomLink className="" href="/about-us" title="About" />
-          <CustomLink className="" href="/contact-us" title="contact" />
+          <CustomLink className="" href="/contact-us" title="Contact" />
         </div>
       </div>
     </div>

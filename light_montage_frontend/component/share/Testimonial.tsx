@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Heading } from "./Headering";
-import TestimonialMessagecard from "./TextTestimonial";
-
-import TestimonialVideocard from "./Videotestimonial";
 import React from "react";
-import Marquee from "react-fast-marquee";
+import VideoTestimonialSwiper from "./VideoTestimonialSwiper";
+import TextTestimonialSwiper from "./TextTestimonailSwiper";
 
 interface ITestimonial {
   id?: string;
@@ -36,8 +34,8 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
     data?.filter((item: any) => item.category === "message") || [];
 
   return (
-    <div className="container  testimonialbg rounded-[40px]    sectionGap">
-      <div className=" py-[60px]">
+    <div className="container px-0!  testimonialbg rounded-[40px]    sectionGap">
+      <div className=" py-15">
         <style>{`
       .testimonialbg {
         background:   linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
@@ -51,48 +49,8 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
         />
 
         <div className="w-full mx-auto mt-10 lg:mt-16 ">
-          <Marquee
-            gradientColor="#E9F8FC"
-            gradientWidth={100}
-            gradient
-            pauseOnHover
-            className="overflow-hidden"
-          >
-            {video_message?.map((testimonial: ITestimonial, idx: number) => (
-              <div
-                className="px-6"
-                key={idx}
-                data-aos="fade-up"
-                data-aos-delay={100 + idx * 100}
-              >
-                <TestimonialVideocard
-                  testimonial={testimonial}
-                  key={testimonial.id || idx}
-                />
-              </div>
-            ))}
-          </Marquee>
-          <Marquee
-            className=" mt-5 overflow-hidden h-80"
-            gradientColor="#E9F8FC"
-            gradientWidth={100}
-            gradient
-            pauseOnHover
-          >
-            {messageTesti?.map((testimonial: ITestimonial, idx: number) => (
-              <div
-                key={idx}
-                className="px-5 "
-                data-aos="fade-up"
-                data-aos-delay={100 + idx * 100}
-              >
-                <TestimonialMessagecard
-                  testimonial={testimonial}
-                  key={testimonial.id || idx}
-                />
-              </div>
-            ))}
-          </Marquee>
+          <VideoTestimonialSwiper data={video_message} />
+          <TextTestimonialSwiper data={messageTesti} />
         </div>
       </div>
     </div>
