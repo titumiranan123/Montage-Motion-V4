@@ -15,14 +15,14 @@ const Locationsection = () => {
       <div
         data-aos="fade-up"
         data-aos-delay={400}
-        className="max-w-[1055px] w-full px-2 max-h-[758px] h-full mt-10  mx-auto flex flex-col-reverse justify-center items-center relative gap-2"
+        className="max-w-263.75 w-full px-2 max-h-189.5 h-full mt-10  mx-auto flex flex-col-reverse justify-center items-center relative gap-2"
       >
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d868.4200193609572!2d90.3718197197554!3d23.83628515594626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c10077d8354d%3A0x6baa8b9e6aa72e89!2sMontage%20Motion%20Ltd.!5e1!3m2!1sen!2sus!4v1766743405766!5m2!1sen!2sus"
           width="1055"
           height="578"
           loading="lazy"
-          className="rounded-lg md:w-[1055px] lg:mt-0 mt-10 md:h-[578px] w-full h-full px-2"
+          className="rounded-lg md:w-263.75 lg:mt-0 mt-10 md:h-144.5 w-full h-full px-2"
         ></iframe>
         <div
           data-aos="fade-right"
@@ -31,7 +31,7 @@ const Locationsection = () => {
         >
           <Gradientcard
             isHover={false}
-            className="max-w-[440px] max-h-[217px] w-full h-full rounded-3xl md:py-6 py-5 md:px-5 px-5 "
+            className="max-w-110 max-h-54.25 w-full h-full rounded-3xl md:py-6 py-5 md:px-5 px-5 "
             borderClassName="max-w-[440px]   max-h-[219px] w-full h-full p-[1px] rounded-[24px] "
           >
             <h2 className="text-[20px] text-(--text-primary) font-semibold poppins md:text-[24px]">
@@ -41,7 +41,7 @@ const Locationsection = () => {
               House #12, Road #3, Mirpur DOHS, Dhaka, Bangladesh.
             </p>
             <a
-              href="https://wa.me/8801786-546949?text=Hi%20Montage%20Motion!%20I%20need%20guidance%20to%20reach%20your%20location."
+              href="https://wa.me/+8801786546949?text=Hi%20Montage%20Motion!%20I%20need%20guidance%20to%20reach%20your%20location."
               target="_blank"
               rel="noopener noreferrer"
               className="text-[14px] font-semibold opensans md:text-[16px] text-(--text-primary) mt-5 md:mt-8 flex items-center cursor-pointer hover:text-[#2B6AB2] transition translate-all duration-300 ease-in-out hover:scale-105"

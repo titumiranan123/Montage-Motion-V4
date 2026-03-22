@@ -33,7 +33,7 @@ const ContactSection = () => {
               title: "Call Us",
               value: "+8801786546949",
               icon: "/assets/icon/whatsapp.png",
-              href: "tel:++8801786546949",
+              href: "tel:+8801786546949",
             },
             {
               title: "Work at Montage Motion",
@@ -50,7 +50,7 @@ const ContactSection = () => {
           ].map((item, idx) => (
             <Link
               href={`${item?.href}`}
-              className="w-full "
+              className="w-full  cursor-pointer"
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}

@@ -10,11 +10,11 @@ export async function generateMetadata() {
 const ContactPage = async () => {
   return (
     <div className="mt-2">
-      <div className="headerbg pb-[60px] pt-40 rounded-[40px] max-w-[1440px] px-2 xl:px-[60px]  mx-auto">
+      <div className="headerbg pb-15 pt-40 rounded-[40px] max-w-360 px-2 xl:px-15  mx-auto">
         <FirstSection />
       </div>
       <Locationsection />
-      <div className="candly sectionGap py-[60px] container  rounded-[40px] ">
+      <div className="candly sectionGap py-15 container  rounded-[40px] ">
         <style>
           {`
             .candly{
