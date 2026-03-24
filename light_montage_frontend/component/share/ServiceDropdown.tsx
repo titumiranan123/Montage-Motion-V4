@@ -80,9 +80,9 @@ const ServiceDropdown = () => {
             iconColor="text-primary-40"
             links={[
               { href: "/thumbnail-design-services", label: "Graphics Design" },
-              { href: "/thumbnail-design-services", label: "Logo Design" },
-              { href: "/thumbnail-design-services", label: "Branding" },
-              { href: "/thumbnail-design-services", label: "UI/UX" },
+              // { href: "/thumbnail-design-services", label: "Logo Design" },
+              // { href: "/thumbnail-design-services", label: "Branding" },
+              // { href: "/thumbnail-design-services", label: "UI/UX" },
             ]}
             borderNone={true}
           />
@@ -129,7 +129,7 @@ const ServiceColumn: React.FC<ServiceColumnProps> = ({
 
       <div className="h-px bg-(--text-primary)/20 my-3" />
 
-      <ul className="space-y-4 py-8 px-6">
+      <ul className="space-y-4 pt-3 pb-8 px-6">
         {links.map((link, index) => (
           <li key={index}>
             <Link

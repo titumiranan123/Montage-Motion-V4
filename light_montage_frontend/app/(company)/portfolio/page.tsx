@@ -3,7 +3,6 @@ import Portfoliotab from "./Portfoliotab";
 import { getPageSEO } from "@/component/share/getPageSEO";
 import Image from "next/image";
 import ContactSection from "@/component/share/ContactSection";
-import { Heading } from "@/component/share/Headering";
 import { getData } from "@/utils/getData";
 import VideoPlayer from "@/component/home/VideoPlayer";
 import CalendlyContact from "../contact-us/CalendlyContact";
@@ -25,13 +24,35 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
     <div className=" mt-4">
       <div className="portfoliobg sectionarea min-h-screen rounded-[42px]">
         <div className="pt-40"></div>
-        <Heading
-          subtitle="Turning raw footage and ideas into content that captures attention."
-          title="Creativity That Converts"
-          tag="Our Portfolio"
-          width="160"
-        />
 
+        <div
+          className={`flex flex-col gap-1 justify-center items-center max-w-4xl w-full mx-auto `}
+        >
+          <p
+            data-aos="fade-up"
+            data-aos-delay={200}
+            style={{ maxWidth: `160px` }}
+            className={`  max-w-59.5 w-full h-11.5 flex justify-center items-center rounded-3xl text-[16px] leading-[140%]  font-normal  poppins glass-card text-(--text-primary) `}
+          >
+            Our Portfolio
+          </p>
+
+          <h1
+            data-aos="fade-up"
+            data-aos-delay={300}
+            className="text-[36px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins"
+          >
+            Creativity That Converts
+          </h1>
+
+          <p
+            data-aos="fade-up"
+            data-aos-delay={400}
+            className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-8/9 mx-auto "
+          >
+            Turning raw footage and ideas into content that captures attention.
+          </p>
+        </div>
         <Portfoliotab
           tab={matchedCategory?.service_type}
           types={category?.data}

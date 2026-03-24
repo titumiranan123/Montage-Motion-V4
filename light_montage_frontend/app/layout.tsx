@@ -22,6 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="google-site-verification"
+          content="j1gOxbt6mmWofWDDIxmXhGqMLyezqvQ4UILFuesc2K4"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistDMSans?.variable}  overflow-x-hidden `}
       >

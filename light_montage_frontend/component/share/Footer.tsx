@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import CustomLink from "./CustomLink";
+// import CustomLink from "./CustomLink";
 
 const Footer: React.FC = () => {
   return (
@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="justify-between py-5 px-9 rounded-[12px] max-w-3xl ms-auto w-full lg:flex hidden border border-white   bg-white/40  glassShadow ">
+        {/* <div className="justify-between  py-5 px-9 rounded-[12px] max-w-3xl ms-auto w-full lg:flex hidden border border-white   bg-white/40  glassShadow ">
           <CustomLink
             className="  text-(--text-primary) "
             href="/"
@@ -135,7 +135,7 @@ const Footer: React.FC = () => {
           <CustomLink className="" href="/blog" title="Blogs" />
           <CustomLink className="" href="/about-us" title="About" />
           <CustomLink className="" href="/contact-us" title="Contact" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ interface Props {
 
 export const Videoplayer: React.FC<Props> = ({ video_link, thumbnail }) => {
   return (
-    <div className="relative lg:max-w-[1143px] mx-auto lg:h-[643px] rounded-[31px] w-full h-full aspect-video bg-black overhidden  mt-7 lg:mt-16">
+    <div className="relative lg:max-w-285.75 mx-auto lg:h-160.75 rounded-[31px] w-full h-full aspect-video bg-black overhidden  mt-7 lg:mt-16">
       <ReactPlayer
         src={video_link}
         playing={true}
@@ -33,7 +33,7 @@ export const Videoplayer: React.FC<Props> = ({ video_link, thumbnail }) => {
 
       {/* Fallback for when JS is disabled */}
       <noscript>
-        <div className="relative lg:w-[794px] mx-auto lg:h-[444px] w-full h-full aspect-video bg-slate-500 overhidden rounded-[39px] mt-7 lg:mt-16 flex justify-center items-center animate-pulse duration-100">
+        <div className="relative lg:w-198.5 mx-auto lg:h-111 w-full h-full aspect-video bg-slate-500 overhidden rounded-[39px] mt-7 lg:mt-16 flex justify-center items-center animate-pulse duration-100">
           <Image
             src="/assets/playbutton.png"
             width={80}

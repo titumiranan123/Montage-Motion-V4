@@ -5,20 +5,20 @@ import React from "react";
 const CareersHeader = () => {
   return (
     <div className="relative sectionarea rounded-xl md:rounded-[40px]   overflow-hidden lg:h-screen pt-14">
-      <div className="bg-[#1FB5DD] w-[600px] h-[600px] absolute xl:-top-[5px] xl:-right-[427px] -top-[215px] -right-[580px] blur-[70px] xl:blur-[205px]  "></div>
-      <div className="bg-[#1FB5DD] w-[600px] h-[600px] absolute xl:-top-[5px] xl:-left-[427px] -top-[215px] -left-[580px] xl:blur-[185px] blur-[70px] "></div>
+      <div className="bg-[#1FB5DD] w-150 h-150 absolute xl:-top-1.25 xl:-right-106.75 -top-53.75 -right-145 blur-[70px] xl:blur-[205px]  "></div>
+      <div className="bg-[#1FB5DD] w-150 h-150 absolute xl:-top-1.25 xl:-left-106.75 -top-53.75 -left-145 xl:blur-[185px] blur-[70px] "></div>
       <div
         style={{ zIndex: 50 }}
-        className="flex justify-center items-center flex-col  max-w-[620px] w-full mx-auto lg:min-h-[70vh] lg:mt-14 mt-20 lg:px-0 px-4"
+        className="flex justify-center items-center flex-col  max-w-155 w-full mx-auto lg:min-h-[70vh] lg:mt-14 mt-20 lg:px-0 px-4"
       >
         <TurstedBy isCenter={true} />
-        <h2
+        <h1
           data-aos="fade-up"
           data-aos-delay={100}
-          className="text-(--text-primary) poppins text-[42px] md:text-[64px] font-medium lg:text-[64px] text-center lg:leading-[81px]"
+          className="text-(--text-primary) poppins text-[42px] md:text-[64px] font-medium lg:text-[64px] text-center lg:leading-20.25"
         >
           Your Creativity, Our Platform
-        </h2>
+        </h1>
         <p
           data-aos="fade-up"
           data-aos-delay={200}
@@ -33,7 +33,7 @@ const CareersHeader = () => {
           data-aos="fade-up"
           data-aos-delay={300}
           type="submit"
-          className="md:w-[255px] w-[220px]  h-12 btn-color text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium lg:mt-10 mt-8"
+          className="md:w-63.75 w-55  h-12 btn-color text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium lg:mt-10 mt-8"
         >
           See Open Positions
         </a>

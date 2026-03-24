@@ -32,7 +32,7 @@ const Brand = () => {
         // style={{ boxShadow: "0px 4px 60px 0px #1FB5DD29 inset" }}
         data-aos="fade-up"
         data-aos-delay="400"
-        className=" mx-auto h-[86px]  overflow-hidden mt-10 md:mt-16"
+        className=" mx-auto h-21.5  overflow-hidden mt-10 md:mt-16"
         // className=" mx-auto hidden sm:block h-[86px] rounded-[17.45px] border bg-[#080B0C] border-[#0A303A] overflow-hidden mt-10 md:mt-16"
       >
         <div className=" w-full h-full flex items-center">
@@ -43,7 +43,7 @@ const Brand = () => {
             speed={50}
           >
             {duplicatedImages.map((img, idx) => (
-              <div key={idx} className="relative h-10 w-[120px]">
+              <div key={idx} className="relative h-10 w-30">
                 <Image
                   src={img.src}
                   alt={img.alt}
