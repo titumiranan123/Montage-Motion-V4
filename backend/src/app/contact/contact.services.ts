@@ -4,6 +4,7 @@ import { db } from "../../db/db";
 import ApiError from "../../utils/ApiError";
 
 import { IContact } from "./contact.interface";
+import { sendEmailToAdmin } from "./utils";
 // import { sendEmailToAdmin } from "./utils";
 
 export const contactService = {
@@ -15,7 +16,7 @@ export const contactService = {
       const query = `INSERT INTO contacts (name, email, message,interestIn) VALUES ($1, $2, $3,$4) RETURNING *`;
       const values = [data.name, data.email, data.message, data.interestIn];
       const res = await db.query(query, values);
-      // await sendEmailToAdmin(data);
+      await sendEmailToAdmin(data);
       return res.rows;
     } catch (error: any) {
       throw new ApiError(400, "FAILED", error.message);
@@ -23,7 +24,7 @@ export const contactService = {
   },
   async getAllContact() {
     const res = await db.query(
-      `SELECT * FROM contacts ORDER BY created_at DESC;`
+      `SELECT * FROM contacts ORDER BY created_at DESC;`,
     );
     return res.rows || null;
   },
@@ -31,7 +32,7 @@ export const contactService = {
   async deleteContactById(id: string) {
     const isExist = await db.query(
       `SELECT 1 FROM contacts WHERE id = $1 Limit 1;`,
-      [id]
+      [id],
     );
     if (isExist.rowCount === 0) {
       throw new ApiError(400, "FAILED", "Contact not found !");

@@ -34,22 +34,34 @@ export const seoMetaService = {
         data.twitter_card_type,
         data.meta_robots,
         data.schema,
-      ]
+      ],
     );
 
     return result.rows[0];
   },
-
+  async getSchema(page: string) {
+    // const schemas = await db.query(
+    //   `SELECT schema FROM page_seo WHERE page_name = $1 LIMIT 1`,
+    //   [page],
+    // );
+    // console.log(schemas);
+    const schema = await db.query(
+      `SELECT schema FROM page_seo WHERE page_name = $1 LIMIT 1`,
+      [page],
+    );
+    return schema.rows[0];
+  },
   async getSeoMetaByPage(pageName: string) {
     try {
+      // for og image
       const workResult = await db.query(
         `SELECT thumbnail FROM works WHERE type = $1 LIMIT 1 `,
-        ["main"]
+        ["main"],
       );
       // console.log(workResult.rows[0]);
       const result = await db.query(
         `SELECT * FROM page_seo WHERE page_name = $1 LIMIT 1`,
-        [pageName]
+        [pageName],
       );
       const mergeData = {
         ...result.rows[0],
@@ -70,7 +82,7 @@ export const seoMetaService = {
   async deleteSeoMetaByPage(pageName: string) {
     const result = await db.query(
       `DELETE FROM page_seo WHERE page_name = $1 RETURNING *`,
-      [pageName]
+      [pageName],
     );
     return result.rows[0] || null;
   },

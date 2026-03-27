@@ -36,8 +36,9 @@ export const processService = {
       if (data.process_steps?.length) {
         for (const step of data.process_steps) {
           await db.query(
-            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden,order_index)
-             VALUES ($1, $2, $3, $4, $5, $6,$7)`,
+            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden,order_index,image, 
+            icon_alt)
+             VALUES ($1, $2, $3, $4, $5, $6,$7,$8,$9)`,
             [
               process.id,
               step.icon,
@@ -46,6 +47,8 @@ export const processService = {
               step.description,
               step.isHiden ?? false,
               step.order_index,
+              step.image,
+              step.icon_alt,
             ],
           );
         }
@@ -88,8 +91,9 @@ export const processService = {
 
         for (const step of data.process_steps) {
           await db.query(
-            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden,order_index)
-             VALUES ($1, $2, $3, $4, $5, $6,$7)`,
+            `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden,order_index,image, 
+            icon_alt)
+             VALUES ($1, $2, $3, $4, $5, $6,$7,$8,$9)`,
             [
               process.id,
               step.icon,
@@ -98,6 +102,8 @@ export const processService = {
               step.description,
               step.isHiden ?? false,
               step.order_index,
+              step.image,
+              step.icon_alt,
             ],
           );
         }
@@ -186,8 +192,9 @@ export const processService = {
       await db.query(`DELETE FROM process_steps WHERE process_id = $1`, [id]);
       for (const step of data.process_steps) {
         await db.query(
-          `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden)
-           VALUES ($1, $2, $3, $4, $5, $6)`,
+          `INSERT INTO process_steps (process_id, icon, alt, title, description, isHiden,image, 
+          icon_alt)
+           VALUES ($1, $2, $3, $4, $5, $6,$7,$8)`,
           [
             id,
             step.icon,
@@ -195,6 +202,8 @@ export const processService = {
             step.title,
             step.description,
             step.isHiden ?? false,
+            step.image,
+            step.icon_alt,
           ],
         );
       }

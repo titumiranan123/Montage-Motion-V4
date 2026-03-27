@@ -6,6 +6,7 @@ import { faqService } from "../faq/faq.services";
 import { homeService } from "../homeservice/homeservice.service";
 import { industryTabsService } from "../industry/industry.services";
 import { pricingPageService } from "../pricing/pricing.service";
+import { seoMetaService } from "../seo/seo.service";
 // import { seoMetaService } from "../seo/seo.service";
 import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
 import { processService } from "../working_process/process.service";
@@ -44,7 +45,7 @@ export const homeapiServices = {
       query += ` GROUP BY ph.id ORDER BY ph.created_at DESC`;
 
       const result = await db.query(query, values);
-      // const seo = await seoMetaService.getSeoMetaByPage(type);
+      const seo = await seoMetaService.getSchema(type);
       const worksService = await client.query(
         `SELECT tag,heading_part1,paragraph FROM work_header WHERE type = $1 `,
         [type],
@@ -157,6 +158,7 @@ export const homeapiServices = {
       await client.query("COMMIT");
       // console.log("pricing", pricing);
       return {
+        schema: seo?.schema,
         header: result?.rows[0] || null,
         works: worksService.rows?.[0] || [],
         testimonial: testimonialService?.rows || [],
@@ -188,7 +190,7 @@ export const homeapiServices = {
     }
     try {
       await client.query("BEGIN");
-      const itemsRes = await db.query(
+      const itemsRes = await client.query(
         `SELECT id, service_type FROM home_services WHERE href = $1 `,
         [href],
       );
@@ -197,8 +199,10 @@ export const homeapiServices = {
         [itemsRes?.rows[0]?.id, true],
       );
       const availableSections = sectionsRes.rows.map((s) => s.section_name);
-      // console.log("availableSections", itemsRes?.rows);
 
+      const seo = await seoMetaService.getSchema(
+        itemsRes?.rows[0]?.service_type,
+      );
       // header
       const sectionsData: any = {};
 
@@ -214,7 +218,7 @@ export const homeapiServices = {
 
       await client.query("COMMIT");
       // console.log("pricing", pricing);
-      return sectionsData;
+      return { ...sectionsData, schema: seo === " " ? null : seo.schema };
     } catch (error) {
       await client.query("ROLLBACK");
       errorLogger.error(error);

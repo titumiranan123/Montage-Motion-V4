@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
+
 import { errorLogger } from "../../logger/logger";
 
 const checkSectionExists = async (id: string) => {
@@ -15,50 +16,56 @@ export const industryTabsService = {
     const client = await db.connect();
     try {
       await client.query("BEGIN");
-
-      // create section
-      const sectionRes = await client.query(
-        `INSERT INTO industry_section (page, tag, heading_title, paragraph)
-         VALUES ($1,$2,$3,$4) RETURNING id`,
-        [
-          data.page,
-          data.tag,
-          data.heading_title ?? null,
-          data.paragraph ?? null,
-        ],
+      const existingSection = await client.query(
+        `SELECT id FROM industry_section WHERE page = $1 LIMIT 1`,
+        [data.page],
       );
 
-      const sectionId = sectionRes.rows[0].id;
-
-      // create tabs
-      for (const tab of data.tabs) {
-        const tabRes = await client.query(
-          `INSERT INTO industry_tabs 
-            (section_id, tab_key, title, description, image, cta_label, cta_link, position)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id`,
+      if (existingSection) {
+        this.updateSection(data.section_id, data);
+      } else {
+        // create section
+        const sectionRes = await client.query(
+          `INSERT INTO industry_section (page, tag, heading_title, paragraph)
+           VALUES ($1,$2,$3,$4) RETURNING id`,
           [
-            sectionId,
-            tab.tab_key,
-            tab.title,
-            tab.description,
-            tab.image,
-            tab.cta.label,
-            tab.cta.link,
-            tab.position,
+            data.page,
+            data.tag,
+            data.heading_title ?? null,
+            data.paragraph ?? null,
           ],
         );
+        const sectionId = sectionRes.rows[0].id;
 
-        const tabId = tabRes.rows[0].id;
-
-        for (const point of tab.offer_points) {
-          await client.query(
-            `INSERT INTO industry_tab_points (tab_id, point, position)
-             VALUES ($1,$2,$3)`,
-            [tabId, point.text, point.position],
+        // create tabs
+        for (const tab of data.tabs) {
+          const tabRes = await client.query(
+            `INSERT INTO industry_tabs 
+            (section_id, tab_key, title, description, image, cta_label, cta_link, position)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id`,
+            [
+              sectionId,
+              tab.tab_key,
+              tab.title,
+              tab.description,
+              tab.image,
+              tab.cta.label,
+              tab.cta.link,
+              tab.position,
+            ],
           );
+
+          const tabId = tabRes.rows[0].id;
+
+          for (const point of tab.offer_points) {
+            await client.query(
+              `INSERT INTO industry_tab_points (tab_id, point, position)
+             VALUES ($1,$2,$3)`,
+              [tabId, point.text, point.position],
+            );
+          }
         }
       }
-
       await client.query("COMMIT");
       return { message: "Section created successfully" };
     } catch (err) {
@@ -69,7 +76,102 @@ export const industryTabsService = {
       client.release();
     }
   },
+  /** Update Section + optional Tabs */
+  async updateSection(sectionId: string, data: any) {
+    await checkSectionExists(sectionId);
+    const client = await db.connect();
 
+    try {
+      await client.query("BEGIN");
+
+      await client.query(
+        `UPDATE industry_section SET
+        heading_title = COALESCE($1, heading_title),
+        paragraph = COALESCE($2, paragraph)
+       WHERE id = $3`,
+        [data.heading_title, data.paragraph, sectionId],
+      );
+
+      if (data.tabs) {
+        for (const tab of data.tabs) {
+          // check if tab exists
+          const tabRes = await client.query(
+            `SELECT id FROM industry_tabs WHERE section_id = $1 AND tab_key = $2`,
+            [sectionId, tab.tab_key],
+          );
+
+          let tabId: string;
+
+          if (tabRes?.rowCount && tabRes?.rowCount > 0) {
+            // update existing tab
+            tabId = tabRes.rows[0].id;
+            await client.query(
+              `UPDATE industry_tabs SET
+              title = $1,
+              description = $2,
+              image = $3,
+              cta_label = $4,
+              cta_link = $5,
+              position = $6,
+              updated_at = NOW()
+             WHERE id = $7`,
+              [
+                tab.title,
+                tab.description,
+                tab.image,
+                tab.cta.label,
+                tab.cta.link,
+                tab.position,
+                tabId,
+              ],
+            );
+
+            // delete old points
+            await client.query(
+              `DELETE FROM industry_tab_points WHERE tab_id = $1`,
+              [tabId],
+            );
+          } else {
+            // create new tab
+            const newTabRes = await client.query(
+              `INSERT INTO industry_tabs
+              (section_id, tab_key, title, description, image, cta_label, cta_link, position)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+             RETURNING id`,
+              [
+                sectionId,
+                tab.tab_key,
+                tab.title,
+                tab.description,
+                tab.image,
+                tab.cta.label,
+                tab.cta.link,
+                tab.position,
+              ],
+            );
+            tabId = newTabRes.rows[0].id;
+          }
+
+          // insert points
+          for (const point of tab.offer_points) {
+            await client.query(
+              `INSERT INTO industry_tab_points (tab_id, point, position) VALUES ($1,$2,$3)`,
+              [tabId, point.text, point.position],
+            );
+          }
+        }
+      }
+
+      await client.query("COMMIT");
+      return { message: "Section updated successfully" };
+    } catch (err) {
+      await client.query("ROLLBACK");
+      errorLogger.error(err);
+      throw new Error("Failed to update section");
+    } finally {
+      client.release();
+    }
+  },
   /** Get Sections with Tabs and Points */
   async getSections(page?: string) {
     const values: any[] = [];
@@ -158,102 +260,6 @@ export const industryTabsService = {
       paragraph: section.paragraph,
       tabs: tabMap.get(section.id) ?? [],
     }));
-  },
-  /** Update Section + optional Tabs */
-  async updateSection(sectionId: string, data: any) {
-    await checkSectionExists(sectionId);
-    const client = await db.connect();
-
-    try {
-      await client.query("BEGIN");
-
-      await client.query(
-        `UPDATE industry_section SET
-          heading_title = COALESCE($1, heading_title),
-          paragraph = COALESCE($2, paragraph)
-         WHERE id = $3`,
-        [data.heading_title, data.paragraph, sectionId],
-      );
-
-      if (data.tabs) {
-        for (const tab of data.tabs) {
-          // check if tab exists
-          const tabRes = await client.query(
-            `SELECT id FROM industry_tabs WHERE section_id = $1 AND tab_key = $2`,
-            [sectionId, tab.tab_key],
-          );
-
-          let tabId: string;
-
-          if (tabRes?.rowCount && tabRes?.rowCount > 0) {
-            // update existing tab
-            tabId = tabRes.rows[0].id;
-            await client.query(
-              `UPDATE industry_tabs SET
-                title = $1,
-                description = $2,
-                image = $3,
-                cta_label = $4,
-                cta_link = $5,
-                position = $6,
-                updated_at = NOW()
-               WHERE id = $7`,
-              [
-                tab.title,
-                tab.description,
-                tab.image,
-                tab.cta.label,
-                tab.cta.link,
-                tab.position,
-                tabId,
-              ],
-            );
-
-            // delete old points
-            await client.query(
-              `DELETE FROM industry_tab_points WHERE tab_id = $1`,
-              [tabId],
-            );
-          } else {
-            // create new tab
-            const newTabRes = await client.query(
-              `INSERT INTO industry_tabs
-                (section_id, tab_key, title, description, image, cta_label, cta_link, position)
-               VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
-               RETURNING id`,
-              [
-                sectionId,
-                tab.tab_key,
-                tab.title,
-                tab.description,
-                tab.image,
-                tab.cta.label,
-                tab.cta.link,
-                tab.position,
-              ],
-            );
-            tabId = newTabRes.rows[0].id;
-          }
-
-          // insert points
-          for (const point of tab.offer_points) {
-            await client.query(
-              `INSERT INTO industry_tab_points (tab_id, point, position) VALUES ($1,$2,$3)`,
-              [tabId, point.text, point.position],
-            );
-          }
-        }
-      }
-
-      await client.query("COMMIT");
-      return { message: "Section updated successfully" };
-    } catch (err) {
-      await client.query("ROLLBACK");
-      errorLogger.error(err);
-      throw new Error("Failed to update section");
-    } finally {
-      client.release();
-    }
   },
 
   /** Delete section (cascade deletes tabs and points) */

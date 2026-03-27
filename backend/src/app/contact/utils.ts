@@ -1,18 +1,20 @@
 import nodemailer from "nodemailer";
 import { IContact } from "./contact.interface";
+import config from "../../config";
 export async function sendEmailToAdmin(contact: IContact) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "titumiranan.gtc@gmail.com",
-      pass: "lmke ziod tysh bcgo",
+      user: config.app_gmail,
+      pass: config.app_password,
     },
   });
 
   const mailOptions = {
-    from: `"From Portfolio" <${contact.email}>`, // যিনি পাঠাচ্ছেন
-    to: "titumiranan.gtc@gmail.com", // Admin এর ইমেইল
-    subject: "📩 New Contact Form Submission",
+    from: `"From Portfolio" <${contact.email}>`,
+    to: `${config.app_gmail}`,
+    replyTo: contact.email,
+    subject: " New Contact Form Submission",
     html: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px; padding: 20px; background-color: #f9f9f9;">
       <h2 style="color: #333; text-align: center;">📬 New Contact Message Received</h2>

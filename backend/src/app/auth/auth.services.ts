@@ -60,8 +60,11 @@ export const authService = {
 
       await client.query("COMMIT");
 
-      await sendVerificationEmail({ name, email, code: verificationToken });
-
+      try {
+        await sendVerificationEmail({ name, email, code: verificationToken });
+      } catch (mailError) {
+        errorLogger.error("Email failed but user created:", mailError);
+      }
       return userResult.rows[0];
     } catch (error: any) {
       await client.query("ROLLBACK");

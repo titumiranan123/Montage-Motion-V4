@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import config from "../config";
 
 export const sendVerificationEmail = async (data: {
   email: string;
@@ -7,14 +8,15 @@ export const sendVerificationEmail = async (data: {
 }) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
+
     auth: {
-      user: "titumiranan.gtc@gmail.com",
-      pass: "lmke ziod tysh bcgo",
+      user: config.app_gmail,
+      pass: config.app_password,
     },
   });
 
   const mailOptions = {
-    from: `"Your Portfolio" <titumiranan.gtc@gmail.com>`,
+    from: `"Verification Code " <imonofficial2@gmail.com>`,
     to: data.email,
     subject: "Email Verification Code",
     html: `

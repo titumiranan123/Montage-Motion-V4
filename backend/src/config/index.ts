@@ -15,4 +15,6 @@ export default {
   db_user: process.env.DB_USER,
   db_password: process.env.DB_PASSWORD,
   db_name: process.env.DB_NAME,
+  app_password: process.env.APP_PASS,
+  app_gmail: process.env.APP_GMAIL,
 };

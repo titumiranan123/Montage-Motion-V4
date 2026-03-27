@@ -3,6 +3,8 @@ export interface ProcessStep {
   title: string;
   description: string;
   isHiden: boolean;
+  image: string;
+  icon_alt: string;
   alt: string;
   order_index: number;
 }

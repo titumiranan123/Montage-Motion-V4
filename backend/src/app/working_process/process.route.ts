@@ -7,13 +7,14 @@ import {
   updateProcess,
   deleteProcess,
 } from "./process.controller";
+import auth from "../../midleware/authMidleware";
 
 const workingProcess = Router();
 
-workingProcess.post("/", createProcess);
+workingProcess.post("/", auth("ADMIN", "MODARATOR"), createProcess);
 workingProcess.get("/", getAllProcesses);
 workingProcess.get("/:id", getProcessById);
-workingProcess.put("/:id", updateProcess);
-workingProcess.delete("/:id", deleteProcess);
+workingProcess.put("/:id", auth("ADMIN", "MODARATOR"), updateProcess);
+workingProcess.delete("/:id", auth("ADMIN", "MODARATOR"), deleteProcess);
 
 export default workingProcess;
