@@ -6,13 +6,13 @@ import Link from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ShortsHeader = ({ data }: { data: any }) => {
   return (
-    <div className="flex lg:flex-row flex-col-reverse lg:justify-between items-center  rounded-[40px] sectionarea   overflow-hidden relative lg:h-[704px] h-full lg:gap-24 gap-4 ">
+    <div className="flex lg:flex-row flex-col-reverse lg:justify-between items-center  rounded-[40px] sectionarea   overflow-hidden relative lg:h-176 h-full lg:gap-24 gap-4 ">
       <div className="flex z-20 justify-center items-start  flex-col   w-full lg:mt-18 mt-10 ">
         <TurstedBy />
         <h1
           data-aos="fade-up"
           data-aos-delay={200}
-          className="lg:text-[62px] lg:leading-[72px] text-[40px] leading-14 font-medium text-(--text-primary) poppins md:text-left  lg:mt-4 mt-3"
+          className="lg:text-[62px] lg:leading-18 text-[42px] leading-14 font-medium text-(--text-primary) poppins md:text-left  lg:mt-4 mt-3"
         >
           {data?.page_title}
         </h1>
@@ -31,20 +31,20 @@ const ShortsHeader = ({ data }: { data: any }) => {
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
+            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Start a project
           </Link>
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
+            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
           >
             Book a Call
           </Link>
         </div>
       </div>
-      <div className=" mt-32 relative md:h-[600px]">
+      <div className=" mt-32 relative md:h-150">
         <VerticalMarqueeSlider data={data?.media} type={data?.type} />
         {/* Top Fade (White) */}
         <div className="absolute bg-linear-to-b from-white to-transparent h-40 sm:-left-10 left-0 -top-2 w-full sm:w-screen   pointer-events-none "></div>

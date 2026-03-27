@@ -12,7 +12,7 @@ const PodacstHeader = ({ data }: { data: any }) => {
         <h1
           data-aos="fade-up"
           data-aos-delay={300}
-          className="poppins lg:leading-20.25 font-medium lg:text-[64px] text-[48px] leading-14  text-center text-(--text-primary) mt-4 mb-6"
+          className="poppins lg:leading-20.25 font-medium lg:text-[64px] text-[42px] leading-14  text-center text-(--text-primary) mt-4 mb-6"
         >
           {data?.page_title}
         </h1>

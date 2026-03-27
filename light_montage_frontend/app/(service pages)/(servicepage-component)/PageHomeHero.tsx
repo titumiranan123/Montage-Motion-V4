@@ -10,7 +10,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
   return (
     <div className="flex headerbg   flex-col justify-center items-center relative   lg:pt-56 pt-48  lg:gap-4 gap-4 sectionarea rounded-[40px]  ">
       {/* header content left side */}
-      <div className="flex z-20 justify-center items-center  flex-col   max-w-[1100px] mx-auto">
+      <div className="flex z-20 justify-center items-center  flex-col   max-w-275 mx-auto">
         <div
           data-aos="fade-up"
           data-aos-delay="100"
@@ -21,7 +21,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
         <h1
           data-aos="fade-up"
           data-aos-delay={200}
-          className="lg:text-[70px]  text-[30px] leading-[111%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
+          className="lg:text-[70px]  text-[42px] leading-[111%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
         >
           {data?.page_title}
         </h1>
@@ -40,14 +40,14 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
+            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Start a project
           </Link>
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-[155px] w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
+            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
           >
             Book a Call
           </Link>

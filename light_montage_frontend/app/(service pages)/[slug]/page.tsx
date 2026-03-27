@@ -35,8 +35,26 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
+
+  // console.log("scham ====================>", data?.data?.process);
+
+  const safeSchema =
+    data?.data?.schema ??
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "MontageMotion",
+    });
+
+  // console.log("safeSchema =============>", safeSchema);
   return (
     <div className="lg:min-h-screen text-black mt-4 ">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: safeSchema,
+        }}
+      />
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
       {data?.data?.home_hero && <PageHomeHero data={data?.data?.home_hero} />}
       {data?.data?.podcast_hero && (

@@ -18,9 +18,25 @@ const HomePage = async () => {
   const { data } = await getData({
     url: `api/website/data?type=home&table=brand,services,process,whychooseus,industries,comparision,faq`,
   });
+  console.log("scham ====================>", data);
   const categoryRes = await getData({ url: "api/website/service/type" });
   return (
     <div className="lg:mt-4 w-full mx-auto">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html:
+            data?.schema ??
+            JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: "MontageMotion",
+              url: "https://montagemotion.com",
+              description:
+                "Full-service video editing agency helping creators and brands grow with Shorts, Reels, podcasts, and high-converting content.",
+            }),
+        }}
+      />
       <div className="headerbg lg:rounded-[40px] rounded-lg sectionarea mb-10 min-h-screen">
         <Header data={data?.header ?? []} />
       </div>

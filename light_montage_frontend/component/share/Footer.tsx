@@ -6,14 +6,14 @@ import React from "react";
 const Footer: React.FC = () => {
   return (
     <div className="bg">
-      <div className="container lg:pb-26 sectionGap">
+      <div className="container lg:pb-10 sectionGap">
         <style>{`
       .bg{
         background:   linear-gradient(179.93deg, #FFFFFF 0.07%, #CCF4FF 99.96%);
       }
       `}</style>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9  text-(--text-primary)  lg:mt-12 mt-9 md:gap-10 gap-8 md:mb-8 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9  text-(--text-primary)  lg:mt-12 mt-9 md:gap-10 gap-8 ">
           <div className="col-span-3 max-w-100.5">
             <Link
               href={"/"}
