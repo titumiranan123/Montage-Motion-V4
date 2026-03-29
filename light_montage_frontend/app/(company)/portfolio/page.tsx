@@ -10,18 +10,35 @@ export async function generateMetadata() {
   return await getPageSEO("portfolio");
 }
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
-  const category = await getData({ url: "api/website/service/type" });
   const { cat } = await searchParams;
-  const matchedCategory = category?.data?.find(
+  const [categoryRes, seoRes] = await Promise.all([
+    getData({ url: "api/website/service/type" }),
+    getData({ url: "api/seo/portfolio" }),
+  ]);
+
+  const matchedCategory = categoryRes?.data?.find(
     (item: any) => item.service_type === cat || item.href === cat,
   );
 
+  const safeSchema =
+    seoRes?.data?.schema ??
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "MontageMotion",
+    });
   const data = await getData({
     url: `api/works/website?type=${cat && cat !== "all" ? matchedCategory?.service_type : "home"}`,
   });
 
   return (
     <div className=" mt-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: safeSchema,
+        }}
+      />
       <div className="portfoliobg sectionarea min-h-screen rounded-[42px]">
         <div className="pt-40"></div>
 
@@ -55,7 +72,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
         </div>
         <Portfoliotab
           tab={matchedCategory?.service_type}
-          types={category?.data}
+          types={categoryRes?.data}
         />
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
           {data?.data?.map((work: any, idx: number) => {

@@ -51,7 +51,7 @@ const JobPost = ({ data }: { data: any }) => {
                         <Image
                           src={"/assets/dollar.png"}
                           alt="dollar"
-                          className="w-[38px] h-16"
+                          className="w-9.5 h-16"
                           width={38}
                           height={64}
                         />
@@ -76,7 +76,7 @@ const JobPost = ({ data }: { data: any }) => {
                   href={`${job?.applylink}`}
                   target="_blank"
                   style={{ boxShadow: "0px 0px 25px 0px #FFFFFF40 inset" }}
-                  className="max-w-[348px] bg-white/40 backdrop-blur-[20px] group-hover:text-white group-hover:bg-[linear-gradient(180deg,#1fb5dd_0%,#2b6ab2_100%)]   w-full  h-12 btn-colors text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium mt-6 transition-colors duration-200 ease-in-out"
+                  className="max-w-87 bg-white/40 backdrop-blur-[20px] group-hover:text-white group-hover:bg-[linear-gradient(180deg,#1fb5dd_0%,#2b6ab2_100%)]   w-full  h-12 btn-colors text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium mt-6 transition-colors duration-200 ease-in-out"
                 >
                   Apply Now
                 </Link>

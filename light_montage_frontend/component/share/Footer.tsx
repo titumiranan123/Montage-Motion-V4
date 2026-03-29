@@ -31,8 +31,8 @@ const Footer: React.FC = () => {
             </Link>
             <p className="text-[16px] leading-[150%] opensans font-normal mt-10">
               Montage Motion delivers documentary and fiction production,
-              editing, animation, design, and influencer marketing that connects
-              your brand with the right audience and drives sales.
+              editing, animation and design that connects your brand with the
+              right audience and drives sales.
             </p>
             <div className="max-w-76.25 hidden lg:mt-10 mt-6 max-h-13  h-full rounded-2xl border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2  items-center justify-around">
               <input

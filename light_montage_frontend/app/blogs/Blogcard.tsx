@@ -18,16 +18,16 @@ const Blogcard = ({
   return (
     <Gradientcard
       isHover={true}
-      className="max-w-[384px] w-full h-[586px] rounded-3xl"
-      borderClassName="max-w-[384px] group hover:scale-[102%] animated w-full h-[588px]  rounded-3xl p-[1.5px]"
+      className="max-w-[384px] w-full h-146.5 rounded-3xl  bg-[#F7F7F7]!"
+      borderClassName="max-w-[384px] group hover:scale-[102%] animated w-full h-[588px]  rounded-3xl p-[1.5px] "
     >
       <Link
         href={`/blogs/${slug}`}
         className=" p-6  overflow-hidden block cursor-pointer"
       >
-        <div className="max-w-[344px] max-h-[276px] w-full h-full overflow-hidden rounded-[13px]">
+        <div className="max-w-86 max-h-69 w-full h-full overflow-hidden rounded-[13px]">
           <Image
-            className="max-w-[336px] w-full h-[276px] rounded-[13px]  object-cover"
+            className="max-w-84 w-full h-69 rounded-[13px]  object-cover"
             src={image}
             alt={title}
             width={336}
@@ -47,14 +47,14 @@ const Blogcard = ({
               })}
             </p>
           </div>
-          <h3 className=" md:text-[24px] md:leading-8 text-[22px] font-semibold leading-[26px] mt-2 poppins line-clamp-2">
+          <h3 className=" md:text-[24px] md:leading-8 text-[22px] font-semibold leading-6.5 mt-2 poppins line-clamp-2">
             {title}
           </h3>
           <p className="text-[14px] md:text-[16px] opensans font-normal mt-2 transform-gpu line-clamp-2">
             {" "}
             {short_description}{" "}
           </p>
-          <p className="text-[16px] font-normal opensans max-w-[200px] bg-[#141B3466] mt-6 md:mt-8 rounded-[36px] py-2 px-3 md:px-4 flex justify-center items-center">
+          <p className="text-[16px] font-normal opensans max-w-50 bg-[#141B3466] mt-6 md:mt-8 rounded-[36px] py-2 px-3 md:px-4 flex justify-center items-center">
             Video Editing TIps
           </p>
         </div>

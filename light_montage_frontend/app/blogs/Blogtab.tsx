@@ -81,7 +81,7 @@ const Blogtab = () => {
       onMouseLeave={handleMouseLeave}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
-      className={`flex mx-auto h-[75px] justify-start lg:justify-start items-center gap-4 pb-2 max-w-[1002px]  rounded-[12px] py-2 px-9 bg-white/40 glassShadow backdrop-blur-md flex-nowrap overflow-x-auto overflow-y-hidden scroll-hide mt-5 ${
+      className={`flex mx-auto h-18.75 justify-start lg:justify-start items-center gap-4 pb-2 max-w-250.5  rounded-[12px] py-2 px-9 bg-[#F7F7F7]! glassShadow backdrop-blur-md flex-nowrap overflow-x-auto overflow-y-hidden scroll-hide mt-5 ${
         isDragging ? "cursor-grabbing" : "cursor-grab"
       }`}
     >
@@ -94,7 +94,7 @@ const Blogtab = () => {
               e.preventDefault();
             }
           }}
-          className={`py-2 px-5 text-center h-[51px] font-normal text-[16px] rounded-[12px] transition-all whitespace-nowrap select-none ${
+          className={`py-2 px-5 text-center h-12.75 font-normal text-[16px] rounded-[12px] transition-all whitespace-nowrap select-none ${
             activeTab === tab.href ? "btn-color text-white " : " text-gray-700 "
           }`}
         >

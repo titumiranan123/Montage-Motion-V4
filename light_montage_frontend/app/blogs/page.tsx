@@ -14,8 +14,23 @@ const Blogs = async ({ searchParams }: { searchParams: any }) => {
     url: `api/website/blog?category=${cat}&search=${search}`,
   });
   const data = result.data;
+  const seoRes = await getData({ url: "api/seo/blog" });
+
+  const safeSchema =
+    seoRes?.data?.schema ??
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "MontageMotion",
+    });
   return (
     <div className="relative  container lg:mt-44 mt-40 min-h-screen header-background pagelogo">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: safeSchema,
+        }}
+      />
       <div
         className={`flex flex-col gap-1 justify-center items-center max-w-4xl w-full mx-auto `}
       >

@@ -1,11 +1,27 @@
 import { getPageSEO } from "@/component/share/getPageSEO";
+import { getData } from "@/utils/getData";
 
 export async function generateMetadata() {
   return await getPageSEO("terms");
 }
-const Termsandconditions = () => {
+const Termsandconditions = async () => {
+  const data = await getData({ url: "api/seo/terms" });
+
+  const safeSchema =
+    data?.data?.schema ??
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "MontageMotion",
+    });
   return (
-    <div className="max-w-[996px] mx-auto px-2 ">
+    <div className="max-w-249 mx-auto px-2 ">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: safeSchema,
+        }}
+      />
       <h2 className="mb-3 text-3xl font-bold capitalize text-(--text-primary) lg:mt-60 mt-40 poppins">
         Terms and Conditions
       </h2>

@@ -18,6 +18,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
         tag={data?.section_tag}
         title={data?.section_title}
         isbackground={true}
+        width="160"
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:mt-20 md:mt-16 mt-8 lg:gap-10">
         <div data-aos="fade-up" className="" data-aos-delay={400}>

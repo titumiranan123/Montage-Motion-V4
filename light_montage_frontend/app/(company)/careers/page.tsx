@@ -9,9 +9,26 @@ export async function generateMetadata() {
   return await getPageSEO("career");
 }
 const Careers = async () => {
-  const data = await getData({ url: `api/jobpost` });
+  const [data, seoRes] = await Promise.all([
+    getData({ url: "api/jobpost" }),
+    getData({ url: "api/seo/career" }),
+  ]);
+
+  const safeSchema =
+    seoRes?.data?.schema ??
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "MontageMotion",
+    });
   return (
     <div className="lg:mt-5 mt-2">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: safeSchema,
+        }}
+      />
       <CareersHeader />
       <OurStory />
       <JobPost data={data?.data ?? []} />

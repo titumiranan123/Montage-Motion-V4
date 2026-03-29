@@ -6,7 +6,7 @@ import PageContactsections from "../(servicepage-component)/PageContactsections"
 import PageProcesssection from "../(servicepage-component)/PageProcesssection";
 import PagePricing from "../(servicepage-component)/PagePricing";
 import PageServicesection from "../(servicepage-component)/PageServicesection";
-import ServicepageTestimonial from "../(servicepage-component)/ServicepageTestimonial";
+
 import ShortsHeader from "../(servicepage-component)/ShortsHeader";
 import PartnersSection from "@/component/home/PatnersSection";
 import PageHomeHero from "../(servicepage-component)/PageHomeHero";
@@ -17,6 +17,7 @@ import PageWhychooseus from "../(servicepage-component)/PageWhychooseus";
 import Thumbnailworksection from "../(servicepage-component)/Thumbnailworksection";
 import HomeFaqSection from "@/component/share/HomeFaqSection";
 import ComparisonCards from "@/component/home/PriceComparison";
+import TestimonialSection from "@/component/share/Testimonial";
 export async function generateMetadata({
   params,
 }: {
@@ -35,9 +36,7 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-
-  // console.log("scham ====================>", data?.data?.process);
-
+  // console.log("scham ====================>", data?.data);
   const safeSchema =
     data?.data?.schema ??
     JSON.stringify({
@@ -45,8 +44,6 @@ const ServicePage = async ({
       "@type": "Organization",
       name: "MontageMotion",
     });
-
-  // console.log("safeSchema =============>", safeSchema);
   return (
     <div className="lg:min-h-screen text-black mt-4 ">
       <script
@@ -75,8 +72,8 @@ const ServicePage = async ({
         <PageServicesection data={data?.data?.service?.[0]} />
       )}
       {data?.data?.pricing && <PagePricing pricing={data?.data?.pricing} />}
-      {data?.data?.process && (
-        <ServicepageTestimonial
+      {data?.data?.testimonial && (
+        <TestimonialSection
           data={data?.data?.testimonial}
           title="What Our Clients Say"
           description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"

@@ -18,7 +18,7 @@ const HomePage = async () => {
   const { data } = await getData({
     url: `api/website/data?type=home&table=brand,services,process,whychooseus,industries,comparision,faq`,
   });
-  console.log("scham ====================>", data);
+  // console.log("scham ====================>", data);
   const categoryRes = await getData({ url: "api/website/service/type" });
   return (
     <div className="lg:mt-4 w-full mx-auto">

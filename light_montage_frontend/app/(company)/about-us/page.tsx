@@ -18,9 +18,22 @@ const AboutUs = async () => {
   const data = await getData({
     url: `api/website/data?type=about&table=brand,members,faq`,
   });
-
+  // console.log("data ========> ", data?.data?.schema);
+  const safeSchema =
+    data?.data?.schema ??
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "MontageMotion",
+    });
   return (
     <div className=" mt-2 md:pt-0 ">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: safeSchema,
+        }}
+      />
       {data?.data?.header && (
         <div className="headerbg rounded-[40px] max-w-360 px-2 xl:px-15 mx-auto pb-15 pt-16 mb-10">
           <HeaderService mainIntro={data?.data?.header || null} />
