@@ -32,9 +32,9 @@ const JobPost = ({ data }: { data: any }) => {
                     Deadline:{job?.deadline}
                   </p>
                 </div>
-                <h2 className="text-[20px] md:text-[24px] poppins font-semibold">
+                <h3 className="text-[20px] md:text-[24px] poppins font-semibold">
                   {job?.job_title}
-                </h2>
+                </h3>
                 <p className="text-[14px] md:text-[16px] opensans font-normal">
                   {job?.description}
                 </p>

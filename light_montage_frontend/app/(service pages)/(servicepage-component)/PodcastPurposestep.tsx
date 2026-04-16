@@ -37,7 +37,7 @@ const Dot: React.FC<{ index: number; isActive: boolean }> = ({
             }
             `}
         </style>
-        <span className="text-base font-semibold flex justify-center items-center h-full leading-none z-30 w-full  bg-black rounded-3xl">
+        <span className="text-lg font-semibold flex justify-center items-center h-full leading-none z-30 w-full  btn-color rounded-3xl">
           {index + 1}
         </span>
       </div>

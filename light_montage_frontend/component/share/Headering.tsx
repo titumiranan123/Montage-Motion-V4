@@ -31,13 +31,13 @@ export const Heading: React.FC<headerProp> = ({
         {tag}
       </p>
 
-      <p
+      <h2
         data-aos="fade-up"
         data-aos-delay={300}
         className="text-[36px] md:text-[56px] md:leading-[120%] font-medium text-center text-(--text-primary) mt-2 xl:mt-4 poppins"
       >
         {title}
-      </p>
+      </h2>
       {/* 
       {extratitle && (
         <p className="text-4xl md:text-5xl font-semibold text-center text-gray-800 poppins">

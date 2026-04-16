@@ -5,7 +5,7 @@ import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
 
 export const PageProcesssection2 = ({ data }: { data: any }) => {
-  console.log("new set ======================>", data);
+  // console.log("new set ======================>", data);
   return (
     <div className="mx-auto max-w-7xl sectionGap">
       <Heading
@@ -23,7 +23,7 @@ export const PageProcesssection2 = ({ data }: { data: any }) => {
             alt="process"
             width={638}
             height={898}
-            className="max-w-159.5 bg-cover w-full max-h-224.5 h-full"
+            className={` bg-cover w-full h-full ${data?.process_steps.length > 3 ? "max-w-159.5 max-h-224.5 " : "max-h-134  max-w-159.5"}`}
             priority
           />
         </div>

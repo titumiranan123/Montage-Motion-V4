@@ -68,14 +68,14 @@ const Processwrapper = ({ data }: { data: any }) => {
           </button>
         </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-5">
         <SingleProcess data={data} />
         <button
           onClick={() => {
             setInitialServiceData(data);
             setIsModalOpent(true);
           }}
-          className="bg-[#1FB5DD] mt-10   text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+          className="bg-[#1FB5DD] mt-50  w-40  text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

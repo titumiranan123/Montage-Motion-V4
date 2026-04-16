@@ -31,20 +31,20 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
     service: Service;
     isSecondRow?: boolean;
   }) => (
-    <div className={`group h-[500px] ${isSecondRow ? "col-span-3" : ""}`}>
+    <div className={`group h-125 ${isSecondRow ? "col-span-3" : ""}`}>
       <Gradientcard
         isHover={true}
         borderClassName="w-full max-h-[482px] h-full rounded-[24px] p-[1px] animated hover:scale-[102%] overflow-hidden"
-        className="w-full max-h-[480px] h-full rounded-3xl text-(--text-primary) flex flex-col p-4 bg-[#F7F7F7]!"
+        className="w-full max-h-120 h-full rounded-3xl text-(--text-primary) flex flex-col p-4 bg-[#F7F7F7]!"
       >
         <div className="flex-1">
-          <h2 className="text-[24px] font-semibold">{service.service_title}</h2>
+          <h3 className="text-[24px] font-semibold">{service.service_title}</h3>
           <p className="text-[16px] font-normal leading-[140%] text-(--text-primary) mt-2">
             {service.service_description}
           </p>
         </div>
 
-        <div className="relative w-full h-[276px] mt-12">
+        <div className="relative w-full h-69 mt-12">
           <Image
             src={service.image}
             alt={service.title}
@@ -109,7 +109,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
                   animated hover:scale-[1.02] overflow-hidden
                 "
                   className="
-                  w-full h-[466px] rounded-3xl
+                  w-full h-116.5 rounded-3xl
                   bg-[#F7F7F7]! flex flex-col p-4
                   text-(--text-primary)
                 "
@@ -125,7 +125,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
                   </div>
 
                   {/* IMAGE */}
-                  <div className="relative w-full h-[276px] mt-6 overflow-hidden rounded-[13.5px]">
+                  <div className="relative w-full h-69 mt-6 overflow-hidden rounded-[13.5px]">
                     <Image
                       src={service.image}
                       alt={service.title || service.service_title}

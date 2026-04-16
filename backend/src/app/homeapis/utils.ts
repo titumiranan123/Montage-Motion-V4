@@ -34,12 +34,12 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
         type,
         limit: 6,
       });
-      return { sectionName, data: works || [] };
+      return { sectionName, data: works.length < 0 ? works : null };
     }
 
     case "service": {
       const result = await serviceSectionService.getAllSections({ type });
-      return { sectionName, data: result || [] };
+      return { sectionName, data: result.length > 0 ? result : null };
     }
 
     case "testimonial": {
@@ -47,37 +47,46 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
         `SELECT * FROM testimonials WHERE type = $1`,
         ["home"],
       );
-      return { sectionName, data: testimonials.rows || [] };
+      return {
+        sectionName,
+        data: testimonials.rows.length < 0 ? testimonials.rows : null,
+      };
     }
 
     case "pricing": {
       const result = await pricingPageService.getPagePricePlanByType({ type });
-      return { sectionName, data: result || [] };
+      return { sectionName, data: result.length > 0 ? result : null };
     }
 
     case "process": {
       const processResult = await processService.getAllProcesses({ type });
-      return { sectionName, data: processResult[0] || [] };
+      return {
+        sectionName,
+        data: processResult.length > 0 ? processResult[0] : null,
+      };
     }
 
     case "whychooseus": {
       const whychooseusResult = await whychooseusSectionService.getAllSections({
         type,
       });
-      return { sectionName, data: whychooseusResult[0] || [] };
+      return {
+        sectionName,
+        data: whychooseusResult.length > 0 ? whychooseusResult[0] : null,
+      };
     }
     case "comparison": {
       const result = await comparisonService.getComparisons(type as string);
-      return { sectionName, data: result || [] };
+      return { sectionName, data: result || null };
     }
     case "insight": {
       const result = await getSectionByPage(type as string);
-      return { sectionName, data: result?.[0] || [] };
+      return { sectionName, data: result.length > 0 ? result[0] : null };
     }
     case "faq": {
       const result = await faqService.getFaqSections({ page: type });
 
-      return { sectionName, data: result[0] || [] };
+      return { sectionName, data: result.length > 0 ? result[0] : null };
     }
 
     case "contact": {

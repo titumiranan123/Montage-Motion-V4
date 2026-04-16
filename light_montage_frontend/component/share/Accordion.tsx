@@ -38,7 +38,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
       `}</style>
       {items?.map((item, index) => (
         <div
-          className={`lg:max-w-[996px] min-h-[68px] w-full h-full rounded-3xl  border border-[#E8EAEA] ${
+          className={`lg:max-w-249 min-h-17 w-full h-full rounded-3xl  border border-[#E8EAEA] ${
             index === openIndex ? "bgaccordion border-transparent" : ""
           }`}
           key={index}
@@ -50,7 +50,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
               className="cursor-pointer p-6 flex justify-between items-center"
               onClick={() => handleToggle(index)}
             >
-              <h3 className="font-semibold poppins leading-[30px] md:text-[24px] md:leading-[25px] text-[16px] flex items-center gap-2">
+              <h3 className="font-semibold poppins leading-7.5 md:text-[24px] md:leading-6.25 text-[16px] flex items-center gap-2">
                 Q. {item?.question}
               </h3>
               <div className="shrink-0 ml-4 border border-(--text-primary) rounded-full">
@@ -78,7 +78,7 @@ const Accordion: React.FC<accordionProp> = ({ items }) => {
               className="transition-all duration-300  ease-in-out overflow-hidden opensans"
             >
               <div className="px-6 pb-6 pt-0">
-                <p className="lg:text-[16px] font-normal lg:leading-[26px] text-sm opensans">
+                <p className="lg:text-[16px] font-normal lg:leading-6.5 text-sm opensans">
                   {item?.answer}
                 </p>
               </div>

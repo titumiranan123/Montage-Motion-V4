@@ -33,14 +33,21 @@ export default function OurStory() {
       const cards = document.querySelectorAll(".story-card");
       const cardsContainer = document.querySelector(".cards-container");
       cards.forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        if (
-          rect.top < window.innerHeight / 2 &&
-          rect.bottom > window.innerHeight / 2
-        ) {
-          setActiveIndex(index);
-        }
-      });
+  const rect = card.getBoundingClientRect();
+  const isLast = index === cards.length - 1;
+
+  const centerPoint = window.innerHeight / 2;
+
+  //  last card এর জন্য center + 100px
+  const triggerPoint = isLast ? centerPoint + 100 : centerPoint;
+
+  if (
+    rect.top < triggerPoint &&
+    rect.bottom > triggerPoint
+  ) {
+    setActiveIndex(index);
+  }
+});
 
       if (cardsContainer) {
         const containerRect = cardsContainer.getBoundingClientRect();
@@ -77,7 +84,7 @@ export default function OurStory() {
             alt={storyCards[activeIndex].title}
             width={590}
             height={620}
-            className="w-147.5 h-155 rounded-[13px] object-cover"
+            className="w-147.5 h-135 rounded-[13px] object-cover"
           />
         </div>
         <div className="relative w-6 md:flex hidden items-start justify-center select-none lg:sticky lg:top-32 h-150">
@@ -128,9 +135,9 @@ export default function OurStory() {
                   activeIndex === index ? "scale-105" : "scale-100"
                 }`}
               >
-                <h2 className="text-[20px] md:text-[24px] font-semibold poppins mb-3">
+                <h3 className="text-[20px] md:text-[24px] font-semibold poppins mb-3">
                   {card.title}
-                </h2>
+                </h3>
                 <p className="text-[14px] md:text-[16px] font-normal opensans leading-relaxed">
                   {card.description}
                 </p>

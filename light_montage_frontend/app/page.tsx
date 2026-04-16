@@ -37,7 +37,7 @@ const HomePage = async () => {
             }),
         }}
       />
-      <div className="headerbg lg:rounded-[40px] rounded-lg sectionarea mb-10 min-h-screen">
+      <div className="headerbg lg:rounded-[40px] rounded-lg  mb-10 min-h-screen">
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />

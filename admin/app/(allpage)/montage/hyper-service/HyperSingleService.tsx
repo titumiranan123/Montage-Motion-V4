@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import Gradientcard from "./Gradientcard";
@@ -31,7 +32,7 @@ const SingleService = ({ data }: { data: any }) => {
                   width={344}
                   height={276}
                   priority
-                  className="max-w-[344px] w-full max-h-[276px] h-full md:mt-8 mt-4"
+                  className="max-w-86 w-full max-h-69 h-full md:mt-8 mt-4"
                 />
               </div>
             </div>
@@ -42,7 +43,7 @@ const SingleService = ({ data }: { data: any }) => {
                 className="w-full h-full md:py-6 py-4 md:px-5 px-4 bg-black flex flex-col justify-center rounded-3xl"
                 borderClassName="w-full h-full rounded-[24px] p-[1px] animated !duration-100"
               >
-                <div className="flex justify-between items-start flex-col text-(--text-primary) gap-[111px] h-full">
+                <div className="flex justify-between items-start flex-col text-(--text-primary) gap-27.75 h-full">
                   <div>
                     <Image
                       src={dt?.icon}
@@ -64,7 +65,7 @@ const SingleService = ({ data }: { data: any }) => {
                       href={`https://montagemotion.com/${dt?.href}`}
                       className="py-2 px-4 rounded-lg btn-color transition-transform duration-300 ease-out hover:scale-105"
                     >
-                      Get Start
+                      Get Started
                     </Link>
                   </div>
                 </div>

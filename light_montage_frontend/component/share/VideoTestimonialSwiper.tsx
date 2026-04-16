@@ -33,6 +33,8 @@ const VideoTestimonialSwiper: React.FC<Props> = ({ data }) => {
         modules={[Navigation, Autoplay]}
         autoplay={{ delay: 4500, disableOnInteraction: false }}
         onSwiper={(swiper) => setSwiperInstance(swiper)}
+        onMouseEnter={() => swiperInstance?.autoplay?.stop()}
+        onMouseLeave={() => swiperInstance?.autoplay?.start()}
         breakpoints={{
           640: { slidesPerView: 1.2 },
           768: { slidesPerView: 2 },

@@ -60,9 +60,9 @@ const ServiceSections = ({ data }: { data: any }) => {
             <div key={idx} className="card-wrapper">
               {/* Front side */}
               <div className="card-front text-(--text-primary) flex justify-center items-start flex-col py-6 px-5 h-full bg-[#F7F7F7] rounded-3xl">
-                <h2 className="md:text-[24px] text-[20px] poppins font-semibold">
+                <h3 className="md:text-[24px] text-[20px] poppins font-semibold">
                   {dt?.service_title}
-                </h2>
+                </h3>
                 <p className="md:text-[16px] text-[14px] font-normal leading-[140%] text-(--text-primary) mt-2 opensans">
                   {dt?.service_description}
                 </p>
@@ -106,7 +106,7 @@ const ServiceSections = ({ data }: { data: any }) => {
                         href={`${dt?.href}`}
                         className="py-2 px-4 rounded-lg btn-color transition-transform duration-300 ease-out hover:scale-105 active:scale-90"
                       >
-                        Get Start
+                       Get Started
                       </Link>
                     </div>
                   </div>

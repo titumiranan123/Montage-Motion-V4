@@ -15,8 +15,7 @@ const PageContactsections = () => {
 
       <Heading
         title="Have a Project? Let’s Talk "
-        subtitle="See how design meets function. Real results, clean code, and 
-user-first experiences."
+        subtitle="Tell us about your project. We will get back with a clear plan."
         tag="Contact Us"
         isbackground={true}
         width="160"
@@ -31,7 +30,7 @@ user-first experiences."
               href: "mailto:hello@montagemotion.com",
             },
             {
-              title: "Call Us",
+              title: "WhatsApp Us",
               value: "+8801786546949",
               icon: "/assets/icon/whatsapp.png",
               href: "tel:+8801786546949",
@@ -61,7 +60,7 @@ user-first experiences."
                   <h3 className="text-[20px] md:text-[24px] md:leading-7.5 font-semibold poppins">
                     {item.title}
                   </h3>
-                  <p className="text-[14px] md:text-[16px] md:leading-[140%] font-normal opensans">
+                  <p className="text-[14px] md:text-[16px] md:leading-[140%] font-normal opensans mt-1">
                     {item.value}
                   </p>
                 </div>

@@ -17,9 +17,9 @@ const PodcastInsight = ({ data }: any) => {
           <p className=" text-[#1FB5DD] min-w-30.5 h-9.5 rounded-3xl py-2 px-5 text-center opensans glass-card flex justify-center items-center backdrop-blur-[2px]!">
             {data?.tag}
           </p>
-          <p className="poppins md:text-[56px] md:leading-[120%] font-semibold text-left text-(--text-primary) text-[32px]">
+          <h2 className="poppins md:text-[56px] md:leading-[120%] font-semibold text-left text-(--text-primary) text-[32px]">
             {data?.heading_title}
-          </p>
+          </h2>
 
           <p className="opensans font-normal md:text-[16px] text-[14px] md:leading-[150%] text-(--text-primary) text-left">
             {data?.paragraph}
@@ -45,9 +45,9 @@ const PodcastInsight = ({ data }: any) => {
           borderClassName="max-w-[440px]  lg:max-h-[450px] w-full h-full borderbg rounded-3xl absolute md:top-[147px] top-10 -left-2 md:-left-[90px]  p-px"
         >
           <div>
-            <h2 className="text-[24px] leading-7.5 font-semibold poppins">
+            <h3 className="text-[24px] leading-7.5 font-semibold poppins">
               {data?.steps?.[activeStep]?.title}
-            </h2>
+            </h3>
             <p className="opensans text-(--text-primary) text-[14px] md:text-[16px] font-normal leading-[140%] mt-1">
               {data?.steps?.[activeStep]?.description}
             </p>

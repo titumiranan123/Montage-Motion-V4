@@ -1,5 +1,7 @@
 export interface ProcessStep {
   icon: string;
+  image: string;
+  icon_alt: string;
   alt: string;
   title: string;
   description: string;

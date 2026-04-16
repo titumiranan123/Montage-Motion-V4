@@ -25,7 +25,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
   }, []);
   return (
     <div className=" flex lg:flex-row flex-col mt-9 md:mt-16 gap-12">
-      <div className="lg:sticky top-32 max-w-159.5 rounded-[13px] w-full max-h-224.5 h-full">
+      <div className="lg:sticky top-44 max-w-159.5 rounded-[13px] w-full max-h-224.5 h-full">
         <Image
           src={data?.[activeIndex]?.image ?? ""}
           alt="process "
@@ -33,7 +33,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
           height={898}
           data-aos="fade-right"
           data-aos-delay={200}
-          className="max-w-159.5 rounded-[13px] w-full max-h-224.5 h-full"
+          className="max-w-159.5 rounded-[13px] w-full h-124.5"
           priority
         />
       </div>

@@ -1,4 +1,4 @@
-import { DM_Sans, Poppins } from "next/font/google";
+import { DM_Sans, Open_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import Footer from "@/component/share/Footer";
 import Provider from "./Provider";
@@ -6,6 +6,11 @@ import Navbar from "@/component/share/Navbar";
 const geistSans = Poppins({
   variable: "--font-poppins",
   weight: ["100", "400", "500", "600", "700", "900"],
+  subsets: ["latin"],
+});
+const opensans = Open_Sans({
+  variable: "--font-open-sans", 
+  weight: [ "400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -29,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistDMSans?.variable}  overflow-x-hidden `}
+        className={`${geistSans.variable} ${geistDMSans?.variable} ${opensans?.variable}  `}
       >
         <Provider>
           <div className="fixed w-full top-6 z-50">

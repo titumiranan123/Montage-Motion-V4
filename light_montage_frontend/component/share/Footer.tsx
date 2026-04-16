@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           <div className="col-span-3 max-w-100.5">
             <Link
               href={"/"}
-              className="block md:w-58.75 md:h-23 w-35.75 h-14 box-border animated hover:scale-105 "
+              className="block md:w-58.75 md:h-23 w-35.75 h-14 box-border animated active:scale-95 "
             >
               <Image
                 src={"/assets/icon/logo.png"}
@@ -30,9 +30,7 @@ const Footer: React.FC = () => {
               />
             </Link>
             <p className="text-[16px] leading-[150%] opensans font-normal mt-10">
-              Montage Motion delivers documentary and fiction production,
-              editing, animation and design that connects your brand with the
-              right audience and drives sales.
+           Montage Motion is a dedicated video editing agency helping creators and brands produce videos that get watched, shared, and remembered.
             </p>
             <div className="max-w-76.25 hidden lg:mt-10 mt-6 max-h-13  h-full rounded-2xl border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2  items-center justify-around">
               <input
@@ -83,7 +81,7 @@ const Footer: React.FC = () => {
               </Link>
               <Link
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
-                href={"/podcast-editing-service"}
+                href={"/podcast-editing-services"}
               >
                 Podcast Video Editing
               </Link>
@@ -110,7 +108,7 @@ const Footer: React.FC = () => {
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
                 href={"mailto:hello@montagemotion.com"}
               >
-                Hello@montagemotion.com
+                hello@montagemotion.com
               </a>
               <Link
                 className="text-[16px] font-normal leading-[150%] hover:scale-105 animated"
@@ -119,7 +117,7 @@ const Footer: React.FC = () => {
                 +8801786546949
               </Link>
               <p className="text-[16px] font-normal leading-[150%] hover:scale-105 animated">
-                DOHS, Mirpur, Dhaka
+                House no 11, Road 24, 2 Modina Nagar, Evenue 5, Dhaka 1216
               </p>
             </div>
           </div>

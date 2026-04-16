@@ -79,7 +79,7 @@ const ServiceDropdown = () => {
             title="Design"
             iconColor="text-primary-40"
             links={[
-              { href: "/thumbnail-design-services", label: "Graphics Design" },
+              { href: "/thumbnail-design-services", label: "Thumbnail Design" },
               // { href: "/thumbnail-design-services", label: "Logo Design" },
               // { href: "/thumbnail-design-services", label: "Branding" },
               // { href: "/thumbnail-design-services", label: "UI/UX" },

@@ -12,11 +12,11 @@ const Navbar = () => {
         className="lg:py-4 py-2 mt-2 bg-white/20   lg:px-5 px-2 rounded-[12px]  flex justify-between items-center  backdrop-blur-[21px] transition-all duration-300 ease-in-out glassShadow sticky top-2"
       >
         <Link
-          className="block hover:scale-105 transition-all duration-300"
+          className="block active:scale-95"
           href={"/"}
         >
           <Image
-            src={"/assets/montagelogo.png"}
+            src={"/assets/montlogo.svg"}
             alt="logo"
             priority
             width={120}

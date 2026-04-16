@@ -205,7 +205,6 @@ export const homeapiServices = {
       );
       // header
       const sectionsData: any = {};
-
       for (const section of availableSections) {
         const result = await fetchSectionData(
           section,
@@ -217,7 +216,6 @@ export const homeapiServices = {
       }
 
       await client.query("COMMIT");
-      // console.log("pricing", pricing);
       return { ...sectionsData, schema: seo === " " ? null : seo.schema };
     } catch (error) {
       await client.query("ROLLBACK");

@@ -34,17 +34,18 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
                 width={135}
                 height={135}
                 priority
+                className="rounded-lg w-33.75 h-auto"
               />
-              <h2 className="md:mt-4 mt-2 mb-2 font-semibold poppins  text-(--text-primary)  md:text-[24px] text-[22px] text-center lg:text-left">
+              <h3 className="md:mt-4 mt-2 mb-2 font-semibold poppins  text-(--text-primary)  md:text-[24px] text-[22px] text-center lg:text-left">
                 {data?.contact_heading}
-              </h2>
+              </h3>
               <p className="font-normal text-[16px] opensans leading-[140%]  text-(--text-primary)  text-center">
                 {data?.contact_description}
               </p>
               <div className="flex justify-between items-center flex-col  text-(--text-primary)  mt-12 mb-9 gap-2">
-                <h2 className="text-[24px] font-semibold leading-[100%] poppins">
+                <p className="text-[24px] font-semibold leading-[100%] poppins">
                   {data?.contact_name}
-                </h2>
+                </p>
                 <p className="text-[16px] font-normal leading-[140%] opensans">
                   {data?.contact_position}
                 </p>

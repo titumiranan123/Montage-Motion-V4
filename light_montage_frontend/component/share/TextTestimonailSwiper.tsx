@@ -1,58 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
+import Marquee from "react-fast-marquee";
 import TestimonialMessagecard from "./TextTestimonial";
 
 type Props = {
   data: any[];
 };
-import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+
 const TextTestimonialSwiper: React.FC<Props> = ({ data }) => {
   if (!data?.length) return null;
 
   return (
     <div className="mt-5">
-      {" "}
-      <Swiper
-        spaceBetween={24}
-        slidesPerView={1}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
-        breakpoints={{
-          640: { slidesPerView: 1.2 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 2.5 },
-        }}
-        className="textSwiper"
+      <Marquee
+        gradient={true}
+        gradientColor={`255, 255, 255`} 
+        speed={50}
+        pauseOnHover={true}
       >
-        {data.map((testimonial, idx) => (
-          <SwiperSlide key={testimonial.id ?? idx}>
+        <div className="flex gap-6 px-5 overflow-y-hidden">
+          {data.map((testimonial, idx) => (
             <div
+              key={testimonial.id ?? idx}
               className=""
-              data-aos="fade-up"
-              data-aos-delay={100 + idx * 100}
             >
-              <TestimonialMessagecard
-                testimonial={testimonial}
-                key={testimonial?.id || idx}
-              />
+              <TestimonialMessagecard testimonial={testimonial} idx={idx} />
             </div>
-          </SwiperSlide>
-        ))}
-        <style>{`
-   .textSwiper{
-   height: 360px;
-   }
-   .swiper-pagination-bullet{
-     background: linear-gradient(180deg, #1fb5dd 0%, #2b6ab2 100%);
-   }
-   `}</style>
-      </Swiper>
+          ))}
+        </div>
+      </Marquee>
     </div>
   );
 };

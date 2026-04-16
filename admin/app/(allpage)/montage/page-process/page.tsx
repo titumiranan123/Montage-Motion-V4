@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import ProcessForm from "./Processform";
 import Processwrapper from "./Processwrapper";
 
 export default async function Page({ searchParams }: { searchParams: any }) {

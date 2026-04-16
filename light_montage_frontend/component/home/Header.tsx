@@ -42,14 +42,14 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
             href={`${data?.cta_primary_link}`}
             className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
-            Start a project
+            Start a Project
           </Link>
           <Link
             target="_blank"
-            href={`${data?.cta_primary_link}`}
+            href={`/portfolio`}
             className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-[2px]"
           >
-            Book a Call
+            View Work
           </Link>
         </div>
       </div>
@@ -59,7 +59,6 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
              overflow-hidden
              max-w-7xl
              mx-auto
-             
              rounded-[40px]
              bg-black relative aspect-video w-full
            "

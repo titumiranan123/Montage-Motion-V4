@@ -28,23 +28,15 @@ export async function getPageSEO(slug: string): Promise<Metadata> {
         title: seo.meta_title || defaultSEO.title,
         description: seo.meta_description || defaultSEO.description,
         url: seo.canonical_url || "https://montagemotion.com",
-        images: seo.ogImage
-          ? [
-              {
-                url: seo.ogImage,
-                width: 1200,
-                height: 630,
-                alt: seo.meta_title || defaultSEO.title,
-              },
-            ]
-          : [],
+        images: `https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/Montage%20Motion%20OG%20Image.png`
+          ,
         type: "website",
       },
       twitter: {
         card: seo.twitter_card_type || "summary_large_image",
         title: seo.meta_title || defaultSEO.title,
         description: seo.meta_description || defaultSEO.description,
-        images: seo.twitter?.image ? [seo.twitter.image] : [],
+        images: `https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/Montage%20Motion%20OG%20Image.png`,
       },
       alternates: {
         canonical: seo.canonical_url || "https://montagemotion.com",

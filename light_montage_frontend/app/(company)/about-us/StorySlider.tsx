@@ -160,14 +160,14 @@ function StorySlider({ activeIndexs }: { activeIndexs: number }) {
       ref={containerRef}
       data-aos="fade-up"
       data-aos-delay={400}
-      className="relative flex w-full overflow-hidden h-[594px] text-white lg:mt-10 mt-8  "
+      className="relative flex w-full overflow-hidden h-148.5 text-white lg:mt-10 mt-8  "
     >
       {/* LEFT: IMAGES (change only when index snaps) */}
       <div className=" w-full relative flex items-center justify-center overflow-hidden rounded-xl">
         {slides.map((slide, i) => (
           <div
             key={i}
-            className={`absolute max-w-[510px] max-h-[594px] w-full h-full inset-0 transition-opacity duration-500 ease-in-out rounded-[13px] ${
+            className={`absolute max-w-127.5 max-h-148.5 w-full h-full inset-0 transition-opacity duration-500 ease-in-out rounded-[13px] ${
               i === activeIndex ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -176,7 +176,7 @@ function StorySlider({ activeIndexs }: { activeIndexs: number }) {
               alt={slide.title}
               width={510}
               height={594}
-              className="object-cover max-w-[510px] max-h-[594px] w-full h-full rounded-[13px]"
+              className="object-cover max-w-127.5 max-h-148.5 w-full h-full rounded-[13px]"
             />
             <div className="absolute inset-0 bg-black/30" />
           </div>
@@ -231,7 +231,7 @@ function StorySlider({ activeIndexs }: { activeIndexs: number }) {
           {/* handle (cap) */}
           <div
             ref={handleRef}
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[18px] h-[38px] rounded-[25px] bg-[#2B6AB2]   ring-white/20"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-4.5 h-9.5 rounded-[25px] bg-[#2B6AB2]   ring-white/20"
             aria-label="Image progress handle"
           />
         </div>

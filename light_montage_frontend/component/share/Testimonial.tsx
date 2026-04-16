@@ -19,13 +19,13 @@ interface ITestimonial {
 
 interface TestimonialSectionProps {
   title: string;
-  description: string;
+  description?: string;
   data: ITestimonial[];
 }
 
 const TestimonialSection: React.FC<TestimonialSectionProps> = ({
   title,
-  description,
+  
   data,
 }) => {
   const video_message =
@@ -42,7 +42,7 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
       }
       `}</style>
         <Heading
-          subtitle={description}
+          subtitle={"1,000+ creators trust us to edit their videos."}
           tag="Testimonials"
           title={title}
           width={"180"}

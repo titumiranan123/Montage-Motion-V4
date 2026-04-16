@@ -32,8 +32,7 @@ const FirstSection = () => {
           data-aos-delay={400}
           className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-8/9 mx-auto "
         >
-          See how design meets function. Real results, clean code, and
-          user-first experiences.
+         Tell us about your project. We will get back with a clear plan.
         </p>
         <style>{`
        .glass-card {
@@ -96,7 +95,7 @@ const FirstSection = () => {
                 href: "mailto:hello@montagemotion.com",
               },
               {
-                title: "Call Us",
+                title: "WhatsApp Us",
                 value: "+8801786546949",
                 icon: "/assets/icon/whatsapp.png",
                 href: "tel:+8801786546949",

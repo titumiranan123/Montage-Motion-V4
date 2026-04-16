@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
-import React, { useState } from "react";
+import  { useState } from "react";
 
 const OurTeam = ({ members }: any) => {
   const [index, setIndex] = useState(6);
@@ -27,19 +27,19 @@ const OurTeam = ({ members }: any) => {
         {members?.slice(0, index)?.map((member: any, idx: number) => {
           return (
             <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
-              <div className="max-w-[410px] mx-auto h-[530px] w-full rounded-2xl md:py-6 md:px-5 py-3 px-1 flex flex-col justify-center items-center glassShadow bg-white/40 backdrop-blur-2xl">
+              <div className="max-w-102.5 mx-auto h-132.5 w-full rounded-2xl md:py-6 md:px-5 py-3 px-1 flex flex-col justify-center items-center glassShadow bg-white/40 backdrop-blur-2xl">
                 <Image
                   src={member?.photourl}
                   alt={member?.name}
                   priority
-                  className="max-w-[370px] max-h-[420px] w-full h-full bg-cover"
+                  className="max-w-92.5 max-h-105 w-full h-full bg-cover"
                   width={370}
                   height={420}
                 />
                 <div className="flex flex-col gap-2 w-full justify-start mt-4 text-(--text-primary)">
-                  <h2 className="text-[20px] md:text-[24px] leading-[100%] font-semibold poppins">
+                  <h3 className="text-[20px] md:text-[24px] leading-[100%] font-semibold poppins">
                     {member?.name}
-                  </h2>
+                  </h3>
                   <p className="text-[14px] md:text-[16px] leading-[140%] font-normal opensans">
                     {member?.designation}
                   </p>
@@ -53,7 +53,7 @@ const OurTeam = ({ members }: any) => {
         <div className="flex  justify-center items-center mt-10">
           <button
             onClick={() => setIndex(index + 3)}
-            className="btn-color w-[131px] h-14 py-2 px-3 rounded-lg "
+            className="btn-color w-32.75 h-14 py-2 px-3 rounded-lg "
           >
             See More
           </button>
@@ -63,7 +63,7 @@ const OurTeam = ({ members }: any) => {
         <div className="flex justify-center items-center mt-10">
           <button
             onClick={() => setIndex(index - 3)}
-            className="btn-color py-2 px-3 rounded-lg w-[131px] h-14 "
+            className="btn-color py-2 px-3 rounded-lg w-32.75 h-14 "
           >
             See Less
           </button>

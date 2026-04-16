@@ -70,6 +70,8 @@ const ProcessForm = ({
               isHiden: false,
               alt: "",
               order_index: 0,
+              image: "",
+              icon_alt: "",
             },
           ],
         },
@@ -185,14 +187,14 @@ const ProcessForm = ({
         </div>
 
         <div className=" grid-cols-2 gap-4">
-          <div>
-            <label className="block text-gray-200 mb-1">Image</label>
+          {/* <div> */}
+          {/* <label className="block text-gray-200 mb-1">Image</label> */}
 
-            <ImageUploader
+          {/* <ImageUploader
               value={watch("image")}
               onChange={(url) => setValue(`image`, url)}
-            />
-            <input
+            /> */}
+          {/* <input
               {...register("image", { required: "This field is required" })}
               placeholder="Enter section  tag"
               className="hidden"
@@ -201,8 +203,8 @@ const ProcessForm = ({
               <p className="text-red-500 text-sm mt-1">
                 {errors.image.message}
               </p>
-            )}
-          </div>
+            )} */}
+          {/* </div> */}
           <div>
             <label className="block text-gray-200 mb-1">Alt *</label>
             <input
@@ -259,6 +261,28 @@ const ProcessForm = ({
                 </button>
               </div>
               <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-200 mb-1">Image</label>
+
+                  <ImageUploader
+                    value={watch(`process_steps.${index}.image`)}
+                    onChange={(url) =>
+                      setValue(`process_steps.${index}.image`, url)
+                    }
+                  />
+                  <input
+                    {...register(`process_steps.${index}.image`, {
+                      required: "This field is required",
+                    })}
+                    placeholder="Enter section  tag"
+                    className="hidden"
+                  />
+                  {errors?.process_steps?.[index]?.image && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors?.process_steps?.[index]?.image?.message}
+                    </p>
+                  )}
+                </div>
                 <div>
                   <label className="block text-gray-200 mb-1">Icon</label>
 
@@ -330,6 +354,22 @@ const ProcessForm = ({
                   </p>
                 )}
               </div>
+              <div className="mt-3">
+                <label className="block text-gray-200 mb-1">Icon Alt *</label>
+                <textarea
+                  {...register(`process_steps.${index}.icon_alt` as const, {
+                    required: "This field is required",
+                  })}
+                  placeholder="Enter icon alt"
+                  rows={3}
+                  className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1E9ED2]"
+                ></textarea>
+                {errors?.process_steps?.[index]?.icon_alt && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors?.process_steps?.[index]?.icon_alt?.message}
+                  </p>
+                )}
+              </div>
 
               <div className="mt-3 flex items-center justify-between">
                 <label className="text-gray-300">Hide Step</label>
@@ -360,6 +400,8 @@ const ProcessForm = ({
                 description: "",
                 isHiden: false,
                 alt: "",
+                image: "",
+                icon_alt: "",
               })
             }
             className="bg-[#1E9ED2] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#1787b5] transition-all"

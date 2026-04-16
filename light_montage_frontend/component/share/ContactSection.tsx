@@ -15,7 +15,7 @@ const ContactSection = () => {
 
       <Heading
         title="Have a Project? Let’s Talk "
-        subtitle="See how design meets function. Real results, clean code, and user-first experiences."
+        subtitle="Tell us about your project. We will get back with a clear plan."
         tag="Contact Us"
         isbackground={false}
         width="160"
@@ -30,7 +30,7 @@ const ContactSection = () => {
               href: "mailto:hello@montagemotion.com",
             },
             {
-              title: "Call Us",
+              title: "WhatsApp Us",
               value: "+8801786546949",
               icon: "/assets/icon/whatsapp.png",
               href: "tel:+8801786546949",

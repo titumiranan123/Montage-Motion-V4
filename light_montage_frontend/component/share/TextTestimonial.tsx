@@ -12,8 +12,10 @@ interface testimonial {
 }
 const TestimonialMessagecard = ({
   testimonial,
+  idx = 1
 }: {
   testimonial: testimonial;
+  idx?:number
 }) => {
   return (
     <div className="md:w-114.5 w-75  h-74.75 mx-auto p-3 glassShadow  bg-white/40  backdrop-blur-sm rounded-3xl">
@@ -24,7 +26,7 @@ const TestimonialMessagecard = ({
         <Image
           className=" w-10  h-10 "
           src={`/assets/comma.png`}
-          alt=""
+          alt={`comma- ${idx}`}
           width={40}
           height={40}
           priority
@@ -41,16 +43,16 @@ const TestimonialMessagecard = ({
             <Image
               className="rounded-full lg:w-16   lg:h-16 h-10 w-10 "
               src={testimonial.image}
-              alt=""
+              alt={`${testimonial.name}`}
               width={64}
               height={64}
               priority
             />
           </div>
           <div className="  text-(--text-primary)  flex flex-col md:gap-4 gap-0">
-            <h2 className="font-bold text-base lg:text-[20px] poppins">
+            <h3 className="font-bold text-base lg:text-[20px] poppins">
               {testimonial.name}
-            </h2>
+            </h3>
             <p className="lg:text-[14px] text-xs font-normal md:-mt-3 opensans">
               {testimonial.designation}
             </p>
