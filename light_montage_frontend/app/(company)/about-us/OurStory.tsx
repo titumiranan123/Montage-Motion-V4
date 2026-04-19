@@ -33,21 +33,21 @@ export default function OurStory() {
       const cards = document.querySelectorAll(".story-card");
       const cardsContainer = document.querySelector(".cards-container");
       cards.forEach((card, index) => {
-  const rect = card.getBoundingClientRect();
-  const isLast = index === cards.length - 1;
+        const rect = card.getBoundingClientRect();
+        const isLast = index === cards.length - 1;
 
-  const centerPoint = window.innerHeight / 2;
+        const centerPoint = window.innerHeight / 2;
 
-  //  last card এর জন্য center + 100px
-  const triggerPoint = isLast ? centerPoint + 100 : centerPoint;
+        //  last card এর জন্য center + 100px
+        const triggerPoint = isLast ? centerPoint + 150 : centerPoint;
 
-  if (
-    rect.top < triggerPoint &&
-    rect.bottom > triggerPoint
-  ) {
-    setActiveIndex(index);
-  }
-});
+        if (
+          rect.top < triggerPoint &&
+          rect.bottom > triggerPoint
+        ) {
+          setActiveIndex(index);
+        }
+      });
 
       if (cardsContainer) {
         const containerRect = cardsContainer.getBoundingClientRect();
@@ -78,16 +78,16 @@ export default function OurStory() {
 
       <div className="flex md:flex-row flex-col gap-8 mt-16">
         {/* Left - Image */}
-        <div className="xl:w-1/2 xl:sticky top-36 h-fit">
+        <div className="xl:w-1/2 xl:sticky top-44 h-fit">
           <Image
             src={storyCards[activeIndex].image}
             alt={storyCards[activeIndex].title}
             width={590}
             height={620}
-            className="w-147.5 h-135 rounded-[13px] object-cover"
+            className="w-147.5 h-130 rounded-[13px] object-cover"
           />
         </div>
-        <div className="relative w-6 md:flex hidden items-start justify-center select-none lg:sticky lg:top-32 h-150">
+        <div className="relative w-6 md:flex hidden items-start justify-center select-none lg:sticky lg:top-44 h-135">
           <div className="relative h-full w-6 rounded-full overflow-visible">
             {/* Background beam */}
             <div
@@ -110,9 +110,8 @@ export default function OurStory() {
             {/* Handle (animated cap) */}
             <div
               style={{
-                top: `${
-                  Number(capPosition) === 0 ? capPosition + 0 : capPosition - 6
-                }%`,
+                top: `${Number(capPosition) === 0 ? capPosition + 0 : capPosition - 6
+                  }%`,
               }}
               className="absolute top-5 left-1/2 -translate-x-1/2 w-4.5 h-9.5 rounded-[25px] bg-[#1FB5DD]  pointer-events-none"
               aria-label="Progress indicator"
@@ -131,9 +130,8 @@ export default function OurStory() {
               <Gradientcard
                 isHover={activeIndex !== index}
                 className="max-w-145.5 min-h-62.5 rounded-3xl py-6 px-4"
-                borderClassName={`max-w-[582px]  min-h-[250px] rounded-[24px] p-[1px] ${
-                  activeIndex === index ? "scale-105" : "scale-100"
-                }`}
+                borderClassName={`max-w-[582px]  min-h-[250px] rounded-[24px] p-[1px] ${activeIndex === index ? "scale-105" : "scale-100"
+                  }`}
               >
                 <h3 className="text-[20px] md:text-[24px] font-semibold poppins mb-3">
                   {card.title}

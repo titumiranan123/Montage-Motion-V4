@@ -34,11 +34,11 @@ const Navbar = () => {
         </div>
 
         <Link
-          href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
+          href={"https://www.instagram.com/_samiul_arafat"}
           target="_blank"
           className="w-38.75 h-12 btn-color text-(--text-primary) py-4 px-5 rounded-[10px] lg:flex hidden justify-center items-center text-[16px] font-medium poppins cursor-pointer hover:scale-105  transition-all duration-300 ease-in-out "
         >
-          Start a project
+          Let&apos;s Talk
         </Link>
         <div className="flex lg:hidden">
           <MobileMenu />

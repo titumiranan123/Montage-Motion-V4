@@ -44,6 +44,7 @@ const ServicePage = async ({
       "@type": "Organization",
       name: "MontageMotion",
     });
+    // console.log(data?.data?.home_hero)
   return (
     <div className="lg:min-h-screen text-black mt-4 ">
       <script

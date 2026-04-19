@@ -28,19 +28,19 @@ const ShortsHeader = ({ data }: { data: any }) => {
           data-aos-delay={400}
           className="w-full flex justify-start items-center md:flex-row flex-col gap-3 "
         >
-          <Link
+           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
+            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
-            Start a project
+            Start a Project
           </Link>
           <Link
             target="_blank"
-            href={`${data?.cta_primary_link}`}
-            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
+            href={`/portfolio`}
+            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-[2px]"
           >
-            Book a Call
+            View Work
           </Link>
         </div>
       </div>

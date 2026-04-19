@@ -1,12 +1,13 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import TurstedBy from "./TurstedBy";
 import Link from "next/link";
 import ReactPlayer from "react-player";
 import Image from "next/image";
 import { Play } from "lucide-react";
 const Header: React.FC<{ data: any }> = ({ data }) => {
+const [isPlaying, setIsPlaying] = useState(false);
   return (
     <div className="flex   lg:pt-30 pt-34 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
       {/* header content left side */}
@@ -62,31 +63,39 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
              rounded-[40px]
              bg-black relative aspect-video w-full
            "
-      >
-        <ReactPlayer
-          url={`https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/videos/work3.mp4`}
-          width="100%"
-          height="100%"
-          controls
-          playsinline
-          playIcon={
-            <button className="w-16 absolute top-[42%] left-[48%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
-              <Play
-                fill="#fff"
-                className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
-              />
-            </button>
-          }
-          light={
-            <Image
-              src={data?.media?.[0]?.image_url}
-              alt="Intro video thumbnail"
-              fill
-              priority
-              className="object-cover"
-            />
-          }
-        />
+      >{/* Custom thumbnail overlay */}
+      {!isPlaying && (
+        <div
+          className="absolute inset-0 z-10 cursor-pointer"
+          onClick={() => setIsPlaying(true)}
+        >
+          <Image
+            src={data?.media?.[0]?.image_url}
+            alt="Intro video thumbnail"
+            fill
+            priority
+            className="object-cover"
+          />
+          {/* Play button — design unchanged */}
+        <button className="w-16 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px] st group">
+  <Play
+    fill="#fff"
+    className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+  />
+</button>
+        </div>
+      )}
+
+      <ReactPlayer
+        url={data?.media?.[0]?.video_url}
+        width="100%"
+        height="100%"
+        controls
+        playsinline
+        playing={isPlaying}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => setIsPlaying(false)}
+      />
       </div>
     </div>
   );

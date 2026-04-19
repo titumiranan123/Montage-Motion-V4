@@ -12,7 +12,7 @@ interface MarqueeItem {
 
 interface VerticalMarqueeSliderProps {
   data: MarqueeItem[];
-  speed?: number; // pixels per second
+  speed?: number;
   pauseOnHover?: boolean;
   type: string;
 }
@@ -23,35 +23,32 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
   pauseOnHover = true,
 }) => {
   const [pausedColumns, setPausedColumns] = useState<Set<number>>(new Set());
+  // কোন item play হচ্ছে track করা — "colIdx-itemIdx"
+  const [playingKey, setPlayingKey] = useState<string | null>(null);
 
   const togglePause = (columnIndex: number, isPaused: boolean) => {
     setPausedColumns((prev) => {
       const newSet = new Set(prev);
-      if (isPaused) {
-        newSet.add(columnIndex);
-      } else {
-        newSet.delete(columnIndex);
-      }
+      if (isPaused) newSet.add(columnIndex);
+      else newSet.delete(columnIndex);
       return newSet;
     });
   };
 
-  if (!data || data.length === 0) {
-    return null;
-  }
+  if (!data || data.length === 0) return null;
 
-  // Calculate animation duration based on speed
-  const itemHeight = 228 + 20; // image height + gap
+  const itemHeight = 228 + 20;
   const animationDuration = (data.length * itemHeight) / speed;
 
-  const renderMarqueeColumn = (direction: "up" | "down", key: number) => {
-    const isColumnPaused = pausedColumns.has(key);
+  const renderMarqueeColumn = (direction: "up" | "down", colKey: number) => {
+    const isColumnPaused = pausedColumns.has(colKey);
+
     return (
       <div
-        key={key}
-        className="relative h-[500px] md:h-[600px] overflow-y-hidden"
-        onMouseEnter={pauseOnHover ? () => togglePause(key, true) : undefined}
-        onMouseLeave={pauseOnHover ? () => togglePause(key, false) : undefined}
+        key={colKey}
+        className="relative h-125 md:h-150 overflow-y-hidden"
+        onMouseEnter={pauseOnHover ? () => togglePause(colKey, true) : undefined}
+        onMouseLeave={pauseOnHover ? () => togglePause(colKey, false) : undefined}
       >
         <div
           className={`flex flex-col items-stretch gap-1 sm:gap-4 md:gap-5 ${isColumnPaused ? "animate-pause" : ""}`}
@@ -59,15 +56,15 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
             animation: `marquee-${direction} ${animationDuration}s linear infinite`,
           }}
         >
-          {/* Original items */}
           {data.map((item, idx) => {
+            const itemKey = `${colKey}-${idx}`;
+            const isPlaying = playingKey === itemKey;
+
             return (
-              <>
+              <React.Fragment key={idx}>
                 {item.video_url === "" || item.video_url === null ? (
-                  <div
-                    key={idx}
-                    className="relative w-38  sm:w-64 overflow-hidden rounded-lg md:w-52 h-20 xs:h-24 sm:h-32 md:h-[132px] mx-auto"
-                  >
+                  // ── Image only ──────────────────────────────
+                  <div className="relative w-38 sm:w-64 overflow-hidden rounded-lg md:w-52 h-20 xs:h-24 sm:h-32 md:h-33 mx-auto">
                     <Image
                       src={item.image_url}
                       alt={item.alt || ""}
@@ -76,29 +73,54 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
                     />
                   </div>
                 ) : (
-                  <div
-                    key={idx}
-                    className="w-[152px] sm:w-[171px] sm:h-[228px] md:w-[171px] h-[270px] md:h-[228px] overflow-hidden rounded-lg"
-                  >
+                  // ── Video ────────────────────────────────────
+                  <div className="w-38 sm:w-42.75 sm:h-57 md:w-42.75 h-67.5 md:h-57 overflow-hidden rounded-lg relative">
+                    
+                    {/* Custom thumbnail overlay */}
+                    {!isPlaying && (
+                      <div
+                        className="absolute inset-0 z-10 cursor-pointer"
+                        onClick={() => {
+                          setPlayingKey(itemKey);
+                          togglePause(colKey, true); // video চলাকালে marquee pause
+                        }}
+                      >
+                        <img
+                          src={item.image_url}
+                          alt={item.alt || ""}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* Play icon — design unchanged */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="flex items-center justify-center w-12 xs:w-14 sm:w-16 md:w-17 h-8 xs:h-10 sm:h-12 md:h-12">
+                            <Image
+                              src="/assets/icon/playsmall.png"
+                              width={68}
+                              height={48}
+                              alt="Play"
+                              className="w-full h-full"
+                              priority
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     <ReactPlayer
                       url={item?.video_url}
-                      playing={false}
-                      light={<img src={item.image_url} alt="" />}
-                      width={"100%"}
-                      height={"100%"}
+                      playing={isPlaying}
+                      width="100%"
+                      height="100%"
                       controls={true}
-                      playIcon={
-                        <div className="flex items-center justify-center w-12 xs:w-14 sm:w-16 md:w-[68px] h-8 xs:h-10 sm:h-12 md:h-12">
-                          <Image
-                            src="/assets/icon/playsmall.png"
-                            width={68}
-                            height={48}
-                            alt="Play"
-                            className="w-full h-full"
-                            priority
-                          />
-                        </div>
-                      }
+                      playsinline
+                      onPause={() => {
+                        setPlayingKey(null);
+                        togglePause(colKey, false);
+                      }}
+                      onEnded={() => {
+                        setPlayingKey(null);
+                        togglePause(colKey, false);
+                      }}
                       config={{
                         youtube: {
                           playerVars: {
@@ -111,30 +133,20 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
                     />
                   </div>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </div>
 
         <style jsx>{`
           @keyframes marquee-up {
-            0% {
-              transform: translateY(0);
-            }
-            100% {
-              transform: translateY(-50%);
-            }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
           }
-
           @keyframes marquee-down {
-            0% {
-              transform: translateY(-50%);
-            }
-            100% {
-              transform: translateY(0);
-            }
+            0% { transform: translateY(-50%); }
+            100% { transform: translateY(0); }
           }
-
           .animate-pause {
             animation-play-state: paused !important;
           }
@@ -147,17 +159,12 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
     <div
       className={`flex justify-center items-center gap-2 xs:gap-2.5 sm:gap-3 md:gap-3 w-full ${
         data?.[0]?.video_url
-          ? "max-w-md md:max-w-[513px]"
-          : "max-w-md md:max-w-[468px]"
+          ? "max-w-md md:max-w-128.25"
+          : "max-w-md md:max-w-117"
       }`}
     >
-      {/* First Column - Up */}
       <div className="shrink-0">{renderMarqueeColumn("up", 0)}</div>
-
-      {/* Second Column - Down */}
       <div className="shrink-0">{renderMarqueeColumn("down", 1)}</div>
-
-      {/* Third Column - Up - Hidden on mobile and tablet */}
       {data?.[0]?.video_url && (
         <div className="hidden md:block shrink-0">
           {renderMarqueeColumn("up", 2)}

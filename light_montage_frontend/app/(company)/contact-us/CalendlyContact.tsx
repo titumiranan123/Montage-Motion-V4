@@ -17,7 +17,7 @@ const CalendlyContact = () => {
       <div
         // data-aos="fade-up"
         // data-aos-delay={400}
-        className="max-w-[1200px] mx-auto w-full h-full xl:h-[761px]  overflow-hidden  bg-cover bg-center lg:mt-20 mt-10"
+        className="max-w-300 mx-auto w-full h-full xl:h-190.25  overflow-hidden  bg-cover bg-center lg:mt-20 mt-10"
       >
         {/* JS Disabled Fallback */}
         <noscript>
@@ -25,7 +25,7 @@ const CalendlyContact = () => {
             <h2 className="text-2xl font-semibold mb-3">
               JavaScript is disabled in your browser
             </h2>
-            <p className="mb-5 max-w-[500px]">
+            <p className="mb-5 max-w-125">
               Please enable JavaScript to view the booking calendar.
               Alternatively, you can book your meeting directly using the link
               below.
@@ -42,7 +42,7 @@ const CalendlyContact = () => {
         </noscript>
         <InlineWidget
           url="https://calendly.com/imonofficial2/30min"
-          className="max-w-[1200px] w-full xl:h-[761px] h-[1010px] overflow-hidden"
+          className="max-w-300 w-full xl:h-190.25 h-252.5 overflow-hidden"
         />
       </div>
     </div>

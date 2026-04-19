@@ -26,7 +26,7 @@ const ContactPage = async () => {
           __html: safeSchema,
         }}
       />
-      <div className="headerbg pb-15 pt-40 rounded-[40px] max-w-360 px-2 xl:px-15  mx-auto">
+      <div className="headerbg pb-15 pt-40 rounded-[40px]  px-2 xl:px-15  mx-auto">
         <FirstSection />
       </div>
       <Locationsection />

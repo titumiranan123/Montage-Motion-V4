@@ -39,7 +39,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
           __html: safeSchema,
         }}
       />
-      <div className="portfoliobg sectionarea min-h-screen rounded-[42px]">
+      <div className="portfoliobg  min-h-screen rounded-[42px]">
         <div className="pt-40"></div>
 
         <div
@@ -74,7 +74,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
           tab={matchedCategory?.service_type}
           types={categoryRes?.data}
         />
-        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto pb-14">
           {data?.data?.map((work: any, idx: number) => {
             if (work?.type === "shortsreels-editing") {
               return (

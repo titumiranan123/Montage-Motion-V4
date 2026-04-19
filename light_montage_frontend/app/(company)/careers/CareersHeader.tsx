@@ -4,9 +4,9 @@ import React from "react";
 
 const CareersHeader = () => {
   return (
-    <div className="relative sectionarea rounded-xl md:rounded-[40px]   overflow-hidden lg:h-screen pt-14">
-      <div className="bg-[#1FB5DD] w-150 h-150 absolute xl:-top-1.25 xl:-right-106.75 -top-53.75 -right-145 blur-[70px] xl:blur-[205px]  "></div>
-      <div className="bg-[#1FB5DD] w-150 h-150 absolute xl:-top-1.25 xl:-left-106.75 -top-53.75 -left-145 xl:blur-[185px] blur-[70px] "></div>
+    <div className="  rounded-xl md:rounded-[40px]   overflow-hidden lg:h-screen pt-14 relative">
+      <div className="bg-[#1FB5DD] w-150 h-150 absolute xl:-top-1 xl:-right-106.75 -top-53.75 -right-145 blur-[70px] xl:blur-[205px]  "></div>
+      <div className="bg-[#1FB5DD] w-150 h-150 absolute xl:-top-1 xl:-left-106.75 -top-53.75 -left-145 xl:blur-[185px] blur-[70px] "></div>
       <div
         style={{ zIndex: 50 }}
         className="flex justify-center items-center flex-col  max-w-155 w-full mx-auto lg:min-h-[70vh] lg:mt-14 mt-20 lg:px-0 px-4"

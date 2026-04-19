@@ -1,12 +1,13 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import TurstedBy from "@/component/home/TurstedBy";
 import Image from "next/image";
 import { Play } from "lucide-react";
 import ReactPlayer from "react-player";
 const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
   return (
     <div className="flex headerbg   flex-col justify-center items-center relative   lg:pt-56 pt-48  lg:gap-4 gap-4 sectionarea rounded-[40px]  ">
       {/* header content left side */}
@@ -40,54 +41,61 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           <Link
             target="_blank"
             href={`${data?.cta_primary_link}`}
-            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
+            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
-            Start a project
+            Start a Project
           </Link>
           <Link
             target="_blank"
-            href={`${data?.cta_primary_link}`}
-            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[10px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-2xl"
+            href={`/portfolio`}
+            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-[2px]"
           >
-            Book a Call
+            View Work
           </Link>
         </div>
       </div>
-      <div
+        <div
         className="
              lg:mt-10 mt-8
              overflow-hidden
              max-w-7xl
              mx-auto
-             
              rounded-[40px]
              bg-black relative aspect-video w-full
            "
-      >
-        <ReactPlayer
-          url={`https://pub-6a9bd81559354e09b0ca799ba12301c8.r2.dev/videos/work3.mp4`}
-          width="100%"
-          height="100%"
-          controls
-          playsinline
-          playIcon={
-            <button className="w-16 absolute top-[42%] left-[48%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
-              <Play
-                fill="#fff"
-                className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
-              />
-            </button>
-          }
-          light={
-            <Image
-              src={data?.media?.[0]?.image_url}
-              alt="Intro video thumbnail"
-              fill
-              priority
-              className="object-cover"
-            />
-          }
-        />
+      >{/* Custom thumbnail overlay */}
+      {!isPlaying && (
+        <div
+          className="absolute inset-0 z-10 cursor-pointer"
+          onClick={() => setIsPlaying(true)}
+        >
+          <Image
+            src={data?.media?.[0]?.image_url}
+            alt="Intro video thumbnail"
+            fill
+            priority
+            className="object-cover"
+          />
+          {/* Play button — design unchanged */}
+        <button className="w-16 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px] st group">
+  <Play
+    fill="#fff"
+    className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+  />
+</button>
+        </div>
+      )}
+
+      <ReactPlayer
+        url={data?.media?.[0]?.video_url}
+        width="100%"
+        height="100%"
+        controls
+        playsinline
+        playing={isPlaying}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => setIsPlaying(false)}
+      />
       </div>
     </div>
   );

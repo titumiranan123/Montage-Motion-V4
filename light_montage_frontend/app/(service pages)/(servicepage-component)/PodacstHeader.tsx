@@ -24,26 +24,27 @@ const PodacstHeader = ({ data }: { data: any }) => {
           {data?.description}
         </p>
 
-        <div className="w-full flex md:flex-row flex-col justify-center items-center gap-3 mt-10">
+       
+         <div
+          data-aos="fade-up"
+          data-aos-delay={200}
+          className="w-full flex justify-center items-center md:flex-row flex-col gap-3 mt-10"
+        >
           <Link
-            href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
             target="_blank"
-            data-aos="fade-up"
-            data-aos-delay={500}
-            className="md:w-38.75 w-full  h-12 btn-color text-black py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium"
+            href={`${data?.cta_primary_link}`}
+            className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
-            Start a project
+            Start a Project
           </Link>
           <Link
-            href={"https://calendly.com/imonofficial2/30min?month=2024-07"}
             target="_blank"
-            data-aos="fade-up"
-            data-aos-delay={600}
-            style={{}}
-            className="md:w-38.75 w-full h-12 btn-secondary text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium"
+            href={`/portfolio`}
+            className="md:w-38.75 w-full h-14 btn-secondary text-textPrimary py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out bg-white/20 glassShadow backdrop-blur-[2px]"
           >
-            Book a Call
+            View Work
           </Link>
+     
         </div>
       </div>
       <div data-aos="fade-up" data-aos-delay={700} className="">

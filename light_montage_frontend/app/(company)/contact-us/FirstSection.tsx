@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const FirstSection = () => {
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full mx-auto sectionarea">
       <div
         className={`flex flex-col gap-1 justify-center items-center max-w-4xl w-full mx-auto `}
       >

@@ -35,7 +35,7 @@ const AboutUs = async () => {
         }}
       />
       {data?.data?.header && (
-        <div className="headerbg rounded-[40px] max-w-360 px-2 xl:px-15 mx-auto pb-15 pt-16 mb-10">
+        <div className="headerbg rounded-[40px]  px-2 xl:px-15 mx-auto pb-15 pt-16 mb-10">
           <HeaderService mainIntro={data?.data?.header || null} />
         </div>
       )}

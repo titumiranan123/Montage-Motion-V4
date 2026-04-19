@@ -20,6 +20,7 @@ const HomePage = async () => {
   });
   // console.log("scham ====================>", data);
   const categoryRes = await getData({ url: "api/website/service/type" });
+  // console.log(data?.header)
   return (
     <div className="lg:mt-4 w-full mx-auto">
       <script
