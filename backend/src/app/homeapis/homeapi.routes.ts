@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getAllAboutData,
   getAllBlogs,
+  getAllCarrerData,
   getAllhomeData,
   getAllServicesData,
   getSingleBlogs,
@@ -10,6 +11,7 @@ import { getAllServiceSectionsType } from "../homeservice/homeservice.controller
 
 const webRoute = Router();
 webRoute.get("/website/data", getAllhomeData);
+webRoute.get("/website/carrer", getAllCarrerData);
 webRoute.get("/website/services/data", getAllServicesData);
 webRoute.get("/website/about", getAllAboutData);
 webRoute.get("/website/blog", getAllBlogs);

@@ -28,6 +28,8 @@ import comparisonRoute from "./app/comparison/comparison.routes";
 import industriesRoute from "./app/industry/industry.routes";
 import insightRoute from "./app/insight/insight.routes";
 import auth from "./midleware/authMidleware";
+import ourstoryRouter from "./app/ourstory/ourstory.route";
+import teamimageRoute from "./app/team_image/teamimage.route";
 
 const mainRoute = Router();
 
@@ -64,9 +66,12 @@ mainRoute.use("/api/process", workingProcess);
 mainRoute.use("/api/why-choose-us", pageWhychooseusRoute);
 mainRoute.use("/api/brand/images", bradImageRoute);
 mainRoute.use("/api/jobpost", carrerRoute);
+
 mainRoute.use("/api", videoRoute);
 // new
 mainRoute.use("/api/comparison", comparisonRoute);
 mainRoute.use("/api/industries", industriesRoute);
 mainRoute.use("/api/insight", insightRoute);
+mainRoute.use("/api/our-story", ourstoryRouter);
+mainRoute.use("/api/team-image", teamimageRoute);
 export default mainRoute;

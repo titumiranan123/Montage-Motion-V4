@@ -1,0 +1,13 @@
+
+CREATE TABLE team_images (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+ type VARCHAR(50) NOT NULL UNIQUE,
+  image VARCHAR(512) NOT NULL,
+  alt VARCHAR(512) NOT NULL,
+
+  order_index INTEGER DEFAULT 0 NOT NULL,
+  is_hidden BOOLEAN DEFAULT FALSE,
+
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);

@@ -5,6 +5,7 @@ import { responseHandler } from "../../utils/responseHandler";
 
 export const getAllhomeData = asyncHandler(
   async (req: Request, res: Response) => {
+
     const { type, table } = req.query;
     let tables: string[] = [];
     if (typeof table === "string") {
@@ -35,6 +36,12 @@ export const getAllServicesData = asyncHandler(
 export const getAllAboutData = asyncHandler(
   async (req: Request, res: Response) => {
     const result = await homeapiServices.aboutService();
+    return responseHandler(res, 200, true, "Fetched all about data", result);
+  },
+);
+export const getAllCarrerData = asyncHandler(
+  async (req: Request, res: Response) => {
+    const result = await homeapiServices.carrerService();
     return responseHandler(res, 200, true, "Fetched all about data", result);
   },
 );

@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../../db/db";
 import { errorLogger } from "../../logger/logger";
+import { careerPageService } from "../carrerpost/carrer.service";
 import { comparisonService } from "../comparison/comparison.services";
 import { faqService } from "../faq/faq.services";
 import { homeService } from "../homeservice/homeservice.service";
 import { industryTabsService } from "../industry/industry.services";
+import { ourstoryService } from "../ourstory/ourstory.service";
 import { pricingPageService } from "../pricing/pricing.service";
 import { seoMetaService } from "../seo/seo.service";
+import { BrandImageService } from "../team_image/teamimage.service";
 // import { seoMetaService } from "../seo/seo.service";
 import { whychooseusSectionService } from "../whychooseus/whychooseus.service";
 import { processService } from "../working_process/process.service";
@@ -15,6 +18,7 @@ import { fetchSectionData } from "./utils";
 
 export const homeapiServices = {
   async advertsingService(type: string, tables: string[]) {
+   
     const client = await db.connect();
     try {
       await client.query("BEGIN");
@@ -81,6 +85,18 @@ export const homeapiServices = {
         });
         whychooseus = result.length > 0 ? result[0] : [];
       }
+      let ourstory
+      if (tables.includes("ourstory")) {
+         ourstory = await ourstoryService.getAllStories({type:type});
+     
+   
+    
+      }
+      let teamimage
+      if (tables.includes("teamimage")) {
+      teamimage = await BrandImageService.getAllBrandImage(type);
+           
+      }
       let comparision: any = [];
       if (tables.includes("comparision")) {
         const result = await comparisonService.getComparisons(type as string);
@@ -113,50 +129,10 @@ export const homeapiServices = {
         members = res;
       }
 
-      // const pricingService = async () => {
-      //   let res;
-      //   if (type === "main") {
-      //     res = await client.query(`SELECT * FROM packages `);
-      //   } else {
-      //     res = await client.query(`SELECT * FROM packages WHERE type = $1`, [
-      //       type,
-      //     ]);
-      //   }
-      //   logger.info("results", res.rows);
-      //   const packages = res.rows;
-
-      //   for (const pkg of packages) {
-      //     pkg.features = await packageFeatureService.getFeaturesByPackageId(
-      //       pkg.id
-      //     );
-      //   }
-
-      //   return packages;
-      // };
-
-      // const faqService = async () => {
-      //   const result = await client.query(
-      //     `SELECT id, title, sub_title FROM faqs WHERE type = $1 AND is_visible = true`,
-      //     [type]
-      //   );
-
-      //   const faq = result.rows[0];
-      //   if (!faq) return null;
-
-      //   const faqitem = await client.query(
-      //     `SELECT * FROM faq_items WHERE faq_id = $1 ORDER BY position ASC`,
-      //     [faq.id]
-      //   );
-
-      //   faq.faqs = faqitem.rows;
-      //   return faq;
-      // };
-
-      // const allFaqs = await faqService();
-      // const prices = await pricingService();
+      
 
       await client.query("COMMIT");
-      // console.log("pricing", pricing);
+   
       return {
         schema: seo?.schema,
         header: result?.rows[0] || null,
@@ -171,6 +147,8 @@ export const homeapiServices = {
         comparision: comparision,
         industries: industries,
         faq: faq,
+        teamimage:teamimage,
+        ourstory:ourstory
         // seo: seo,
         // pricing: prices || [],
       };
@@ -242,6 +220,23 @@ export const homeapiServices = {
     } finally {
       client.release();
     }
+  },
+  async carrerService(){
+
+    try {
+    
+     const ourstory = await ourstoryService.getAllStories({type:"about"});
+     const jobpost = await careerPageService.getCareerPageByType();
+   
+    const seo = await seoMetaService.getSchema("career");
+    
+
+      return  {ourstory:ourstory,jobpost:jobpost,schema:seo.schema};
+    } catch (error) {
+   
+      errorLogger.error(error);
+      throw error;
+    } 
   },
 
   async getAllHomeBlogs() {
