@@ -23,11 +23,15 @@ const TextTestimonialSwiper: React.FC<Props> = ({ data }) => {
 
     const step = () => {
       if (!isPaused.current && el) {
-        el.scrollLeft += 0.6;
+        el.scrollLeft -= 0.6;
         const half = el.scrollWidth / 2;
-        if (el.scrollLeft >= half) {
-          el.scrollLeft -= half;
+        if (el.scrollLeft <= 0) {
+          el.scrollLeft += half;
         }
+        // const half = el.scrollWidth / 2;
+        // if (el.scrollLeft >= half) {
+        //   el.scrollLeft -= half;
+        // }
       }
       animRef.current = requestAnimationFrame(step);
     };

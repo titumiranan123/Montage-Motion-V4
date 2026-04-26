@@ -9,13 +9,11 @@ export async function generateMetadata() {
   return await getPageSEO("career");
 }
 const Careers = async () => {
-  const [data, seoRes] = await Promise.all([
-    getData({ url: "api/jobpost" }),
-    getData({ url: "api/seo/career" }),
-  ]);
+ 
+  const data = await getData({ url: "api/website/carrer" })
 
   const safeSchema =
-    seoRes?.data?.schema ??
+    data?.data?.schema ??
     JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -30,8 +28,8 @@ const Careers = async () => {
         }}
       />
       <CareersHeader />
-      <OurStory />
-      <JobPost data={data?.data ?? []} />
+      <OurStory data={data?.data?.ourstory?.[0]} />
+      <JobPost data={data?.data?.jobpost ?? []} />
       <Locationsection />
     </div>
   );

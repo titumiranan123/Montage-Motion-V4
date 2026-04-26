@@ -8,9 +8,9 @@ const PartnersSection = ({ data }: { data: any[] }) => {
     <section
       data-aos="fade-up"
       data-aos-delay={500}
-      className="relative w-full mt-10  max-w-7xl px-6 mx-auto py-6 overflow-hidden "
+      className="relative w-full mt-10 max-w-7xl px-6 mx-auto py-6 overflow-hidden"
     >
-      <div className=" mx-auto w-full flex flex-col items-center justify-center">
+      <div className="mx-auto w-full flex flex-col items-center justify-center">
         <Marquee
           pauseOnHover
           speed={50}
@@ -21,24 +21,28 @@ const PartnersSection = ({ data }: { data: any[] }) => {
           {data?.map((partner, index) => (
             <div
               key={partner.id || index}
-              className="lg:-mx-2.5 -mx-5 pointer-events-none select-none flex items-center justify-center "
+              className="lg:mx-6 mx-4 pointer-events-none select-none flex items-center justify-center"
             >
-              <Image
-                src={partner?.image}
-                alt={partner?.alt || `Partner logo ${index + 1}`}
+              <div
+                className="relative  w-auto"
                 style={{
                   backgroundColor: partner?.bg || "transparent",
-                  width: partner?.width || "auto",
-                  height: partner?.height || "40px",
-                  maxWidth: "140px",
-                  maxHeight: "40px",
-                  objectFit: "contain",
+                  aspectRatio: "auto",
                 }}
-                className="rounded-lg select-none"
-                loading="lazy"
-                width={140}
-                height={40}
-              />
+              >
+                <Image
+                  src={partner?.image}
+                  alt={partner?.alt || `Partner logo ${index + 1}`}
+                  height={40}          // ← fixed 40px height
+                  width={180}          // ← width auto adjust হবে
+                  className="rounded-lg select-none object-contain h-auto w-auto "
+                  loading="lazy"
+                  style={{
+                    height: "70px",    // ← globally max 40px
+                    width: "auto",     // ← aspect ratio বজায় থাকবে
+                  }}
+                />
+              </div>
             </div>
           ))}
         </Marquee>

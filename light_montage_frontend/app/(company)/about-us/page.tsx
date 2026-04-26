@@ -1,5 +1,4 @@
 import HeaderService from "@/component/about/Header";
-import InsideMontage from "./InsideMontage";
 import OurMission from "./OurMission";
 import OurTeam from "./OurTeam";
 import OurStory from "./OurStory";
@@ -8,6 +7,7 @@ import ContactSection from "@/component/share/ContactSection";
 import { getData } from "@/utils/getData";
 import PartnersSection from "@/component/home/PatnersSection";
 import HomeFaqSection from "@/component/share/HomeFaqSection";
+import TeamimageSection from "./TeamimageSection";
 export const dynamic = "force-dynamic";
 // Metadata for SEO
 export async function generateMetadata() {
@@ -16,9 +16,8 @@ export async function generateMetadata() {
 
 const AboutUs = async () => {
   const data = await getData({
-    url: `api/website/data?type=about&table=brand,members,faq`,
+    url: `api/website/data?type=about&table=brand,members,faq,ourstory,teamimage`,
   });
-  // console.log("data ========> ", data?.data?.schema);
   const safeSchema =
     data?.data?.schema ??
     JSON.stringify({
@@ -43,9 +42,9 @@ const AboutUs = async () => {
       {/* <Brand /> */}
       <OurMission />
 
-      <OurStory />
+      <OurStory data={data?.data?.ourstory?.[0]} />
       {data?.data?.members && <OurTeam members={data?.data?.members} />}
-      <InsideMontage />
+      <TeamimageSection data={data?.data?.teamimage} />
       {data?.data?.faq && <HomeFaqSection data={data?.data?.faq} />}
       <ContactSection />
     </div>

@@ -1,31 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Gradientcard from "@/component/share/Gradientcard";
 import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const storyCards = [
-  {
-    title: "Where we Began",
-    description:
-      "Montage Motion started with a passion for storytelling through video. What began as a small editing team focused on helping creators polish their content quickly became a creative hub where ideas turned into impactful visuals.",
-    image: "/assets/podcast/process.png",
-  },
-  {
-    title: "How we Grew",
-    description:
-      "As demand grew, so did we. From video editing, we expanded into advertising, graphic design, and custom website development. Our team grew into a powerhouse of 12+ specialists, delivering projects for creators, businesses, and brands across industries.",
-    image: "/assets/podcast/greatpodcast.png",
-  },
-  {
-    title: "Where we're Going",
-    description:
-      "The future is bold. Montage Motion is on a mission to become a global creative partner for content creators and brands, pushing the boundaries of short-form video, marketing visuals, and digital storytelling. We're building towards innovation, scale, and impact that inspires millions.",
-    image: "/assets/podcast/process.png",
-  },
-];
+// const data = [
+//   {
+//     title: "Where we Began",
+//     description:
+//       "Montage Motion started with a passion for storytelling through video. What began as a small editing team focused on helping creators polish their content quickly became a creative hub where ideas turned into impactful visuals.",
+//     image: "/assets/podcast/process.png",
+//   },
+//   {
+//     title: "How we Grew",
+//     description:
+//       "As demand grew, so did we. From video editing, we expanded into advertising, graphic design, and custom website development. Our team grew into a powerhouse of 12+ specialists, delivering projects for creators, businesses, and brands across industries.",
+//     image: "/assets/podcast/greatpodcast.png",
+//   },
+//   {
+//     title: "Where we're Going",
+//     description:
+//       "The future is bold. Montage Motion is on a mission to become a global creative partner for content creators and brands, pushing the boundaries of short-form video, marketing visuals, and digital storytelling. We're building towards innovation, scale, and impact that inspires millions.",
+//     image: "/assets/podcast/process.png",
+//   },
+// ];
 
-export default function OurStory() {
+export default function OurStory({data}:{data:any}) {
+  // console.log(" data ===============>",data)
   const [activeIndex, setActiveIndex] = useState(0);
   const [capPosition, setCapPosition] = useState(8);
   useEffect(() => {
@@ -69,9 +71,9 @@ export default function OurStory() {
   return (
     <div className="bg-white sectionGap p-8 max-w-7xl mx-auto">
       <Heading
-        tag="Our Story"
-        title="Our Story in Motion"
-        subtitle="From humble beginnings to a growing creative powerhouse — discover how Montage Motion started, evolved, and where we’re headed next."
+        tag={data?.tag}
+        title={data?.heading_part1}
+        subtitle={data?.paragraph}
         isbackground={true}
         width="160"
       />
@@ -80,8 +82,8 @@ export default function OurStory() {
         {/* Left - Image */}
         <div className="xl:w-1/2 xl:sticky top-44 h-fit">
           <Image
-            src={storyCards[activeIndex].image}
-            alt={storyCards[activeIndex].title}
+            src={data?.ourstory_steps?.[activeIndex]?.image}
+            alt={data?.ourstory_steps?.[activeIndex]?.title}
             width={590}
             height={620}
             className="w-147.5 h-130 rounded-[13px] object-cover"
@@ -120,7 +122,7 @@ export default function OurStory() {
         </div>
         {/* Right - Cards */}
         <div className="xl:w-1/2 space-y-8 cards-container">
-          {storyCards?.map((card, index) => (
+          {data?.ourstory_steps?.map((card:any, index:number) => (
             <div
               key={index}
               className="story-card"
@@ -134,10 +136,10 @@ export default function OurStory() {
                   }`}
               >
                 <h3 className="text-[20px] md:text-[24px] font-semibold poppins mb-3">
-                  {card.title}
+                  {card?.title}
                 </h3>
                 <p className="text-[14px] md:text-[16px] font-normal opensans leading-relaxed">
-                  {card.description}
+                  {card?.description}
                 </p>
               </Gradientcard>
             </div>
