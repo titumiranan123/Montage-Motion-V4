@@ -84,6 +84,7 @@ export default function MainLayout({
         },
       ],
     },
+    
     {
       section: "Hyper Service",
       items: [
@@ -94,6 +95,7 @@ export default function MainLayout({
         },
       ],
     },
+    
     {
       section: "Pages",
       items: [
@@ -161,6 +163,21 @@ export default function MainLayout({
         { href: "/montage/faqs", label: "Faq Section", icon: <FiHelpCircle /> },
         { href: "/montage/blogs", label: "Blogs", icon: <FiBookOpen /> },
         { href: "/montage/contact", label: "Contact", icon: <FiMail /> },
+      ],
+    },
+    {
+      section: "About Page *",
+      items: [
+        {
+          href: "/montage/our-story",
+          label: "Our Story Section",
+          icon: <FiFileText />,
+        },
+        {
+          href: "/montage/team-image",
+          label: "Team Image",
+          icon: <FiMap />,
+        },
       ],
     },
   ];
