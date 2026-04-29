@@ -38,7 +38,7 @@ const PartnersSection = ({ data }: { data: any[] }) => {
                   className="rounded-lg select-none object-contain h-auto w-auto "
                   loading="lazy"
                   style={{
-                    height: "70px",    // ← globally max 40px
+                    height: "50px",    // ← globally max 40px
                     width: "auto",     // ← aspect ratio বজায় থাকবে
                   }}
                 />

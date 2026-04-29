@@ -30,6 +30,7 @@ import insightRoute from "./app/insight/insight.routes";
 import auth from "./midleware/authMidleware";
 import ourstoryRouter from "./app/ourstory/ourstory.route";
 import teamimageRoute from "./app/team_image/teamimage.route";
+import caseRoute from "./app/case-study/caseStudy.routes";
 
 const mainRoute = Router();
 
@@ -74,4 +75,5 @@ mainRoute.use("/api/industries", industriesRoute);
 mainRoute.use("/api/insight", insightRoute);
 mainRoute.use("/api/our-story", ourstoryRouter);
 mainRoute.use("/api/team-image", teamimageRoute);
+mainRoute.use("/api/case-studies", caseRoute);
 export default mainRoute;

@@ -56,7 +56,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ data }) => {
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
-              className={` aspect-9/16!  rounded-lg overflow-hidden relative`}
+              className={` aspect-9/16! mx-auto  rounded-lg overflow-hidden relative`}
             >
               <ReactPlayer
                 url={work.video_link}
@@ -90,7 +90,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ data }) => {
               data-aos="fade-up"
               data-aos-delay={200 + idx * 100}
               key={work.id || idx}
-              className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-102.5 w-full h-full max-h-77 rounded-[13px]"
+              className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-102.5 w-full mx-auto h-full max-h-77 rounded-[13px]"
             >
               {/* Title */}
               {work.title && (
@@ -121,7 +121,7 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ data }) => {
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
-              className=" rounded-lg  overflow-hidden"
+              className=" rounded-lg w-full mx-auto overflow-hidden"
             >
               <VideoPlayer
                 className=""

@@ -68,7 +68,7 @@ const HomeTab = ({
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       className={`glassShadow bg-white/40 backdrop-blur-2xl
-        max-w-148.5 h-18.75
+        sm:max-w-148.5 max-w-full h-18.75
         flex justify-start lg:justify-center items-center
         mx-auto rounded-[12px]
         mt-5 transition-all duration-300

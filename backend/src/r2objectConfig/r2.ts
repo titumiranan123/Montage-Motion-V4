@@ -37,7 +37,8 @@ export const uploadToR2 = async (
   contentType: string,
 ) => {
   try {
-    const fileKey = `production/montagemotion-${fileName}`;
+    const randomId = `${Date.now()}-${Math.floor(10000 + Math.random() * 90000)}`;
+      const fileKey = `production/montagemotion-${randomId}-${fileName}`;
     const upload = new Upload({
       client: r2Client,
       params: {

@@ -121,7 +121,7 @@ export const homeService = {
       //   (item) => item.service_type
       // );
       sectionsType = [
-        { service_title: "Home", service_type: "home" },
+        { service_title: "Home", service_type: "home" , href:"/"},
         ...itemsRes.rows,
       ];
     }

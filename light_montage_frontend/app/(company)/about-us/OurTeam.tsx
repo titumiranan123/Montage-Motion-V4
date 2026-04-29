@@ -17,10 +17,10 @@ const OurTeam = ({ members }: any) => {
         `}
       </style>
       <Heading
-        subtitle="A passionate team of creators, strategists, and innovatiors working together to bring ideas to life."
+        subtitle="Our office, our team, our everyday moments. The real people behind every edit, every thumbnail, and every deadline we hit for you. "
         tag="Our Members"
-        title="Meet the Minds Behind "
-        extratitle="Montage Motion"
+        title="Inside Montage Motion"
+   
         width="160"
       />
       <div className="mt-8 lg:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4">

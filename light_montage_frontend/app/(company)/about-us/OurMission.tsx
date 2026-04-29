@@ -12,9 +12,9 @@ linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
       }
       `}</style>
       <Heading
-        subtitle="At Montage Motion, we blend creativity, strategy, and technology to transform ideas into visuals that inspire, engage, and deliver results."
-        title="Crafting Stories That "
-        extratitle="Connect"
+        subtitle="Every frame we touch is designed to earn attention and deliver results. "
+        title="Visuals Built to Perform"
+   
         tag="Our Mission & Vission"
         width="210"
       />
@@ -25,11 +25,7 @@ linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
               Our Mission{" "}
             </h3>
             <p className="text-[14px] md:text-[16px] font-normal opensans mt-2">
-              Our mission is to simplify the creative process for brands,
-              creators , and bussinesses. We deliver video editing , design ,
-              advertising , and digital solutions that not only look stunning
-              but also achieve measurable impact. Every project is bilt on
-              clarity, creativity, and consistency.
+             To be the creative engine behind the world&apos;s best video content. We handle the editing, design, and strategy so our clients can focus on growing. Every cut is intentional. Every thumbnail earns its click. 
             </p>
           </div>
         </div>
@@ -39,11 +35,7 @@ linear-gradient(180deg, #E9F8FC 0%, #F6FDFF 100%);
               Our Vision{" "}
             </h3>
             <p className="text-[14px] md:text-[16px] font-normal opensans mt-2">
-              We see a future where every story—whether from a creator, startup,
-              or enterprise—has the power to captivate audiences. By combining
-              design, marketing, and storytelling, Montage Motion envisions
-              building a global hub of creative excellence that shapes how
-              people connect with content.
+             A future where every creator and brand, regardless of size, has access to studio-quality production. We are building Montage Motion into the go-to creative partner for ambitious brands across the globe. 
             </p>
           </div>
         </div>

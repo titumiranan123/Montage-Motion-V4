@@ -38,7 +38,7 @@ const Locationsection = () => {
               Location
             </h2>
             <p className="text-[14px] font-normal opensans md:text-[16px] text-(--text-primary) mt-2">
-              House no 11, Road 24, 2 Modina Nagar, Evenue 5, Dhaka 1216
+              House no 11, Road 24, 2 Modina Nagar, Avenue 5, Dhaka 1216
             </p>
             <a
               href="https://wa.me/+8801786546949?text=Hi%20Montage%20Motion!%20I%20need%20guidance%20to%20reach%20your%20location."

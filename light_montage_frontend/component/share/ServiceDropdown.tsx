@@ -80,20 +80,10 @@ const ServiceDropdown = () => {
             iconColor="text-primary-40"
             links={[
               { href: "/thumbnail-design-services", label: "Thumbnail Design" },
-              // { href: "/thumbnail-design-services", label: "Logo Design" },
-              // { href: "/thumbnail-design-services", label: "Branding" },
-              // { href: "/thumbnail-design-services", label: "UI/UX" },
             ]}
             borderNone={true}
           />
 
-          {/* Content Section */}
-          {/* <ServiceColumn
-              title="Advertising"
-              iconColor="text-primary-40"
-              links={[]}
-              borderNone
-            /> */}
         </div>
       </div>
     </div>

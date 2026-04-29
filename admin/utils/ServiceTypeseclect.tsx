@@ -16,13 +16,13 @@ export const ServiceTypeSelect = ({
   slice?: number;
   others?: any[];
 }) => {
+
   // Fetch category list
   const { data } = useQuery({
     queryKey: ["categories"],
     queryFn: getDataCategory,
   });
   const allTypes = [...(data ?? []), ...others];
-
   return (
     <select
       value={value}

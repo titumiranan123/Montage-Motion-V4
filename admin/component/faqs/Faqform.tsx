@@ -115,6 +115,8 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
           <ServiceTypeSelect
             value={watch("type")}
             onChange={(v) => setValue("type", v)}
+            others={[{service_type:"about",service_title:"About"}]}
+
           />
           {errors.type && (
             <p className="text-red-400 text-sm mt-1">{errors.type.message}</p>

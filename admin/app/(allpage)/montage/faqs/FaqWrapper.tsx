@@ -2,7 +2,7 @@
 "use client";
 import { FaqForm } from "@/component/faqs/Faqform";
 import { IFaqSection } from "@/interface/interface";
-import React, { useState } from "react";
+import  { useState } from "react";
 import PageFaqSection from "./PagefaqSection";
 import { ServiceFilter } from "@/utils/Servicefilter";
 
@@ -19,7 +19,7 @@ const FaqWrapper = ({ data }: any) => {
         </div>
 
         <div className="flex items-center gap-4">
-          <ServiceFilter />
+          <ServiceFilter others={[{service_title:"About",service_type:"about"}]} />
           {/* Add section */}
           <button
             onClick={() => {

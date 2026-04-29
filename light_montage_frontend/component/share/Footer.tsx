@@ -117,7 +117,7 @@ const Footer: React.FC = () => {
                 +8801786546949
               </Link>
               <p className="text-[16px] font-normal leading-[150%] hover:scale-105 animated">
-                House no 11, Road 24, 2 Modina Nagar, Evenue 5, Dhaka 1216
+                House no 11, Road 24, 2 Modina Nagar, Avenue 5, Dhaka 1216
               </p>
             </div>
           </div>
