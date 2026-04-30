@@ -36,7 +36,7 @@ const PodcastInsight = ({ data }: any) => {
           src={data?.steps?.[activeStep]?.image}
           width={544}
           height={506}
-          className="rounded-[13px] lg:w-136 lg:h-126.5 w-70 ms-24 lg:ms-0"
+          className="rounded-[13px]  lg:max-w-136 lg:w-136 lg:h-126.5 max-w-70 w-full ms-4 lg:ms-0"
           alt="greatpodcast"
         />
 

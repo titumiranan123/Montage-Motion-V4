@@ -33,7 +33,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
           height={898}
           data-aos="fade-right"
           data-aos-delay={200}
-          className="max-w-159.5 rounded-[13px] w-full h-124.5"
+          className="max-w-159.5 rounded-[13px] w-full lg:h-124.5"
           priority
         />
       </div>

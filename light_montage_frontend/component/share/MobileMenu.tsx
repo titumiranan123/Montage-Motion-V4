@@ -22,7 +22,7 @@ const MobileMenu = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/portfolio", label: "Portfolio" },
-    { href: "/blog", label: "Blogs" },
+    { href: "/blogs", label: "Blogs" },
     { href: "/careers", label: "Careers" },
     { href: "/about-us", label: "About" },
     { href: "/contact-us", label: "Contact" },

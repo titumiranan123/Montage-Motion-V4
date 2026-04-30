@@ -87,7 +87,7 @@ const Homewrapper = ({ initialData }: { initialData: any }) => {
                         <Image
                           src={media?.image_url}
                           fill
-                          alt=" "
+                          alt={"image"}
                           className="w-full h-full aspect-video"
                         />
                       }

@@ -9,7 +9,7 @@ import { Play } from "lucide-react";
 const Header: React.FC<{ data: any }> = ({ data }) => {
 const [isPlaying, setIsPlaying] = useState(false);
   return (
-    <div className="flex   lg:pt-30 pt-34 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 ">
+    <div className="flex   lg:pt-30 pt-34 flex-col justify-center items-center relative    py-10  lg:gap-4 gap-4 px-2 ">
       {/* header content left side */}
       <div className="flex z-20 justify-center items-center  flex-col  lg:pt-10 pt-10 max-w-195 mx-auto">
         <div
@@ -22,7 +22,7 @@ const [isPlaying, setIsPlaying] = useState(false);
         <h1
           data-aos="fade-up"
           data-aos-delay={200}
-          className="lg:text-[70px]  text-[42px] leading-[101%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
+          className="lg:text-[70px]  text-[40px] leading-[110%] font-medium text-(--text-primary) poppins  text-center lg:mt-5 mt-4"
         >
           {data?.page_title}
         </h1>
@@ -36,7 +36,7 @@ const [isPlaying, setIsPlaying] = useState(false);
         <div
           data-aos="fade-up"
           data-aos-delay={200}
-          className="w-full flex justify-center items-center md:flex-row flex-col gap-3 mt-10"
+          className="w-full flex justify-center items-center md:flex-row flex-col gap-3 mt-10 px-4 md:px-0"
         >
           <Link
             target="_blank"
@@ -60,7 +60,7 @@ const [isPlaying, setIsPlaying] = useState(false);
              overflow-hidden
              max-w-7xl
              mx-auto
-             rounded-[40px]
+             lg:rounded-[40px] px-2 rounded-2xl
              bg-black relative aspect-video w-full
            "
       >{/* Custom thumbnail overlay */}
@@ -77,12 +77,12 @@ const [isPlaying, setIsPlaying] = useState(false);
             className="object-cover"
           />
           {/* Play button — design unchanged */}
-        <button className="w-16 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px] st group">
-  <Play
-    fill="#fff"
-    className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
-  />
-</button>
+        <button className="md:w-16 w-14 md:h-10 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center lg:rounded-xl rounded-lg  text-white backdrop-blur-[2px] st group">
+            <Play
+              fill="#fff" 
+              className="group-hover:scale-105 size-4 md:size-6 active:scale-90 duration-200 ease-in-out"
+            />
+          </button>
         </div>
       )}
 

@@ -37,9 +37,11 @@ const HomeTab = ({
   const handleTabClick = (href: string) => {
     if (!isDragging) {
       setActiveTab(href);
-      // router.replace(`?cat=${href}`, { scroll: false });
+    
+   
     }
   };
+
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);

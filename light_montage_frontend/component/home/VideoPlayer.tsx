@@ -8,16 +8,18 @@ const VideoPlayer = ({
   link,
   thumbnail,
   className,
+
 }: {
   link: string;
   thumbnail: string;
   className?: string;
+
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
     <div className={`${className} aspect-video rounded-lg overflow-hidden relative`}>
-      
+
       {/* Custom thumbnail overlay */}
       {!isPlaying && (
         <div
@@ -32,10 +34,10 @@ const VideoPlayer = ({
             className="object-cover"
           />
           {/* Play button — design unchanged */}
-          <button className="w-16 absolute top-[42%] left-[44%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px] st group">
+          <button className="md:w-16 w-14 md:h-10 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center lg:rounded-xl rounded-lg  text-white backdrop-blur-[2px] st group">
             <Play
               fill="#fff"
-              className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+              className="group-hover:scale-105 size-4 md:size-6 active:scale-90 duration-200 ease-in-out"
             />
           </button>
         </div>

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -41,11 +43,20 @@ export default function PodcastSlider({ data }: { data: any[] }) {
   const isDraggingRef = useRef(false);
   const draggableRef = useRef<Draggable | null>(null);
   const proxyRef = useRef<HTMLDivElement | null>(null);
-
+  const [isDragging, setIsDragging] = useState(false); // যোগ করো
   const EASE = "power4.out";
   const DUR = 1.0;
   const len = data?.length ?? 0;
-
+  const [layout, setLayout] = useState<Layout>({
+    baseW: 688,
+    baseH: 387,
+    stepX: 520,
+    sideX: 500,
+    sideY: 60,
+    sideScaleX: 240 / 688,
+    sideScaleY: 143 / 387,
+    offscreenX: 1500,
+  });
   const layoutRef = useRef<Layout>({
     baseW: 688,
     baseH: 387,
@@ -99,6 +110,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
       el.style.width = `${layoutRef.current.baseW}px`;
       el.style.height = `${layoutRef.current.baseH}px`;
     });
+    setLayout({ ...layoutRef.current });
   }, []);
 
   // 🧠 GSAP setters cache
@@ -279,6 +291,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
           player.getInternalPlayer()?.pause();
         } catch (e) {
           // Silent fail
+          console.log(e)
         }
       }
     });
@@ -323,6 +336,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
       },
       onDragStart: function () {
         isDraggingRef.current = true;
+        setIsDragging(true);
       },
       onDrag: function () {
         const dragProgress = this.x / (layoutRef.current.baseW * 0.5);
@@ -361,6 +375,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
         }
 
         isDraggingRef.current = false;
+        setIsDragging(false);
       },
     })[0];
 
@@ -403,6 +418,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
           player.getInternalPlayer()?.pause();
         } catch (e) {
           // Silent fail
+          console.log(e)
         }
       }
     });
@@ -417,6 +433,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
             ?.play()
             .catch((e: any) => {
               // Silent fail
+              console.log(e)
             });
         }, 100);
       }
@@ -433,11 +450,11 @@ export default function PodcastSlider({ data }: { data: any[] }) {
       <div className="w-full px-2 sm:px-4">
         <div
           ref={containerRef}
-          className="relative h-[260px] sm:h-80 md:h-[400px] lg:h-[460px] xl:h-[480px] cursor-grab active:cursor-grabbing touch-none"
+          className="relative h-65 sm:h-80 md:h-100 lg:h-115 xl:h-120 cursor-grab active:cursor-grabbing touch-none"
           style={{ perspective: "2000px" }}
         >
           <div className="relative h-full flex items-center justify-center">
-            {data.map((item, index) => {
+            {data.map((item: any, index: number) => {
               const isCenterSlide = safeCurrentIndex === index;
               return (
                 <div
@@ -456,18 +473,18 @@ export default function PodcastSlider({ data }: { data: any[] }) {
                   <div
                     className="relative overflow-hidden bg-black rounded-[20px]"
                     style={{
-                      width: layoutRef.current.baseW,
-                      height: layoutRef.current.baseH,
+                      width: layout.baseW,
+                      height: layout.baseH,
                     }}
                   >
                     <ReactPlayer
                       url={item?.video_url}
                       light={item?.image_url}
                       playIcon={
-                        <button className="w-16 absolute top-[40%] left-[46%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
+                        <button className="md:w-16 w-14 md:h-10 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center lg:rounded-xl rounded-lg  text-white backdrop-blur-[2px] st group">
                           <Play
                             fill="#fff"
-                            className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
+                            className="group-hover:scale-105 size-4 md:size-6 active:scale-90 duration-200 ease-in-out"
                           />
                         </button>
                       }
@@ -479,7 +496,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
                       width="100%"
                       height="100%"
                       style={{
-                        pointerEvents: isDraggingRef.current ? "none" : "auto",
+                        pointerEvents: isDragging ? "none" : "auto",
                       }}
                       onReady={() => handleVideoReady(index)}
                       onPlay={handleVideoPlay}

@@ -4,14 +4,14 @@ import React from "react";
 import Image from "next/image";
 
 import VideoPlayer from "./VideoPlayer";
-import ReactPlayer from "react-player";
-import { Play } from "lucide-react";
+
 
 interface DynamicWorkContentProps {
   data: any;
 }
 
 const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ data }) => {
+  // console.log("data ===========>",data)
   // Handle no data state
   if (!data || data.length === 0) {
     return (
@@ -51,36 +51,18 @@ const DynamicWorkContent: React.FC<DynamicWorkContentProps> = ({ data }) => {
     <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto">
       {data?.map((work: any, idx: number) => {
         if (work?.type === "shortsreels-editing") {
+  
           return (
             <div
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
-              className={` aspect-9/16! mx-auto  rounded-lg overflow-hidden relative`}
+              className={`w-full mx-auto  rounded-lg overflow-hidden relative`}
             >
-              <ReactPlayer
-                url={work.video_link}
-                width="100%"
-                height="100%"
-                controls
-                playsinline
-                playIcon={
-                  <button className="w-16 absolute top-[42%] left-[44%] flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px]  st group">
-                    <Play
-                      fill="#fff"
-                      className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
-                    />
-                  </button>
-                }
-                light={
-                  <Image
-                    src={work?.thumbnail}
-                    alt="Intro video thumbnail"
-                    fill
-                    priority
-                    className="object-cover"
-                  />
-                }
+                <VideoPlayer
+                className="aspect-9/16!"
+                thumbnail={work?.thumbnail}
+                link={work?.video_link}
               />
             </div>
           );

@@ -31,7 +31,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           data-aos-delay={300}
           className="text-(--text-secondary) text-[14px] font-normal md:text-[16px] opensans text-center  leading-[150% ]  mt-6 "
         >
-          {data?.description} {}
+          {data?.description} { }
         </p>
         <div
           data-aos="fade-up"
@@ -54,7 +54,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           </Link>
         </div>
       </div>
-        <div
+      <div
         className="
              lg:mt-10 mt-8
              overflow-hidden
@@ -64,38 +64,38 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
              bg-black relative aspect-video w-full
            "
       >{/* Custom thumbnail overlay */}
-      {!isPlaying && (
-        <div
-          className="absolute inset-0 z-10 cursor-pointer"
-          onClick={() => setIsPlaying(true)}
-        >
-          <Image
-            src={data?.media?.[0]?.image_url}
-            alt="Intro video thumbnail"
-            fill
-            priority
-            className="object-cover"
-          />
-          {/* Play button — design unchanged */}
-        <button className="w-16 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center rounded-xl h-10 text-white backdrop-blur-[2px] st group">
-  <Play
-    fill="#fff"
-    className="group-hover:scale-105 active:scale-90 duration-200 ease-in-out"
-  />
-</button>
-        </div>
-      )}
+        {!isPlaying && (
+          <div
+            className="absolute inset-0 z-10 cursor-pointer"
+            onClick={() => setIsPlaying(true)}
+          >
+            <Image
+              src={data?.media?.[0]?.image_url}
+              alt="Intro video thumbnail"
+              fill
+              priority
+              className="object-cover"
+            />
+            {/* Play button — design unchanged */}
+            <button className="md:w-16 w-14 md:h-10 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center lg:rounded-xl rounded-lg  text-white backdrop-blur-[2px] st group">
+              <Play
+                fill="#fff"
+                className="group-hover:scale-105 size-4 md:size-6 active:scale-90 duration-200 ease-in-out"
+              />
+            </button>
+          </div>
+        )}
 
-      <ReactPlayer
-        url={data?.media?.[0]?.video_url}
-        width="100%"
-        height="100%"
-        controls
-        playsinline
-        playing={isPlaying}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => setIsPlaying(false)}
-      />
+        <ReactPlayer
+          url={data?.media?.[0]?.video_url}
+          width="100%"
+          height="100%"
+          controls
+          playsinline
+          playing={isPlaying}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+        />
       </div>
     </div>
   );

@@ -63,11 +63,11 @@ const PageProcessslider = ({ data }: { data: any }) => {
               <div className="w-full">
                 <h3
                   title={dt?.title}
-                  className="font-semibold line-clamp-2 poppins text-[24px] "
+                  className="font-semibold line-clamp-2 poppins text-[20px] lg:text-[24px] "
                 >
                   {dt?.title ?? ""}
                 </h3>
-                <p className=" font-normal line-clamp-3 text-[16px]">
+                <p className=" font-normal line-clamp-3 text-sm lg:text-[16px]">
                   {dt?.description ?? ""}
                 </p>
               </div>

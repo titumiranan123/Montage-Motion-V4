@@ -31,11 +31,11 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
     service: Service;
     isSecondRow?: boolean;
   }) => (
-    <div className={`group h-125 ${isSecondRow ? "col-span-3" : ""}`}>
+    <div className={`group w-full h-125 ${isSecondRow ? "col-span-3" : ""}`}>
       <Gradientcard
         isHover={true}
-        borderClassName="w-full max-h-[482px] h-full rounded-[24px] p-[1px] animated hover:scale-[102%] overflow-hidden"
-        className="w-full max-h-120 h-full rounded-3xl text-(--text-primary) flex flex-col p-4 bg-[#F7F7F7]!"
+        borderClassName="w-full max-w-full max-h-[482px] h-full rounded-[24px] p-[1px] animated hover:scale-[102%]  overflow-hidden"
+        className="w-full max-h-120 h-full rounded-3xl text-(--text-primary) max-w-full flex flex-col p-4 bg-[#F7F7F7]!"
       >
         <div className="flex-1">
           <h3 className="text-[24px] font-semibold">{service.service_title}</h3>
@@ -60,7 +60,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
   const renderGrid = () => {
     if (length >= 6) {
       return (
-        <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 md:gap-4">
           {services.map((service, idx) => (
             <div key={idx} data-aos="fade-up" data-aos-delay={200 + idx * 100}>
               <ServiceCard service={service} />
@@ -72,7 +72,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
 
     if (length === 5) {
       return (
-        <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+        <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 lg:gap-8 md:gap-4">
           {services.map((service, idx) => {
             const isSecondRow = idx >= 3;
             return (
@@ -91,7 +91,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
     }
     if (length === 4) {
       return (
-        <div className="mt-10 lg:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-10 lg:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 md:gap-4">
           {services?.map((service, idx) => {
             const isSmallCard = idx === 0 || idx === 2;
 

@@ -6,7 +6,7 @@ import PageProcesssection2 from "./PageProcesssection2";
 
 export const PageProcesssection = ({ data }: { data: any }) => {
   const old = data.image || data.image.length > 20 ? true : false;
-  // console.log("new set ======================>", old);
+
   if (old) {
     return <PageProcesssection2 data={data} />;
   } else
