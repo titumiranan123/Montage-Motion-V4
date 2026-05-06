@@ -71,7 +71,7 @@ const FaqSection = () => {
               <Image
                 src={"/assets/faq.png"}
                 alt="faq"
-                title="faqimage"
+                  
                 width={135}
                 height={135}
                 priority

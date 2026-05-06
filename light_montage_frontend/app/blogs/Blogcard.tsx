@@ -23,7 +23,7 @@ const Blogcard = ({
     >
       <Link
         href={`/blogs/${slug}`}
-        className=" p-6  overflow-hidden block cursor-pointer"
+        className=" lg:p-6 p-3  overflow-hidden block cursor-pointer"
       >
         <div className="max-w-86 max-h-69 w-full h-full overflow-hidden rounded-[13px]">
           <Image

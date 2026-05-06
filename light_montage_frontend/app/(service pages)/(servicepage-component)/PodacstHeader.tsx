@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const PodacstHeader = ({ data }: { data: any }) => {
   return (
-    <div className="container lg:mt-48 mt-40 ">
+    <div className="container lg:mt-48 mt-40  rounded-2xl lg:rounded-[40px]">
       <div className="flex justify-center items-center flex-col  max-w-232 w-full mx-auto lg:mb-20">
         <TurstedBy isCenter={true} />
         <h1

@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
               />
             </Link>
             <p className="text-[16px] leading-[150%] opensans font-normal mt-10">
-           Montage Motion is a dedicated video editing agency helping creators and brands produce videos that get watched, shared, and remembered.
+              Montage Motion is a dedicated video editing agency helping creators and brands produce videos that get watched, shared, and remembered.
             </p>
             <div className="max-w-76.25 hidden lg:mt-10 mt-6 max-h-13  h-full rounded-2xl border border-[#585858]/20 bg-[#585858]/20 backdrop-blur-[22px]px-2  items-center justify-around">
               <input
@@ -134,6 +134,13 @@ const Footer: React.FC = () => {
           <CustomLink className="" href="/about-us" title="About" />
           <CustomLink className="" href="/contact-us" title="Contact" />
         </div> */}
+      </div>
+      {/* Copyright Section */}
+      <div className="border-t border-[#585858]/20 mt-8 pt-6 pb-6 text-center">
+        <p className="text-[14px] opensans text-(--text-primary) opacity-70">
+          © {new Date().getFullYear()} Montage Motion. All rights reserved.
+        </p>
+
       </div>
     </div>
   );

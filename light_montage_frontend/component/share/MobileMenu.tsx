@@ -21,6 +21,7 @@ const MobileMenu = () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/case-studies", label: "Case Studies" },
     { href: "/portfolio", label: "Portfolio" },
     { href: "/blogs", label: "Blogs" },
     { href: "/careers", label: "Careers" },

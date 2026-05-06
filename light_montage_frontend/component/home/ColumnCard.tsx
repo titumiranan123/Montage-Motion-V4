@@ -8,7 +8,7 @@ export function ColumnCard({ column }: { column: any }) {
   const items = column?.entries.filter((en: any) => en.entry_type === "item");
   return (
     <div
-      className={`max-w-[389px] min-h-[716px] w-full h-full  p-px rounded-3xl ${
+      className={`max-w-97.25 lg:min-h-179 w-full h-full  p-px rounded-3xl ${
         column?.title === null ? "comparison-border" : ""
       }`}
     >

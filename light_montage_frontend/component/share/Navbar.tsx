@@ -28,6 +28,7 @@ const Navbar = () => {
           <CustomLink className="" href="/" title="Home" />
           <ServiceDropdown />
           <CustomLink className="" href="/portfolio" title="Portfolio" />
+          <CustomLink className="" href="/case-studies" title="Case Studies" />
           <CustomLink className="" href="/careers" title="Careers" />
           <CustomLink className="" href="/blogs" title="Blogs" />
           <CustomLink className="" href="/about-us" title="About" />

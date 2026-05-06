@@ -24,7 +24,7 @@ const Blogs = async ({ searchParams }: { searchParams: any }) => {
       name: "MontageMotion",
     });
   return (
-    <div className="relative  container lg:mt-44 mt-40 min-h-screen header-background pagelogo">
+    <div className="relative  lg:rounded-[40px] rounded-2xl mt-2 lg:pt-44 pb-20 pt-40 min-h-screen header-background pagelogo">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -30,7 +30,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
               <Image
                 src={data?.contact_image}
                 alt="faq"
-                title="faqimage"
+                  
                 width={135}
                 height={135}
                 priority
@@ -60,7 +60,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
             </div>
           </Gradientcard>
         </div>
-        <div className=" col-span-2 ">
+        <div className=" col-span-2 mt-6 lg:mt-0" data-aos="fade-up" data-aos-delay={500}>
           <Accordion items={allFaq} />
         </div>
       </div>

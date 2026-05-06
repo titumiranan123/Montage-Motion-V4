@@ -32,7 +32,9 @@
   position: relative;
   overflow: hidden;
 }
-
+.header-background{
+  background: linear-gradient(180deg, #EAF0F7 30.22%, #69CDE8 65.11%, #EAF0F7 100%);
+}
 .glass-card::before {
   content: "";
   position: absolute;

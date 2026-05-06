@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
@@ -5,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import Gradientcard from "../share/Gradientcard";
 
 const ProcessSlider = ({ data }: { data: any }) => {
+  console.log("process data ====================>", data);
   const [activeIndex, setActiveIndex] = useState(0);
   useEffect(() => {
     const handleScroll = () => {
@@ -23,9 +25,10 @@ const ProcessSlider = ({ data }: { data: any }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <div className=" flex lg:flex-row flex-col mt-9 md:mt-16 gap-12">
-      <div className="lg:sticky top-44 max-w-159.5 rounded-[13px] w-full max-h-224.5 h-full">
+      <div className="lg:sticky top-44 max-w-159.5 rounded-[13px] w-full max-h-224.5 h-full md:block hidden">
         <Image
           src={data?.[activeIndex]?.image ?? ""}
           alt="process "
@@ -39,8 +42,9 @@ const ProcessSlider = ({ data }: { data: any }) => {
       </div>
 
       <div className=" flex flex-col  gap-2">
-        {data?.map((dt: any, idx: number) => (
-          <div
+        {data?.map((dt: any, idx: number) => {
+          // console.log("active index ====================>", dt);
+          return ( <div
             key={idx}
             data-aos="fade-up"
             className="story-card"
@@ -48,8 +52,8 @@ const ProcessSlider = ({ data }: { data: any }) => {
           >
             <Gradientcard
               isHover={activeIndex !== idx}
-              className="contact-card flex justify-between lg:items-start text-(--text-primary) flex-col lg:flex-row max-w-175 w-full lg:h-42.5 h-80  rounded-3xl "
-              borderClassName="max-w-[698px] w-full lg:h-[172px] h-80.5 rounded-[24px] p-[1px] transition-transform duration-200 ease-in-out hover:scale-[104%]"
+              className="contact-card flex justify-between lg:items-start text-(--text-primary) flex-col lg:flex-row max-w-175 w-full lg:h-42.5 h-140.5  rounded-3xl "
+              borderClassName="max-w-[698px] w-full lg:h-[172px] h-140.5 rounded-[24px] p-[1px] transition-transform duration-200 ease-in-out hover:scale-[104%]"
             >
               <Image
                 src={dt?.icon ?? ""}
@@ -64,11 +68,14 @@ const ProcessSlider = ({ data }: { data: any }) => {
                 </h3>
                 <p className=" font-normal text-[16px]">
                   {dt?.description ?? ""}
+                 
                 </p>
+                <img src={dt?.image} className="max-w-159.5 rounded-[13px] w-full lg:h-124.5 md:hidden mt-2" alt={dt?.alt ?? ""}/>
+                
               </div>
             </Gradientcard>
-          </div>
-        ))}
+          </div>);
+        })}
       </div>
     </div>
   );
