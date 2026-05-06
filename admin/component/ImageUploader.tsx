@@ -134,7 +134,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           </div>
         </div>
       )}
-      <div className={`w-full h-full`}>
+      <div className={`w-full h-full mt-3`}>
         {value ? (
           <div className="relative w-full h-full py-4   overflow-hidden">
             <Image

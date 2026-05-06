@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/incompatible-library */
 'use client';
 
 import { Plus, Trash2, ChevronLeft, ChevronRight, CheckCircle, Send } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { api_url } from '@/hook/Apiurl';
 import toast from 'react-hot-toast';
@@ -12,6 +12,7 @@ type CaseType = 'client_success' | 'product' | 'research' | 'business';
 type StatusType = 'draft' | 'published' | 'archived';
 
 interface FormData {
+    id?: string;
   slug:             string;
   type:             CaseType;
   status:           StatusType;
@@ -42,36 +43,7 @@ interface FormData {
   testimonials:     { quote: string; name: string; role: string; avatar_url: string }[];
 }
 
-const defaultFormData: FormData = {
-  slug:             '',
-  type:             'client_success',
-  status:           'draft',
-  title:            '',
-  description:      '',
-  image_url:        '',
-  image_alt:        '',
-  client_name:      '',
-  client_logo:      '',
-  client_industry:  '',
-  client_domain:    '',
-  client_employees: undefined,
-  client_desc:      '',
-  challenge_intro:  '',
-  solution_intro:   '',
-  outcome_desc:     '',
-  outcome_video:    '',
-  meta_title:       '',
-  meta_desc:        '',
-  meta_keywords:    '',
-  calendly_url:     '',
-  tag_slugs:        [],
-  client_tags:      [],
-  hero_stats:       [{ value: '', label: '' }],
-  metrics:          [{ value: '', label: '', sub: '' }],
-  challenge_items:  [{ title: '', desc: '' }],
-  solution_phases:  [{ phase: '', time_range: '', desc: '' }],
-  testimonials:     [{ quote: '', name: '', role: '', avatar_url: '' }],
-};
+
 
 const steps = [
   { id: 1, name: 'Header & Meta' },
@@ -94,17 +66,47 @@ const trashBtn= 'w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 text-
 const addBtn  = 'w-full flex items-center justify-center gap-2 border border-dashed border-[#1fb5dd]/40 text-[#1fb5dd] py-3 rounded-xl text-[12px] font-medium hover:bg-[#1fb5dd]/10 transition-all';
 const card    = 'bg-[#151b24]/80 backdrop-blur-sm border border-[rgba(255,255,255,0.08)] rounded-2xl p-6 md:p-8 shadow-xl';
 
-export default function CreateCaseStudyPage() {
-  const [currentStep, setCurrentStep] = useState(3);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+export default function EditCaseStudyForm({initialData}: { initialData?: FormData }) {
+  const [currentStep, setCurrentStep] = useState(1);
+
   const [done, setDone] = useState(false);
 
   const {
     register, control, handleSubmit,
-    watch, setValue, getValues, reset,
-    formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: defaultFormData,
+    watch, setValue, getValues, 
+    formState: { errors,isSubmitting },
+  } =useForm<FormData>({
+    defaultValues: {
+  id:               initialData?.id               ?? '',
+  slug:             initialData?.slug             ?? '',
+  type:             initialData?.type             ?? 'client_success',
+  status:           initialData?.status           ?? 'draft',
+  title:            initialData?.title            ?? '',
+  description:      initialData?.description      ?? '',
+  image_url:        initialData?.image_url        ?? '',
+  image_alt:        initialData?.image_alt        ?? '',
+  client_name:      initialData?.client_name      ?? '',
+  client_logo:      initialData?.client_logo      ?? '',
+  client_industry:  initialData?.client_industry  ?? '',
+  client_domain:    initialData?.client_domain    ?? '',
+  client_employees: initialData?.client_employees ?? undefined,
+  client_desc:      initialData?.client_desc      ?? '',
+  challenge_intro:  initialData?.challenge_intro  ?? '',
+  solution_intro:   initialData?.solution_intro   ?? '',
+  outcome_desc:     initialData?.outcome_desc     ?? '',
+  outcome_video:    initialData?.outcome_video    ?? '',
+  meta_title:       initialData?.meta_title       ?? '',
+  meta_desc:        initialData?.meta_desc        ?? '',
+  meta_keywords:    initialData?.meta_keywords    ?? '',
+  calendly_url:     initialData?.calendly_url     ?? '',
+  tag_slugs:        initialData?.tag_slugs        ?? [],
+  client_tags:      initialData?.client_tags      ?? [],
+  hero_stats:       initialData?.hero_stats       ?? [],
+  metrics:          initialData?.metrics          ?? [],
+  challenge_items:  initialData?.challenge_items  ?? [],
+  solution_phases:  initialData?.solution_phases  ?? [],
+  testimonials:     initialData?.testimonials     ?? [],
+},
     mode: 'onChange',
   });
 
@@ -114,28 +116,7 @@ export default function CreateCaseStudyPage() {
   const solutionPhases = useFieldArray({ control, name: 'solution_phases' });
   const testimonials   = useFieldArray({ control, name: 'testimonials' });
 
-  useEffect(() => {
-    try {
-      const d = localStorage.getItem('csDraft');
-      if (d) { reset(JSON.parse(d) as FormData); toast.success('Draft loaded'); }
-    } catch {}
-  }, [reset]);
-
-  useEffect(() => {
-    const sub = watch((v) => {
-      const t = setTimeout(() => localStorage.setItem('csDraft', JSON.stringify(v)), 1000);
-      return () => clearTimeout(t);
-    });
-    return () => sub.unsubscribe();
-  }, [watch]);
-
-  const clearDraft = () => {
-    localStorage.removeItem('csDraft');
-    reset(defaultFormData);
-    setDone(false);
-    setCurrentStep(1);
-    toast.success('Draft cleared');
-  };
+  
 
   const goTo = (s: number) => {
     setCurrentStep(s);
@@ -144,7 +125,7 @@ export default function CreateCaseStudyPage() {
 
   const toggleTag = (arr: 'tag_slugs' | 'client_tags', tag: string) => {
     const cur = getValues(arr);
-    setValue(arr, cur.includes(tag) ? cur.filter((t: string) => t !== tag) : [...cur, tag], { shouldValidate: true });
+    setValue(arr, cur?.includes(tag) ? cur.filter((t: string) => t !== tag) : [...cur, tag], { shouldValidate: true });
   };
 
   const addCustomTag = (inputId: string, arr: 'tag_slugs' | 'client_tags') => {
@@ -152,7 +133,7 @@ export default function CreateCaseStudyPage() {
     const v  = el?.value.trim();
     if (!v) return;
     const cur = getValues(arr);
-    if (!cur.includes(v)) setValue(arr, [...cur, v], { shouldValidate: true });
+    if (!cur?.includes(v)) setValue(arr, [...cur, v], { shouldValidate: true });
     if (el) el.value = '';
   };
 
@@ -160,17 +141,16 @@ export default function CreateCaseStudyPage() {
     const clean = Object.fromEntries(
       Object.entries(data).map(([k, v]) => [k, v === '' ? undefined : v])
     );
-    setIsSubmitting(true);
+console.log("Submitting data =========>", clean);
     try {
-      await api_url.post('/api/case-studies', clean);
-      localStorage.removeItem('csDraft');
+      const res = await api_url.patch(`/api/case-studies/${data?.id}`, clean);
+      console.log("API response =========>", res);
       setDone(true);
       toast.success('Published!');
-    } catch {
+    } catch(error) {
+      console.error("API error =========>", error);
       toast.error('Failed to publish');
-    } finally {
-      setIsSubmitting(false);
-    }
+    } 
   };
 
   const watchType   = watch('type');
@@ -182,7 +162,7 @@ export default function CreateCaseStudyPage() {
 
   const CardHeader = ({ emoji, title, sub }: { emoji: string; title: string; sub: string }) => (
     <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[rgba(255,255,255,0.08)]">
-      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1fb5dd] to-[#0d8eb0] flex items-center justify-center shadow-lg shadow-[#1fb5dd]/20">
+      <div className="w-10 h-10 rounded-xl bg-linear-to-br from-[#1fb5dd] to-[#0d8eb0] flex items-center justify-center shadow-lg shadow-[#1fb5dd]/20">
         <span className="text-white text-lg">{emoji}</span>
       </div>
       <div>
@@ -194,7 +174,7 @@ export default function CreateCaseStudyPage() {
 
   const Section = ({ title }: { title: string }) => (
     <div className="flex items-center gap-2 mb-3">
-      <div className="w-1 h-5 bg-gradient-to-b from-[#1fb5dd] to-[#0d8eb0] rounded-full" />
+      <div className="w-1 h-5 bg-linear-to-b from-[#1fb5dd] to-[#0d8eb0] rounded-full" />
       <h3 className="text-[13px] font-semibold text-white">{title}</h3>
     </div>
   );
@@ -211,12 +191,12 @@ export default function CreateCaseStudyPage() {
       ) : <div />}
       {isSubmit ? (
         <button type="submit" disabled={isSubmitting}
-          className="flex items-center gap-2 bg-gradient-to-r from-[#1fb5dd] to-[#0d8eb0] text-white px-10 py-2.5 rounded-xl text-[14px] font-semibold shadow-lg shadow-[#1fb5dd]/30 hover:scale-[1.02] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100">
+          className="flex items-center gap-2 bg-linear-to-r from-[#1fb5dd] to-[#0d8eb0] text-white px-10 py-2.5 rounded-xl text-[14px] font-semibold shadow-lg shadow-[#1fb5dd]/30 hover:scale-[1.02] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100">
           {isSubmitting ? 'Publishing...' : 'Publish'} {!isSubmitting && <Send size={16} />}
         </button>
       ) : next ? (
         <button type="button" onClick={() => goTo(next)}
-          className="flex items-center gap-2 bg-gradient-to-r from-[#1fb5dd] to-[#0d8eb0] text-white px-8 py-2.5 rounded-xl text-[14px] font-semibold shadow-lg shadow-[#1fb5dd]/30 hover:scale-[1.02] transition-all">
+          className="flex items-center gap-2 bg-linear-to-r from-[#1fb5dd] to-[#0d8eb0] text-white px-8 py-2.5 rounded-xl text-[14px] font-semibold shadow-lg shadow-[#1fb5dd]/30 hover:scale-[1.02] transition-all">
           {nextLabel} <ChevronRight size={16} />
         </button>
       ) : null}
@@ -224,24 +204,21 @@ export default function CreateCaseStudyPage() {
   );
 
   if (done) return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0e14] via-[#0f141c] to-[#0a0e14] flex items-center justify-center">
-      <div className={`${card} text-center max-w-md w-full`}>
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1fb5dd] to-[#0d8eb0] flex items-center justify-center mx-auto mb-6">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className={`${card} text-center max-w-lg w-full`}>
+        <div className="w-20 h-20 rounded-full bg-linear-to-br from-[#1fb5dd] to-[#0d8eb0] flex items-center justify-center mx-auto mb-6">
           <CheckCircle size={36} className="text-white" />
         </div>
         <h2 className="text-2xl font-bold text-white mb-2">Published!</h2>
         <p className="text-[#7a8899] text-sm mb-8">Your case study is live.</p>
-        <button onClick={clearDraft}
-          className="bg-gradient-to-r from-[#1fb5dd] to-[#0d8eb0] text-white px-8 py-2.5 rounded-xl text-[14px] font-semibold">
-          Create Another
-        </button>
+      
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0e14] via-[#0f141c] to-[#0a0e14] text-[#e8edf5]">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-linear-to-br from-[#0a0e14] via-[#0f141c] to-[#0a0e14] text-[#e8edf5]">
+      <div className="max-w-6xl mx-auto px-4 py-8">
 
         {/* Header */}
         <div className="mb-8">
@@ -253,7 +230,7 @@ export default function CreateCaseStudyPage() {
         <div className="relative mb-10">
           <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#1c2534]" />
           <div className="relative flex justify-between">
-            {steps.map(s => (
+            {steps?.map(s => (
               <button key={s.id} type="button"
                 onClick={() => s.id < currentStep && goTo(s.id)}
                 className="flex flex-col items-center gap-2">
@@ -359,7 +336,7 @@ export default function CreateCaseStudyPage() {
                   {['saas', 'growth', 'marketing', 'b2b', 'startup', 'fintech', 'ecommerce'].map(t => (
                     <span key={t} onClick={() => toggleTag('tag_slugs', t)}
                       className={`cursor-pointer px-3 py-1.5 rounded-full text-[12px] font-medium transition-all
-                        ${watchTags.includes(t) ? 'bg-[#1fb5dd] text-white' : 'bg-[#1fb5dd]/10 text-[#1fb5dd] hover:bg-[#1fb5dd]/20'}`}>
+                        ${watchTags?.includes(t) ? 'bg-[#1fb5dd] text-white' : 'bg-[#1fb5dd]/10 text-[#1fb5dd] hover:bg-[#1fb5dd]/20'}`}>
                       #{t}
                     </span>
                   ))}
@@ -396,10 +373,7 @@ export default function CreateCaseStudyPage() {
               </div>
 
               <div className="flex justify-between mt-8 pt-4 border-t border-[rgba(255,255,255,0.08)]">
-                <button type="button" onClick={clearDraft}
-                  className="flex items-center gap-2 border border-red-500/30 text-red-400 px-5 py-2.5 rounded-xl text-[13px] hover:bg-red-500/10 transition-all">
-                  <Trash2 size={16} /> Clear Draft
-                </button>
+               
                 <button type="button" onClick={() => goTo(2)}
                   className="flex items-center gap-2 bg-linear-to-r from-[#1fb5dd] to-[#0d8eb0] text-white px-8 py-2.5 rounded-xl text-[14px] font-semibold shadow-lg shadow-[#1fb5dd]/30 hover:scale-[1.02] transition-all">
                   Continue <ChevronRight size={16} />
@@ -447,7 +421,7 @@ export default function CreateCaseStudyPage() {
                   {['b2b', 'b2c', 'enterprise', 'startup', 'smb'].map(t => (
                     <span key={t} onClick={() => toggleTag('client_tags', t)}
                       className={`cursor-pointer px-3 py-1.5 rounded-full text-[12px] font-medium transition-all
-                        ${watchCtags.includes(t) ? 'bg-[#1fb5dd] text-white' : 'bg-[#1fb5dd]/10 text-[#1fb5dd] hover:bg-[#1fb5dd]/20'}`}>
+                        ${watchCtags?.includes(t) ? 'bg-[#1fb5dd] text-white' : 'bg-[#1fb5dd]/10 text-[#1fb5dd] hover:bg-[#1fb5dd]/20'}`}>
                       {t}
                     </span>
                   ))}

@@ -151,6 +151,11 @@ export default function MainLayout({
           icon: <FiBriefcase />,
         },
         {
+          href: "/montage/case-studies",
+          label: "Case Studies",
+          icon: <FiBriefcase />,
+        },
+        {
           href: "/montage/comparison",
           label: "Comparison",
           icon: <FiTrendingUp />,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { Plus, Trash2, ChevronLeft, ChevronRight, CheckCircle, Send } from 'lucide-react';
@@ -224,8 +223,8 @@ export default function CreateCaseStudyPage() {
   );
 
   if (done) return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0e14] via-[#0f141c] to-[#0a0e14] flex items-center justify-center">
-      <div className={`${card} text-center max-w-md w-full`}>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className={`${card} text-center max-w-lg w-full`}>
         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1fb5dd] to-[#0d8eb0] flex items-center justify-center mx-auto mb-6">
           <CheckCircle size={36} className="text-white" />
         </div>
@@ -240,8 +239,8 @@ export default function CreateCaseStudyPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0e14] via-[#0f141c] to-[#0a0e14] text-[#e8edf5]">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-linear-to-br from-[#0a0e14] via-[#0f141c] to-[#0a0e14] text-[#e8edf5]">
+      <div className="max-w-6xl mx-auto px-4 py-8">
 
         {/* Header */}
         <div className="mb-8">

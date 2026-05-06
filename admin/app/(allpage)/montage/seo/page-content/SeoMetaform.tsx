@@ -96,6 +96,7 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
     "contact",
     "about",
     "blog",
+    "case-studies",
     "terms",
     "privacy",
     "refund",
