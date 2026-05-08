@@ -36,7 +36,7 @@ const ServicePage = async ({
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
   });
-  // console.log("scham ====================>", data?.data);
+  // console.log("scham ====================>", data);
   const safeSchema =
     data?.data?.schema ??
     JSON.stringify({

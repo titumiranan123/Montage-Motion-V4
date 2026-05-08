@@ -82,21 +82,6 @@ export default function CaseStudyCard({ data, onEdit, onDelete }: Props) {
           </span>
         </div>
 
-        {/* Action buttons always visible top-right */}
-        <div className="absolute top-3 right-3 flex gap-2">
-          <button
-            onClick={() => onEdit?.(data?.id)}
-            className="w-8 h-8 rounded-lg bg-[#0a0e14]/70 backdrop-blur-sm border border-white/10 text-[#7a8899] flex items-center justify-center hover:text-[#1fb5dd] hover:border-[#1fb5dd]/40 transition-all"
-          >
-            <Pencil size={13} />
-          </button>
-          <button
-            onClick={() => onDelete?.(data?.id)}
-            className="w-8 h-8 rounded-lg bg-[#0a0e14]/70 backdrop-blur-sm border border-white/10 text-[#7a8899] flex items-center justify-center hover:text-red-400 hover:border-red-500/40 transition-all"
-          >
-            <Trash2 size={13} />
-          </button>
-        </div>
       </div>
 
       {/* Body */}

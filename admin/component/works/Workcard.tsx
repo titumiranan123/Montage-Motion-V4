@@ -94,7 +94,7 @@ const VideoCard = ({
 
       {/* Video Player Section - Fixed aspect ratio (16:9) */}
       {video.video_link === "" || video.video_link === null ? (
-        <Image src={video?.thumbnail} alt="" width={256} height={145} />
+        <Image src={video?.thumbnail} alt={video?.title} width={256} height={145} />
       ) : (
         <div className="relative w-64 h-36 shrink-0 bg-black">
           <ReactPlayer

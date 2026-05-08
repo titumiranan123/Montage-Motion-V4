@@ -38,7 +38,7 @@ const TestimonialMessagecard = ({
         >
           {testimonial.message}
         </p>
-        <div className="flex justify-start gap-10 h-22.5 items-center">
+        <div className="flex justify-start lg:gap-10 gap-2 h-22.5 items-center">
           <div className="lg:w-16   overflow-hidden lg:h-16 h-10 w-10">
             <Image
               className="rounded-full lg:w-16   lg:h-16 h-10 w-10 "

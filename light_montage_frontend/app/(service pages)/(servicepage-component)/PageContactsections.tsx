@@ -33,7 +33,7 @@ const PageContactsections = () => {
               title: "WhatsApp Us",
               value: "+8801786546949",
               icon: "/assets/icon/whatsapp.png",
-              href: "tel:+8801786546949",
+             href:"https://wa.me/8801786546949?text=Hello%21%20I%20visited%20your%20website%20and%20would%20like%20to%20know%20more.%20Could%20you%20please%20assist%20me%3F"
             },
             {
               title: "Work at Montage Motion",
@@ -54,6 +54,7 @@ const PageContactsections = () => {
               key={idx}
               data-aos="fade-up"
               data-aos-delay={100 + idx * 100}
+              target="_blank"
             >
               <div className="contact-card flex justify-between items-center text-(--text-primary)  max-w-155.5 w-full h-34.75 rounded-3xl glassShadow  bg-white/40  backdrop-blur-2xl animated hover:scale-[104%] px-5 py-6">
                 <div>

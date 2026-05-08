@@ -2,15 +2,15 @@
 "use client";
 import Image from "next/image";
 import { Bullet } from "./BulletPoint";
+import Link from "next/link";
 
 export function ColumnCard({ column }: { column: any }) {
   const bonus = column?.entries.filter((en: any) => en.entry_type === "bonus");
   const items = column?.entries.filter((en: any) => en.entry_type === "item");
   return (
     <div
-      className={`max-w-97.25 lg:min-h-179 w-full h-full  p-px rounded-3xl ${
-        column?.title === null ? "comparison-border" : ""
-      }`}
+      className={`max-w-97.25 lg:min-h-179 w-full h-full  p-px rounded-3xl ${column?.title === null ? "comparison-border" : ""
+        }`}
     >
       <style>
         {`
@@ -38,13 +38,12 @@ export function ColumnCard({ column }: { column: any }) {
             `}
       </style>
       <div
-        className={`relative rounded-3xl text-(--text-primary) p-6 sm:p-8 bg-white h-full  ${
-          column?.title === null
-            ? "active"
-            : column?.type !== "agencies"
-              ? "others"
-              : "freelancer"
-        }`}
+        className={`relative rounded-3xl text-(--text-primary) p-6 sm:p-8 bg-white h-full  ${column?.title === null
+          ? "active"
+          : column?.type !== "agencies"
+            ? "others"
+            : "freelancer"
+          }`}
       >
         {/* Header */}
         <div className="mb-6 flex items-center gap-3">
@@ -90,6 +89,7 @@ export function ColumnCard({ column }: { column: any }) {
             </div>
           </div>
         )}
+        {column?.title === null && <Link target="_blank" href={'https://calendly.com/imonofficial2/30min'} className="mt-6  btn-color text-white py-3 rounded-lg font-medium w-full flex justify-center items-center">Book 30 Min Strategy Call</Link>}
       </div>
     </div>
   );

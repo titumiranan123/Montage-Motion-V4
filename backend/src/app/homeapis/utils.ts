@@ -34,7 +34,7 @@ export const fetchSectionData = async (sectionName: string, type: string) => {
         type,
         limit: 6,
       });
-      return { sectionName, data: works.length < 0 ? works : null };
+      return { sectionName, data: works ? works : null };
     }
 
     case "service": {

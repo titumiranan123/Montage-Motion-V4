@@ -98,7 +98,7 @@ const FirstSection = () => {
                 title: "WhatsApp Us",
                 value: "+8801786546949",
                 icon: "/assets/icon/whatsapp.png",
-                href: "tel:+8801786546949",
+                  href:"https://wa.me/8801786546949?text=Hello%21%20I%20visited%20your%20website%20and%20would%20like%20to%20know%20more.%20Could%20you%20please%20assist%20me%3F"
               },
               {
                 title: "Work at Montage Motion",
@@ -115,6 +115,7 @@ const FirstSection = () => {
             ].map((item, idx) => (
               <Link
                 href={`${item?.href}`}
+                target="_blank"
                 className="w-full cursor-pointer"
                 key={idx}
                 data-aos="fade-up"

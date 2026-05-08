@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
@@ -311,7 +312,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
 
         <form
           onSubmit={handleSubmit(onSubmitHandler)}
-          className="p-6 space-y-8 lg:w-[1000px] h-[500px] overflow-y-auto w-full"
+          className="p-6 space-y-8 lg:w-250 h-125 overflow-y-auto w-full"
         >
           {/* Basic Information Section */}
           <div className="space-y-6">

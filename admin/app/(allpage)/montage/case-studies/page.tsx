@@ -15,7 +15,7 @@ const page = async () => {
     console.log(error)
   }
 
-  console.log("case study data =========>", result?.data);
+  // console.log("case study data =========>", result?.data);
   return (
     <div>
 

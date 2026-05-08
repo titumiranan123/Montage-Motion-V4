@@ -4,7 +4,7 @@ import EditCaseStudyForm from './EditFrom';
 
 const page = async({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  console.log("slug =========>", slug);
+  // console.log("slug =========>", slug);
   let result;
   try {
     const res = await axios.get(
@@ -15,7 +15,7 @@ const page = async({ params }: { params: Promise<{ slug: string }> }) => {
   } catch (error) {
     console.log(error)
   }
-  console.log("case study data =========>", result?.data);
+  // console.log("case study data =========>", result?.data);
   return (
     <div>
       <EditCaseStudyForm initialData={result?.data} />

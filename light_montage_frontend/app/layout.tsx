@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "@/component/share/Footer";
 import Provider from "./Provider";
 import Navbar from "@/component/share/Navbar";
+import WhatsAppFloat from "@/component/WhatsAppFloat";
 const geistSans = Poppins({
   variable: "--font-poppins",
   weight: ["100", "400", "500", "600", "700", "900"],
@@ -47,6 +48,7 @@ export default function RootLayout({
           </div>
           {children}
           <Footer />
+          <WhatsAppFloat />
         </Provider>
       </body>
     </html>

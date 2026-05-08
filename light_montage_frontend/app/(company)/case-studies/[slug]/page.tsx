@@ -3,14 +3,68 @@ import React from 'react';
 import VideoPlayer from './VideoPlayer';
 import Image from 'next/image';
 import TableOfContents from './TableOfContents';
+import { Metadata } from 'next';
+const fetchSingleCaseStudy = async (slug: string) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/case-studies/slug/${slug}`);
+    const result = await response.json();
+    return result?.data;
+  } catch (error) {
+    console.error('Error fetching case study data:', error);
+    return null;
+  }
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const caseStudy = await fetchSingleCaseStudy(slug);
+
+  const title = caseStudy?.meta_title || "caseStudy Title";
+  const description =
+    caseStudy?.meta_desc || "Read the latest caseStudy on MontageMotion.";
+  const image = caseStudy?.image_url; // fallback image
+  const url = `https://montagemotion.com/case-studies/${slug}`;
+
+  return {
+    title,
+    description,
+    keywords: caseStudy?.meta_keywords || [],
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "MontageMotion",
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   let caseStudyData;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/case-studies/slug/${slug}`);
-    const result = await response.json();
-    caseStudyData = result?.data;
+    caseStudyData = await fetchSingleCaseStudy(slug);
   } catch (error) {
     console.error('Error fetching case study data:', error);
   }
@@ -265,7 +319,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 <div className="mt-1 w-1 h-8 rounded-full bg-[#1fb5dd] shrink-0" />
                 <h2 className="text-2xl text-gray-900 font-bold">The Outcome</h2>
               </div>
-              <p className="text-gray-600 leading-relaxed mb-6">{caseStudyData?.outcome_description}</p>
+              <p className="text-gray-600 leading-relaxed mb-6">{caseStudyData?.outcome_desc}</p>
               <VideoPlayer url={caseStudyData?.outcome_video} />
 
 

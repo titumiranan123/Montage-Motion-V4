@@ -26,7 +26,7 @@ export function ColumnCard({ column }: { column: any }) {
           <div>
             <h3 className="text-lg sm:text-xl font-semibold tracking-tight">
               {column.title === null ? (
-                <Image src={column?.image} alt={""} width={133} height={52} />
+                <Image src={column?.image} alt={column?.title} width={133} height={52} />
               ) : (
                 column.title
               )}{" "}

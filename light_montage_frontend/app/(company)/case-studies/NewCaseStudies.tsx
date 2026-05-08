@@ -48,7 +48,7 @@ export default function CaseStudyCard({ item }: CaseStudyCardProps) {
   const metrics = extractMetrics();
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:border-blue-300 hover:shadow-md max-w-sm">
+    <a href={`/case-studies/${item.slug}`} className="bg-white border border-gray-200 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:border-blue-300 hover:shadow-md max-w-sm">
 
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
@@ -99,6 +99,6 @@ export default function CaseStudyCard({ item }: CaseStudyCardProps) {
           </a>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
