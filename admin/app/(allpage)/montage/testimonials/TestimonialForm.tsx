@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/incompatible-library */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState, useCallback } from "react";
@@ -275,6 +278,7 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         color: "#fff",
         confirmButtonColor: "#6366f1",
       });
+      onCancel?.();
     } catch (error) {
       const err = error as Error;
       await Swal.fire(

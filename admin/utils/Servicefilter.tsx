@@ -15,27 +15,26 @@ export const ServiceFilter = ({
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const currentPage = searchParams.get("page");
-  // Fetch category list
+
   const { data } = useQuery({
     queryKey: ["categories"],
     queryFn: getDataCategory,
   });
-  // Set default page if missing
+
+  // ✅ Only runs after data arrives AND no page param is set yet
   useEffect(() => {
-    if (!currentPage) {
-      router.replace(`?page=${data?.[slice]?.service_type}`); // replace prevents reload
+    if (!currentPage && data && data.length > 0) {
+      router.replace(`?page=${data[slice]?.service_type}`);
     }
   }, [currentPage, data, router, slice]);
 
   const allTypes = [...(data ?? []), ...others];
+
   return (
     <select
-      value={currentPage ?? "home"}
-      onChange={(e) => {
-        router.push(`?page=${e.target.value}`);
-      }}
+      value={currentPage ?? data?.[slice]?.service_type ?? ""}
+      onChange={(e) => router.push(`?page=${e.target.value}`)}
       className="bg-[#101828] border border-slate-300 rounded-lg p-2 text-white w-full md:w-50"
     >
       {allTypes?.slice(slice)?.map((item: any, idx: number) => (

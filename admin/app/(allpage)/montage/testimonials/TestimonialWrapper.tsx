@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -92,7 +93,7 @@ const TestimonialWrapper = ({ data }: { data: any }) => {
         {/* Content Section */}
         <div className="mb-8">
           {filteredData?.length > 0 ? (
-            <div className="grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-2 gap-6 mx-auto max-w-[1000px]">
+            <div className="grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-2 gap-6 mx-auto max-w-250">
               {filteredData?.map((testimonial: ITestimonial) =>
                 testimonial?.category !== "message" ? (
                   <Shortcard
