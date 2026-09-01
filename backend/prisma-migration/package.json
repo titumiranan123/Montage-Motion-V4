@@ -1,0 +1,23 @@
+{
+  "name": "montagemotion-prisma-migration",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Isolated Prisma introspection workspace for the montagemotion backend. Original src/ is NOT touched.",
+  "scripts": {
+    "db:pull": "prisma db pull",
+    "generate": "prisma generate",
+    "test:read": "ts-node test-connection.ts",
+    "format": "prisma format"
+  },
+  "//scripts-note": "No 'migrate' script on purpose. Do NOT run 'prisma migrate' — it would try to create/apply new migrations against production. Only 'db pull' (introspection) and 'generate' are allowed.",
+  "dependencies": {
+    "@prisma/client": "^6.1.0",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "prisma": "^6.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}

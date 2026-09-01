@@ -1,0 +1,670 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model about {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String
+  description String
+  image       String
+  alt         String
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model blogs {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title             String
+  slug              String    @unique
+  short_description String
+  description       String
+  image             String?
+  alt               String?
+  is_publish        Boolean?  @default(true)
+  is_feature        Boolean?  @default(false)
+  position          Int       @default(0)
+  read_time         String?
+  updatedat         String?
+  whatwilllearn     String[]  @default([])
+  meta_title        String?   @db.VarChar(255)
+  meta_description  String?
+  keywords          String[]  @default([])
+  created_at        DateTime? @default(now()) @db.Timestamp(6)
+  updated_at        DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model brandimage {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  image      String    @db.VarChar(512)
+  alt        String    @db.VarChar(512)
+  ishide     Boolean?  @default(false)
+  type       String    @db.VarChar(100)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  width      String?   @db.VarChar(512)
+  height     String?   @db.VarChar(512)
+  sortorder  Int?
+}
+
+model campaigns {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String
+  email              String
+  phone              String
+  ovc                String
+  message            String
+  selectedinfuencers String[]
+  budget             String
+  project_brief      String
+  is_read            Boolean?  @default(false)
+  is_marked          Boolean?  @default(false)
+  is_rejected        Boolean?  @default(false)
+  is_sent            Boolean?  @default(false)
+  rejected_message   String?
+  created_at         DateTime? @default(now()) @db.Timestamp(6)
+  updated_at         DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model career_pages {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type          String      @unique @db.VarChar(50)
+  tag           String
+  heading_part1 String
+  heading_part2 String?
+  paragraph     String?
+  created_at    DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?   @default(now()) @db.Timestamp(6)
+  job_posts     job_posts[]
+}
+
+model case_studies {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug             String    @unique
+  type             String?
+  status           String?   @default("draft")
+  title            String?
+  description      String?
+  image_url        String?
+  image_alt        String?
+  client_name      String?
+  client_logo      String?
+  client_industry  String?
+  client_domain    String?
+  client_employees Int?
+  client_desc      String?
+  challenge_intro  String?
+  solution_intro   String?
+  outcome_desc     String?
+  outcome_video    String?
+  meta_title       String?
+  meta_desc        String?
+  meta_keywords    String?
+  calendly_url     String?
+  tag_slugs        String[]
+  client_tags      String[]
+  hero_stats       Json?
+  metrics          Json?
+  challenge_items  Json?
+  solution_phases  Json?
+  testimonials     Json?
+  created_at       DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model comparison_columns {
+  id                 String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  section_id         String               @db.Uuid
+  type               String
+  title              String?
+  image              String?
+  bonus_title        String?
+  created_at         DateTime?            @default(now()) @db.Timestamp(6)
+  updated_at         DateTime?            @default(now()) @db.Timestamp(6)
+  comparisons        comparisons          @relation(fields: [section_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  comparison_entries comparison_entries[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model comparison_entries {
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  column_id          String             @db.Uuid
+  entry_type         String
+  text               String
+  position           Int
+  comparison_columns comparison_columns @relation(fields: [column_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([column_id, entry_type, position])
+}
+
+model comparisons {
+  id                 String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  page               String               @unique(map: "comparisons_page_unique")
+  tag                String
+  heading_title      String?
+  paragraph          String?
+  comparison_columns comparison_columns[]
+}
+
+model contacts {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String    @db.VarChar(255)
+  email      String    @db.VarChar(255)
+  message    String
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+  interestin String?
+}
+
+model faq_items {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  faq_section_id String       @db.Uuid
+  question       String
+  answer         String
+  sort_order     Int?         @default(0)
+  is_visible     Boolean?     @default(true)
+  created_at     DateTime?    @default(now()) @db.Timestamp(6)
+  updated_at     DateTime?    @default(now()) @db.Timestamp(6)
+  faq_sections   faq_sections @relation(fields: [faq_section_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model faq_sections {
+  id                  String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  section_tag         String
+  section_title       String
+  section_description String
+  contact_image       String
+  contact_alt         String?
+  contact_heading     String      @db.VarChar(255)
+  contact_description String?
+  contact_name        String?     @db.VarChar(100)
+  contact_position    String?     @db.VarChar(100)
+  contact_link        String?
+  is_active           Boolean?    @default(true)
+  created_at          DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at          DateTime?   @default(now()) @db.Timestamp(6)
+  type                String      @unique(map: "faq_sections_type_unique") @default("home")
+  faq_items           faq_items[]
+}
+
+model header_media {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  header_id    String?       @db.Uuid
+  image_url    String
+  alt          String
+  video_url    String
+  created_at   DateTime?     @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime?     @default(now()) @db.Timestamptz(6)
+  page_headers page_headers? @relation(fields: [header_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model home_services {
+  id                    String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  section_id            String                  @db.Uuid
+  service_title         String
+  service_type          String?
+  page_active           Boolean?                @default(false)
+  service_description   String?
+  image                 String?
+  alt                   String?
+  icon                  String?
+  icon_alt              String?
+  href                  String?                 @db.VarChar(256)
+  order_index           Int?                    @default(0)
+  created_at            DateTime?               @default(now()) @db.Timestamp(6)
+  updated_at            DateTime?               @default(now()) @db.Timestamp(6)
+  service_sections      service_sections        @relation(fields: [section_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  service_item_sections service_item_sections[]
+}
+
+model industry_section {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  page          String          @unique(map: "industry_section_page_unique")
+  tag           String
+  heading_title String?
+  paragraph     String?
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  industry_tabs industry_tabs[]
+}
+
+model industry_tab_points {
+  id            String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tab_id        String        @db.Uuid
+  point         String
+  position      Int           @default(1)
+  created_at    DateTime?     @default(now()) @db.Timestamp(6)
+  industry_tabs industry_tabs @relation(fields: [tab_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model industry_tabs {
+  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  section_id          String                @db.Uuid
+  tab_key             String
+  title               String
+  description         String
+  image               String
+  cta_label           String
+  cta_link            String
+  position            Int                   @default(1)
+  created_at          DateTime?             @default(now()) @db.Timestamp(6)
+  updated_at          DateTime?             @default(now()) @db.Timestamp(6)
+  industry_tab_points industry_tab_points[]
+  industry_section    industry_section      @relation(fields: [section_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model insight_section {
+  id            String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  page          String  @unique(map: "insight_section_page_unique")
+  tag           String
+  heading_title String?
+  paragraph     String?
+  steps         steps[]
+
+  @@unique([page, tag])
+}
+
+model job_posts {
+  id                  String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  career_page_id      String?       @db.Uuid
+  job_title           String
+  positions_available Int
+  deadline            String
+  description         String
+  employment_type     String        @db.VarChar(50)
+  work_arrangement    String        @db.VarChar(50)
+  salary              Json?
+  applylink           String
+  created_at          DateTime?     @default(now()) @db.Timestamp(6)
+  updated_at          DateTime?     @default(now()) @db.Timestamp(6)
+  career_pages        career_pages? @relation(fields: [career_page_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model members {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  designation String?
+  photourl    String
+  alt         String?
+  position    Int?      @default(0)
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+model ourstory {
+  id             String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type           String           @db.VarChar(50)
+  tag            String
+  heading_part1  String
+  heading_part2  String?
+  paragraph      String?
+  image          String?
+  alt            String?
+  created_at     DateTime?        @default(now()) @db.Timestamp(6)
+  updated_at     DateTime?        @default(now()) @db.Timestamp(6)
+  ourstory_steps ourstory_steps[]
+}
+
+model ourstory_steps {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  story_id    String   @db.Uuid
+  image       String?
+  icon        String?
+  icon_alt    String?
+  alt         String?
+  title       String
+  description String?
+  order_index Int      @default(0)
+  is_hidden   Boolean? @default(false)
+  ourstory    ourstory @relation(fields: [story_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([story_id, order_index], map: "idx_story_steps_order")
+}
+
+model package_features {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  package_id String    @db.Uuid
+  feature    String
+  is_active  Boolean?  @default(true)
+  position   Int?      @default(0)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  packages   packages  @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([package_id], map: "idx_package_features_package_id")
+}
+
+model packages {
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  page_price_plan_id String             @db.Uuid
+  name               String             @db.VarChar(255)
+  description        String?
+  currency           String?            @default("USD") @db.VarChar(10)
+  price              Decimal            @db.Decimal(10, 2)
+  billing_cycle      String?            @db.VarChar(50)
+  is_hidden          Boolean?           @default(false)
+  position           Int?               @default(0)
+  created_at         DateTime?          @default(now()) @db.Timestamp(6)
+  updated_at         DateTime?          @default(now()) @db.Timestamp(6)
+  package_features   package_features[]
+  page_price_plans   page_price_plans   @relation(fields: [page_price_plan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([page_price_plan_id], map: "idx_packages_page_id")
+}
+
+model page_headers {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type             String         @unique(map: "page_headers_type_unique") @db.VarChar(50)
+  page_subtitle    String         @db.VarChar(255)
+  page_title       String?        @db.VarChar(255)
+  description      String?
+  cta_primary_link String?
+  created_at       DateTime?      @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime?      @default(now()) @db.Timestamptz(6)
+  header_media     header_media[]
+}
+
+model page_price_plans {
+  id            String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type          String     @unique(map: "idx_page_price_plans_type") @db.VarChar(50)
+  tag           String
+  heading_part1 String
+  heading_part2 String?
+  paragraph     String?
+  created_at    DateTime?  @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?  @default(now()) @db.Timestamp(6)
+  packages      packages[]
+}
+
+model page_seo {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  page_name         String    @unique(map: "page_seo_page_name_unique") @db.VarChar(50)
+  meta_title        String    @db.VarChar(255)
+  meta_description  String
+  meta_keywords     String?
+  canonical_url     String?   @db.VarChar(255)
+  meta_robots       String?   @db.VarChar(50)
+  schema            String?
+  twitter_card_type String?   @db.VarChar(50)
+  created_at        DateTime? @default(now()) @db.Timestamp(6)
+  updated_at        DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+model process_steps {
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  process_id  String?    @db.Uuid
+  icon        String?
+  alt         String?
+  title       String
+  description String?
+  ishiden     Boolean?   @default(false)
+  created_at  DateTime?  @default(now()) @db.Timestamp(6)
+  updated_at  DateTime?  @default(now()) @db.Timestamp(6)
+  position    Int?       @default(0)
+  order_index Int        @default(0)
+  image       String?
+  icon_alt    String?
+  processes   processes? @relation(fields: [process_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model processes {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type          String          @unique(map: "processes_type_unique") @db.VarChar(50)
+  tag           String
+  heading_part1 String
+  heading_part2 String?
+  paragraph     String?
+  image         String?
+  alt           String?
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?       @default(now()) @db.Timestamp(6)
+  process_steps process_steps[]
+}
+
+model service_item_sections {
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  service_item_id String        @db.Uuid
+  section_name    String        @db.VarChar(50)
+  visible         Boolean?      @default(true)
+  home_services   home_services @relation(fields: [service_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model service_items {
+  id                  String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  section_id          String           @db.Uuid
+  service_title       String
+  service_description String?
+  image               String?
+  alt                 String?
+  position            Int?             @default(0)
+  created_at          DateTime?        @default(now()) @db.Timestamp(6)
+  updated_at          DateTime?        @default(now()) @db.Timestamp(6)
+  href                String?          @db.VarChar(256)
+  service_type        String?
+  page_active         Boolean?         @default(false)
+  icon                String?
+  icon_alt            String?
+  service_sections    service_sections @relation(fields: [section_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model service_sections {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type          String          @unique(map: "service_sections_type_unique") @db.VarChar(50)
+  tag           String
+  heading_part1 String
+  heading_part2 String?
+  paragraph     String?
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at    DateTime?       @default(now()) @db.Timestamp(6)
+  home_services home_services[]
+  service_items service_items[]
+}
+
+model services {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String
+  description String
+  image       String
+  ispublish   String
+  href        String
+  position    Int
+  is_active   Boolean?  @default(true)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model site_robots {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content    String
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_by String?   @db.VarChar(100)
+}
+
+model site_sitemap {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content    String
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_by String?   @db.VarChar(100)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model steps {
+  id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  section_id      String          @db.Uuid
+  step_order      Int             @db.SmallInt
+  title           String
+  heading         String
+  description     String
+  items           Json
+  created_at      DateTime?       @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?       @default(now()) @db.Timestamp(6)
+  image           String?
+  insight_section insight_section @relation(fields: [section_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([section_id, step_order])
+}
+
+model team_images {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type        String    @db.VarChar(50)
+  image       String    @db.VarChar(512)
+  alt         String    @db.VarChar(512)
+  order_index Int       @default(0)
+  is_hidden   Boolean?  @default(false)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @default(now()) @db.Timestamp(6)
+
+  @@unique([type, order_index])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model testimonials {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String
+  designation   String
+  message       String?
+  image         String?
+  video_message String?
+  position      Int?      @default(0)
+  type          String
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime? @default(now()) @db.Timestamptz(6)
+  category      String?
+  thumbnail     String?
+}
+
+model user_dynamic_data {
+  id                            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id                       String?   @db.Uuid
+  reset_password_token          String?
+  reset_password_expire_at      DateTime? @db.Timestamp(6)
+  verification_token            String?
+  verification_token_expires_at DateTime? @db.Timestamp(6)
+  updated_at                    DateTime? @default(now()) @db.Timestamp(6)
+  users                         users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model user_login_history {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id       String?  @db.Uuid
+  device        String?
+  browser       String?
+  ip_address    String   @db.VarChar(100)
+  login_time    DateTime @default(now()) @db.Timestamp(6)
+  location      String?
+  is_successful Boolean? @default(true)
+  users         users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model users {
+  id                 String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String               @db.VarChar(100)
+  email              String               @unique @db.VarChar(150)
+  password           String
+  role               String?              @default("user") @db.VarChar(50)
+  verified           Boolean?             @default(false)
+  created_at         DateTime?            @default(now()) @db.Timestamp(6)
+  updated_at         DateTime?            @default(now()) @db.Timestamp(6)
+  user_dynamic_data  user_dynamic_data[]
+  user_login_history user_login_history[]
+}
+
+model video_upload_parts {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  upload_id   String
+  video_id    String
+  part_number Int
+  etag        String
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model visitors {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ip           String    @db.VarChar(45)
+  country      String?   @db.VarChar(100)
+  region       String?   @db.VarChar(100)
+  city         String?   @db.VarChar(100)
+  provider     String?   @db.VarChar(100)
+  device       String?   @db.VarChar(100)
+  os           String?   @db.VarChar(100)
+  browser      String?   @db.VarChar(100)
+  visit_count  Int?      @default(1)
+  first_visit  DateTime? @default(now()) @db.Timestamptz(6)
+  last_visit   DateTime? @default(now()) @db.Timestamptz(6)
+  is_duplicate Boolean?  @default(false)
+  user_agent   String?
+}
+
+model whychooseus_items {
+  id                   String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  whychooseus_id       String               @db.Uuid
+  title                String
+  description          String?
+  icon                 String?
+  alt                  String?
+  position             Int?                 @default(0)
+  created_at           DateTime?            @default(now()) @db.Timestamp(6)
+  updated_at           DateTime?            @default(now()) @db.Timestamp(6)
+  whychooseus_sections whychooseus_sections @relation(fields: [whychooseus_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model whychooseus_sections {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type              String              @unique(map: "whychooseus_sections_type_unique") @db.VarChar(50)
+  tag               String
+  heading_part1     String
+  heading_part2     String?
+  paragraph         String?
+  created_at        DateTime?           @default(now()) @db.Timestamp(6)
+  updated_at        DateTime?           @default(now()) @db.Timestamp(6)
+  whychooseus_items whychooseus_items[]
+}
+
+model work_header {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type          String    @unique @db.VarChar(50)
+  tag           String
+  heading_part1 String
+  heading_part2 String?
+  paragraph     String?
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  updated_at    DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model works {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String?   @db.VarChar(255)
+  description String?
+  thumbnail   String?   @db.VarChar(512)
+  video_link  String    @db.VarChar(512)
+  is_visible  Boolean?  @default(true)
+  is_feature  Boolean?  @default(false)
+  position    Int?
+  type        String    @db.VarChar(50)
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+enum faq_type {
+  main
+  shorts
+  talking
+  podcast
+  graphic
+  advertising
+  website
+}
+
+enum header_type {
+  main
+  shorts
+  talking
+  podcast
+  graphic
+  advertising
+  website
+}

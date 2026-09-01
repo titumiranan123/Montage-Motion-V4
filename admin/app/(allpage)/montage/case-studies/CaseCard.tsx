@@ -1,53 +1,89 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { Pencil, Trash2, ExternalLink } from 'lucide-react';
-import Link from 'next/link';
+import { api_url } from "@/hook/Apiurl";
+import { Pencil, Trash2, ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 type HeroStat = { label: string; value: string };
-type Metric   = { label: string; value: string; sub: string };
+type Metric = { label: string; value: string; sub: string };
 
 interface CaseStudy {
-  id:          string;
-  slug:        string;
-  type:        string;
-  status:      string;
-  title:       string;
+  id: string;
+  slug: string;
+  type: string;
+  status: string;
+  title: string;
   description: string;
-  image_url:   string;
-  image_alt:   string;
-  tag_slugs:   string[];
-  hero_stats:  HeroStat[];
-  metrics:     Metric[];
-  created_at:  string;
+  image_url: string;
+  image_alt: string;
+  tag_slugs: string[];
+  hero_stats: HeroStat[];
+  metrics: Metric[];
+  created_at: string;
 }
 
 interface Props {
-  data:     CaseStudy;
-  onEdit?:  (id: string) => void;
-  onDelete?:(id: string) => void;
+  data: CaseStudy;
 }
 
 const typeColors: Record<string, string> = {
-  client_success: 'bg-[#1fb5dd]/15 text-[#1fb5dd] border-[#1fb5dd]/30',
-  product:        'bg-purple-500/15 text-purple-400 border-purple-500/30',
-  research:       'bg-amber-500/15 text-amber-400 border-amber-500/30',
-  business:       'bg-green-500/15 text-green-400 border-green-500/30',
+  client_success: "bg-[#1fb5dd]/15 text-[#1fb5dd] border-[#1fb5dd]/30",
+  product: "bg-purple-500/15 text-purple-400 border-purple-500/30",
+  research: "bg-amber-500/15 text-amber-400 border-amber-500/30",
+  business: "bg-green-500/15 text-green-400 border-green-500/30",
 };
 
 const statusColors: Record<string, string> = {
-  published: 'bg-green-500/15 text-green-400 border-green-500/30',
-  draft:     'bg-gray-500/15 text-gray-400 border-gray-500/30',
-  archived:  'bg-red-500/15 text-red-400 border-red-500/30',
+  published: "bg-green-500/15 text-green-400 border-green-500/30",
+  draft: "bg-gray-500/15 text-gray-400 border-gray-500/30",
+  archived: "bg-red-500/15 text-red-400 border-red-500/30",
 };
 
 const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+  new Date(iso).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
-export default function CaseStudyCard({ data, onEdit, onDelete }: Props) {
+export default function CaseStudyCard({ data }: Props) {
+  const router = useRouter();
+  const onDelete = async (id: string) => {
+    const result = await Swal.fire({
+      title: "Delete Case Study?",
+      text: "This will permanently remove the Case Study.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Keep",
+      background: "#1f2937",
+      color: "#fff",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await api_url.delete(`/api/case-studies/${id}`);
+
+        if (res.status === 200 || res.status === 204) {
+          toast.success("Case Study deleted successfully");
+          router.refresh();
+        }
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data?.message || "Failed to delete Case Study",
+        );
+      }
+    }
+  };
   return (
     <div className="group bg-[#151b24] border border-[rgba(255,255,255,0.08)] rounded-2xl overflow-hidden hover:border-[#1fb5dd]/30 hover:shadow-xl hover:shadow-[#1fb5dd]/5 transition-all duration-300 max-w-100 w-full">
-
       {/* Thumbnail */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -74,19 +110,21 @@ export default function CaseStudyCard({ data, onEdit, onDelete }: Props) {
 
         {/* Top badges */}
         <div className="absolute top-3 left-3 flex gap-2">
-          <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border capitalize ${typeColors[data?.type] ?? typeColors.business}`}>
-            {data?.type.replace('_', ' ')}
+          <span
+            className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border capitalize ${typeColors[data?.type] ?? typeColors.business}`}
+          >
+            {data?.type.replace("_", " ")}
           </span>
-          <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border capitalize ${statusColors[data?.status] ?? statusColors?.draft}`}>
+          <span
+            className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border capitalize ${statusColors[data?.status] ?? statusColors?.draft}`}
+          >
             {data?.status}
           </span>
         </div>
-
       </div>
 
       {/* Body */}
       <div className="p-5">
-
         {/* Title */}
         <h3 className="text-[15px] font-semibold text-white leading-snug mb-2 line-clamp-2">
           {data?.title}
@@ -97,14 +135,14 @@ export default function CaseStudyCard({ data, onEdit, onDelete }: Props) {
           {data?.description}
         </p>
 
-      
-      
-
         {/* Tags */}
         {data?.tag_slugs.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {data?.tag_slugs.slice(0, 4).map(t => (
-              <span key={t} className="px-2 py-0.5 rounded-full bg-[#1fb5dd]/8 text-[#1fb5dd] text-[11px] font-medium border border-[#1fb5dd]/15">
+            {data?.tag_slugs.slice(0, 4).map((t) => (
+              <span
+                key={t}
+                className="px-2 py-0.5 rounded-full bg-[#1fb5dd]/8 text-[#1fb5dd] text-[11px] font-medium border border-[#1fb5dd]/15"
+              >
                 #{t}
               </span>
             ))}
@@ -118,9 +156,11 @@ export default function CaseStudyCard({ data, onEdit, onDelete }: Props) {
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-3 border-t border-[rgba(255,255,255,0.06)]">
-          <span className="text-[11px] text-[#4a5568]">{formatDate(data?.created_at)}</span>
+          <span className="text-[11px] text-[#4a5568]">
+            {formatDate(data?.created_at)}
+          </span>
           <a
-            href={`/case-study/${data?.slug}`}
+            href={`https://montagemotion.com/case-studies/${data?.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-[12px] text-[#7a8899] hover:text-[#1fb5dd] transition-colors"
