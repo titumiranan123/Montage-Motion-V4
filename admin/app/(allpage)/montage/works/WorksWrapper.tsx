@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useDragAndDrop } from "@formkit/drag-and-drop/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { api_url } from "@/hook/Apiurl";
 import VideoCard from "@/component/works/Workcard";
@@ -29,20 +29,30 @@ export const WorkWrapper = ({ data }: { data: any }) => {
   const [editData, setEditData] = useState<IVideo | null>(null);
   const router = useRouter();
   const [hasChanges, setHasChanges] = useState(false);
+  const savedPositions = useRef("");
   const [parent, tapes, setTapes] = useDragAndDrop<HTMLDivElement, IVideo>(
-    data?.works,
+    data?.works ?? [],
   );
   const [WorkEdit, setWorkEditData] = useState<any | null>();
   const [isHeaderModal, setWorkHeaderModal] = useState(false);
 
   useEffect(() => {
-    if (data) {
-      setTapes(data?.works);
+    if (data?.works) {
+      setTapes(data.works);
+      savedPositions.current = JSON.stringify(
+        data.works.map((item: IVideo) => item.id),
+      );
+      setHasChanges(false);
     }
   }, [data, setTapes]);
 
   useEffect(() => {
-    setHasChanges(true);
+    const currentPositions = JSON.stringify(
+      (tapes ?? []).map((item) => item.id),
+    );
+    if (savedPositions.current) {
+      setHasChanges(currentPositions !== savedPositions.current);
+    }
   }, [tapes]);
 
   const savePositions = async () => {
@@ -54,6 +64,9 @@ export const WorkWrapper = ({ data }: { data: any }) => {
 
     try {
       await api_url.patch("/api/works/positions", payload);
+      savedPositions.current = JSON.stringify(
+        tapes.map((item) => item.id),
+      );
       Swal.fire({
         title: "Positions updated!",
         icon: "success",
@@ -81,7 +94,6 @@ export const WorkWrapper = ({ data }: { data: any }) => {
         `/api/works${data.id ? `/${data.id}` : ""}`,
         data,
       );
-      router.refresh();
       Swal.fire({
         title: res.data.message,
         icon: "success",
@@ -89,7 +101,6 @@ export const WorkWrapper = ({ data }: { data: any }) => {
         color: "#fff",
         confirmButtonColor: "#6366f1",
       });
-      router.refresh();
       setWorkModal(false);
       setEditData(null);
     } catch (err: any) {

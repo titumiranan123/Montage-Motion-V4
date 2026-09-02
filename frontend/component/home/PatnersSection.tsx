@@ -2,6 +2,7 @@
 "use client";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
+import { getSafeImageSrc } from "@/utils/media";
 
 const PartnersSection = ({ data }: { data: any[] }) => {
   return (
@@ -31,7 +32,7 @@ const PartnersSection = ({ data }: { data: any[] }) => {
                 }}
               >
                 <Image
-                  src={partner?.image}
+                  src={getSafeImageSrc(partner?.image)}
                   alt={partner?.alt || `Partner logo ${index + 1}`}
                   height={40}          // ← fixed 40px height
                   width={180}          // ← width auto adjust হবে

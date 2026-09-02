@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/incompatible-library */
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
@@ -23,7 +22,7 @@ const inter = Inter({
 });
 
 interface SeoMeta {
-  id?: number;
+  id?: string;
   page_name: string;
   meta_title: string;
   meta_description: string;
@@ -51,6 +50,7 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
     control,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<SeoMeta>({
     defaultValues: {
@@ -68,28 +68,30 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
   const router = useRouter();
   const pages = watch("page_name");
   useEffect(() => {
-    if (pages ?? initialData?.page_name) {
-      router.push(`?page_name=${pages ?? initialData?.page_name}`, {
+    if (pages) {
+      router.replace(`?page_name=${encodeURIComponent(pages)}`, {
         scroll: false,
       });
     }
-  }, [pages, initialData?.page_name]);
+  }, [pages, router]);
   useEffect(() => {
     if (initialData) {
-      setValue("meta_title", initialData.meta_title ?? "");
-      setValue("meta_description", initialData.meta_description ?? "");
-      setValue("meta_keywords", initialData.meta_keywords ?? "");
-      setValue("canonical_url", initialData.canonical_url ?? "");
-      setValue("meta_robots", initialData.meta_robots ?? "index, follow");
-      setValue(
-        "twitter_card_type",
-        initialData.twitter_card_type ?? "summary_large_image",
-      );
-      setValue("schema", initialData.schema ?? "");
+      reset({
+        id: initialData.id,
+        page_name: initialData.page_name ?? "home",
+        meta_title: initialData.meta_title ?? "",
+        meta_description: initialData.meta_description ?? "",
+        meta_keywords: initialData.meta_keywords ?? "",
+        canonical_url: initialData.canonical_url ?? "",
+        meta_robots: initialData.meta_robots ?? "index, follow",
+        twitter_card_type:
+          initialData.twitter_card_type ?? "summary_large_image",
+        schema: initialData.schema ?? "",
+      });
     }
-  }, [initialData]);
+  }, [initialData, reset]);
 
-  const pageOptions: SeoMeta["page_name"][] = [
+  const pageOptions: SeoMeta["page_name"][] = Array.from(new Set([
     ...type,
     "portfolio",
     "career",
@@ -100,7 +102,7 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
     "terms",
     "privacy",
     "refund",
-  ];
+  ]));
 
   const robotsOptions: SeoMeta["meta_robots"][] = [
     "index, follow",
@@ -128,25 +130,56 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
       return false;
     }
   };
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: SeoMeta) => {
     setIsSubmitting(true);
+    const payload = {
+      ...data,
+      page_name: data.page_name.trim(),
+      meta_title: data.meta_title.trim(),
+      meta_description: data.meta_description.trim(),
+      meta_keywords: data.meta_keywords?.trim() ?? "",
+      canonical_url: data.canonical_url?.trim() ?? "",
+      schema: data.schema?.trim() ?? "",
+    };
     try {
-      const res = await api_url.post(`/api/seo`, data);
+      const res = await api_url.post(`/api/seo`, payload);
 
       if (res.status === 200) {
-        setIsSubmitting(false);
         Swal.fire({
-          title: res.data.message,
+          title: res.data?.message ?? "SEO metadata saved",
           icon: "success",
           background: "#1f2937",
           color: "#fff",
           confirmButtonColor: "#6366f1",
         });
+        router.refresh();
       }
-    } catch (error: any) {
-      console.log(error);
+    } catch (error: unknown) {
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not save SEO metadata");
+    } finally {
       setIsSubmitting(false);
-      toast.error(error.errorDetails?.[0]?.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!initialData?.page_name) return;
+    if (!window.confirm(`Delete SEO metadata for ${initialData.page_name}?`)) {
+      return;
+    }
+
+    try {
+      await api_url.delete(`/api/seo/${encodeURIComponent(initialData.page_name)}`);
+      toast.success("SEO metadata deleted");
+      router.replace("?page_name=home");
+      router.refresh();
+    } catch (error: unknown) {
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not delete SEO metadata");
     }
   };
   return (
@@ -219,10 +252,12 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
           <label className="block text-sm font-semibold text-gray-200 mb-2">
             Meta Title <span className="text-[#4FFFD0]">*</span>
           </label>
-          <input
-            type="text"
+            <input
+              type="text"
             {...register("meta_title", {
               required: "Meta title is required",
+              validate: (value) =>
+                value.trim().length > 0 || "Meta title is required",
             })}
             className="w-full p-3 bg-[#0D0D0D] border border-[#1FB5DD]/40 text-gray-200 rounded-xl focus:ring-4 focus:ring-[#4FFFD0]/40 transition"
             placeholder="Enter meta title (max 60 characters)"
@@ -246,6 +281,8 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
             rows={6}
             {...register("meta_description", {
               required: "Meta description is required",
+              validate: (value) =>
+                value.trim().length > 0 || "Meta description is required",
             })}
             className="w-full p-3 bg-[#0D0D0D] border border-[#1FB5DD]/40 text-gray-200 rounded-xl focus:ring-4 focus:ring-[#4FFFD0]/40 transition resize-y"
             placeholder="Enter meta description (max 160 characters)"
@@ -280,7 +317,18 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
             </label>
             <input
               type="url"
-              {...register("canonical_url")}
+              {...register("canonical_url", {
+                validate: (value) => {
+                  if (!value?.trim()) return true;
+                  try {
+                    const url = new URL(value);
+                    return ["http:", "https:"].includes(url.protocol) ||
+                      "Canonical URL must use http or https";
+                  } catch {
+                    return "Enter a valid canonical URL";
+                  }
+                },
+              })}
               className="w-full p-3 bg-[#0D0D0D] border border-[#1FB5DD]/40 text-gray-200 rounded-xl focus:ring-4 focus:ring-[#4FFFD0]/40 transition"
               placeholder="https://example.com/page"
             />
@@ -326,7 +374,12 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
                   defaultLanguage="json"
                   theme="vs-dark"
                   value={field.value}
-                  onChange={(val) => setValue("schema", val || "")}
+                onChange={(val) =>
+                  setValue("schema", val || "", {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  })
+                }
                   options={{
                     minimap: { enabled: false },
                     fontSize: 14,
@@ -345,11 +398,11 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
         </div>
 
         {/* Submit Button */}
-        <div>
+        <div className="flex gap-3">
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 rounded-full bg-linear-to-r from-[#1FB5DD] to-[#4FFFD0] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
+            className={`flex-1 py-3 rounded-full bg-linear-to-r from-[#1FB5DD] to-[#4FFFD0] text-black font-semibold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:opacity-90 disabled:opacity-50 ${
               isSubmitting ? "animate-pulse" : ""
             }`}
           >
@@ -383,6 +436,16 @@ const SeoMetaForm: React.FC<SeoMetaFormProps> = ({ initialData, type }) => {
               </span>
             )}
           </button>
+          {initialData?.page_name && (
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={isSubmitting}
+              className="px-6 py-3 rounded-full border border-red-500 text-red-400 font-semibold hover:bg-red-500/10 disabled:opacity-50"
+            >
+              Delete
+            </button>
+          )}
         </div>
       </form>
     </div>

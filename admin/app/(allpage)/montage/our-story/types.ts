@@ -3,7 +3,7 @@ export interface ProcessStep {
   alt: string;
   title: string;
   description: string;
-  isHiden: boolean;
+  is_hidden: boolean;
 }
 
 export interface ProcessSchema {

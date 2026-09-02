@@ -7,6 +7,7 @@ import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motio
 import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
 import Image from "next/image";
 import ReactPlayer from "react-player";
+import { getSafeImageSrc } from "@/utils/media";
 
 type Testimonial = {
   id?: string | number;
@@ -63,7 +64,7 @@ const TestimonialCard: React.FC<CardProps> = ({
       <div className="aspect-9/16 rounded-[13px] overflow-hidden relative group">
         {testimonial?.thumbnail ? (
           <Image
-            src={testimonial.thumbnail}
+            src={getSafeImageSrc(testimonial.thumbnail)}
             alt={`${testimonial.name} thumbnail`}
             fill
             className="object-cover"
@@ -80,7 +81,7 @@ const TestimonialCard: React.FC<CardProps> = ({
       <div className="flex items-center gap-4 mt-2">
         <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0">
           <Image
-            src={testimonial.image}
+            src={getSafeImageSrc(testimonial.image)}
             alt={`${testimonial.name}'s profile`}
             className="object-cover"
             width={64}

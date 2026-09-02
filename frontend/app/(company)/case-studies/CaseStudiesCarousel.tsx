@@ -15,6 +15,7 @@ export default function CaseStudiesCarousel({ data }: CaseStudiesCarouselProps) 
   const [current, setCurrent] = useState(0);
   const animatingRef = useRef(false);
   const lockedRef = useRef(false);
+  const animationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const total = data.length;
 
   // ── Navigation ─────────────────
@@ -26,7 +27,8 @@ export default function CaseStudiesCarousel({ data }: CaseStudiesCarouselProps) 
 
       animatingRef.current = true;
       setCurrent(next);
-      setTimeout(() => {
+      if (animationTimerRef.current) clearTimeout(animationTimerRef.current);
+      animationTimerRef.current = setTimeout(() => {
         animatingRef.current = false;
       }, 420);
     },
@@ -48,9 +50,16 @@ export default function CaseStudiesCarousel({ data }: CaseStudiesCarouselProps) 
     return rect.top <= 0 && rect.bottom >= window.innerHeight;
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (animationTimerRef.current) clearTimeout(animationTimerRef.current);
+    };
+  }, []);
+
   // ── Wheel ──────────────
   useEffect(() => {
     const acc = { v: 0 };
+    let unlockTimer: ReturnType<typeof setTimeout> | null = null;
 
     const handler = (e: WheelEvent) => {
       if (!isInView()) return;
@@ -66,7 +75,8 @@ export default function CaseStudiesCarousel({ data }: CaseStudiesCarouselProps) 
           go(dir as 1 | -1);
           lockedRef.current = true;
           acc.v = 0;
-          setTimeout(() => {
+          if (unlockTimer) clearTimeout(unlockTimer);
+          unlockTimer = setTimeout(() => {
             lockedRef.current = false;
           }, 650);
         } else {
@@ -77,12 +87,17 @@ export default function CaseStudiesCarousel({ data }: CaseStudiesCarouselProps) 
     };
 
     window.addEventListener("wheel", handler, { passive: false });
-    return () => window.removeEventListener("wheel", handler);
+    return () => {
+      window.removeEventListener("wheel", handler);
+      if (unlockTimer) clearTimeout(unlockTimer);
+      lockedRef.current = false;
+    };
   }, [current, go, total, isInView]);
 
   // ── Touch ─────────────────────────────────────────────────────────────────
   useEffect(() => {
     let startY = 0;
+    let unlockTimer: ReturnType<typeof setTimeout> | null = null;
 
     const onStart = (e: TouchEvent) => {
       startY = e.touches[0].clientY;
@@ -100,7 +115,8 @@ export default function CaseStudiesCarousel({ data }: CaseStudiesCarouselProps) 
         if (next >= 0 && next < total) {
           go(dir as 1 | -1);
           lockedRef.current = true;
-          setTimeout(() => {
+          if (unlockTimer) clearTimeout(unlockTimer);
+          unlockTimer = setTimeout(() => {
             lockedRef.current = false;
           }, 650);
           startY = e.touches[0].clientY;
@@ -113,6 +129,8 @@ export default function CaseStudiesCarousel({ data }: CaseStudiesCarouselProps) 
     return () => {
       window.removeEventListener("touchstart", onStart);
       window.removeEventListener("touchmove", onMove);
+      if (unlockTimer) clearTimeout(unlockTimer);
+      lockedRef.current = false;
     };
   }, [current, go, total, isInView]);
 

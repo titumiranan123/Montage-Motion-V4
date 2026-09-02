@@ -167,6 +167,7 @@ export default function MainLayout({
         },
         { href: "/montage/faqs", label: "Faq Section", icon: <FiHelpCircle /> },
         { href: "/montage/blogs", label: "Blogs", icon: <FiBookOpen /> },
+        { href: "/montage/ebook", label: "Ebook & Leads", icon: <FiBookOpen /> },
         { href: "/montage/contact", label: "Contact", icon: <FiMail /> },
       ],
     },

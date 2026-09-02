@@ -3,6 +3,7 @@ import Gradientcard from "@/component/share/Gradientcard";
 import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
 import Link from "next/link";
+import { getSafeHref } from "@/utils/media";
 
 const JobPost = ({ data }: { data: any }) => {
   return (
@@ -49,7 +50,7 @@ const JobPost = ({ data }: { data: any }) => {
                     <>
                       <div className="text-[64px] font-semibold poppins flex items-center text-white gap-2">
                         <Image
-                          src={"/assets/dollar.png"}
+                          src={"/assets/icon/certificate.png"}
                           alt="dollar"
                           className="w-9.5 h-16"
                           width={38}
@@ -73,7 +74,7 @@ const JobPost = ({ data }: { data: any }) => {
           `}
                 </style>
                 <Link
-                  href={`${job?.applylink}`}
+                  href={getSafeHref(job?.applylink)}
                   target="_blank"
                   style={{ boxShadow: "0px 0px 25px 0px #FFFFFF40 inset" }}
                   className="max-w-87 bg-white/40 backdrop-blur-[20px] group-hover:text-white group-hover:bg-[linear-gradient(180deg,#1fb5dd_0%,#2b6ab2_100%)]   w-full  h-12 btn-colors text-(--text-primary) py-4 px-5 rounded-2xl flex justify-center items-center poppins font-medium mt-6 transition-colors duration-200 ease-in-out"

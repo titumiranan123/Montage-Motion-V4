@@ -3,6 +3,7 @@ import VideoPlayer from "@/component/home/VideoPlayer";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 import Link from "next/link";
 
 const Thumbnailworksection = ({
@@ -38,7 +39,7 @@ const Thumbnailworksection = ({
                 {/* Thumbnail */}
                 {dt?.video_link === "" || dt?.video_link === null ? (
                   <Image
-                    src={dt?.thumbnail}
+                    src={getSafeImageSrc(dt?.thumbnail)}
                     alt={dt?.title || "Graphic work"}
                     width={410}
                     height={308}

@@ -4,6 +4,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Gradientcard from "../share/Gradientcard";
+import { getSafeImageSrc } from "@/utils/media";
 
 const ProcessSlider = ({ data }: { data: any }) => {
   // console.log("process data ====================>", data);
@@ -26,11 +27,14 @@ const ProcessSlider = ({ data }: { data: any }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const items = Array.isArray(data) ? data : [];
+  const activeItem = items[activeIndex] ?? items[0];
+
   return (
     <div className=" flex lg:flex-row flex-col mt-9 md:mt-16 gap-12">
       <div className="lg:sticky top-44 max-w-159.5 rounded-[13px] w-full max-h-224.5 h-full md:block hidden">
         <Image
-          src={data?.[activeIndex]?.image ?? ""}
+          src={getSafeImageSrc(activeItem?.image)}
           alt="process "
           width={638}
           height={898}
@@ -41,7 +45,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
       </div>
 
       <div className=" flex flex-col  gap-2">
-        {data?.map((dt: any, idx: number) => {
+        {items.map((dt: any, idx: number) => {
           // console.log("active index ====================>", dt);
           return ( <div
             key={idx}
@@ -55,7 +59,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
               borderClassName="max-w-[698px] w-full lg:h-[172px] h-140.5 rounded-[24px] p-[1px] transition-transform duration-200 ease-in-out hover:scale-[104%]"
             >
               <Image
-                src={dt?.icon ?? ""}
+                src={getSafeImageSrc(dt?.icon)}
                 alt={dt?.alt ?? ""}
                 className="w-14 h-14  rounded-[12px] p-2.5"
                 width={36}
@@ -69,7 +73,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
                   {dt?.description ?? ""}
                  
                 </p>
-                <img src={dt?.image} className="max-w-159.5 rounded-[13px] w-full lg:h-124.5 md:hidden mt-2" alt={dt?.alt ?? ""}/>
+                <img src={getSafeImageSrc(dt?.image)} className="max-w-159.5 rounded-[13px] w-full lg:h-124.5 md:hidden mt-2" alt={dt?.alt ?? ""}/>
                 
               </div>
             </Gradientcard>

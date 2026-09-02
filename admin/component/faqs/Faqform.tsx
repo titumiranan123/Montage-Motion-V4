@@ -32,6 +32,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
       section_description: "",
       contact_image: "",
       contact_heading: "",
+      type: "about",
       is_active: true,
       faqs: [],
     },
@@ -48,7 +49,6 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
 
   const addFaqItem = () => {
     const newItem: IFaqItem = {
-      id: Date.now().toString(),
       question: "",
       answer: "",
       is_visible: true,
@@ -77,6 +77,16 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
     }
   };
   const onSubmit = async (data: IFaqSection) => {
+    if (!data.faqs?.length) {
+      Swal.fire({
+        title: "Add at least one FAQ",
+        text: "A FAQ section must contain at least one question and answer.",
+        icon: "warning",
+        background: "#1f2937",
+        color: "#fff",
+      });
+      return;
+    }
     try {
       const url = data.id ? `/api/faq/${data.id}` : "/api/faq";
 
@@ -118,6 +128,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             others={[{service_type:"about",service_title:"About"}]}
 
           />
+          <input {...register("type", { required: "Page type is required" })} type="hidden" />
           {errors.type && (
             <p className="text-red-400 text-sm mt-1">{errors.type.message}</p>
           )}
@@ -282,6 +293,7 @@ export const FaqForm = ({ initialData, onCancel }: FaqFormProps) => {
             value={watch("contact_image")}
             onChange={(url) => setValue(`contact_image`, url)}
           />
+          <input {...register("contact_image", { required: "Contact image is required" })} type="hidden" />
           {errors.contact_image && (
             <p className="text-red-400 text-sm mt-1">
               {errors.contact_image.message}

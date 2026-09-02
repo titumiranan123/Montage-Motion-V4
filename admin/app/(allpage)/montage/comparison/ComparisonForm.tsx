@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { PlusCircle, X } from "lucide-react";
 import ImageUploader from "@/component/ImageUploader";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
+import { useRouter } from "next/navigation";
 
 type SectionProps = {
   title: string;
@@ -111,7 +112,9 @@ const Section = ({
           {bonuses.map((entry) => (
             <div key={entry.index} className="flex gap-2">
               <input
-                {...register(`columns.${colIndex}.entries.${entry.index}.text`)}
+                {...register(`columns.${colIndex}.entries.${entry.index}.text`, {
+                  required: "Bonus text is required",
+                })}
                 className="input w-full border border-slate-800 py-2 px-3 rounded-lg"
                 placeholder="Bonus text"
               />
@@ -166,6 +169,7 @@ export default function ComparisonForm({
   data: any;
   setOpen: (p: boolean) => void;
 }) {
+  const router = useRouter();
   const {
     register,
     control,
@@ -201,6 +205,7 @@ export default function ComparisonForm({
       if (res.status === 201 || res.status === 200) {
         toast.success(`Successfull ${data?.id ? data?.id : ""}`);
         setOpen(false);
+        router.refresh();
       }
     } catch (error) {
       console.error(error);

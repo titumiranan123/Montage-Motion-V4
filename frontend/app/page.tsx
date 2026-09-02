@@ -9,6 +9,7 @@ import ContactSection from "@/component/share/ContactSection";
 import { getPageSEO } from "@/component/share/getPageSEO";
 import HomeFaqSection from "@/component/share/HomeFaqSection";
 import IndustryWeWork from "@/component/share/IndustryWork";
+import JsonLd from "@/component/share/JsonLd";
 import TestimonialSection from "@/component/share/Testimonial";
 import { getData } from "@/utils/getData";
 export async function generateMetadata() {
@@ -26,19 +27,15 @@ const HomePage = async () => {
   // console.log(data?.header)
   return (
     <div className="lg:mt-4 w-full mx-auto">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html:
-            data?.schema ??
-            JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              name: "MontageMotion",
-              url: "https://montagemotion.com",
-              description:
-                "Full-service video editing agency helping creators and brands grow with Shorts, Reels, podcasts, and high-converting content.",
-            }),
+      <JsonLd
+        value={data?.schema}
+        fallback={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "MontageMotion",
+          url: "https://montagemotion.com",
+          description:
+            "Full-service video editing agency helping creators and brands grow with Shorts, Reels, podcasts, and high-converting content.",
         }}
       />
       <div className="headerbg lg:rounded-[40px] rounded-lg  mb-10 min-h-screen">

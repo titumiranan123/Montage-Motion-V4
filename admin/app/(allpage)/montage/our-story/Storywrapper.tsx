@@ -1,98 +1,94 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { api_url } from "@/hook/Apiurl";
 import StoryForm from "./Processform";
 import StroySlider from "./Storyslider";
 
-const Storywrapper = ({ data }: { data: any }) => {
+const Storywrapper = ({ data }: { data?: any }) => {
+  const [storyData, setInitialServiceData] = useState<any | null>(null);
+  const [isOpenModal, setIsModalOpent] = useState(false);
+  const router = useRouter();
 
-  const [ProcessData, setInitialServiceData] = useState<any | null>(null);
-  const [isOpenModal, setIsModalOpent] = useState<any | null>(null);
-  // Disable scrolling when the modal is open
   useEffect(() => {
-    if (isOpenModal) {
-      // Disable scroll when modal is open
-      document.body.style.overflow = "hidden";
-    } else {
-      // Enable scroll when modal is closed
-      document.body.style.overflow = "auto";
-    }
-
+    document.body.style.overflow = isOpenModal ? "hidden" : "auto";
     return () => {
-      // Cleanup: reset overflow when the component unmounts
       document.body.style.overflow = "auto";
     };
   }, [isOpenModal]);
+
+  const deleteStory = async () => {
+    if (!data?.id) return;
+    if (!window.confirm("Delete this story section and all story steps?")) return;
+
+    try {
+      await api_url.delete(`/api/our-story/${data.id}`);
+      toast.success("Our Story section deleted");
+      router.refresh();
+    } catch (error) {
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not delete story section");
+    }
+  };
+
+  const openForm = (initialData: any | null) => {
+    setInitialServiceData(initialData);
+    setIsModalOpent(true);
+  };
+
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold ">Our Story Section</h1>
-          <p className="text-gray-400">
-            Manage about story section
-          </p>
+          <h1 className="text-2xl md:text-3xl font-bold">Our Story Section</h1>
+          <p className="text-gray-400">Manage the about story section</p>
         </div>
-
-        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-       
-          {/* Add New Button */}
-          <button
-            onClick={() => {
-              setInitialServiceData(null);
-              setIsModalOpent(true);
-            }}
-            className="bg-[#1FB5DD]    text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Add Service
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col gap-5">
-        <StroySlider data={data} />
         <button
-          onClick={() => {
-            setInitialServiceData(data);
-            setIsModalOpent(true);
-          }}
-          className="bg-[#1FB5DD] mt-50  w-40  text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+          onClick={() => openForm(data ?? null)}
+          className="bg-[#1FB5DD] text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Edit 
+          Add Story Step
         </button>
       </div>
+
+      {data ? (
+        <>
+          <StroySlider data={data} />
+          <div className="flex gap-3 mt-10">
+            <button
+              onClick={() => openForm(data)}
+              className="bg-[#1FB5DD] text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+            >
+              Edit Story
+            </button>
+            <button
+              onClick={deleteStory}
+              className="border border-red-500 text-red-400 font-medium py-2 px-4 rounded-lg transition-all duration-200"
+            >
+              Delete Section
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="rounded-lg border border-slate-700 p-8 text-gray-400">
+          No story section found. Add the first story step to create it.
+        </div>
+      )}
+
       {isOpenModal && (
         <div
           style={{ zIndex: 99 }}
           onClick={() => setIsModalOpent(false)}
-          className="w-screen
-        h-full flex justify-center items-center fixed inset-0 bg-black/30 backdrop-blur-2xl"
+          className="w-screen h-full flex justify-center items-center fixed inset-0 bg-black/30 backdrop-blur-2xl"
         >
-          <div onClick={(e) => e.stopPropagation()}>
+          <div onClick={(event) => event.stopPropagation()}>
             <StoryForm
-              initialData={ProcessData}
+              initialData={storyData}
               setIsModalOpent={setIsModalOpent}
             />
           </div>

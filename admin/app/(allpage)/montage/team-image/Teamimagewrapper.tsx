@@ -2,8 +2,9 @@
 "use client";
 import React, { useState } from "react";
 import BrandimageFrom from "./BrandimageFrom";
+import Brandcard from "./Brandcard";
 
-const Teamimagewrapper = () => {
+const Teamimagewrapper = ({ data }: { data: any[] }) => {
   const [initialValue, setInitialServiceData] = useState<any | null>();
   const [isOpenModal, setIsModalOpent] = useState<any | null>(null);
   return (
@@ -43,6 +44,24 @@ const Teamimagewrapper = () => {
             Add Brand
           </button>
         </div>
+      </div>
+      <div className="flex w-full flex-wrap gap-8 items-center">
+        {data?.length ? (
+          data.map((item) => (
+            <Brandcard
+              dt={item}
+              key={item.id}
+              onEdit={() => {
+                setInitialServiceData(item);
+                setIsModalOpent(true);
+              }}
+            />
+          ))
+        ) : (
+          <p className="w-full rounded-lg border border-dashed border-gray-600 p-8 text-center text-gray-400">
+            No team images found.
+          </p>
+        )}
       </div>
       {isOpenModal && (
         <div

@@ -4,6 +4,7 @@ import OurTeam from "./OurTeam";
 import OurStory from "./OurStory";
 import { getPageSEO } from "@/component/share/getPageSEO";
 import ContactSection from "@/component/share/ContactSection";
+import JsonLd from "@/component/share/JsonLd";
 import { getData } from "@/utils/getData";
 import PartnersSection from "@/component/home/PatnersSection";
 import HomeFaqSection from "@/component/share/HomeFaqSection";
@@ -18,21 +19,9 @@ const AboutUs = async () => {
   const data = await getData({
     url: `api/website/data?type=about&table=brand,members,faq,ourstory,teamimage`,
   });
-  const safeSchema =
-    data?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
   return (
     <div className=" mt-2 md:pt-0 ">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+      <JsonLd value={data?.data?.schema} />
       {data?.data?.header && (
         <div className="headerbg rounded-[40px]  px-2 xl:px-15 mx-auto pb-15 pt-16 mb-10">
           <HeaderService mainIntro={data?.data?.header || null} />

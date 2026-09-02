@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -172,7 +173,7 @@ function StorySlider({ activeIndexs }: { activeIndexs: number }) {
             }`}
           >
             <Image
-              src={slide.image}
+              src={getSafeImageSrc(slide.image)}
               alt={slide.title}
               width={510}
               height={594}

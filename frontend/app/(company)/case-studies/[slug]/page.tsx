@@ -4,15 +4,15 @@ import VideoPlayer from './VideoPlayer';
 import Image from 'next/image';
 import TableOfContents from './TableOfContents';
 import { Metadata } from 'next';
+import { getSafeHref, getSafeImageSrc } from '@/utils/media';
+import { getData, isApiNotFoundError } from '@/utils/getData';
+import { notFound } from 'next/navigation';
 const fetchSingleCaseStudy = async (slug: string) => {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/case-studies/slug/${slug}`);
-    const result = await response.json();
-    return result?.data;
-  } catch (error) {
-    console.error('Error fetching case study data:', error);
-    return null;
-  }
+  const result = await getData({
+    url: `api/case-studies/slug/${encodeURIComponent(slug)}`,
+    throwOnError: true,
+  });
+  return result?.data ?? null;
 };
 
 export async function generateMetadata({
@@ -21,12 +21,17 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = await fetchSingleCaseStudy(slug);
+  let caseStudy = null;
+  try {
+    caseStudy = await fetchSingleCaseStudy(slug);
+  } catch (error) {
+    console.error('Error fetching case study metadata:', error);
+  }
 
   const title = caseStudy?.meta_title || "caseStudy Title";
   const description =
     caseStudy?.meta_desc || "Read the latest caseStudy on MontageMotion.";
-  const image = caseStudy?.image_url; // fallback image
+  const image = getSafeImageSrc(caseStudy?.image_url);
   const url = `https://montagemotion.com/case-studies/${slug}`;
 
   return {
@@ -66,15 +71,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   try {
     caseStudyData = await fetchSingleCaseStudy(slug);
   } catch (error) {
-    console.error('Error fetching case study data:', error);
+    if (isApiNotFoundError(error)) notFound();
+    throw error;
   }
   // console.log(caseStudyData, "caseStudyData =========================?");
   if (!caseStudyData) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500">Case study not found</p>
-      </div>
-    );
+    notFound();
   }
   const {
     metrics,
@@ -340,7 +342,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                   {
                     caseStudyData?.testimonials?.[0]?.avatar_url ? (
                       <Image
-                        src={caseStudyData?.testimonials?.[0]?.avatar_url }
+                        src={getSafeImageSrc(caseStudyData?.testimonials?.[0]?.avatar_url)}
                         alt={caseStudyData?.testimonials?.[0]?.name}
                         width={48}
                         height={48}
@@ -379,7 +381,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                   Let&apos;s talk about your growth challenges.
                 </p>
                 <a
-                  href={caseStudyData?.calendly_url}
+                  href={getSafeHref(caseStudyData?.calendly_url)}
                   target='_blank'
                   className="block w-full text-center bg-white text-sm font-medium py-2.5 rounded-xl hover:opacity-90 transition-opacity relative z-10 text-[#0d8faf]"
                 >

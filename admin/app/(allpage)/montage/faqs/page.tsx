@@ -8,7 +8,7 @@ const Faqs = async ({
   searchParams: Promise<{ page: string }>;
 }) => {
   const { page } = await searchParams;
-  const data = await getData({ slug: `faq?page=${page}` });
+  const data = await getData({ slug: page ? `faq?page=${page}` : "faq" });
   return (
     <div className="text-gray-100 p-4 md:p-8">
       <FaqWrapper data={data?.[0] ?? null} />

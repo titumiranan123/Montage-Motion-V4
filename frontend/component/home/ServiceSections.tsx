@@ -5,6 +5,7 @@ import Image from "next/image";
 import Gradientcard from "../share/Gradientcard";
 import { Heading } from "../share/Headering";
 import Link from "next/link";
+import { getSafeHref, getSafeImageSrc } from "@/utils/media";
 
 const ServiceSections = ({ data }: { data: any }) => {
   return (
@@ -68,7 +69,7 @@ const ServiceSections = ({ data }: { data: any }) => {
                 </p>
                 <div className="mt-auto w-full">
                   <Image
-                    src={dt?.image}
+                    src={getSafeImageSrc(dt?.image)}
                     alt={dt?.alt}
                     width={344}
                     height={276}
@@ -86,7 +87,7 @@ const ServiceSections = ({ data }: { data: any }) => {
                   <div className="flex justify-between items-start flex-col text-(--text-primary) lg:gap-27.75 h-full">
                     <div>
                       <Image
-                        src={dt?.icon}
+                        src={getSafeImageSrc(dt?.icon)}
                         alt={dt?.icon_alt ?? ""}
                         width={35}
                         height={35}
@@ -101,7 +102,7 @@ const ServiceSections = ({ data }: { data: any }) => {
                     </p>
                     <div className="flex justify-end items-center w-full">
                       <Link
-                        href={`${dt?.href}`}
+                        href={getSafeHref(dt?.href)}
                         className="py-2 px-4 rounded-lg btn-color transition-transform duration-300 ease-out hover:scale-105 active:scale-90"
                       >
                        Get Started

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
@@ -7,6 +6,7 @@ import toast from "react-hot-toast";
 import { FiSave } from "react-icons/fi";
 import { useState } from "react";
 import { api_url } from "@/hook/Apiurl";
+import { useRouter } from "next/navigation";
 
 // Load Monaco editor dynamically
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
@@ -17,30 +17,45 @@ interface SitemapFormData {
   sitemap_xml: string;
 }
 
-const Sitemapform = ({ data }: { data: any }) => {
-  const { control, handleSubmit, setValue } = useForm<SitemapFormData>({
+const Sitemapform = ({ data }: { data?: string | null }) => {
+  const { control, handleSubmit } = useForm<SitemapFormData>({
     defaultValues: {
       sitemap_xml: data ?? ``,
     },
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
+  const validateXml = (value: string) => {
+    if (!value.trim()) return true;
+    const document = new DOMParser().parseFromString(value, "application/xml");
+    return !document.querySelector("parsererror") || "Enter valid XML content";
+  };
 
   // Submit Handler
-  const onSubmit = async (data: SitemapFormData) => {
+  const onSubmit = async (formData: SitemapFormData) => {
     try {
       setIsSubmitting(true);
+      const sitemapXml = formData.sitemap_xml.replace(/\r\n/g, "\n");
+      if (!validateXml(sitemapXml)) {
+        toast.error("Enter valid XML content before saving");
+        return;
+      }
       const res = await api_url.post(
         "/api/sitemap",
-        { sitemap_xml: data.sitemap_xml },
-        // JSON.stringify(data.sitemap_xml)
+        { sitemap_xml: sitemapXml },
       );
 
       if (res.status === 200) {
-        toast.success(" SiteMap saved successfully!");
+        toast.success(res.data?.message ?? "Sitemap saved successfully");
+        router.refresh();
       }
-    } catch (err: any) {
-      toast.error(err.message || "Something went wrong!");
+    } catch (error: unknown) {
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not save sitemap.xml");
     } finally {
       setIsSubmitting(false);
     }
@@ -61,6 +76,7 @@ const Sitemapform = ({ data }: { data: any }) => {
           <Controller
             name="sitemap_xml"
             control={control}
+            rules={{ validate: validateXml }}
             render={({ field }) => (
               <div className="border border-[#1FB5DD]/40 rounded-xl overflow-hidden">
                 <MonacoEditor
@@ -68,7 +84,7 @@ const Sitemapform = ({ data }: { data: any }) => {
                   defaultLanguage="xml"
                   theme="vs-dark"
                   value={field.value}
-                  onChange={(val) => setValue("sitemap_xml", val || "")}
+                  onChange={(val) => field.onChange(val ?? "")}
                   options={{
                     minimap: { enabled: false },
                     fontSize: 14,

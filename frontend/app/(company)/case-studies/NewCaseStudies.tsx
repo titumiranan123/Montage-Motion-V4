@@ -2,17 +2,20 @@
 // components/CaseStudyCard.tsx
 
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { getSafeImageSrc } from "@/utils/media";
 
 interface CaseStudyItem {
   id: string;
-  slug: string;
-  type: string;
-  status: 'published' | 'draft';
-  title: string;
-  description: string;
-  image_url: string;
-  image_alt: string;
-  created_at: string;
+  slug?: string;
+  type?: string | null;
+  status?: 'published' | 'draft' | 'archived' | null;
+  title?: string | null;
+  description?: string | null;
+  image_url?: string | null;
+  image_alt?: string | null;
+  metrics?: Metric[];
+  created_at?: string | null;
 }
 
 interface Metric {
@@ -20,7 +23,9 @@ interface Metric {
   value: string;
 }
 
-function formatDate(iso: string): string {
+function formatDate(iso?: string | null): string {
+  if (!iso) return "";
+
   return new Date(iso).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -28,16 +33,10 @@ function formatDate(iso: string): string {
   });
 }
 
-function formatType(type: string): string {
-  return type.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-}
+function formatType(type?: string | null): string {
+  if (!type) return "Case Study";
 
-function extractMetrics(): Metric[] {
-  return [
-    { label: 'ARR Growth', value: '3×' },
-    { label: 'Timeline', value: '9 mo' },
-    { label: 'Final ARR', value: '$2.4M' },
-  ];
+  return type.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 interface CaseStudyCardProps {
@@ -45,16 +44,19 @@ interface CaseStudyCardProps {
 }
 
 export default function CaseStudyCard({ item }: CaseStudyCardProps) {
-  const metrics = extractMetrics();
+  const metrics = Array.isArray(item.metrics)
+    ? item.metrics.filter((metric) => metric?.label && metric?.value)
+    : [];
+  const href = `/case-studies/${item.slug}`;
 
   return (
-    <a href={`/case-studies/${item.slug}`} className="bg-white border border-gray-200 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:border-blue-300 hover:shadow-md max-w-sm">
+    <Link href={href} className="bg-white border border-gray-200 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:border-blue-300 hover:shadow-md max-w-sm block">
 
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <img
-          src={item.image_url}
-          alt={item.image_alt}
+          src={getSafeImageSrc(item.image_url)}
+          alt={item.image_alt || item.title || "Graphic work"}
           className="w-full h-full object-cover"
         />
         <span className="absolute top-3 left-3 bg-blue-50 text-[#1FB5DD] text-[11px] font-medium px-3 py-1 rounded-md uppercase tracking-wide">
@@ -91,14 +93,13 @@ export default function CaseStudyCard({ item }: CaseStudyCardProps) {
         {/* Footer */}
         <div className="border-t border-gray-100 pt-3 flex items-center justify-between">
           <span className="text-xs text-gray-400">{formatDate(item.created_at)}</span>
-          <a
-            href={`/case-studies/${item.slug}`}
+          <span
             className="text-[14px] text-[#1FB5DD] hover:text-[#1FB5DD] flex items-center gap-1 transition-colors active:scale-90"
           >
             Read case study  <ArrowRight size={14} className="-rotate-45"/>
-          </a>
+          </span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

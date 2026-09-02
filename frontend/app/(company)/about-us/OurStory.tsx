@@ -3,6 +3,7 @@
 import Gradientcard from "@/component/share/Gradientcard";
 import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 import { useEffect, useState } from "react";
 
 // const data = [
@@ -82,7 +83,7 @@ export default function OurStory({data}:{data:any}) {
         {/* Left - Image */}
         <div className="xl:w-1/2 xl:sticky top-44 h-fit">
           <Image
-            src={data?.ourstory_steps?.[activeIndex]?.image}
+            src={getSafeImageSrc(data?.ourstory_steps?.[activeIndex]?.image)}
             alt={data?.ourstory_steps?.[activeIndex]?.title}
             width={590}
             height={620}

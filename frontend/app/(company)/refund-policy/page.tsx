@@ -1,4 +1,5 @@
 import { getPageSEO } from "@/component/share/getPageSEO";
+import JsonLd from "@/component/share/JsonLd";
 import { getData } from "@/utils/getData";
 
 export async function generateMetadata() {
@@ -7,21 +8,9 @@ export async function generateMetadata() {
 const Refundpolicy = async () => {
   const data = await getData({ url: "api/seo/refund" });
 
-  const safeSchema =
-    data?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
   return (
     <div className="max-w-249 mx-auto px-2">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+      <JsonLd value={data?.data?.schema} />
       <h2 className="mb-15 mt-40 font-bold poppins text-center text-[36px] text-(--text-primary) ">
         Refund Policy
       </h2>

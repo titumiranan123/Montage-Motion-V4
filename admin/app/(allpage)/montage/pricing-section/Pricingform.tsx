@@ -15,7 +15,7 @@ import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { useRouter } from "next/navigation";
 
 const defaultValues: IPagePricePlan = {
-  type: " ",
+  type: "",
   tag: "",
   heading_part1: "",
   heading_part2: "",
@@ -314,6 +314,10 @@ const PricingPageForm = ({
   const router = useRouter();
 
   const onSubmit: SubmitHandler<IPagePricePlan> = async (data) => {
+    if (!data.packages.length || data.packages.some((pkg) => !pkg.features.length)) {
+      toast.error("Add at least one package and one feature to every package");
+      return;
+    }
     try {
       const respon = await api_url.post(`/api/pricing`, data);
       if (respon.status === 200 || respon.status === 201) {

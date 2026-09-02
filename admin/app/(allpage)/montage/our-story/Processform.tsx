@@ -66,7 +66,7 @@ const StoryForm = ({
               icon: "",
               title: "",
               description: "",
-              isHiden: false,
+              is_hidden: false,
               alt: "",
               order_index: 0,
               image: "",
@@ -88,6 +88,11 @@ const StoryForm = ({
     }
   };
   const onSubmit = async (data: ProcessSchema) => {
+    if (data.ourstory_steps.length === 0) {
+      toast.error("At least one story step is required");
+      return;
+    }
+
     const processWithOrder = data?.ourstory_steps.map((service, index) => ({
       ...service,
       order_index: index,
@@ -104,7 +109,10 @@ const StoryForm = ({
         setIsModalOpent(false);
       }
     } catch (error) {
-      console.log(error);
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not save story");
     }
   };
 
@@ -243,7 +251,10 @@ const StoryForm = ({
                   <ImageUploader
                     value={watch(`ourstory_steps.${index}.image`)}
                     onChange={(url) =>
-                      setValue(`ourstory_steps.${index}.image`, url)
+                      setValue(`ourstory_steps.${index}.image`, url, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      })
                     }
                   />
                   <input
@@ -314,9 +325,12 @@ const StoryForm = ({
               <div className="mt-3 flex items-center justify-between">
                 <label className="text-gray-300">Hide Step</label>
                 <ToggleSwitch
-                  checked={watch(`ourstory_steps.${index}.isHiden`)}
+                  checked={watch(`ourstory_steps.${index}.is_hidden`)}
                   onChange={(val) =>
-                    setValue(`ourstory_steps.${index}.isHiden`, val)
+                    setValue(`ourstory_steps.${index}.is_hidden`, val, {
+                      shouldDirty: true,
+                      shouldValidate: true,
+                    })
                   }
                 />
               </div>
@@ -338,7 +352,7 @@ const StoryForm = ({
          
                 title: "",
                 description: "",
-                isHiden: false,
+                is_hidden: false,
                 alt: "",
                 image: "",
        

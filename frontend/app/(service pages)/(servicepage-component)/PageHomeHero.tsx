@@ -6,10 +6,12 @@ import TurstedBy from "@/component/home/TurstedBy";
 import Image from "next/image";
 import { Play } from "lucide-react";
 import ReactPlayer from "react-player";
+import { getSafeHref, getSafeImageSrc } from "@/utils/media";
 
 const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
+  const videoUrl = data?.media?.[0]?.video_url;
+  const [isPlaying, setIsPlaying] = useState(Boolean(videoUrl));
+  const [hasStarted, setHasStarted] = useState(Boolean(videoUrl));
 
   return (
     <div className="headerbg rounded-2xl lg:rounded-[40px]">
@@ -39,7 +41,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           >
             <Link
               target="_blank"
-              href={`${data?.cta_primary_link}`}
+              href={getSafeHref(data?.cta_primary_link)}
               className="md:w-38.75 w-full h-14 btn-color py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
             >
               Start a Project
@@ -65,7 +67,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
               }}
             >
               <Image
-                src={data?.media?.[0]?.image_url}
+                src={getSafeImageSrc(data?.media?.[0]?.image_url)}
                 alt="Intro video thumbnail"
                 fill
                 priority
@@ -80,20 +82,23 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
             </div>
           )}
 
-          <ReactPlayer
-            url={data?.media?.[0]?.video_url}
-            width="100%"
-            height="100%"
-            controls
-            playsinline
-            playing={isPlaying}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onEnded={() => {
-              setIsPlaying(false);
-              setHasStarted(false); // remove if you don't want thumbnail back after video ends
-            }}
-          />
+          {hasStarted && videoUrl && (
+            <ReactPlayer
+              url={videoUrl}
+              width="100%"
+              height="100%"
+              controls
+              playsinline
+              playing={isPlaying}
+              muted
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onEnded={() => {
+                setIsPlaying(false);
+                setHasStarted(false); // show thumbnail again after the video ends
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

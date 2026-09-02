@@ -14,7 +14,7 @@ const Page = async ({ searchParams }: { searchParams: any }) => {
     <main className="min-h-screen  py-10">
       <Whychoosewrapper
         data={responsce?.data?.data}
-        key={responsce?.data?.data}
+        key={page ?? "home"}
       />
     </main>
   );

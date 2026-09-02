@@ -6,6 +6,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 
 type Testimonial = {
   id?: string | number;
@@ -127,7 +128,7 @@ useAnimationFrame((t, delta) => {
               className="shrink-0"
             >
               <Image
-                src={team?.image}
+                src={getSafeImageSrc(team?.image)}
                 alt={team?.alt}
                 width={cardWidth}
                 height={265}

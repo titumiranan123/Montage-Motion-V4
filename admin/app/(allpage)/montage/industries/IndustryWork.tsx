@@ -22,8 +22,8 @@ export interface TabItem {
   cta: CTA;
 }
 
-export default function IndustryWeWork({ data }: { data?: any }) {
-  const tabs = data?.tabs as TabItem;
+export default function IndustryWeWork({ data }: { data?: { tabs?: TabItem[] } }) {
+  const tabs = data?.tabs ?? [];
 
   return (
     <section className="w-full sectionGap container rounded-[40px] py-10 industriesbg">

@@ -9,13 +9,14 @@ import toast from "react-hot-toast";
 import { PageService } from "./types";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { ArrowDown, ArrowUp } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const ServiceForm = ({
   initialData,
   setIsModalOpent,
 }: {
   initialData: any;
-  setIsModalOpent: (p: false) => void;
+  setIsModalOpent: (p: boolean) => void;
 }) => {
   const {
     register,
@@ -30,7 +31,8 @@ const ServiceForm = ({
       : {
           type: "",
           tag: "",
-          heading: ["", ""],
+          heading_part1: "",
+          heading_part2: "",
           paragraph: "",
           services: [
             {
@@ -42,6 +44,8 @@ const ServiceForm = ({
           ],
         },
   });
+
+  const router = useRouter();
 
   const { fields, append, remove, move } = useFieldArray({
     control,
@@ -58,16 +62,22 @@ const ServiceForm = ({
 
   const onSubmit = async (data: PageService) => {
     try {
+      if (data.services.length === 0) {
+        toast.error("At least one service is required");
+        return;
+      }
+
       const response = await api_url.post("/api/our-service", data);
       if (response.status === 200 || response.status === 201) {
         setIsModalOpent(false);
         toast.success(response?.data?.message);
+        router.refresh();
       }
     } catch (error: any) {
       toast.error(
         error?.response?.data?.errorDetails?.[0]?.message ?? "falied to save",
       );
-      console.log(error?.response?.data?.errorDetails?.[0]?.message);
+      console.error(error);
     }
   };
 
@@ -109,7 +119,7 @@ const ServiceForm = ({
               </label>
               <ServiceTypeSelect
                 onChange={(type: string) => {
-                  setValue("type", type);
+                  setValue("type", type, { shouldDirty: true, shouldValidate: true });
                 }}
                 value={watch("type")}
                 slice={1}
@@ -384,7 +394,10 @@ const ServiceForm = ({
                       <ImageUploader
                         value={watch(`services.${index}.image`)}
                         onChange={(url) =>
-                          setValue(`services.${index}.image`, url)
+                          setValue(`services.${index}.image`, url, {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                          })
                         }
                       />
                       {errors?.services?.[index]?.image?.message && (

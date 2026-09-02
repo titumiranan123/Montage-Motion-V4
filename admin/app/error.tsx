@@ -73,8 +73,7 @@ export default function GlobalError({ error, reset }: ErrorPageProps) {
 
   return (
     <div
-      className="min-h-screen flex flex-col justify-center items-center relative bg-cover bg-top bg-no-repeat"
-      style={{ backgroundImage: "url(/assets/logobackgourd.png)" }}
+      className="admin-brand-glow min-h-screen flex flex-col justify-center items-center relative bg-cover bg-top bg-no-repeat"
     >
       {/* Dynamic Error Code */}
       <h2 className="text-[244px] text-white font-bold leading-none select-none">

@@ -20,6 +20,12 @@
   background: linear-gradient(180deg, #1fb5dd 0%, #2b6ab2 100%);
   color: white !important;
 }
+.admin-brand-glow {
+  background-color: #050b14;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(31, 181, 221, 0.34) 0%, rgba(31, 181, 221, 0.12) 28%, transparent 64%),
+    radial-gradient(circle at 50% 40%, rgba(43, 106, 178, 0.3), transparent 68%);
+}
 h1 {
   background: linear-gradient(90deg, #ffffff 0%, #ffffff 49.89%, #1fb5dd 100%);
   background-clip: text;

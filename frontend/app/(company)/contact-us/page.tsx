@@ -3,6 +3,7 @@ import "./contact.css";
 import Locationsection from "./Locationsection";
 import CalendlyContact from "./CalendlyContact";
 import { getPageSEO } from "@/component/share/getPageSEO";
+import JsonLd from "@/component/share/JsonLd";
 import { getData } from "@/utils/getData";
 
 export async function generateMetadata() {
@@ -11,21 +12,9 @@ export async function generateMetadata() {
 const ContactPage = async () => {
   const data = await getData({ url: "api/seo/contact" });
 
-  const safeSchema =
-    data?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
   return (
     <div className="mt-2">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+      <JsonLd value={data?.data?.schema} />
       <div className="headerbg pb-15 pt-40 rounded-[40px]  px-2 xl:px-15  mx-auto">
         <FirstSection />
       </div>

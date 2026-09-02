@@ -61,7 +61,7 @@ const BlogCardHorizontal = ({ blog }: BlogCardProps) => {
   };
 
   return (
-    <div className="flex flex-col border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white w-full sm:w-87.5 rounded-[21px] overflow-hidden">
+    <div className="flex h-full w-full flex-col border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-white rounded-[21px] overflow-hidden">
       {/* Image */}
       <div className="relative w-full h-56 rounded-t-[21px] overflow-hidden">
         <Image
@@ -70,7 +70,6 @@ const BlogCardHorizontal = ({ blog }: BlogCardProps) => {
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          priority
         />
       </div>
 

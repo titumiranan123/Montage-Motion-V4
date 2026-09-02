@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/incompatible-library */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -39,7 +38,7 @@ const WorkHeaderForm = ({
         },
   });
   const router = useRouter();
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: IWorkHeader) => {
     try {
       const response = await api_url.post("/api/work-header", data);
       if (response.status === 200 || response.status === 201) {
@@ -48,7 +47,10 @@ const WorkHeaderForm = ({
         toast.success(response?.data?.message);
       }
     } catch (error) {
-      console.log(error);
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not save work header");
     }
   };
 

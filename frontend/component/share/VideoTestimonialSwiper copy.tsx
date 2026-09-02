@@ -10,6 +10,7 @@ import type { Swiper as SwiperType } from "swiper";
 
 import Image from "next/image";
 import ReactPlayer from "react-player";
+import { getSafeImageSrc } from "@/utils/media";
 
 type Testimonial = {
   id?: string | number;
@@ -91,7 +92,7 @@ const VideoTestimonialSwiper: React.FC<Props> = ({ data }) => {
               <div className="flex items-center gap-4 mt-2">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0">
                   <Image
-                    src={testimonial.image}
+                    src={getSafeImageSrc(testimonial.image)}
                     alt={`${testimonial.name}'s profile`}
                     className="object-cover"
                     width={64}

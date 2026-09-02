@@ -6,10 +6,12 @@ import Link from "next/link";
 import ReactPlayer from "react-player";
 import Image from "next/image";
 import { Play } from "lucide-react";
+import { getSafeHref, getSafeImageSrc } from "@/utils/media";
 
 const Header: React.FC<{ data: any }> = ({ data }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false); // NEW
+  const videoUrl = data?.media?.[0]?.video_url;
+  const [isPlaying, setIsPlaying] = useState(Boolean(videoUrl));
+  const [hasStarted, setHasStarted] = useState(Boolean(videoUrl));
 
   return (
     <div className="flex lg:pt-30 pt-34 flex-col justify-center items-center relative py-10 lg:gap-4 gap-4 px-2">
@@ -39,7 +41,7 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
         >
           <Link
             target="_blank"
-            href={`${data?.cta_primary_link}`}
+            href={getSafeHref(data?.cta_primary_link)}
             className="md:w-38.75 w-full h-14 btn-color py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Start a Project
@@ -54,7 +56,7 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
         </div>
       </div>
 
-   <div className="lg:mt-10 mt-8 max-w-7xl mx-auto lg:rounded-[40px]  rounded-2xl relative aspect-video w-full overflow-hidden">
+      <div className="lg:mt-10 mt-8 max-w-7xl mx-auto lg:rounded-[40px]  rounded-2xl relative aspect-video w-full overflow-hidden">
 
   {/* Thumbnail */}
   {!hasStarted && (
@@ -66,7 +68,7 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
       }}
     >
       <Image
-        src={data?.media?.[0]?.image_url}
+        src={getSafeImageSrc(data?.media?.[0]?.image_url)}
         alt="Intro video thumbnail"
         fill
         priority
@@ -82,14 +84,15 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
     </div>
   )}
 
-  {hasStarted && data?.media?.[0]?.video_url && (
+  {hasStarted && videoUrl && (
     <ReactPlayer
-      url={data.media[0].video_url}
+      url={videoUrl}
       width="100%"
       height="100%"
       controls
       playsinline
       playing={isPlaying}
+      muted
       onPlay={() => setIsPlaying(true)}
       onPause={() => setIsPlaying(false)}
       onEnded={() => {

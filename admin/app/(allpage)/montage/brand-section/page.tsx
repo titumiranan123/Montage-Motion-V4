@@ -1,33 +1,29 @@
 import React from "react";
 import Brandwrapper from "./Brandwrapper";
-import Brandcard from "./Brandcard";
+import { BrandCardData } from "./Brandcard";
 
 const BrandSection = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) => {
   const { page } = await searchParams;
+  let data: BrandCardData[] = [];
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/brand/images?type=${page}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/brand/images${
+        page ? `?type=${encodeURIComponent(page)}` : ""
+      }`,
+      { cache: "no-store" },
     );
+    if (!response.ok) throw new Error(`Brand images request failed: ${response.status}`);
     const result = await response.json();
-    const data = result.data;
-
-    return (
-      <div>
-        <Brandwrapper />
-        <div className="flex w-full flex-wrap gap-8 items-center">
-          {data?.map((dt: any, idx: number) => (
-            <Brandcard dt={dt} />
-          ))}
-        </div>
-      </div>
-    );
+    data = Array.isArray(result.data) ? result.data : [];
   } catch (error) {
-    console.log(error);
+    console.error("Could not load brand images", error);
   }
+
+  return <Brandwrapper data={data} />;
 };
 
 export default BrandSection;

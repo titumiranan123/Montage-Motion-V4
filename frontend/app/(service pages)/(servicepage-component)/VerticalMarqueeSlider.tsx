@@ -4,6 +4,7 @@ import { Play } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
+import { getSafeImageSrc } from "@/utils/media";
 
 interface MarqueeItem {
   image_url: string;
@@ -76,7 +77,8 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
 }) => {
   const [pausedColumns, setPausedColumns] = useState<Set<number>>(new Set());
   const [popupUrl, setPopupUrl] = useState<string | null>(null); // popup 
-const doubled = [...data, ...data]
+  const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
+  const doubled = [...data, ...data]
   const togglePause = (columnIndex: number, isPaused: boolean) => {
     setPausedColumns((prev) => {
       const newSet = new Set(prev);
@@ -109,11 +111,11 @@ const doubled = [...data, ...data]
         >
           {doubled.map((item, idx) => (
             <React.Fragment key={idx}>
-              {item.video_url === "" || item.video_url === null ? (
+              {!item.video_url ? (
                 // ── Image only ──────────────────────────────
                 <div className="relative w-38 sm:w-64 overflow-hidden rounded-lg md:w-52 h-20 xs:h-24 sm:h-32 md:h-33 mx-auto">
                   <Image
-                    src={item.image_url}
+                    src={getSafeImageSrc(item.image_url)}
                     alt={item.alt || ""}
                     fill
                     className="object-cover"
@@ -123,20 +125,37 @@ const doubled = [...data, ...data]
                 // ── Video thumbnail (popup trigger) ──────────
                 <div
                   className="w-38 sm:w-42.75 sm:h-57 md:w-42.75 h-67.5 md:h-57 overflow-hidden rounded-lg relative cursor-pointer"
+                  onMouseEnter={() => setHoveredVideo(`${colKey}-${idx}`)}
+                  onMouseLeave={() => setHoveredVideo(null)}
                   onClick={() => setPopupUrl(item.video_url)} // popup open
                 >
-                  <img
-                    src={item.image_url}
-                    alt={item.alt || ""}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Play icon */}
-                  <button className=" w-14  h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center  rounded-lg  text-white backdrop-blur-[2px] st group">
-                    <Play
-                      fill="#fff"
-                      className="group-hover:scale-105 size-4  active:scale-90 duration-200 ease-in-out"
+                  {hoveredVideo === `${colKey}-${idx}` ? (
+                    <ReactPlayer
+                      url={item.video_url}
+                      playing
+                      muted
+                      loop
+                      playsinline
+                      controls={false}
+                      width="100%"
+                      height="100%"
                     />
-                  </button>
+                  ) : (
+                    <img
+                      src={getSafeImageSrc(item.image_url)}
+                      alt={item.alt || ""}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {/* Play icon */}
+                  {hoveredVideo !== `${colKey}-${idx}` && (
+                    <button className=" w-14  h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center  rounded-lg  text-white backdrop-blur-[2px] st group">
+                      <Play
+                        fill="#fff"
+                        className="group-hover:scale-105 size-4  active:scale-90 duration-200 ease-in-out"
+                      />
+                    </button>
+                  )}
                 </div>
               )}
             </React.Fragment>

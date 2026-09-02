@@ -2,15 +2,22 @@ import { useQuery } from '@tanstack/react-query';
 
 import { api_url } from './Apiurl';
 
-const useContact = () => {
-    const {data,isLoading,isError} = useQuery({
-        queryKey:["contacts"],
+const useContact = (page = 1, limit = 6) => {
+    const {data: response,isLoading,isError} = useQuery({
+        queryKey:["contacts", page, limit],
         queryFn:async ()=>{
-        const res = await api_url.get('/api/contacts')
+        const res = await api_url.get(`/api/contacts?page=${page}&limit=${limit}`)
         return res.data.data
         }
     })
-    return {data,isLoading,isError}
+    const data = Array.isArray(response) ? response : response?.data ?? [];
+    return {
+        data,
+        total: Array.isArray(response) ? data.length : response?.total ?? 0,
+        totalPages: Array.isArray(response) ? 1 : response?.pages ?? 1,
+        isLoading,
+        isError,
+    }
 };
 
 export default useContact;

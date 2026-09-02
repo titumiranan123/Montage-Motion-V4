@@ -49,10 +49,13 @@ export default function FeaturePlayer({ youtubeUrl, thumbnail }: Props) {
 
   // Fix for tab switching - recalculate player size
   useEffect(() => {
+    let visibilityTimer: ReturnType<typeof setTimeout> | null = null;
+
     const handleVisibilityChange = () => {
       if (!document.hidden && plyrRef.current?.plyr) {
         // Force player to recalculate its dimensions
-        setTimeout(() => {
+        if (visibilityTimer) clearTimeout(visibilityTimer);
+        visibilityTimer = setTimeout(() => {
           if (plyrRef.current?.plyr) {
             // Trigger a resize event
             window.dispatchEvent(new Event("resize"));
@@ -82,9 +85,11 @@ export default function FeaturePlayer({ youtubeUrl, thumbnail }: Props) {
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (visibilityTimer) clearTimeout(visibilityTimer);
       if (videoContainer) {
         observer.unobserve(videoContainer);
       }
+      observer.disconnect();
     };
   }, []);
 

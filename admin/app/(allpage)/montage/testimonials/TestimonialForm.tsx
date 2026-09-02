@@ -11,6 +11,7 @@ import ReactPlayer from "react-player";
 import { api_url } from "@/hook/Apiurl";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { useRouter } from "next/navigation";
+import { compressImageForUpload } from "@/utils/compressImage";
 
 export interface ITestimonial {
   id?: string;
@@ -30,9 +31,8 @@ interface ITestimonialFormProps {
   onCancel?: () => void;
 }
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_ORIGINAL_IMAGE_SIZE = 25 * 1024 * 1024; // compressed in the browser before upload
 const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
-const MAX_THUMBNAIL_SIZE = 2 * 1024 * 1024; // 2MB
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/quicktime"];
 
@@ -87,8 +87,8 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         return;
       }
 
-      if (file.size > MAX_FILE_SIZE) {
-        Swal.fire("File Too Large", "Maximum file size is 5MB", "error");
+      if (file.size > MAX_ORIGINAL_IMAGE_SIZE) {
+        Swal.fire("File Too Large", "Maximum original image size is 25MB", "error");
         return;
       }
 
@@ -100,8 +100,9 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
 
       setIsUploadingImage(true);
       try {
+        const optimizedFile = await compressImageForUpload(file);
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", optimizedFile);
 
         const response = await api_url.post<{ url: string }>(
           "/api/upload",
@@ -204,8 +205,8 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
         return;
       }
 
-      if (file.size > MAX_THUMBNAIL_SIZE) {
-        Swal.fire("File Too Large", "Maximum thumbnail size is 2MB", "error");
+      if (file.size > MAX_ORIGINAL_IMAGE_SIZE) {
+        Swal.fire("File Too Large", "Maximum original image size is 25MB", "error");
         return;
       }
 
@@ -216,8 +217,9 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
       reader.readAsDataURL(file);
       setIsUploadingThumbnail(true);
       try {
+        const optimizedFile = await compressImageForUpload(file);
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", optimizedFile);
         const response = await api_url.post<{ url: string }>(
           "/api/upload",
           formData,
@@ -280,10 +282,16 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
       });
       onCancel?.();
     } catch (error) {
-      const err = error as Error;
+      const err = error as AxiosError<{
+        message?: string;
+        errorDetails?: { message?: string }[];
+      }>;
       await Swal.fire(
         "Error!",
-        err.message || "Failed to submit form",
+        err.response?.data?.message ||
+          err.response?.data?.errorDetails?.[0]?.message ||
+          err.message ||
+          "Failed to submit form",
         "error",
       );
     }
@@ -388,6 +396,10 @@ const TestimonialForm: React.FC<ITestimonialFormProps> = ({
                 <ServiceTypeSelect
                   onChange={(type) => setValue("type", type)}
                   value={watch("type")}
+                />
+                <input
+                  {...register("type", { required: "Type is required" })}
+                  type="hidden"
                 />
                 {errors.type && (
                   <p className="mt-1 text-sm text-red-400">

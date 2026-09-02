@@ -229,9 +229,7 @@ body {
 }
 a:hover,
 button:hover {
-  cursor:
-    url("/frontend/public/assets/dollar.png") 16 0,
-    pointer;
+  cursor: pointer;
 }
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */

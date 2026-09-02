@@ -2,6 +2,7 @@
 import { Play } from "lucide-react";
 import Image from "next/image";
 import ReactPlayer from "react-player";
+import { getSafeImageSrc } from "@/utils/media";
 
 const TestimonialVideocard = ({ testimonial }: { testimonial: any }) => {
   return (
@@ -29,7 +30,7 @@ const TestimonialVideocard = ({ testimonial }: { testimonial: any }) => {
       <div className="flex items-center gap-4 mt-2">
         <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0">
           <Image
-            src={testimonial.image}
+            src={getSafeImageSrc(testimonial.image)}
             alt={`${testimonial.name}'s profile`}
             className="object-cover"
             width={64}

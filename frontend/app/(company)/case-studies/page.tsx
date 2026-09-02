@@ -2,6 +2,7 @@
 // app/case-studies/page.tsx
 
 import { getPageSEO } from '@/component/share/getPageSEO';
+import JsonLd from '@/component/share/JsonLd';
 import CaseStudyCard from './NewCaseStudies';
 import PaginationControls from './PaginationControls';
 import Style from './Style';
@@ -15,13 +16,13 @@ interface CaseStudiesPageProps {
 const CaseStudies = async ({ searchParams }: CaseStudiesPageProps) => {
   const { page } = await searchParams;
   const currentPage = Number(page) || 1;
-  const limit = 9;
+  const limit = 6;
 
   let allCaseStudies: any = {};
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/case-studies?page=${currentPage}&limit=${limit}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/case-studies?page=${currentPage}&limit=${limit}&status=published`,
       { cache: 'no-store' }
     );
     allCaseStudies = await response.json();
@@ -31,23 +32,11 @@ const CaseStudies = async ({ searchParams }: CaseStudiesPageProps) => {
 // console.log("all case studies =========>", allCaseStudies?.data?.schema);
   const totalPages = allCaseStudies?.data?.pages || 1;
   const caseStudies = allCaseStudies?.data?.data || [];
- const safeSchema =
-    allCaseStudies?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
   return (
     <div style={{
       background: `linear-gradient(180deg, #EAF0F7 30.22%, #69CDE8 65.11%, #EAF0F7 100%)`
     }} className="relative lg:mt-4 pt-40 rounded-[40px] pb-10 pagelogo casebg">
-       <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+       <JsonLd value={allCaseStudies?.data?.schema} />
       <div className="flex flex-col gap-1 justify-center items-center max-w-4xl w-full mx-auto sectionarea">
         <p
           data-aos="fade-up"

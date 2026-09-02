@@ -2,6 +2,7 @@ import React from "react";
 import TurstedBy from "@/component/home/TurstedBy";
 import VerticalMarqueeSlider from "./VerticalMarqueeSlider";
 import Link from "next/link";
+import { getSafeHref } from "@/utils/media";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ShortsHeader = ({ data }: { data: any }) => {
@@ -30,7 +31,7 @@ const ShortsHeader = ({ data }: { data: any }) => {
         >
            <Link
             target="_blank"
-            href={`${data?.cta_primary_link}`}
+            href={getSafeHref(data?.cta_primary_link)}
             className="md:w-38.75 w-full  h-14 btn-color  py-4 px-5 rounded-[12px] flex justify-center items-center poppins font-medium hover:scale-105 duration-200 transition-all ease-in-out"
           >
             Start a Project

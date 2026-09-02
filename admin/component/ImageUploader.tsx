@@ -2,6 +2,7 @@
 "use client";
 
 import { api_url } from "@/hook/Apiurl";
+import { compressImageForUpload } from "@/utils/compressImage";
 import Image from "next/image";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -26,7 +27,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const MAX_FILE_SIZE = 5 * 1024 * 1024;
+    const MAX_ORIGINAL_FILE_SIZE = 25 * 1024 * 1024;
     const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
     const file = e.target.files?.[0];
@@ -37,8 +38,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
       return;
     }
 
-    if (file.size > MAX_FILE_SIZE) {
-      Swal.fire("Too Large", "Max 5MB allowed", "error");
+    if (file.size > MAX_ORIGINAL_FILE_SIZE) {
+      Swal.fire("Too Large", "Maximum original image size is 25MB", "error");
       return;
     }
 
@@ -49,8 +50,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     setIsUploadingImage(true);
 
     try {
+      const optimizedFile = await compressImageForUpload(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", optimizedFile);
 
       const res = await api_url.post<{ url: string }>("/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },

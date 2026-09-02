@@ -380,6 +380,10 @@ const CareerPageForm = ({
   });
   const router = useRouter();
   const onSubmit: SubmitHandler<ICareerPage> = async (data) => {
+    if (!data.jobposts.length) {
+      toast.error("Add at least one job post");
+      return;
+    }
     try {
       const processedData = {
         ...data,

@@ -6,6 +6,7 @@ import Gradientcard from "./Gradientcard";
 
 const ProcessSlider = ({ data }: { data: any }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const steps = Array.isArray(data) ? data : [];
   useEffect(() => {
     const handleScroll = () => {
       const cards = document.querySelectorAll(".story-card");
@@ -23,11 +24,16 @@ const ProcessSlider = ({ data }: { data: any }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (steps.length === 0) {
+    return <p className="text-gray-400">No story steps found.</p>;
+  }
+
   return (
     <div className=" flex lg:flex-row flex-col mt-9 md:mt-16 gap-12">
       <div className="sticky top-32 max-w-109.5 rounded-[13px] w-full max-h-124.5 h-full">
         <Image
-          src={data?.[activeIndex]?.image ?? ""}
+          src={steps[activeIndex]?.image ?? steps[0]?.image ?? ""}
           alt="process "
           width={438}
           height={598}
@@ -39,7 +45,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
       </div>
 
       <div className=" flex flex-col  gap-2">
-        {data?.map((dt: any, idx: number) => {
+        {steps.map((dt: any, idx: number) => {
           const result = activeIndex !== idx;
           return (
             <div

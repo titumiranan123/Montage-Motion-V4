@@ -2,6 +2,7 @@
 "use client";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 import React, { useState } from "react";
 
 import StepperDemo from "./PodcastPurposestep";
@@ -33,7 +34,7 @@ const PodcastInsight = ({ data }: any) => {
       </div>
       <div className="relative lg:pb-10 pb-48">
         <Image
-          src={data?.steps?.[activeStep]?.image}
+          src={getSafeImageSrc(data?.steps?.[activeStep]?.image)}
           width={544}
           height={506}
           className="rounded-[13px]  lg:max-w-136 lg:w-136 lg:h-126.5 max-w-70 w-full ms-4 lg:ms-0"

@@ -12,7 +12,7 @@ interface IBrandImage {
   id?: string;
   image: string;
   alt: string;
-  ishide: true;
+  is_hidden: boolean;
   type: string;
 }
 
@@ -21,7 +21,7 @@ interface BrandFormValues {
   alt: string;
   type: string;
 
-  ishide: boolean;
+  is_hidden: boolean;
 }
 
 interface BrandImageFormProps {
@@ -46,13 +46,13 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
           image: initialValue.image,
           alt: initialValue.alt,
           type: initialValue.type,
-          ishide: initialValue.ishide,
+          is_hidden: initialValue.is_hidden,
         }
       : {
           image: "",
           alt: "",
           type: "about",
-          ishide: false,
+          is_hidden: false,
         },
   });
 
@@ -61,16 +61,17 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
   const onSubmit: SubmitHandler<BrandFormValues> = async (data) => {
     try {
       setIsSubmitting(true);
-      console.log("Submitting brand data:", data);
-      // TODO: Replace console.log with API POST request here
-      const responsce = await api_url.post(`/api/team-image`, data);
-      if (responsce.status === 201 || responsce.status ===200) {
-        toast.success(responsce.data.message);
+      const response = initialValue?.id
+        ? await api_url.patch(`/api/team-image/${initialValue.id}`, data)
+        : await api_url.post("/api/team-image", data);
+      if (response.status === 201 || response.status === 200) {
+        toast.success(response.data.message || "Team image saved successfully");
         router.refresh();
+        onClose();
       }
-      onClose();
     } catch (error) {
       console.error("Error saving brand image:", error);
+      toast.error("Failed to save team image");
     } finally {
       setIsSubmitting(false);
     }
@@ -147,12 +148,12 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
           {/* Hide Field */}
           <div className="flex items-center space-x-3">
             <input
-              {...register("ishide")}
+              {...register("is_hidden")}
               type="checkbox"
-              id="ishide"
+              id="is_hidden"
               className="w-4 h-4 text-[#1FA4C0] bg-gray-900 border-gray-700 rounded focus:ring-[#1FA4C0] focus:ring-2"
             />
-            <label htmlFor="ishide" className="block font-medium text-gray-200">
+            <label htmlFor="is_hidden" className="block font-medium text-gray-200">
               Hide Image
             </label>
           </div>

@@ -31,7 +31,7 @@ const SingleService = ({ data }: { data: any }) => {
                   alt={dt?.alt}
                   width={344}
                   height={276}
-                  priority
+                  priority={idx === 0}
                   className="max-w-86 w-full max-h-69 h-full md:mt-8 mt-4"
                 />
               </div>
@@ -50,7 +50,7 @@ const SingleService = ({ data }: { data: any }) => {
                       alt={dt?.icon_alt ?? ""}
                       width={35}
                       height={35}
-                      priority
+                      priority={idx === 0}
                       className="transition-transform duration-500 ease-out"
                     />
                     <p className="text-[24px] leading-[100%] md:text-[24px] font-semibold poppins mt-2 text-(--text-primary)">

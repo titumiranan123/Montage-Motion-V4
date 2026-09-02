@@ -107,7 +107,13 @@ const Workform: React.FC<IWorkFormProps> = ({
               Video Url <span className="text-red-500">*</span>
             </label>
             <input
-              {...register("video_link", { required: "Required !" })}
+              {...register("video_link", {
+                required: "Video URL is required",
+                pattern: {
+                  value: /^https?:\/\/.+/,
+                  message: "Enter a valid http:// or https:// URL",
+                },
+              })}
               type="text"
               placeholder="Video Url"
               className={`w-full rounded-md p-3 bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-[#1FB5DD] focus:border-transparent focus:outline-none transition-all`}

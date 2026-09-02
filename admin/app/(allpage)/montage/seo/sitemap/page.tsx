@@ -7,9 +7,10 @@ const Robotform = async () => {
   const response = await getData({
     slug: `admin/sitemap`,
   });
+  const sitemap = typeof response === "string" ? response : "";
   return (
     <div>
-      <Sitemapform data={response} />
+      <Sitemapform data={sitemap} />
     </div>
   );
 };

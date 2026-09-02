@@ -1,5 +1,6 @@
 import { getPageSEO } from "@/component/share/getPageSEO";
 import { getData } from "@/utils/getData";
+import { notFound } from "next/navigation";
 import React from "react";
 import { getTypeFromSlug } from "./getTypeFromSlug";
 import PageContactsections from "../(servicepage-component)/PageContactsections";
@@ -17,6 +18,7 @@ import PageWhychooseus from "../(servicepage-component)/PageWhychooseus";
 import Thumbnailworksection from "../(servicepage-component)/Thumbnailworksection";
 import HomeFaqSection from "@/component/share/HomeFaqSection";
 import ComparisonCards from "@/component/home/PriceComparison";
+import JsonLd from "@/component/share/JsonLd";
 import TestimonialSection from "@/component/share/Testimonial";
 export async function generateMetadata({
   params,
@@ -25,7 +27,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const type = await getTypeFromSlug(slug);
-  return await getPageSEO(type as string);
+  return await getPageSEO(type ?? slug);
 }
 const ServicePage = async ({
   params,
@@ -33,26 +35,19 @@ const ServicePage = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
+  const type = await getTypeFromSlug(slug);
+  if (!type) notFound();
+
   const data = await getData({
     url: `api/website/services/data?type=${slug}`,
+    throwOnError: true,
   });
+  if (!data?.data || Object.keys(data.data).length === 0) notFound();
   // console.log("scham ====================>", data);
-  const safeSchema =
-    data?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
     // console.log(data?.data?.home_hero)
   return (
     <div className="lg:min-h-screen text-black mt-4 ">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+      <JsonLd value={data?.data?.schema} />
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
       {data?.data?.home_hero && <PageHomeHero data={data?.data?.home_hero} />}
       {data?.data?.podcast_hero && (

@@ -5,10 +5,11 @@ import Image from "next/image";
 import Accordion from "./Accordion";
 import Gradientcard from "./Gradientcard";
 import Link from "next/link";
+import { getSafeHref, getSafeImageSrc } from "@/utils/media";
 
 const HomeFaqSection = ({ data }: { data?: any }) => {
   const allFaq = data?.faqs;
-  if (data?.length <= 0) {
+  if (!data || Array.isArray(data) || typeof data !== "object") {
     return null;
   }
   return (
@@ -28,7 +29,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
           >
             <div className="flex justify-center  items-center flex-col h-full md:py-10 py-6 px-2 md:px-9">
               <Image
-                src={data?.contact_image}
+                src={getSafeImageSrc(data?.contact_image)}
                 alt="faq"
                   
                 width={135}
@@ -50,7 +51,7 @@ const HomeFaqSection = ({ data }: { data?: any }) => {
                 </p>
               </div>
               <Link
-                href={data?.contact_link ?? "#"}
+                href={getSafeHref(data?.contact_link)}
                 target="_blank"
                 className="btn-color max-w-87 w-full h-14 rounded-2xl py-4 px-4 font-medium flex justify-center items-center opensans animated hover:scale-105"
               >

@@ -4,8 +4,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div
-      className="min-h-screen flex flex-col justify-center items-center relative bg-cover bg-top bg-no-repeat"
-      style={{ backgroundImage: "url(/assets/logobackgourd.png)" }}
+      className="admin-brand-glow min-h-screen flex flex-col justify-center items-center relative bg-cover bg-top bg-no-repeat"
     >
       <h2 className="text-[244px]  text-white font-bold leading-none">404</h2>
 

@@ -1,37 +1,47 @@
-import api from "@/utils/api.json";
-import axios from "axios";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-const extractUrlTags = (xmlString: string) => {
-  const urlTagRegex = /<url>([\s\S]*?)<\/url>/g;
-  return xmlString.match(urlTagRegex) || [];
+import { SEO_CONFIG, buildFallbackSitemap, isSitemapXml } from "@/config/seo";
+
+export const revalidate = 300;
+
+const xmlHeaders = {
+  "Content-Type": "application/xml; charset=utf-8",
 };
 
 export async function GET() {
-  let combineAllSiteMapXml = undefined;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "");
+
+  if (!apiUrl) {
+    return new Response(buildFallbackSitemap(), {
+      status: 200,
+      headers: xmlHeaders,
+    });
+  }
+
   try {
-    const data = await axios.get(api.cms.sitemaps, {
+    const response = await fetch(`${apiUrl}${SEO_CONFIG.backend.sitemap}`, {
+      next: {
+        revalidate: 300,
+        tags: [SEO_CONFIG.cacheTags.sitemap],
+      },
       headers: {
         "Cache-Control": "no-cache",
         Pragma: "no-cache",
         Expires: "0",
       },
     });
-    const finalData = extractUrlTags(data.data);
-    combineAllSiteMapXml = `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-            xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-                http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-                ${finalData.join("\n")}
-    </urlset>`;
+    const sitemapXml = await response.text();
+    if (!response.ok || !isSitemapXml(sitemapXml)) {
+      throw new Error(`Sitemap API returned an invalid response (${response.status})`);
+    }
 
-    return new Response(combineAllSiteMapXml, {
+    return new Response(sitemapXml, {
       status: 200,
-      headers: { "Content-Type": "application/xml" },
+      headers: xmlHeaders,
     });
   } catch (error) {
-    console.error(error);
-    return new Response("Internal Server Error", { status: 500 });
+    console.error("Error fetching sitemap.xml:", error);
+    return new Response(buildFallbackSitemap(), {
+      status: 200,
+      headers: { ...xmlHeaders, "X-Sitemap-Source": "fallback" },
+    });
   }
 }

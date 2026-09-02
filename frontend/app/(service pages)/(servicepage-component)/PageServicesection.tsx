@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Heading } from "@/component/share/Headering";
 import Gradientcard from "@/component/share/Gradientcard";
+import { getSafeImageSrc } from "@/utils/media";
 
 interface Service {
   service_title: string;
@@ -46,7 +47,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
 
         <div className="relative w-full h-69 mt-12">
           <Image
-            src={service.image}
+            src={getSafeImageSrc(service.image)}
             alt={service.title ?? "Service Image"}
             fill
             priority
@@ -127,7 +128,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
                   {/* IMAGE */}
                   <div className="relative w-full h-69 mt-6 overflow-hidden rounded-[13.5px]">
                     <Image
-                      src={service.image}
+                      src={getSafeImageSrc(service.image)}
                       alt={service.title || service.service_title}
                       fill
                       priority

@@ -7,6 +7,9 @@ import ShareButtons from "./ShareButtons";
 import BlogHeader from "./BlogHeader";
 import "./blogstyle.css";
 import Link from "next/link";
+import { sanitizeRichText } from "@/utils/contentSecurity";
+import { getSafeImageSrc } from "@/utils/media";
+import { notFound } from "next/navigation";
 export async function generateMetadata({
   params,
 }: {
@@ -18,7 +21,7 @@ export async function generateMetadata({
   const title = blog?.title || "Blog Title";
   const description =
     blog?.short_description || "Read the latest blog on MontageMotion.";
-  const image = blog?.image; // fallback image
+  const image = getSafeImageSrc(blog?.image);
   const url = `https://montagemotion.com/blog/${slug}`;
 
   return {
@@ -66,6 +69,7 @@ const SingleBlog = async ({ params }: { params: any }) => {
     ],
   };
   const data = await fetchSingleBlog(slug);
+  if (!data) notFound();
   return (
     <div className=" max-w-300 mx-auto  flex flex-col   mt-36 lg:mt-40 px-2">
       <div className="w-full">
@@ -97,7 +101,7 @@ const SingleBlog = async ({ params }: { params: any }) => {
         </div>
         <div className="">
           <Image
-            src={data?.image}
+            src={getSafeImageSrc(data?.image)}
             alt={data?.title}
             width={900}
             height={500}
@@ -108,7 +112,9 @@ const SingleBlog = async ({ params }: { params: any }) => {
           <div className="mt-5 max-w-191  mx-auto ">
             <div
               className="text-(--text-primary) mt-10 editor-preview "
-              dangerouslySetInnerHTML={{ __html: data?.description }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeRichText(data?.description),
+              }}
             ></div>
           </div>
           <div className="flex justify-center items-center  mt-10">

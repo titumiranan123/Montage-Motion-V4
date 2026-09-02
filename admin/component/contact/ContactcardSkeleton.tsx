@@ -2,7 +2,7 @@ import React from "react";
 
 const ContactcardSkeleton = () => {
   return (
-    <div className="w-full border border-white rounded-xl shadow-md overflow-hidden mb-6 bg-gray-800">
+    <div className="h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-[#111827] shadow-md">
     <div className="p-6">
       {/* Header Section */}
       <div className="flex justify-between items-start mb-4">

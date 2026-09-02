@@ -10,6 +10,7 @@ import { api_url } from "@/hook/Apiurl";
 import toast from "react-hot-toast";
 import { whychooseus_Section } from "./types";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
+import { useRouter } from "next/navigation";
 
 const Whychooseusform = ({
   initialData,
@@ -18,6 +19,7 @@ const Whychooseusform = ({
   initialData: any;
   setIsModalOpent: (p: boolean) => void;
 }) => {
+  const router = useRouter();
   const {
     register,
     control,
@@ -30,7 +32,7 @@ const Whychooseusform = ({
     defaultValues: initialData
       ? initialData
       : {
-          type: " ",
+          type: "",
           tag: "",
           heading_part1: "",
           heading_part2: "",
@@ -67,9 +69,8 @@ const Whychooseusform = ({
       if (response.status === 200 || response.status === 201) {
         setIsModalOpent(false);
         toast.success(response?.data?.message);
-        if (!initialData?.id) {
-          reset(); // Reset form for new entries
-        }
+        reset();
+        router.refresh();
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || "An error occurred");
@@ -90,7 +91,7 @@ const Whychooseusform = ({
           </label>
           <ServiceTypeSelect
             onChange={(type: string) => {
-              setValue("type", type);
+              setValue("type", type, { shouldDirty: true, shouldValidate: true });
             }}
             value={watch("type")}
             slice={1}
@@ -237,7 +238,10 @@ const Whychooseusform = ({
                     <ImageUploader
                       value={watch(`whychooseus_items.${index}.icon`)}
                       onChange={(url) =>
-                        setValue(`whychooseus_items.${index}.icon`, url)
+                        setValue(`whychooseus_items.${index}.icon`, url, {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        })
                       }
                     />
                   </div>

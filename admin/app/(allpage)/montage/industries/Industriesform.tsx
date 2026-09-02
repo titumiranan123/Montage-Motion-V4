@@ -8,6 +8,7 @@ import { api_url } from "@/hook/Apiurl";
 import ImageUploader from "@/component/ImageUploader";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 /* ================= TYPES ================= */
 
@@ -30,6 +31,7 @@ type TabForm = {
 };
 
 type IndustryForm = {
+  section_id?: string;
   page: string;
   tag: string;
   heading_title: string;
@@ -46,6 +48,7 @@ export default function IndustryFormPage({
   data: any;
   setOpen: (p: boolean) => void;
 }) {
+  const router = useRouter();
   const {
     register,
     control,
@@ -86,14 +89,25 @@ export default function IndustryFormPage({
   /* ================= SUBMIT ================= */
   const onSubmit = async (data: IndustryForm) => {
     try {
-      const res = await api_url.post("/api/industries", data);
+      if (!data.tabs.length) {
+        toast.error("At least one tab is required");
+        return;
+      }
+
+      const { section_id, ...payload } = data;
+      const res = section_id
+        ? await api_url.patch(`/api/industries/${section_id}`, payload)
+        : await api_url.post("/api/industries", payload);
       if (res.status === 200 || res.status === 201) {
         setOpen(false);
-        toast.success("Saved successfully");
+        toast.success(section_id ? "Industries updated" : "Industries created");
+        router.refresh();
       }
     } catch (err) {
+      const response = (err as { response?: { data?: { message?: string } } })
+        .response;
       console.error(err);
-      toast.error("Validation or server error");
+      toast.error(response?.data?.message ?? "Validation or server error");
     }
   };
 
@@ -123,6 +137,7 @@ export default function IndustryFormPage({
             value={watch("page")}
             onChange={(val) => setValue("page", val, { shouldValidate: true })}
           />
+          <input type="hidden" {...register("page", { required: "Page is required" })} />
           {errors.page && (
             <p className="text-red-400 text-sm mt-1">{errors.page.message}</p>
           )}

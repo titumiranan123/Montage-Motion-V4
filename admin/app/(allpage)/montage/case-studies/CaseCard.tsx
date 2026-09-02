@@ -83,7 +83,7 @@ export default function CaseStudyCard({ data }: Props) {
     }
   };
   return (
-    <div className="group bg-[#151b24] border border-[rgba(255,255,255,0.08)] rounded-2xl overflow-hidden hover:border-[#1fb5dd]/30 hover:shadow-xl hover:shadow-[#1fb5dd]/5 transition-all duration-300 max-w-100 w-full">
+    <div className="group bg-[#151b24] border border-[rgba(255,255,255,0.08)] rounded-2xl overflow-hidden hover:border-[#1fb5dd]/30 hover:shadow-xl hover:shadow-[#1fb5dd]/5 transition-all duration-300 max-w-100 w-full h-full flex flex-col">
       {/* Thumbnail */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -124,7 +124,7 @@ export default function CaseStudyCard({ data }: Props) {
       </div>
 
       {/* Body */}
-      <div className="p-5">
+      <div className="p-5 flex flex-1 flex-col">
         {/* Title */}
         <h3 className="text-[15px] font-semibold text-white leading-snug mb-2 line-clamp-2">
           {data?.title}
@@ -155,7 +155,7 @@ export default function CaseStudyCard({ data }: Props) {
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-[rgba(255,255,255,0.06)]">
+        <div className="mt-auto flex items-center justify-between pt-3 border-t border-[rgba(255,255,255,0.06)]">
           <span className="text-[11px] text-[#4a5568]">
             {formatDate(data?.created_at)}
           </span>

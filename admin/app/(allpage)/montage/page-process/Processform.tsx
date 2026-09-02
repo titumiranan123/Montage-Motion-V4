@@ -53,13 +53,19 @@ const ProcessForm = ({
     formState: { isSubmitting, errors },
   } = useForm<ProcessSchema>({
     defaultValues: initialData
-      ? initialData
+      ? {
+          ...initialData,
+          process_steps: initialData.process_steps.map((step: any) => ({
+            ...step,
+            isHiden: step.isHiden ?? step.ishiden ?? false,
+          })),
+        }
       : {
           tag: "",
           heading_part1: "",
           heading_part2: "",
           paragraph: "",
-          type: " ",
+          type: "",
           image: "",
           alt: "",
           process_steps: [
@@ -89,6 +95,11 @@ const ProcessForm = ({
     }
   };
   const onSubmit = async (data: ProcessSchema) => {
+    if (data.process_steps.length === 0) {
+      toast.error("At least one process step is required");
+      return;
+    }
+
     const processWithOrder = data?.process_steps.map((service, index) => ({
       ...service,
       order_index: index,
@@ -99,13 +110,16 @@ const ProcessForm = ({
     };
     try {
       const response = await api_url.post("/api/process", formdata);
-      if (response.status === 201) {
+      if (response.status === 200 || response.status === 201) {
         router.refresh();
         toast.success(response.data.message);
         setIsModalOpent(false);
       }
     } catch (error) {
-      console.log(error);
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not save process");
     }
   };
 
@@ -123,7 +137,7 @@ const ProcessForm = ({
           </label>
           <ServiceTypeSelect
             onChange={(type: string) => {
-              setValue("type", type);
+              setValue("type", type, { shouldDirty: true, shouldValidate: true });
             }}
             value={watch("type")}
             slice={0}
@@ -267,7 +281,10 @@ const ProcessForm = ({
                   <ImageUploader
                     value={watch(`process_steps.${index}.image`)}
                     onChange={(url) =>
-                      setValue(`process_steps.${index}.image`, url)
+                      setValue(`process_steps.${index}.image`, url, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      })
                     }
                   />
                   <input
@@ -289,7 +306,10 @@ const ProcessForm = ({
                   <ImageUploader
                     value={watch(`process_steps.${index}.icon`)}
                     onChange={(url) =>
-                      setValue(`process_steps.${index}.icon`, url)
+                      setValue(`process_steps.${index}.icon`, url, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      })
                     }
                   />
                   <input
@@ -376,7 +396,10 @@ const ProcessForm = ({
                 <ToggleSwitch
                   checked={watch(`process_steps.${index}.isHiden`)}
                   onChange={(val) =>
-                    setValue(`process_steps.${index}.isHiden`, val)
+                    setValue(`process_steps.${index}.isHiden`, val, {
+                      shouldDirty: true,
+                      shouldValidate: true,
+                    })
                   }
                 />
               </div>

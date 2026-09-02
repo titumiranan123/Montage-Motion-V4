@@ -8,6 +8,7 @@ import ImageUploader from "../ImageUploader";
 import MyTextEditor from "./Texteditor";
 import { api_url } from "@/hook/Apiurl";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface IBlog {
   id?: string;
@@ -22,7 +23,6 @@ interface IBlog {
   alt: string;
   is_publish?: boolean;
   is_feature?: boolean;
-  is_position?: boolean;
   read_time?: string;
   updatedAt?: string;
   whatWillLearn?: string[];
@@ -44,6 +44,7 @@ function slugify(text: string) {
 }
 
 const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
+  const router = useRouter();
   const {
     control,
     register,
@@ -51,6 +52,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
     reset,
     setValue,
     getValues,
+    watch,
     formState: { errors, isDirty, isSubmitting },
   } = useForm<IBlog>({
     defaultValues: {
@@ -65,7 +67,6 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
       alt: "",
       is_publish: false,
       is_feature: false,
-      is_position: false,
       read_time: "",
       updatedAt: "",
       whatWillLearn: [],
@@ -133,12 +134,14 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
       const res = await api_url.post(url, data);
       if (res.status === 200 || res.status === 201) {
         onCancel(false);
-        toast.success("Blog Created");
+        toast.success(data?.id ? "Blog updated successfully" : "Blog created successfully");
+        router.refresh();
       }
     } catch (error: any) {
       Swal.fire(
         "Error!",
-        error.response?.data?.errorMessages?.[0]?.message ||
+        error.response?.data?.message ||
+          error.response?.data?.errorDetails?.[0]?.message ||
           "Something went wrong",
         "error",
       );
@@ -254,7 +257,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
             </button>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
-            {(getValues("keywords") || []).map((kw) => (
+            {(watch("keywords") || []).map((kw) => (
               <span
                 key={kw}
                 className="bg-gray-800 text-white px-3 py-1 rounded-full flex items-center gap-1"
@@ -311,7 +314,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
           </button>
         </div>
         <div className="flex flex-wrap gap-2 mt-2">
-          {(getValues("whatWillLearn") || []).map((item) => (
+          {(watch("whatWillLearn") || []).map((item) => (
             <span
               key={item}
               className="bg-gray-800 text-white px-3 py-1 rounded-full flex items-center gap-1"
@@ -380,7 +383,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialData, onCancel }) => {
 
       {/* Checkboxes */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {["is_publish", "is_feature", "is_position"].map((field) => (
+        {["is_publish", "is_feature"].map((field) => (
           <div className="p-3 border border-gray-700 rounded-md" key={field}>
             <label className="flex items-center space-x-2">
               <input

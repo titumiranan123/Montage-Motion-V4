@@ -7,6 +7,7 @@ export interface whychooseus_item {
 }
 
 export interface whychooseus_Section {
+  id?: string;
   type: string;
   tag: string;
   heading_part1: string;

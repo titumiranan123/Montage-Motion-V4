@@ -1,58 +1,67 @@
 "use client";
-import React, { useState } from "react";
-import BrandimageFrom from "./BrandimageFrom";
-import { ServiceFilter } from "@/utils/Servicefilter";
 
-const Brandwrapper = () => {
-  const [initialValue, setInitialServiceData] = useState<any | null>();
-  const [isOpenModal, setIsModalOpent] = useState<any | null>(null);
+import React, { useState } from "react";
+import { ServiceFilter } from "@/utils/Servicefilter";
+import BrandimageFrom, { IBrandImage } from "./BrandimageFrom";
+import Brandcard, { BrandCardData } from "./Brandcard";
+
+const Brandwrapper = ({ data }: { data: BrandCardData[] }) => {
+  const [initialValue, setInitialServiceData] = useState<IBrandImage | null>(null);
+  const [isOpenModal, setIsModalOpent] = useState(false);
+
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold ">
-            Brand Image Section
-          </h1>
-          <p className="text-gray-400">
-            Manage and showcase every service brand Image
-          </p>
+          <h1 className="text-2xl md:text-3xl font-bold">Brand Image Section</h1>
+          <p className="text-gray-400">Manage and showcase service brand images</p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
           <ServiceFilter />
-          {/* Add New Button */}
           <button
             onClick={() => {
               setInitialServiceData(null);
               setIsModalOpent(true);
             }}
-            className="bg-[#1FB5DD]    text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+            className="bg-[#1FB5DD] text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 whitespace-nowrap"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Add Brand
+            Add Brand Image
           </button>
         </div>
       </div>
+
+      {data.length > 0 ? (
+        <div className="flex w-full flex-wrap gap-8 items-center">
+          {data.map((image) => (
+            <Brandcard
+              key={image.id}
+              dt={image}
+              onEdit={(selected) => {
+                setInitialServiceData(selected);
+                setIsModalOpent(true);
+              }}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-lg border border-slate-700 p-8 text-gray-400">
+          No brand images found for this page.
+        </div>
+      )}
+
       {isOpenModal && (
         <div
           style={{ zIndex: 201 }}
-          className="fixed inset-0 bg-black/10 backdrop-blur-2xl bg-opacity-50 flex justify-center items-center p-8 "
+          onClick={() => setIsModalOpent(false)}
+          className="fixed inset-0 bg-black/10 backdrop-blur-2xl bg-opacity-50 flex justify-center items-center p-8"
         >
-          <BrandimageFrom
-            initialValue={initialValue}
-            onClose={() => setIsModalOpent(false)}
-          />
+          <div onClick={(event) => event.stopPropagation()} className="w-full">
+            <BrandimageFrom
+              initialValue={initialValue}
+              onClose={() => setIsModalOpent(false)}
+            />
+          </div>
         </div>
       )}
     </>

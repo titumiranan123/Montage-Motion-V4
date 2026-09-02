@@ -1,11 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import Processwrapper from "./Processwrapper";
 
-export default async function Page({ searchParams }: { searchParams: any }) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const { page } = await searchParams;
   const responsce = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/process?type=${page}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/process?type=${encodeURIComponent(
+      page ?? "home",
+    )}`,
   );
   return (
     <main className="min-h-screen bg-black py-10">

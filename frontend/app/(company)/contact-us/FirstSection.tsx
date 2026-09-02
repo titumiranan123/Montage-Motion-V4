@@ -103,7 +103,7 @@ const FirstSection = () => {
               {
                 title: "Work at Montage Motion",
                 value: "See current job opportunities",
-                icon: "/assets/currentjob.png",
+                icon: "/assets/icon/users.png",
                 href: "/careers",
               },
               {

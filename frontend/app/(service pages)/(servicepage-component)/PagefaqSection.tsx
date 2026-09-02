@@ -4,9 +4,10 @@ import { Heading } from "@/component/share/Headering";
 import Gradientcard from "@/component/share/Gradientcard";
 import Accordion from "@/component/share/Accordion";
 import Link from "next/link";
+import { getSafeHref, getSafeImageSrc } from "@/utils/media";
 
 const info = {
-  image: "/assets/faq.png",
+  image: "/assets/montagelogo.png",
   alt: "faq",
 
   heading: "Have more questions ?",
@@ -82,7 +83,7 @@ const PageFaqSection = () => {
           >
             <div className="flex justify-center  items-center flex-col h-full py-10 px-9">
               <Image
-                src={info?.image}
+                src={getSafeImageSrc(info?.image)}
                 alt={info?.alt}
                   
                 width={135}
@@ -104,7 +105,7 @@ const PageFaqSection = () => {
                 </p>
               </div>
               <Link
-                href={`${info.contact_link}`}
+                href={getSafeHref(info.contact_link)}
                 target="_blank"
                 className="btn-color max-w-87 w-full h-14 rounded-2xl py-4 px-4 font-medium  opensans animated hover:scale-105"
               >

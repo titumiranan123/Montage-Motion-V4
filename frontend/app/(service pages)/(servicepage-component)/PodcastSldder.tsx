@@ -36,6 +36,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [videoReady, setVideoReady] = useState<boolean[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -456,6 +457,10 @@ export default function PodcastSlider({ data }: { data: any[] }) {
           <div className="relative h-full flex items-center justify-center">
             {data.map((item: any, index: number) => {
               const isCenterSlide = safeCurrentIndex === index;
+              const isCenterPlaying = isCenterSlide && isPlaying;
+              const isHoverPreview = hoveredIndex === index && !isCenterPlaying;
+              const shouldPlay = isHoverPreview || isCenterPlaying;
+
               return (
                 <div
                   key={index}
@@ -463,6 +468,11 @@ export default function PodcastSlider({ data }: { data: any[] }) {
                     slidesRef.current[index] = el;
                   }}
                   onClick={() => handleSlideClick(index)}
+                  onMouseEnter={() => {
+                    setHoveredIndex(index);
+                    if (!isCenterSlide) setIsPlaying(false);
+                  }}
+                  onMouseLeave={() => setHoveredIndex(null)}
                   className="absolute cursor-pointer select-none touch-none"
                   style={{
                     transformStyle: "preserve-3d",
@@ -479,7 +489,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
                   >
                     <ReactPlayer
                       url={item?.video_url}
-                      light={item?.image_url}
+                      light={shouldPlay ? false : item?.image_url}
                       playIcon={
                         <button className="md:w-16 w-14 md:h-10 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center lg:rounded-xl rounded-lg  text-white backdrop-blur-[2px] st group">
                           <Play
@@ -491,8 +501,9 @@ export default function PodcastSlider({ data }: { data: any[] }) {
                       ref={(player) => {
                         playerRefs.current[index] = player;
                       }}
-                      playing={isCenterSlide && isPlaying}
-                      controls={true}
+                      playing={shouldPlay}
+                      muted={isHoverPreview}
+                      controls={!isHoverPreview}
                       width="100%"
                       height="100%"
                       style={{

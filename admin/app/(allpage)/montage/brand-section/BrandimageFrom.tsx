@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { FiX } from "react-icons/fi";
 import ImageUploader from "@/component/ImageUploader";
 import { api_url } from "@/hook/Apiurl";
@@ -9,13 +9,13 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { ServiceTypeSelect } from "@/utils/ServiceTypeseclect";
 
-interface IBrandImage {
+export interface IBrandImage {
   id?: string;
   image: string;
   alt: string;
   width: string;
   height: string;
-  ishide: true;
+  ishide: boolean;
   type: string;
 }
 
@@ -40,9 +40,9 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
   const router = useRouter();
   const {
     register,
+    control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<BrandFormValues>({
     defaultValues: initialValue
@@ -64,21 +64,25 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
         },
   });
 
+  const selectedImage = useWatch({ control, name: "image" });
+  const selectedType = useWatch({ control, name: "type" });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit: SubmitHandler<BrandFormValues> = async (data) => {
     try {
       setIsSubmitting(true);
-      console.log("Submitting brand data:", data);
-      // TODO: Replace console.log with API POST request here
-      const responsce = await api_url.post(`/api/brand/images`, data);
-      if (responsce.status === 201) {
+      const responsce = initialValue?.id
+        ? await api_url.patch(`/api/brand/images/${initialValue.id}`, data)
+        : await api_url.post(`/api/brand/images`, data);
+      if (responsce.status === 200 || responsce.status === 201) {
         toast.success(responsce.data.message);
         router.refresh();
       }
       onClose();
     } catch (error) {
       console.error("Error saving brand image:", error);
+      toast.error("Could not save brand image");
     } finally {
       setIsSubmitting(false);
     }
@@ -111,8 +115,10 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
 
             <div className="mt-3">
               <ImageUploader
-                value={watch("image")}
-                onChange={(url) => setValue("image", url)}
+                value={selectedImage}
+                onChange={(url) =>
+                  setValue("image", url, { shouldDirty: true, shouldValidate: true })
+                }
               />
               <input
                 {...register("image", { required: "Image is Required" })}
@@ -189,9 +195,9 @@ const BrandImageFormModal: React.FC<BrandImageFormProps> = ({
                 </label>
                 <div className="relative">
                   <ServiceTypeSelect
-                    value={watch("type")}
+                    value={selectedType}
                     onChange={(url: any) => {
-                      setValue(`type`, url);
+                      setValue(`type`, url, { shouldDirty: true, shouldValidate: true });
                     }}
                   />
                   <input

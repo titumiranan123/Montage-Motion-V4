@@ -3,6 +3,7 @@
 import Gradientcard from "@/component/share/Gradientcard";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { getSafeImageSrc } from "@/utils/media";
 
 const PageProcessslider = ({ data }: { data: any }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -23,6 +24,8 @@ const PageProcessslider = ({ data }: { data: any }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const items = Array.isArray(data) ? data : [];
+  const activeItem = items[activeIndex] ?? items[0];
   return (
     <div className=" flex lg:flex-row items-stretch flex-col px-2 lg:px-0 mt-9 md:mt-16 gap-12 lg:max-h-224.5">
       <div
@@ -31,7 +34,7 @@ const PageProcessslider = ({ data }: { data: any }) => {
         className="flex-1 flex sticky top-32 self-start rounded-[13px]"
       >
         <Image
-          src={data?.[activeIndex]?.image ?? ""}
+          src={getSafeImageSrc(activeItem?.image)}
           alt="process"
           width={638}
           height={898}
@@ -41,7 +44,7 @@ const PageProcessslider = ({ data }: { data: any }) => {
       </div>
 
       <div className=" flex-1 flex flex-col  gap-2">
-        {data?.map((dt: any, idx: number) => (
+        {items.map((dt: any, idx: number) => (
           <div
             key={idx}
             data-aos="fade-up"
@@ -54,7 +57,7 @@ const PageProcessslider = ({ data }: { data: any }) => {
               borderClassName="max-w-[698px] w-full h-[172px] rounded-[24px] p-[1px] transition-transform duration-200 ease-in-out hover:scale-[104%]"
             >
               <Image
-                src={dt?.icon ?? ""}
+                src={getSafeImageSrc(dt?.icon)}
                 alt={dt?.alt ?? ""}
                 className="w-14 h-14  rounded-[12px] p-2.5"
                 width={36}

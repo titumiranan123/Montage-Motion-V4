@@ -4,13 +4,19 @@ import { getPageSEO } from "@/component/share/getPageSEO";
 import Image from "next/image";
 import ContactSection from "@/component/share/ContactSection";
 import { getData } from "@/utils/getData";
+import JsonLd from "@/component/share/JsonLd";
+import { getSafeImageSrc } from "@/utils/media";
 import VideoPlayer from "@/component/home/VideoPlayer";
 import CalendlyContact from "../contact-us/CalendlyContact";
+import PaginationControls from "../case-studies/PaginationControls";
 export async function generateMetadata() {
   return await getPageSEO("portfolio");
 }
 const Portfolio = async ({ searchParams }: { searchParams: any }) => {
-  const { cat } = await searchParams;
+  const { cat, page } = await searchParams;
+  const requestedPage = Number(page);
+  const currentPage = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+  const limit = 12;
   const [categoryRes, seoRes] = await Promise.all([
     getData({ url: "api/website/service/type" }),
     getData({ url: "api/seo/portfolio" }),
@@ -20,25 +26,19 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
     (item: any) => item.service_type === cat || item.href === cat,
   );
 
-  const safeSchema =
-    seoRes?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
+  const workType = cat && cat !== "all" ? matchedCategory?.service_type : "home";
   const data = await getData({
-    url: `api/works/website?type=${cat && cat !== "all" ? matchedCategory?.service_type : "home"}`,
+    url: `api/works/website?type=${encodeURIComponent(workType || "home")}&page=${currentPage}&limit=${limit}`,
   });
+  const paginatedData = data?.data;
+  const works = Array.isArray(paginatedData)
+    ? paginatedData
+    : paginatedData?.items || [];
+  const totalPages = paginatedData?.pagination?.totalPages || 1;
 
   return (
     <div className=" mt-4">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+      <JsonLd value={seoRes?.data?.schema} />
       <div className="portfoliobg  min-h-screen rounded-[42px]">
         <div className="pt-40"></div>
 
@@ -75,7 +75,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
           types={categoryRes?.data}
         />
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto pb-14">
-          {data?.data?.map((work: any, idx: number) => {
+          {works.map((work: any, idx: number) => {
             if (work?.type === "shortsreels-editing") {
               return (
                 <div
@@ -109,7 +109,7 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
                   {/* Thumbnail */}
                   {work.thumbnail ? (
                     <Image
-                      src={work.thumbnail}
+                      src={getSafeImageSrc(work.thumbnail)}
                       alt={work.title || "Graphic work"}
                       width={348}
                       height={216}
@@ -139,6 +139,12 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
             }
           })}
         </div>
+        {totalPages > 1 && (
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
+        )}
       </div>
       <div className="sectionGap">
         <CalendlyContact />

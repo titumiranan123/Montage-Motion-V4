@@ -8,7 +8,7 @@ const Testimonail = async ({
   searchParams: Promise<{ page: string }>;
 }) => {
   const { page } = await searchParams;
-  const data = await getData({ slug: `testimonials?type=${page}` });
+  const data = await getData({ slug: page ? `testimonials?type=${page}` : "testimonials" });
   return (
     <div>
       <TestimonialWrapper data={data} />

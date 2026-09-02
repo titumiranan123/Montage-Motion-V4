@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { FiSave } from "react-icons/fi";
 import { useState } from "react";
 import { api_url } from "@/hook/Apiurl";
+import { useRouter } from "next/navigation";
 
 // Dynamically load Monaco Editor
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
@@ -16,28 +17,37 @@ interface RobotsTxtFormData {
   robots_txt: string;
 }
 
-const RobotsTxtForm = ({ data }: any) => {
-  const { control, handleSubmit, setValue } = useForm<RobotsTxtFormData>({
+interface RobotsData {
+  content?: string | null;
+}
+
+const RobotsTxtForm = ({ data }: { data?: RobotsData | null }) => {
+  const { control, handleSubmit } = useForm<RobotsTxtFormData>({
     defaultValues: {
       robots_txt: data?.content ?? "",
     },
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   // Submit Handler
-  const onSubmit = async (data: RobotsTxtFormData) => {
+  const onSubmit = async (formData: RobotsTxtFormData) => {
     try {
       setIsSubmitting(true);
 
       const res = await api_url.post("/api/robots", {
-        robotTxt: data.robots_txt,
+        robotTxt: formData.robots_txt,
       });
       if (res.status === 200) {
-        toast.success("Robots file saved successfully!");
+        toast.success(res.data?.message ?? "Robots file saved successfully");
+        router.refresh();
       }
-    } catch (err: any) {
-      toast.error(err.message || "Something went wrong!");
+    } catch (error: unknown) {
+      const response = (error as { response?: { data?: { message?: string } } })
+        .response;
+      console.error(error);
+      toast.error(response?.data?.message ?? "Could not save robots.txt");
     } finally {
       setIsSubmitting(false);
     }
@@ -62,7 +72,7 @@ const RobotsTxtForm = ({ data }: any) => {
                   defaultLanguage="plaintext"
                   theme="vs-dark"
                   value={field.value}
-                  onChange={(val) => setValue("robots_txt", val || "")}
+                onChange={(val) => field.onChange(val ?? "")}
                   options={{
                     minimap: { enabled: false },
                     fontSize: 14,

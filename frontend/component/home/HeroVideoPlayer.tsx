@@ -3,6 +3,7 @@ import { Play } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import ReactPlayer from "react-player";
+import { getSafeImageSrc } from "@/utils/media";
 
 const HeroVideoPlayer = ({
   thumbnail,
@@ -11,8 +12,8 @@ const HeroVideoPlayer = ({
   thumbnail: string;
   video_url: string;
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(Boolean(video_url));
+  const [hasStarted, setHasStarted] = useState(Boolean(video_url));
 
   return (
     <div className="lg:mt-10 mt-8 overflow-hidden max-w-7xl mx-auto rounded-[40px] bg-black relative aspect-video w-full">
@@ -26,7 +27,7 @@ const HeroVideoPlayer = ({
           }}
         >
           <Image
-            src={thumbnail}
+            src={getSafeImageSrc(thumbnail)}
             alt="Intro video thumbnail"
             fill
             priority
@@ -41,20 +42,23 @@ const HeroVideoPlayer = ({
         </div>
       )}
 
-      <ReactPlayer
-        url={video_url}
-        width="100%"
-        height="100%"
-        controls
-        playsinline
-        playing={isPlaying}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => {
-          setIsPlaying(false);
-          setHasStarted(false); // remove if you don't want thumbnail back after video ends
-        }}
-      />
+      {hasStarted && video_url && (
+        <ReactPlayer
+          url={video_url}
+          width="100%"
+          height="100%"
+          controls
+          playsinline
+          playing={isPlaying}
+          muted
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => {
+            setIsPlaying(false);
+            setHasStarted(false); // show thumbnail again after the video ends
+          }}
+        />
+      )}
     </div>
   );
 };

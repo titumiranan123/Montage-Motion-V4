@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Heading } from "@/component/share/Headering";
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 import  { useState } from "react";
 
 const OurTeam = ({ members }: any) => {
@@ -29,7 +30,7 @@ const OurTeam = ({ members }: any) => {
             <div key={idx} data-aos="fade-up" data-aos-delay={100 + idx * 100}>
               <div className="max-w-102.5 mx-auto h-132.5 w-full rounded-2xl md:py-6 md:px-5 py-3 px-1 flex flex-col justify-center items-center glassShadow bg-white/40 backdrop-blur-2xl">
                 <Image
-                  src={member?.photourl}
+                  src={getSafeImageSrc(member?.photourl)}
                   alt={member?.name}
                   priority
                   className="max-w-92.5 max-h-105 w-full h-full bg-cover"

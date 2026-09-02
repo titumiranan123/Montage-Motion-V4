@@ -75,6 +75,7 @@ export interface ServiceItem {
 }
 
 export interface PageService {
+  id?: string;
   type: string;
   tag: string;
   heading_part1: string;
@@ -132,6 +133,11 @@ const ServiceForm = ({
   const onSubmit = async (data: PageService) => {
     try {
       // Add order_index to each service based on their current position
+      if (data.services.length === 0) {
+        toast.error("At least one service is required");
+        return;
+      }
+
       const servicesWithOrder = data.services.map((service, index) => ({
         ...service,
         order_index: index,
@@ -426,6 +432,7 @@ const ServiceForm = ({
                             setValue(
                               `services.${index}.available_section`,
                               updated,
+                              { shouldDirty: true, shouldValidate: true },
                             );
                           }}
                         />

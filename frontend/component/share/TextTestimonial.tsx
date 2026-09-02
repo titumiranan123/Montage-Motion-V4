@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 interface testimonial {
   id?: string;
   name: string;
@@ -41,7 +42,7 @@ const TestimonialMessagecard = ({
           <div className="lg:w-16   overflow-hidden lg:h-16 h-10 w-10">
             <Image
               className="rounded-full lg:w-16   lg:h-16 h-10 w-10 "
-              src={testimonial.image}
+              src={getSafeImageSrc(testimonial.image)}
               alt={`${testimonial.name}`}
               width={64}
               height={64}

@@ -32,7 +32,7 @@ const SingleService = ({ data }: { data: any }) => {
                   alt={dt.alt}
                   width={344}
                   height={276}
-                  priority
+                  priority={idx === 0}
                   className="max-w-86 w-full max-h-69 h-full md:mt-8 mt-4"
                 />
               </div>

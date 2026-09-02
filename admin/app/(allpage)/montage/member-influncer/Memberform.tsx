@@ -7,11 +7,13 @@ import { useForm } from "react-hook-form";
 interface MemberProfileFormProps {
   onSubmit: (data: MemberProfile) => void;
   defaultValues?: Partial<MemberProfile>;
+  onCancel?: () => void;
 }
 
 export function MemberProfileForm({
   onSubmit,
   defaultValues,
+  onCancel,
 }: MemberProfileFormProps) {
   const {
     register,
@@ -41,7 +43,11 @@ export function MemberProfileForm({
               </label>
               <input
                 type="text"
-                {...register("name", { required: "Name is required" })}
+                {...register("name", {
+                  required: "Name is required",
+                  validate: (value) =>
+                    (value ?? "").trim().length > 0 || "Name is required",
+                })}
                 className={`w-full px-3 py-2 bg-gray-800 border rounded-md text-white ${
                   errors.name ? "border-red-500" : "border-gray-600"
                 }`}
@@ -60,7 +66,9 @@ export function MemberProfileForm({
               <input
                 type="text"
                 {...register("designation", {
-                  required: "designation   is required",
+                  required: "Designation is required",
+                  validate: (value) =>
+                    (value ?? "").trim().length > 0 || "Designation is required",
                 })}
                 className={`w-full px-3 py-2 bg-gray-800 border rounded-md text-white ${
                   errors.designation ? "border-red-500" : "border-gray-600"
@@ -80,7 +88,9 @@ export function MemberProfileForm({
               <input
                 type="text"
                 {...register("alt", {
-                  required: "Alt   is required",
+                  required: "Alt is required",
+                  validate: (value) =>
+                    (value ?? "").trim().length > 0 || "Alt is required",
                 })}
                 className={`w-full px-3 py-2 bg-gray-800 border rounded-md text-white ${
                   errors.alt ? "border-red-500" : "border-gray-600"
@@ -104,7 +114,12 @@ export function MemberProfileForm({
 
           <ImageUploader
             value={watch(`photourl`)}
-            onChange={(url) => setValue(`photourl`, url)}
+            onChange={(url) =>
+              setValue(`photourl`, url, {
+                shouldDirty: true,
+                shouldValidate: true,
+              })
+            }
           />
           <input
             className="hidden"
@@ -121,7 +136,7 @@ export function MemberProfileForm({
         <div className="flex justify-end space-x-4 pt-4">
           <button
             type="button"
-            onClick={() => window.history.back()}
+            onClick={onCancel}
             className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-500 transition font-medium"
           >
             Cancel

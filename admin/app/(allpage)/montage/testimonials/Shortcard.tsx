@@ -100,7 +100,6 @@ const Shortcard = ({
               alt={data?.name}
               fill
               className="object-cover"
-              priority
             />
           </div>
         )}

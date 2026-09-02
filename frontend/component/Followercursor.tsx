@@ -37,6 +37,8 @@ export default function SmoothFollower() {
     });
 
     // Animation function for smooth movement
+    let animationId: number | null = null;
+
     const animate = () => {
       const lerp = (start: number, end: number, factor: number) => {
         return start + (end - start) * factor;
@@ -72,11 +74,11 @@ export default function SmoothFollower() {
         },
       });
 
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     };
 
     // Start animation loop
-    const animationId = requestAnimationFrame(animate);
+    animationId = requestAnimationFrame(animate);
 
     // Clean up
     return () => {
@@ -87,7 +89,7 @@ export default function SmoothFollower() {
         element.removeEventListener("mouseleave", handleMouseLeave);
       });
 
-      cancelAnimationFrame(animationId);
+      if (animationId !== null) cancelAnimationFrame(animationId);
     };
   }, []);
 

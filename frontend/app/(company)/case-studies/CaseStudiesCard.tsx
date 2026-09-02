@@ -1,6 +1,7 @@
 import Gradientcard from '@/component/share/Gradientcard';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getSafeImageSrc } from '@/utils/media';
 
 
 const CaseStudiesCard = ({
@@ -26,7 +27,7 @@ const CaseStudiesCard = ({
       >
         <Image
           className="w-full lg:max-w-200 h-48 sm:h-56 lg:h-106 object-center rounded-[13px] object-cover"
-          src={image}
+          src={getSafeImageSrc(image)}
           alt={title}
           width={800}
           height={276}

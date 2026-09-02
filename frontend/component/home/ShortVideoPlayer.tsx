@@ -47,9 +47,12 @@ export default function ShortVideoPlayer({ videoUrl, thumbnail }: Props) {
 
   // Fix for tab switching and proper sizing
   useEffect(() => {
+    let visibilityTimer: ReturnType<typeof setTimeout> | null = null;
+
     const handleVisibilityChange = () => {
       if (!document.hidden && plyrRef.current?.plyr) {
-        setTimeout(() => {
+        if (visibilityTimer) clearTimeout(visibilityTimer);
+        visibilityTimer = setTimeout(() => {
           if (plyrRef.current?.plyr && containerRef.current) {
             // Force recalculation
             const event = new Event("resize");
@@ -74,7 +77,7 @@ export default function ShortVideoPlayer({ videoUrl, thumbnail }: Props) {
     window.addEventListener("resize", handleResize);
 
     // Initial setup
-    setTimeout(handleResize, 300);
+    const initialTimer = setTimeout(handleResize, 300);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -94,10 +97,9 @@ export default function ShortVideoPlayer({ videoUrl, thumbnail }: Props) {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", handleResize);
-      if (containerRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(containerRef.current);
-      }
+      if (visibilityTimer) clearTimeout(visibilityTimer);
+      clearTimeout(initialTimer);
+      observer.disconnect();
     };
   }, []);
 

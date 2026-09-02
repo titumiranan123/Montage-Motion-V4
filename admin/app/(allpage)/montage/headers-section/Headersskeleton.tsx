@@ -4,12 +4,7 @@ const Headersskeleton = () => {
     return (
         <section className="section container pt-3.5">
         <div
-          className="relative w-full overflow-hidden"
-          style={{
-            backgroundImage: "url(/assets/logobackgourd.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "top",
-          }}
+          className="admin-brand-glow relative w-full overflow-hidden"
         >
           <div className="max-w-200 mx-auto">
             {/* Title Skeleton */}

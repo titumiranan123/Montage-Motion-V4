@@ -81,7 +81,6 @@ const TestimonialMessagecard = ({
           alt=""
           width={64}
           height={64}
-          priority
         />
         <div>
           <h2 className="font-bold text-2xl">{testimonial?.name}</h2>

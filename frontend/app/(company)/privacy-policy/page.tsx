@@ -1,4 +1,5 @@
 import { getPageSEO } from "@/component/share/getPageSEO";
+import JsonLd from "@/component/share/JsonLd";
 import { getData } from "@/utils/getData";
 
 export async function generateMetadata() {
@@ -7,21 +8,9 @@ export async function generateMetadata() {
 const Privacypolicy = async () => {
   const data = await getData({ url: "api/seo/privacy" });
 
-  const safeSchema =
-    data?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
   return (
     <div className="max-w-249 mx-auto px-2">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+      <JsonLd value={data?.data?.schema} />
       <h2
         style={{ textTransform: "capitalize" }}
         className="lg:mt-60 capitalize mb-4 mt-40 text-(--text-primary) poppins font-bold text-3xl "

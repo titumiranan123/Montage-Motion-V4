@@ -1,30 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Brandwrapper from "./Teamimagewrapper";
-import Brandcard from "./Brandcard";
 
 const BrandSection = async () => {
-
+  let data = [];
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/team-image`,
+      { cache: "no-store" },
     );
+    if (!response.ok) throw new Error(`Team images request failed: ${response.status}`);
     const result = await response.json();
-    const data = result.data;
-// console.log("data ==================>",data)
-    return (
-      <div>
-        <Brandwrapper />
-        <div className="flex w-full flex-wrap gap-8 items-center">
-          {data?.map((dt: any, idx: number) => (
-            <Brandcard dt={dt} key={idx} />
-          ))}
-        </div>
-      </div>
-    );
+    data = result?.data ?? [];
   } catch (error) {
-    console.log(error);
+    console.error("Failed to load team images:", error);
   }
+
+  return <Brandwrapper data={data} />;
 };
 
 export default BrandSection;

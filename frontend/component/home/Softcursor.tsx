@@ -6,21 +6,24 @@ export default function CustomCursor() {
   const [showGlow, setShowGlow] = useState(false);
 
   useEffect(() => {
-    const move = (e: any) => setPos({ x: e.clientX, y: e.clientY });
+    const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
+    const handleCardEnter = () => setShowGlow(true);
+    const handleCardLeave = () => setShowGlow(false);
+
     window.addEventListener("mousemove", move);
 
     // hover detection for .card
     const cards = document.querySelectorAll(".card");
     cards.forEach((card) => {
-      card.addEventListener("mouseenter", () => setShowGlow(true));
-      card.addEventListener("mouseleave", () => setShowGlow(false));
+      card.addEventListener("mouseenter", handleCardEnter);
+      card.addEventListener("mouseleave", handleCardLeave);
     });
 
     return () => {
       window.removeEventListener("mousemove", move);
       cards.forEach((card) => {
-        card.removeEventListener("mouseenter", () => setShowGlow(true));
-        card.removeEventListener("mouseleave", () => setShowGlow(false));
+        card.removeEventListener("mouseenter", handleCardEnter);
+        card.removeEventListener("mouseleave", handleCardLeave);
       });
     };
   }, []);

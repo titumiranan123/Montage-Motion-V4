@@ -7,7 +7,9 @@ const IndustriesPage: React.FC<{ searchParams: any }> = async ({
   searchParams,
 }) => {
   const { page } = await searchParams;
-  const data = await getData({ slug: `industries?page=${page}` });
+  const data = await getData({
+    slug: page ? `industries?page=${encodeURIComponent(page)}` : "industries",
+  });
   return (
     <div>
       <Industrieswrapper data={data?.[0]} />

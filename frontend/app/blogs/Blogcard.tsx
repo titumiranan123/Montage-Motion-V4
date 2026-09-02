@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Gradientcard from "@/component/share/Gradientcard";
+import { getSafeImageSrc } from "@/utils/media";
 
 const Blogcard = ({
   image,
@@ -28,7 +29,7 @@ const Blogcard = ({
         <div className="max-w-86 max-h-69 w-full h-full overflow-hidden rounded-[13px]">
           <Image
             className="max-w-84 w-full h-69 rounded-[13px]  object-cover"
-            src={image}
+            src={getSafeImageSrc(image)}
             alt={title}
             width={336}
             height={276}

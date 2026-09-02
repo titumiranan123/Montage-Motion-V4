@@ -14,8 +14,8 @@ const SinglePricePlan = ({ data }: { data: any }) => {
       />
       <div className="lg:mt-20 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {" "}
-        {data?.jobposts?.map((dt: any, idx: number) => (
-          <CareerCard job={dt} key={idx} />
+        {data?.jobposts?.map((dt: any) => (
+          <CareerCard job={dt} key={dt.id} />
         ))}
       </div>
     </div>

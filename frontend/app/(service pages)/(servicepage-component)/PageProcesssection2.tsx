@@ -3,6 +3,7 @@ import Gradientcard from "@/component/share/Gradientcard";
 import { Heading } from "@/component/share/Headering";
 
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 
 export const PageProcesssection2 = ({ data }: { data: any }) => {
   // console.log("new set ======================>", data);
@@ -19,7 +20,7 @@ export const PageProcesssection2 = ({ data }: { data: any }) => {
       <div className=" flex lg:flex-row items-stretch flex-col px-2 lg:px-0 mt-9 md:mt-16 gap-12 lg:max-h-224.5">
         <div data-aos="fade-right" data-aos-delay={200} className="flex-1 flex">
           <Image
-            src={data?.image ?? ""}
+            src={getSafeImageSrc(data?.image)}
             alt="process"
             width={638}
             height={898}
@@ -37,7 +38,7 @@ export const PageProcesssection2 = ({ data }: { data: any }) => {
                 borderClassName="max-w-[698px] w-full h-[172px] rounded-[24px] p-[1px] transition-transform duration-200 ease-in-out hover:scale-[104%]"
               >
                 <Image
-                  src={dt?.icon ?? ""}
+                src={getSafeImageSrc(dt?.icon)}
                   alt={dt?.alt ?? ""}
                   className="w-14 h-14  rounded-[12px] p-2.5"
                   width={36}

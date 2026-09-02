@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
+import { getSafeImageSrc } from "@/utils/media";
 import Gradientcard from "@/component/share/Gradientcard";
 import { Heading } from "@/component/share/Headering";
 
@@ -26,7 +27,7 @@ const PageWhychooseus = ({ data }: { data: any }) => {
             >
               <div className="flex justify-center items-start flex-col  text-(--text-primary)   gap-2  ">
                 <Image
-                  src={dt?.icon}
+                src={getSafeImageSrc(dt?.icon)}
                   alt={dt?.alt}
                   width={35}
                   height={35}

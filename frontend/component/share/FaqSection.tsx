@@ -69,7 +69,7 @@ const FaqSection = () => {
           >
             <div className="flex justify-center  items-center flex-col h-full py-10 lg:px-9 px-4">
               <Image
-                src={"/assets/faq.png"}
+                src={"/assets/montagelogo.png"}
                 alt="faq"
                 width={135}
                 height={135}

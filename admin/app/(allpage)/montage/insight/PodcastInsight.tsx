@@ -9,6 +9,18 @@ import StepperDemo from "./PodcastPurposestep";
 
 const PodcastInsight = ({ data }: any) => {
   const [activeStep, setActivestep] = useState(0);
+  const steps = Array.isArray(data?.steps) ? data.steps : [];
+  const activeIndex = Math.min(activeStep, Math.max(steps.length - 1, 0));
+  const activeData = steps[activeIndex];
+
+  if (!data || steps.length === 0) {
+    return (
+      <div className="rounded-lg border border-slate-700 p-8 text-gray-400">
+        No insight steps found. Add at least one step to preview this section.
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-between lg:flex-row flex-col gap-8 container sectionGap">
       <div className="max-w-124.75 w-full max-h-172">
@@ -21,24 +33,29 @@ const PodcastInsight = ({ data }: any) => {
           </p>
 
           <p className="opensans font-normal md:text-[16px] text-[14px] md:leading-[150%] text-(--text-primary) text-left">
-            It&apos;s not just about talking into a mic- it&apos;s about
-            crafting an experience your audience wants to come back to .
+            {data?.paragraph || "No paragraph added yet."}
           </p>
           <StepperDemo
             setActivestep={setActivestep}
-            activeStep={activeStep}
+            activeStep={activeIndex}
             data={data}
           />
         </div>
       </div>
       <div className="relative">
-        <Image
-          src={data?.steps?.[activeStep]?.image}
-          width={544}
-          height={506}
-          className="rounded-[13px] "
-          alt="greatpodcast"
-        />
+        {activeData?.image ? (
+          <Image
+            src={activeData.image}
+            width={544}
+            height={506}
+            className="rounded-[13px]"
+            alt={activeData.heading || activeData.title || "Insight step"}
+          />
+        ) : (
+          <div className="w-[544px] max-w-full h-[300px] rounded-[13px] bg-slate-800 flex items-center justify-center text-gray-400">
+            No step image
+          </div>
+        )}
 
         <Gradientcard
           className="max-w-110 max-h-112.5 w-full h-full px-2 py-3 md:py-10 md:px-9 rounded-3xl text-(--text-primary)    purposebg"
@@ -54,7 +71,7 @@ const PodcastInsight = ({ data }: any) => {
           </div>
           <div className="flex justify-between flex-col gap-6 md:gap-8 md:mt-8 mt-6">
             <div>
-              {data?.[activeStep]?.steps?.map((it: string, idx: number) => (
+              {activeData?.items?.map((it: string, idx: number) => (
                 <Bullet key={idx} text={it} />
               ))}
             </div>

@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Gradientcard from "../share/Gradientcard";
 import { Heading } from "../share/Headering";
+import { getSafeImageSrc } from "@/utils/media";
 
 const WhyChooseUs = ({ data }: { data: any }) => {
   return (
@@ -24,7 +25,7 @@ const WhyChooseUs = ({ data }: { data: any }) => {
             >
               <div className="flex justify-center items-start flex-col  text-(--text-primary)   gap-2  ">
                 <Image
-                  src={dt?.icon}
+                  src={getSafeImageSrc(dt?.icon)}
                   alt={dt?.alt}
                   width={35}
                   height={35}

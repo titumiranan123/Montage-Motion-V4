@@ -4,13 +4,17 @@ import React, { useEffect, useState } from "react";
 import PricingForm from "./Pricingform";
 import SinglePricePlan from "./SinglePricePlan";
 import { ServiceFilter } from "@/utils/Servicefilter";
+import { api_url } from "@/hook/Apiurl";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import { IPagePricePlan } from "./types";
 
-const PricingWrapper = ({ data }: { data: any }) => {
+const PricingWrapper = ({ data }: { data: IPagePricePlan | null }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [serviceData, setInitialServiceData] = useState<any | null>(null);
-  const [isOpenModal, setIsModalOpent] = useState<any | null>(null);
+  const [serviceData, setInitialServiceData] = useState<IPagePricePlan | null>(null);
+  const [isOpenModal, setIsModalOpent] = useState(false);
 
   useEffect(() => {
     if (!searchParams.get("page")) {
@@ -28,6 +32,31 @@ const PricingWrapper = ({ data }: { data: any }) => {
       document.body.style.overflow = "auto";
     };
   }, [isOpenModal]);
+
+  const deletePricingSection = async () => {
+    if (!data?.type) return;
+    const result = await Swal.fire({
+      title: "Delete pricing section?",
+      text: "This will permanently remove the section and all pricing packages.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Keep",
+      background: "#1f2937",
+      color: "#fff",
+    });
+    if (!result.isConfirmed) return;
+
+    try {
+      await api_url.delete(`/api/pricing/${data.type}`);
+      toast.success("Pricing section deleted successfully");
+      router.refresh();
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to delete pricing section");
+    }
+  };
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -69,29 +98,32 @@ const PricingWrapper = ({ data }: { data: any }) => {
         </div>
       </div>
       <div>
-        <SinglePricePlan data={data} key={data?.id} />
-
-        <button
-          onClick={() => {
-            setInitialServiceData(data);
-            setIsModalOpent(true);
-          }}
-          className="bg-[#1FB5DD] mt-10   text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Edit Service
-        </button>
+        {data ? (
+          <>
+            <SinglePricePlan data={data} key={data?.id} />
+            <div className="flex gap-3 mt-10">
+              <button
+                onClick={() => {
+                  setInitialServiceData(data);
+                  setIsModalOpent(true);
+                }}
+                className="bg-[#1FB5DD] text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+              >
+                Edit Pricing
+              </button>
+              <button
+                onClick={deletePricingSection}
+                className="border border-red-500 text-red-400 font-medium py-2 px-4 rounded-lg transition-all duration-200"
+              >
+                Delete Pricing Section
+              </button>
+            </div>
+          </>
+        ) : (
+          <p className="rounded-lg border border-dashed border-gray-600 p-8 text-center text-gray-400">
+            No pricing section found for this page.
+          </p>
+        )}
       </div>
       {isOpenModal && (
         <div
@@ -102,7 +134,7 @@ const PricingWrapper = ({ data }: { data: any }) => {
         >
           <div onClick={(e) => e.stopPropagation()}>
             <PricingForm
-              initialData={serviceData}
+              initialData={serviceData ?? undefined}
               setIsModalOpent={setIsModalOpent}
             />
           </div>

@@ -1,15 +1,17 @@
+import { SEO_CONFIG } from "./config/seo";
+
 // next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/robots.txt",
-        destination: "/api/robots",
+        source: SEO_CONFIG.routes.robots,
+        destination: SEO_CONFIG.backend.robots,
       },
       {
-        source: "/sitemap.xml",
-        destination: "/api/sitemap",
+        source: SEO_CONFIG.routes.sitemap,
+        destination: SEO_CONFIG.backend.sitemap,
       },
     ];
   },

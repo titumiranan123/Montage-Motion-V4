@@ -18,12 +18,14 @@ export const CategorySelectComponent = ({
 
   return (
     <select
+      id="interestIn"
       value={value}
       onChange={(e) => {
         onChange(e.target.value);
       }}
       className="max-w-[542px] w-full h-14 rounded-2xl border border-[#B9BEBF] animated hover:scale-[103%]  p-3  text-(--text-primary)  focus:outline-none backdrop-blur-2xl text-[16px] leading-[100%] font-normal"
     >
+      <option value="">Select a service</option>
       {data
         ?.slice(1)
         .map((item: { service_type: string; service_title: string }) => (

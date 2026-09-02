@@ -1,22 +1,22 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 import { getData } from "@/utils/getData";
+import { normalizeRobots } from "@/config/seo";
 
 export async function GET() {
   try {
     const robotTextData = await getData({
       url: "api/robots",
-      headers: { cache: "no-store" },
+      cache: "no-store",
+      throwOnError: true,
     });
-    const robots = robotTextData?.data?.content ?? "User-agent: *\nDisallow:";
+    const robots = normalizeRobots(robotTextData?.data?.content);
     return new Response(robots, {
       headers: { "content-type": "text/plain; charset=utf-8" },
     });
   } catch (error) {
     console.error("Error fetching robots.txt:", error);
-    return new Response("User-agent: *\nDisallow:", {
+    return new Response(normalizeRobots(null), {
       headers: { "content-type": "text/plain; charset=utf-8" },
-      status: 500,
+      status: 200,
     });
   }
 }

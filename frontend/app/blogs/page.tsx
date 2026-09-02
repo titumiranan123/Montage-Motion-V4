@@ -3,6 +3,7 @@
 import Blogtab from "./Blogtab";
 import Blogcard from "./Blogcard";
 import { getPageSEO } from "@/component/share/getPageSEO";
+import JsonLd from "@/component/share/JsonLd";
 import { getData } from "@/utils/getData";
 export async function generateMetadata() {
   return await getPageSEO("blog");
@@ -16,21 +17,9 @@ const Blogs = async ({ searchParams }: { searchParams: any }) => {
   const data = result.data;
   const seoRes = await getData({ url: "api/seo/blog" });
 
-  const safeSchema =
-    seoRes?.data?.schema ??
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "MontageMotion",
-    });
   return (
     <div className="relative  lg:rounded-[40px] rounded-2xl mt-2 lg:pt-44 pb-20 pt-40 min-h-screen header-background pagelogo">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: safeSchema,
-        }}
-      />
+      <JsonLd value={seoRes?.data?.schema} />
       <div
         className={`flex flex-col gap-1 justify-center items-center max-w-4xl w-full mx-auto `}
       >

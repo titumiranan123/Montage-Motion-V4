@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useId, useRef } from "react";
 import { ChevronRight, CircleCheck } from "lucide-react";
 import Gradientcard from "./Gradientcard";
+import { getSafeHref, getSafeImageSrc } from "@/utils/media";
 
 export function TabsClient({ tabs }: { tabs: any }) {
   const safeTabs = Array.isArray(tabs) ? tabs : [];
@@ -130,7 +131,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
                 </ul>
 
                 <a
-                  href={activeTabData?.cta?.link}
+                  href={getSafeHref(activeTabData?.cta?.link)}
                   className="mt-6 inline-flex items-center justify-center rounded-2xl  px-4 py-2.5 md:text-[16px] text-[14px] font-medium  opensans"
                 >
                   {activeTabData?.cta?.label}
@@ -140,7 +141,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
               {/* Image Card */}
               <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/10 w-full lg:w-1/2 ">
                 <Image
-                  src={activeTabData?.image}
+                  src={getSafeImageSrc(activeTabData?.image)}
                   alt={activeTabData?.title}
                   width={600}
                   height={390}
@@ -151,7 +152,7 @@ export function TabsClient({ tabs }: { tabs: any }) {
             </div>
             <div className="lg:absolute hidden left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
               <Image
-                src={activeTabData?.image}
+                src={getSafeImageSrc(activeTabData?.image)}
                 alt={activeTabData?.title}
                 className="max-w-358.75 w-full mx-auto"
                 width={1435}

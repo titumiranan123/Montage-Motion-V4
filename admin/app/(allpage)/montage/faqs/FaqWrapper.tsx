@@ -5,10 +5,40 @@ import { IFaqSection } from "@/interface/interface";
 import  { useState } from "react";
 import PageFaqSection from "./PagefaqSection";
 import { ServiceFilter } from "@/utils/Servicefilter";
+import { api_url } from "@/hook/Apiurl";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const FaqWrapper = ({ data }: any) => {
   const [existingData, setExistingData] = useState<IFaqSection | undefined>();
   const [isItemOpen, setItemOpen] = useState(false);
+  const router = useRouter();
+
+  const deleteSection = async () => {
+    if (!data?.id) return;
+    const result = await Swal.fire({
+      title: "Delete FAQ section?",
+      text: "This will permanently remove the section and all FAQ items.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Keep",
+      background: "#1f2937",
+      color: "#fff",
+    });
+    if (!result.isConfirmed) return;
+
+    try {
+      await api_url.delete(`/api/faq/${data.id}`);
+      toast.success("FAQ section deleted successfully");
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || "Failed to delete FAQ section");
+    }
+  };
   return (
     <div className="text-gray-100 p-4 md:p-8">
       {/* Header */}
@@ -70,15 +100,25 @@ const FaqWrapper = ({ data }: any) => {
           </button>
         </div>
       )}
-      <button
-        onClick={() => {
-          setExistingData(data);
-          setItemOpen(true);
-        }}
-        className="bg-[#1FB5DD] text-white py-2 px-6 rounded-lg mt-5"
-      >
-        Update Faq
-      </button>
+      {data && (
+        <div className="flex gap-3 mt-5">
+          <button
+            onClick={() => {
+              setExistingData(data);
+              setItemOpen(true);
+            }}
+            className="bg-[#1FB5DD] text-white py-2 px-6 rounded-lg"
+          >
+            Update FAQ
+          </button>
+          <button
+            onClick={deleteSection}
+            className="border border-red-500 text-red-400 py-2 px-6 rounded-lg"
+          >
+            Delete FAQ Section
+          </button>
+        </div>
+      )}
       {/* Modal */}
       {isItemOpen && (
         <div className="fixed h-screen inset-0 bg-black/10 backdrop-blur-sm flex justify-center p-4 z-50 overflow-y-auto">

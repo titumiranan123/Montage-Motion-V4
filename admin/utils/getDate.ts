@@ -11,12 +11,14 @@ export const getData = async ({
   headers?: Record<string, string>;
   shouldRedirect?: boolean;
 }): Promise<any> => {
+  const session: any = await getServerSession(authOptions);
+  if (!session?.user?.token) {
+    redirect("/signin");
+  }
+
+  let response: Response;
   try {
-    const session: any = await getServerSession(authOptions);
-    if (!session?.user?.token) {
-      redirect("/signin");
-    }
-    const response = await fetch(
+    response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/${slug}`,
       {
         method: "GET",
@@ -28,46 +30,43 @@ export const getData = async ({
         cache: "no-store",
       },
     );
-    // 🚀 401 → redirect always works because json() already consumed above
-    if (response.status === 401) {
-      let errorBody: any = {};
-      try {
-        errorBody = await response.json();
-      } catch (error) {
-        console.log(error);
-      }
-      const errorCode = errorBody?.error?.code;
+  } catch (error) {
+    console.error("API request failed:", error);
+    return [];
+  }
 
-      if (
-        errorCode === "TOKEN_EXPIRED" ||
-        errorCode === "TOKEN_INVALID" ||
-        errorCode === "TOKEN_MISSING" ||
-        errorCode === "UNAUTHORIZED"
-      ) {
-        // এই ক্ষেত্রে সত্যিই সেশন শেষ → লগিনে পাঠাও
-        redirect("/signin?message=session_expired");
-      } else {
-        // অন্য কারণে 401 (যেমন ভুল টোকেন ফরম্যাট, ব্ল্যাকলিস্টেড)
-        console.error("Unauthorized access:", errorBody);
-        redirect("/signin?message=invalid_token");
-      }
+  if (response.status === 401) {
+    const errorBody: any = await response.json().catch(() => ({}));
+    const errorCode = errorBody?.error?.code;
+
+    if (
+      errorCode === "TOKEN_EXPIRED" ||
+      errorCode === "TOKEN_INVALID" ||
+      errorCode === "TOKEN_MISSING" ||
+      errorCode === "UNAUTHORIZED"
+    ) {
+      redirect("/signin?message=session_expired");
     }
 
-    if (response.status === 403) {
-      redirect("/signin?error=forbidden");
-    }
+    console.error("Unauthorized access:", errorBody);
+    redirect("/signin?message=invalid_token");
+  }
 
-    // অন্য সব এরর
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      console.error("API Error:", response.status, error);
-      throw new Error(error.error?.message || "Failed to load data");
-    }
+  if (response.status === 403) {
+    redirect("/signin?error=forbidden");
+  }
 
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    console.error("API Error:", response.status, error);
+    return [];
+  }
+
+  try {
     const result = await response.json();
     return result.data ?? result;
   } catch (error) {
-    console.log(error);
+    console.error("Invalid API response:", error);
     return [];
   }
 };

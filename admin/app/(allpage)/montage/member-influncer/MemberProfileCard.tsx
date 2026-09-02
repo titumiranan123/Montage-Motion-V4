@@ -31,12 +31,12 @@ export function MemberProfileCard({ profile }: MemberProfileCardProps) {
       });
       setIsFormOpen(false);
       refetch();
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const response = (err as { response?: { data?: { message?: string } } })
+        .response;
       await Swal.fire({
         title: "Error!",
-        text:
-          err.response?.data?.errorMessage?.[0]?.message ||
-          "Failed to update member",
+        text: response?.data?.message ?? "Failed to update member",
         icon: "error",
         background: "#1f2937",
         color: "#fff",
@@ -84,9 +84,11 @@ export function MemberProfileCard({ profile }: MemberProfileCardProps) {
 
         refetch();
       } catch (err) {
+        const response = (err as { response?: { data?: { message?: string } } })
+          .response;
         await Swal.fire({
           title: "Error!",
-          text: err instanceof Error ? err.message : "Failed to delete member",
+          text: response?.data?.message ?? "Failed to delete member",
           icon: "error",
           background: "#1f2937",
           color: "#fff",
@@ -154,6 +156,7 @@ export function MemberProfileCard({ profile }: MemberProfileCardProps) {
             <MemberProfileForm
               onSubmit={handleSubmit}
               defaultValues={profile}
+              onCancel={() => setIsFormOpen(false)}
             />
           </div>
         </div>
