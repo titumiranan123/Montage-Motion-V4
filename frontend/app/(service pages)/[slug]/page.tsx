@@ -20,6 +20,18 @@ import HomeFaqSection from "@/component/share/HomeFaqSection";
 import ComparisonCards from "@/component/home/PriceComparison";
 import JsonLd from "@/component/share/JsonLd";
 import TestimonialSection from "@/component/share/Testimonial";
+
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const result = await getData({ url: "api/website/service/type" });
+
+  return (result?.data ?? [])
+    .filter((item: { href?: string }) => item.href && item.href !== "/")
+    .map((item: { href: string }) => ({ slug: item.href }));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -49,7 +61,12 @@ const ServicePage = async ({
     <div className="lg:min-h-screen text-black mt-4 ">
       <JsonLd value={data?.data?.schema} />
       {data?.data?.short_hero && <ShortsHeader data={data?.data?.short_hero} />}
-      {data?.data?.home_hero && <PageHomeHero data={data?.data?.home_hero} />}
+      {data?.data?.home_hero && (
+        <PageHomeHero
+          data={data?.data?.home_hero}
+          autoPlay={slug === "saas-explainer"}
+        />
+      )}
       {data?.data?.podcast_hero && (
         <PodacstHeader data={data?.data?.podcast_hero} />
       )}

@@ -2,6 +2,8 @@ import { getPageSEO } from "@/component/share/getPageSEO";
 import JsonLd from "@/component/share/JsonLd";
 import { getData } from "@/utils/getData";
 
+export const revalidate = 900;
+
 export async function generateMetadata() {
   return await getPageSEO("refund");
 }

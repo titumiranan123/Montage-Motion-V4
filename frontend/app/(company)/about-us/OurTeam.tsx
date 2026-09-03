@@ -32,7 +32,7 @@ const OurTeam = ({ members }: any) => {
                 <Image
                   src={getSafeImageSrc(member?.photourl)}
                   alt={member?.name}
-                  priority
+                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 370px"
                   className="max-w-92.5 max-h-105 w-full h-full bg-cover"
                   width={370}
                   height={420}

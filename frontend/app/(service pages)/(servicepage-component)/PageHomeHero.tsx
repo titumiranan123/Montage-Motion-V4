@@ -5,13 +5,21 @@ import Link from "next/link";
 import TurstedBy from "@/component/home/TurstedBy";
 import Image from "next/image";
 import { Play } from "lucide-react";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { getSafeHref, getSafeImageSrc } from "@/utils/media";
+import { useVideoPlayback } from "@/component/share/VideoPlaybackProvider";
 
-const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
+const PageHomeHero: React.FC<{ data: any; autoPlay?: boolean }> = ({
+  data,
+  autoPlay = false,
+}) => {
   const videoUrl = data?.media?.[0]?.video_url;
-  const [isPlaying, setIsPlaying] = useState(Boolean(videoUrl));
-  const [hasStarted, setHasStarted] = useState(Boolean(videoUrl));
+  const [hasEnded, setHasEnded] = useState(false);
+  const [manuallyStarted, setManuallyStarted] = useState(false);
+  const hasStarted = Boolean(videoUrl) && (autoPlay || manuallyStarted) && !hasEnded;
+  const { isPlaying, containerRef, play, pause } = useVideoPlayback(undefined, {
+    autoPlay: autoPlay && Boolean(videoUrl),
+  });
 
   return (
     <div className="headerbg rounded-2xl lg:rounded-[40px]">
@@ -56,14 +64,15 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
           </div>
         </div>
 
-        <div className="lg:mt-10 mt-8 overflow-hidden max-w-7xl mx-auto rounded-[40px] bg-black relative aspect-video w-full">
+        <div ref={containerRef} className="lg:mt-10 mt-8 overflow-hidden max-w-7xl mx-auto rounded-[40px] bg-black relative aspect-video w-full">
           
           {!hasStarted && (
             <div
               className="absolute inset-0 z-10 cursor-pointer"
               onClick={() => {
-                setHasStarted(true);
-                setIsPlaying(true);
+                setManuallyStarted(true);
+                setHasEnded(false);
+                play();
               }}
             >
               <Image
@@ -71,6 +80,7 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
                 alt="Intro video thumbnail"
                 fill
                 priority
+                sizes="100vw"
                 className="object-cover"
               />
               <button className="md:w-16 w-14 md:h-10 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center lg:rounded-xl rounded-lg text-white backdrop-blur-[2px] st group">
@@ -91,11 +101,11 @@ const PageHomeHero: React.FC<{ data: any }> = ({ data }) => {
               playsinline
               playing={isPlaying}
               muted
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
+              onPlay={play}
+              onPause={pause}
               onEnded={() => {
-                setIsPlaying(false);
-                setHasStarted(false); // show thumbnail again after the video ends
+                pause();
+                setHasEnded(true); // show thumbnail again after the video ends
               }}
             />
           )}

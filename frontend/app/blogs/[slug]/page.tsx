@@ -9,7 +9,20 @@ import "./blogstyle.css";
 import Link from "next/link";
 import { sanitizeRichText } from "@/utils/contentSecurity";
 import { getSafeImageSrc } from "@/utils/media";
+import { getData } from "@/utils/getData";
 import { notFound } from "next/navigation";
+
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const result = await getData({ url: "api/website/blog" });
+
+  return (result?.data ?? [])
+    .filter((blog: { slug?: string }) => blog.slug)
+    .map((blog: { slug: string }) => ({ slug: blog.slug }));
+}
+
 export async function generateMetadata({
   params,
 }: {

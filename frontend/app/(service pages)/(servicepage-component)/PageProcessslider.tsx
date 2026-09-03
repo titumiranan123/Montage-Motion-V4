@@ -38,8 +38,8 @@ const PageProcessslider = ({ data }: { data: any }) => {
           alt="process"
           width={638}
           height={898}
+          sizes="(max-width: 1023px) 100vw, 50vw"
           className="max-w-159.5 bg-cover w-full max-h-224.5 h-full rounded-[13px]"
-          priority
         />
       </div>
 

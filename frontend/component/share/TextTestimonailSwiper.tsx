@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import TestimonialMessagecard from "./TextTestimonial";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -13,6 +13,8 @@ const TextTestimonialSwiper: React.FC<Props> = ({ data }) => {
   const isPaused = useRef(false);
   const isDragging = useRef(false);
   const dragStart = useRef({ x: 0, scrollLeft: 0 });
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isInViewport, setIsInViewport] = useState(false);
 
   const doubled = [...(data ?? []), ...(data ?? [])];
 
@@ -40,11 +42,24 @@ const TextTestimonialSwiper: React.FC<Props> = ({ data }) => {
   }, []);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInViewport(entry.isIntersecting),
+      { rootMargin: "200px 0px" },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInViewport) return;
     startAnimation();
     return () => {
       if (animRef.current) cancelAnimationFrame(animRef.current);
     };
-  }, [startAnimation]);
+  }, [isInViewport, startAnimation]);
 
   // ── Hover pause ─────────────────────────────────────────────
   const pauseAnim = () => { isPaused.current = true; };
@@ -132,7 +147,7 @@ const TextTestimonialSwiper: React.FC<Props> = ({ data }) => {
   if (!data?.length) return null;
 
   return (
-    <div className="mt-5 relative">
+    <div ref={sectionRef} className="mt-5 relative">
       <div
         ref={trackRef}
         className="flex gap-6 px-2  relative overflow-x-auto overflow-y-hidden"

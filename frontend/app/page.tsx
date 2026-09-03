@@ -1,5 +1,6 @@
 import Header from "@/component/home/Header";
-import OurFeatureProject from "@/component/home/OurFeatureProject";
+import DeferredFeatureProjects from "@/component/home/DeferredFeatureProjects";
+import DeferredTestimonials from "@/component/home/DeferredTestimonials";
 import OurProcess from "@/component/home/OurProcess";
 import PartnersSection from "@/component/home/PatnersSection";
 import ComparisonCards from "@/component/home/PriceComparison";
@@ -10,7 +11,6 @@ import { getPageSEO } from "@/component/share/getPageSEO";
 import HomeFaqSection from "@/component/share/HomeFaqSection";
 import IndustryWeWork from "@/component/share/IndustryWork";
 import JsonLd from "@/component/share/JsonLd";
-import TestimonialSection from "@/component/share/Testimonial";
 import { getData } from "@/utils/getData";
 export async function generateMetadata() {
   return await getPageSEO("home");
@@ -42,13 +42,9 @@ const HomePage = async () => {
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />
-      <OurFeatureProject header={data?.works} category={categoryRes?.data} />
+      <DeferredFeatureProjects header={data?.works} category={categoryRes?.data} />
       <ServiceSections data={data?.services ?? []} />
-      <TestimonialSection
-        title="What Our Clients Say"
-        description="Montage Motion is an Advertising and Digital Agency specializing in Influencer Marketing"
-        data={data?.testimonial ?? []}
-      />
+      <DeferredTestimonials data={data?.testimonial ?? []} />
       <OurProcess data={data?.process ?? []} />
       <ComparisonCards data={data?.comparision?.[0]} />
       <IndustryWeWork data={data?.industries} />

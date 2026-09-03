@@ -1,53 +1,14 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 export default function WhatsAppFloat() {
     const [open, setOpen] = useState(false);
-    const autoCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const intervalTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const waNumber = '8801786546949';
     const waMessage = encodeURIComponent('Hello! I visited your website and would like to know more. Could you please assist me?');
     const waLink = `https://wa.me/${waNumber}?text=${waMessage}`;
 
-    const openPopup = () => {
-        setOpen(true);
-        // Auto close after 5 seconds
-        if (autoCloseTimer.current) clearTimeout(autoCloseTimer.current);
-        autoCloseTimer.current = setTimeout(() => {
-            setOpen(false);
-        }, 5000);
-    };
-
-    useEffect(() => {
-        // First time auto open after 3 seconds
-        const firstOpen = setTimeout(() => {
-            openPopup();
-        }, 3000);
-
-        // Every 1 minute auto open
-        intervalTimer.current = setInterval(() => {
-            setOpen(prev => {
-                if (!prev) {
-                    if (autoCloseTimer.current) clearTimeout(autoCloseTimer.current);
-                    autoCloseTimer.current = setTimeout(() => {
-                        setOpen(false);
-                    }, 5000);
-                    return true;
-                }
-                return prev;
-            });
-        }, 60000);
-
-        return () => {
-            clearTimeout(firstOpen);
-            if (intervalTimer.current) clearInterval(intervalTimer.current);
-            if (autoCloseTimer.current) clearTimeout(autoCloseTimer.current);
-        };
-    }, []);
-
     const handleButtonClick = () => {
-        if (autoCloseTimer.current) clearTimeout(autoCloseTimer.current);
         setOpen(prev => !prev);
     };
 

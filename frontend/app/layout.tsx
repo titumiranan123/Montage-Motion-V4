@@ -5,6 +5,8 @@ import Provider from "./Provider";
 import Navbar from "@/component/share/Navbar";
 import WhatsAppFloat from "@/component/WhatsAppFloat";
 import EbookLeadPopup from "@/component/share/EbookLeadPopup";
+import { VideoPlaybackProvider } from "@/component/share/VideoPlaybackProvider";
+import Script from "next/script";
 const geistSans = Poppins({
   variable: "--font-poppins",
   weight: ["100", "400", "500", "600", "700", "900"],
@@ -34,23 +36,25 @@ export default function RootLayout({
           name="google-site-verification"
           content="j1gOxbt6mmWofWDDIxmXhGqMLyezqvQ4UILFuesc2K4"
         />
-        <script
+        <Script
           src="https://analysis.nextcombinator.com/api/script.js"
           data-site-id="b49795992a0c"
-          defer
-        ></script>
+          strategy="lazyOnload"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistDMSans?.variable} ${opensans?.variable}  `}
       >
         <Provider>
-          <div className="fixed w-full top-2 z-50">
-            <Navbar />
-          </div>
-          {children}
-          <Footer />
-          <WhatsAppFloat />
-          <EbookLeadPopup />
+          <VideoPlaybackProvider>
+            <div className="fixed w-full top-2 z-50">
+              <Navbar />
+            </div>
+            {children}
+            <Footer />
+            <WhatsAppFloat />
+            <EbookLeadPopup />
+          </VideoPlaybackProvider>
         </Provider>
       </body>
     </html>

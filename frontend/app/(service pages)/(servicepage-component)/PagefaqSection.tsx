@@ -88,7 +88,6 @@ const PageFaqSection = () => {
                   
                 width={135}
                 height={135}
-                priority
               />
               <h2 className="md:mt-4 mt-2 mb-2 font-semibold poppins  text-(--text-primary)  text-[24px]">
                 {info?.heading}

@@ -3,15 +3,19 @@
 import React, { useState } from "react";
 import TurstedBy from "./TurstedBy";
 import Link from "next/link";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import Image from "next/image";
 import { Play } from "lucide-react";
 import { getSafeHref, getSafeImageSrc } from "@/utils/media";
+import { useVideoPlayback } from "@/component/share/VideoPlaybackProvider";
 
 const Header: React.FC<{ data: any }> = ({ data }) => {
   const videoUrl = data?.media?.[0]?.video_url;
-  const [isPlaying, setIsPlaying] = useState(Boolean(videoUrl));
-  const [hasStarted, setHasStarted] = useState(Boolean(videoUrl));
+  const [hasEnded, setHasEnded] = useState(false);
+  const hasStarted = Boolean(videoUrl) && !hasEnded;
+  const { isPlaying, containerRef, play, pause } = useVideoPlayback(undefined, {
+    autoPlay: Boolean(videoUrl),
+  });
 
   return (
     <div className="flex lg:pt-30 pt-34 flex-col justify-center items-center relative py-10 lg:gap-4 gap-4 px-2">
@@ -56,15 +60,15 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
         </div>
       </div>
 
-      <div className="lg:mt-10 mt-8 max-w-7xl mx-auto lg:rounded-[40px]  rounded-2xl relative aspect-video w-full overflow-hidden">
+      <div ref={containerRef} className="lg:mt-10 mt-8 max-w-7xl mx-auto lg:rounded-[40px]  rounded-2xl relative aspect-video w-full overflow-hidden">
 
   {/* Thumbnail */}
   {!hasStarted && (
     <div
       className="absolute inset-0 z-10 cursor-pointer"
       onClick={() => {
-        setHasStarted(true);
-        setIsPlaying(true);
+        setHasEnded(false);
+        play();
       }}
     >
       <Image
@@ -93,11 +97,11 @@ const Header: React.FC<{ data: any }> = ({ data }) => {
       playsinline
       playing={isPlaying}
       muted
-      onPlay={() => setIsPlaying(true)}
-      onPause={() => setIsPlaying(false)}
+      onPlay={play}
+      onPause={pause}
       onEnded={() => {
-        setIsPlaying(false);
-        setHasStarted(false);
+        pause();
+        setHasEnded(true);
       }}
     />
   )}

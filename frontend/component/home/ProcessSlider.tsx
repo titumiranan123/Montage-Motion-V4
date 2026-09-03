@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
@@ -38,6 +37,7 @@ const ProcessSlider = ({ data }: { data: any }) => {
           alt="process "
           width={638}
           height={898}
+          sizes="(max-width: 767px) 100vw, 638px"
           data-aos="fade-right"
           data-aos-delay={200}
           className="max-w-159.5 rounded-[13px] w-full lg:h-124.5"
@@ -73,7 +73,15 @@ const ProcessSlider = ({ data }: { data: any }) => {
                   {dt?.description ?? ""}
                  
                 </p>
-                <img src={getSafeImageSrc(dt?.image)} className="max-w-159.5 rounded-[13px] w-full lg:h-124.5 md:hidden mt-2" alt={dt?.alt ?? ""}/>
+                <div className="relative mt-2 aspect-[638/498] w-full max-w-159.5 overflow-hidden rounded-[13px] md:hidden">
+                  <Image
+                    src={getSafeImageSrc(dt?.image)}
+                    alt={dt?.alt ?? ""}
+                    fill
+                    sizes="(max-width: 767px) calc(100vw - 48px), 638px"
+                    className="object-cover"
+                  />
+                </div>
                 
               </div>
             </Gradientcard>

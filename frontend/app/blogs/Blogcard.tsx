@@ -33,7 +33,7 @@ const Blogcard = ({
             alt={title}
             width={336}
             height={276}
-            priority
+            sizes="(max-width: 767px) 100vw, 336px"
           />
         </div>
 

@@ -31,7 +31,7 @@ const CaseStudiesCard = ({
           alt={title}
           width={800}
           height={276}
-          priority
+          sizes="(max-width: 767px) 100vw, 800px"
         />
 
         <div className="mt-4 sm:mt-6 text-(--text-primary)">

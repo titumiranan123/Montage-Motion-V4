@@ -1,9 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Play } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { getSafeImageSrc } from "@/utils/media";
 
 interface MarqueeItem {
@@ -118,6 +117,7 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
                     src={getSafeImageSrc(item.image_url)}
                     alt={item.alt || ""}
                     fill
+                    sizes="(max-width: 639px) 152px, 208px"
                     className="object-cover"
                   />
                 </div>
@@ -141,10 +141,12 @@ const VerticalMarqueeSlider: React.FC<VerticalMarqueeSliderProps> = ({
                       height="100%"
                     />
                   ) : (
-                    <img
+                    <Image
                       src={getSafeImageSrc(item.image_url)}
                       alt={item.alt || ""}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 639px) 152px, 171px"
+                      className="object-cover"
                     />
                   )}
                   {/* Play icon */}

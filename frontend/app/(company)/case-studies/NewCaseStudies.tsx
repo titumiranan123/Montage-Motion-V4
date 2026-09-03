@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 // components/CaseStudyCard.tsx
 
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { getSafeImageSrc } from "@/utils/media";
 
@@ -54,9 +54,11 @@ export default function CaseStudyCard({ item }: CaseStudyCardProps) {
 
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
-        <img
+        <Image
           src={getSafeImageSrc(item.image_url)}
           alt={item.image_alt || item.title || "Graphic work"}
+          fill
+          sizes="(max-width: 639px) 100vw, 384px"
           className="w-full h-full object-cover"
         />
         <span className="absolute top-3 left-3 bg-blue-50 text-[#1FB5DD] text-[11px] font-medium px-3 py-1 rounded-md uppercase tracking-wide">

@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from '@/component/share/LazyReactPlayer';
 
 const VideoPlayer = ({url}: {url: string}) => {
     return (

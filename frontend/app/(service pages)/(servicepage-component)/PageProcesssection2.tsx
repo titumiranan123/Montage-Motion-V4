@@ -24,8 +24,8 @@ export const PageProcesssection2 = ({ data }: { data: any }) => {
             alt="process"
             width={638}
             height={898}
+            sizes="(max-width: 1023px) 100vw, 50vw"
             className={` bg-cover w-full h-full ${data?.process_steps.length > 3 ? "max-w-159.5 max-h-224.5 " : "max-h-134  max-w-159.5"}`}
-            priority
           />
         </div>
 

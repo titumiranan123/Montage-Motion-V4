@@ -28,7 +28,7 @@ type Layout = {
   sideScaleY: number;
   offscreenX: number;
 };
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { Play } from "lucide-react";
 
 export default function PodcastSlider({ data }: { data: any[] }) {
@@ -498,7 +498,7 @@ export default function PodcastSlider({ data }: { data: any[] }) {
                           />
                         </button>
                       }
-                      ref={(player) => {
+                      ref={(player: any) => {
                         playerRefs.current[index] = player;
                       }}
                       playing={shouldPlay}

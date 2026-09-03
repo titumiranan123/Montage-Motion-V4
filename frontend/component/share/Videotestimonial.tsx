@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Play } from "lucide-react";
 import Image from "next/image";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { getSafeImageSrc } from "@/utils/media";
 
 const TestimonialVideocard = ({ testimonial }: { testimonial: any }) => {

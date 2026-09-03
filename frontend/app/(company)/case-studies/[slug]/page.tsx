@@ -7,6 +7,32 @@ import { Metadata } from 'next';
 import { getSafeHref, getSafeImageSrc } from '@/utils/media';
 import { getData, isApiNotFoundError } from '@/utils/getData';
 import { notFound } from 'next/navigation';
+
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const firstPage = await getData({
+    url: 'api/case-studies?page=1&limit=100&status=published',
+  });
+  const totalPages = firstPage?.data?.pages ?? 1;
+  const remainingPages = await Promise.all(
+    Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) =>
+      getData({
+        url: `api/case-studies?page=${index + 2}&limit=100&status=published`,
+      }),
+    ),
+  );
+  const caseStudies = [
+    ...(firstPage?.data?.data ?? []),
+    ...remainingPages.flatMap((result) => result?.data?.data ?? []),
+  ];
+
+  return caseStudies
+    .filter((item: { slug?: string }) => item.slug)
+    .map((item: { slug: string }) => ({ slug: item.slug }));
+}
+
 const fetchSingleCaseStudy = async (slug: string) => {
   const result = await getData({
     url: `api/case-studies/slug/${encodeURIComponent(slug)}`,

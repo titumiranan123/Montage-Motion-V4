@@ -9,7 +9,7 @@ import { getData } from "@/utils/getData";
 import PartnersSection from "@/component/home/PatnersSection";
 import HomeFaqSection from "@/component/share/HomeFaqSection";
 import TeamimageSection from "./TeamimageSection";
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 // Metadata for SEO
 export async function generateMetadata() {
   return await getPageSEO("about");

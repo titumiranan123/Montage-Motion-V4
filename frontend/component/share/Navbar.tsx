@@ -16,12 +16,13 @@ const Navbar = () => {
           href={"/"}
         >
           <Image
-            src={"/assets/montlogo.svg"}
+            src={"/assets/montagelogo.png"}
             className=""
             alt="logo"
             priority
-            width={120}
-            height={80}
+            sizes="120px"
+            width={160}
+            height={55}
           />
         </Link>
         <div className=" lg:flex hidden gap-6 ">

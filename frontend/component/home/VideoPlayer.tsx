@@ -1,9 +1,10 @@
 "use client";
 import { Play } from "lucide-react";
 import Image from "next/image";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { useState } from "react";
 import { getSafeImageSrc } from "@/utils/media";
+import { useVideoPlayback } from "@/component/share/VideoPlaybackProvider";
 
 const VideoPlayer = ({
   link,
@@ -14,15 +15,15 @@ const VideoPlayer = ({
   thumbnail: string;
   className?: string;
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [isHoverPreview, setIsHoverPreview] = useState(false);
   const [isManualPlayback, setIsManualPlayback] = useState(false);
+  const { isPlaying, containerRef, play, pause } = useVideoPlayback();
 
   const handleMouseEnter = () => {
     setIsHoverPreview(true);
     setHasStarted(true);
-    setIsPlaying(true);
+    play();
   };
 
   const handleMouseLeave = () => {
@@ -31,7 +32,7 @@ const VideoPlayer = ({
     // Keep an intentionally started video playing after the pointer leaves.
     // Hover-only previews are stopped and reset to the thumbnail.
     if (!isManualPlayback) {
-      setIsPlaying(false);
+      pause();
       setHasStarted(false);
     }
   };
@@ -44,11 +45,12 @@ const VideoPlayer = ({
   const handleManualPlay = () => {
     handleManualIntent();
     setHasStarted(true);
-    setIsPlaying(true);
+    play();
   };
 
   return (
     <div
+      ref={containerRef}
       className={`${className} aspect-video rounded-lg overflow-hidden relative`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -64,6 +66,7 @@ const VideoPlayer = ({
             src={getSafeImageSrc(thumbnail)}
             alt="Intro video thumbnail"
             fill
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 410px"
             className="object-cover"
           />
           <button className="md:w-16 w-14 md:h-10 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center lg:rounded-xl rounded-lg text-white backdrop-blur-[2px] st group">
@@ -75,23 +78,25 @@ const VideoPlayer = ({
         </div>
       )}
 
-      <ReactPlayer
-        url={link}
-        width="100%"
-        height="100%"
-        controls
-        playsinline
-        playing={isPlaying}
-        muted={isHoverPreview && !isManualPlayback}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => {
-          setIsPlaying(false);
-          setHasStarted(false); 
-          setIsHoverPreview(false);
-          setIsManualPlayback(false);
-        }}
-      />
+      {hasStarted && (
+        <ReactPlayer
+          url={link}
+          width="100%"
+          height="100%"
+          controls
+          playsinline
+          playing={isPlaying}
+          muted={isHoverPreview && !isManualPlayback}
+          onPlay={play}
+          onPause={pause}
+          onEnded={() => {
+            pause();
+            setHasStarted(false);
+            setIsHoverPreview(false);
+            setIsManualPlayback(false);
+          }}
+        />
+      )}
     </div>
   );
 };

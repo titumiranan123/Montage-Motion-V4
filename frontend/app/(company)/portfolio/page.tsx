@@ -1,35 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Portfoliotab from "./Portfoliotab";
 import { getPageSEO } from "@/component/share/getPageSEO";
-import Image from "next/image";
+import { Suspense } from "react";
 import ContactSection from "@/component/share/ContactSection";
 import { getData } from "@/utils/getData";
 import JsonLd from "@/component/share/JsonLd";
-import { getSafeImageSrc } from "@/utils/media";
-import VideoPlayer from "@/component/home/VideoPlayer";
 import CalendlyContact from "../contact-us/CalendlyContact";
-import PaginationControls from "../case-studies/PaginationControls";
+import PortfolioListing from "./PortfolioListing";
+
+export const revalidate = 300;
 export async function generateMetadata() {
   return await getPageSEO("portfolio");
 }
-const Portfolio = async ({ searchParams }: { searchParams: any }) => {
-  const { cat, page } = await searchParams;
-  const requestedPage = Number(page);
-  const currentPage = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+const Portfolio = async () => {
+  const currentPage = 1;
   const limit = 12;
-  const [categoryRes, seoRes] = await Promise.all([
+  const [categoryRes, seoRes, data] = await Promise.all([
     getData({ url: "api/website/service/type" }),
     getData({ url: "api/seo/portfolio" }),
+    getData({
+      url: `api/works/website?type=home&page=${currentPage}&limit=${limit}`,
+    }),
   ]);
-
-  const matchedCategory = categoryRes?.data?.find(
-    (item: any) => item.service_type === cat || item.href === cat,
-  );
-
-  const workType = cat && cat !== "all" ? matchedCategory?.service_type : "home";
-  const data = await getData({
-    url: `api/works/website?type=${encodeURIComponent(workType || "home")}&page=${currentPage}&limit=${limit}`,
-  });
   const paginatedData = data?.data;
   const works = Array.isArray(paginatedData)
     ? paginatedData
@@ -70,81 +60,15 @@ const Portfolio = async ({ searchParams }: { searchParams: any }) => {
             Turning raw footage and ideas into content that captures attention.
           </p>
         </div>
-        <Portfoliotab
-          tab={matchedCategory?.service_type}
-          types={categoryRes?.data}
+      <Suspense fallback={<div className="min-h-32" />}>
+        <PortfolioListing
+          initialItems={works}
+          initialTotalPages={totalPages}
+          initialWorkType="home"
+          types={categoryRes?.data ?? []}
+          limit={limit}
         />
-        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 lg:mt-16 mt-10 max-w-7xl mx-auto pb-14">
-          {works.map((work: any, idx: number) => {
-            if (work?.type === "shortsreels-editing") {
-              return (
-                <div
-                  key={idx}
-                  // data-aos="fade-up"
-                  // data-aos-delay={100 + idx * 100}
-                  className=""
-                >
-                  <VideoPlayer
-                    thumbnail={work?.thumbnail}
-                    link={work?.video_link}
-                    className="aspect-9/16! "
-                  />
-                </div>
-              );
-            } else if (work.video_link === "" || work.video_link === null) {
-              return (
-                <div
-                  // data-aos="fade-up"
-                  // data-aos-delay={200 + idx * 100}
-                  key={work.id || idx}
-                  className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 aspect-video max-w-102.5 w-full h-full max-h-77 rounded-[13px]"
-                >
-                  {/* Title */}
-                  {work.title && (
-                    <p className="absolute z-20 text-sm py-1 px-2 rounded-[13px] left-2 top-2 text-white bg-[#00000066]">
-                      {work.title}
-                    </p>
-                  )}
-
-                  {/* Thumbnail */}
-                  {work.thumbnail ? (
-                    <Image
-                      src={getSafeImageSrc(work.thumbnail)}
-                      alt={work.title || "Graphic work"}
-                      width={348}
-                      height={216}
-                      className="rounded-[13px] object-cover w-full h-full"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center bg-gray-700 w-full h-full rounded-[13px]">
-                      <p>No thumbnail</p>
-                    </div>
-                  )}
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  key={idx}
-                  // data-aos="fade-up"
-                  // data-aos-delay={100 + idx * 100}
-                  className=" rounded-lg   overflow-hidden"
-                >
-                  <VideoPlayer
-                    thumbnail={work?.thumbnail}
-                    link={work?.video_link}
-                  />
-                </div>
-              );
-            }
-          })}
-        </div>
-        {totalPages > 1 && (
-          <PaginationControls
-            currentPage={currentPage}
-            totalPages={totalPages}
-          />
-        )}
+      </Suspense>
       </div>
       <div className="sectionGap">
         <CalendlyContact />

@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import type { Swiper as SwiperType } from "swiper";
 
 import Image from "next/image";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { getSafeImageSrc } from "@/utils/media";
 
 type Testimonial = {

@@ -49,7 +49,7 @@ const Brand = () => {
                   alt={img.alt}
                   fill
                   className="object-contain"
-                  priority={idx < 4}
+                  sizes="120px"
                 />
               </div>
             ))}

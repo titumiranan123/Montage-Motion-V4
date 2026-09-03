@@ -31,7 +31,6 @@ const PageWhychooseus = ({ data }: { data: any }) => {
                   alt={dt?.alt}
                   width={35}
                   height={35}
-                  priority
                 />
                 <p className="text-[22px] leading-[100%] md:text-[24px] font-semibold poppins text-[#E4E8F7 mt-2">
                   {dt?.title}

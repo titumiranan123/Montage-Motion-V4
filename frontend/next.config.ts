@@ -3,6 +3,30 @@ import { SEO_CONFIG } from "./config/seo";
 // next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    const publicCacheHeaders = [
+      {
+        key: "Cache-Control",
+        value: "public, s-maxage=300, stale-while-revalidate=86400",
+      },
+    ];
+
+    return [
+      { source: "/", headers: publicCacheHeaders },
+      { source: "/about-us", headers: publicCacheHeaders },
+      { source: "/careers", headers: publicCacheHeaders },
+      { source: "/contact-us", headers: publicCacheHeaders },
+      { source: "/privacy-policy", headers: publicCacheHeaders },
+      { source: "/refund-policy", headers: publicCacheHeaders },
+      { source: "/terms-and-conditions", headers: publicCacheHeaders },
+      { source: "/blogs", headers: publicCacheHeaders },
+      { source: "/blogs/:slug", headers: publicCacheHeaders },
+      { source: "/portfolio", headers: publicCacheHeaders },
+      { source: "/case-studies", headers: publicCacheHeaders },
+      { source: "/case-studies/:slug", headers: publicCacheHeaders },
+      { source: "/:slug", headers: publicCacheHeaders },
+    ];
+  },
   async rewrites() {
     return [
       {

@@ -1,34 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/case-studies/page.tsx
 
 import { getPageSEO } from '@/component/share/getPageSEO';
 import JsonLd from '@/component/share/JsonLd';
-import CaseStudyCard from './NewCaseStudies';
-import PaginationControls from './PaginationControls';
+import CaseStudiesInfiniteGrid from './CaseStudiesInfiniteGrid';
 import Style from './Style';
+import { getData } from '@/utils/getData';
+
+export const revalidate = 300;
 export async function generateMetadata() {
   return await getPageSEO("case-studies");
 }
-interface CaseStudiesPageProps {
-  searchParams: Promise<{ page?: string }>;
-}
-
-const CaseStudies = async ({ searchParams }: CaseStudiesPageProps) => {
-  const { page } = await searchParams;
-  const currentPage = Number(page) || 1;
+const CaseStudies = async () => {
+  const currentPage = 1;
   const limit = 6;
 
-  let allCaseStudies: any = {};
-
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/case-studies?page=${currentPage}&limit=${limit}&status=published`,
-      { cache: 'no-store' }
-    );
-    allCaseStudies = await response.json();
-  } catch (error) {
-    console.error('Error fetching case studies:', error);
-  }
+  const allCaseStudies = await getData({
+    url: `api/case-studies?page=${currentPage}&limit=${limit}&status=published`,
+  });
 // console.log("all case studies =========>", allCaseStudies?.data?.schema);
   const totalPages = allCaseStudies?.data?.pages || 1;
   const caseStudies = allCaseStudies?.data?.data || [];
@@ -65,19 +53,12 @@ const CaseStudies = async ({ searchParams }: CaseStudiesPageProps) => {
       </div>
 
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-          {caseStudies.map((item: any) => (
-            <CaseStudyCard key={item.id} item={item} />
-          ))}
-        </div>
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <PaginationControls
-            currentPage={currentPage}
-            totalPages={totalPages}
-          />
-        )}
+        <CaseStudiesInfiniteGrid
+          initialItems={caseStudies}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          limit={limit}
+        />
       </div>
      <Style />
     </div>

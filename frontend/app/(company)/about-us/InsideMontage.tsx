@@ -20,7 +20,7 @@ const InsideMontage = () => {
             width={389}
             height={593}
             className="rounded-lg object-cover w-full h-auto"
-            priority
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 389px"
             data-aos="fade-up"
             data-aos-delay={400}
           />

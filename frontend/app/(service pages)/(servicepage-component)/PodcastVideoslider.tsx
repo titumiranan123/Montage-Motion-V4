@@ -1,7 +1,7 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-cards";

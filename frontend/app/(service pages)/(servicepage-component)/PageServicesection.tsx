@@ -50,7 +50,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
             src={getSafeImageSrc(service.image)}
             alt={service.title ?? "Service Image"}
             fill
-            priority
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
             className="object-cover rounded-[13.5px]"
           />
         </div>
@@ -131,7 +131,7 @@ const PageServicesection = ({ data }: PageServiceSectionProps) => {
                       src={getSafeImageSrc(service.image)}
                       alt={service.title || service.service_title}
                       fill
-                      priority
+                      sizes="(max-width: 767px) 100vw, (max-width: 1023px) 66vw, 33vw"
                       className="object-cover"
                     />
                   </div>

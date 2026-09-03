@@ -3,10 +3,10 @@
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motion";
+import { motion, useMotionValue, animate } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
 import Image from "next/image";
-import ReactPlayer from "react-player";
+import ReactPlayer from "@/component/share/LazyReactPlayer";
 import { getSafeImageSrc } from "@/utils/media";
 
 type Testimonial = {
@@ -67,6 +67,7 @@ const TestimonialCard: React.FC<CardProps> = ({
             src={getSafeImageSrc(testimonial.thumbnail)}
             alt={`${testimonial.name} thumbnail`}
             fill
+            sizes="(max-width: 767px) 300px, 410px"
             className="object-cover"
             draggable={false}
           />
@@ -109,6 +110,9 @@ const VideoTestimonialSwiper: React.FC<Props> = ({ data }) => {
   const baseX = useRef(0);
   const isHovered = useRef(false);
   const isDragging = useRef(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+  const [isInViewport, setIsInViewport] = useState(false);
 
   //  3 copy — মাঝেরটা দিয়ে শুরু
   const tripled = [...data, ...data, ...data];
@@ -130,19 +134,40 @@ const VideoTestimonialSwiper: React.FC<Props> = ({ data }) => {
     x.set(startX);
   }, [totalWidth]);
 
-  useAnimationFrame((_, delta) => {
-    if (isHovered.current || isDragging.current || modalTestimonial) return;
-    baseX.current -= SPEED * (delta / 16.67);
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
 
-    //  seamless loop — মাঝের copy এর বাইরে গেলে reset
-    if (baseX.current < -totalWidth * 2) {
-      baseX.current += totalWidth;
-    }
-    if (baseX.current > 0) {
-      baseX.current -= totalWidth;
-    }
-    x.set(baseX.current);
-  });
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInViewport(entry.isIntersecting),
+      { rootMargin: "200px 0px" },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInViewport || modalTestimonial) return;
+    let previousTime: number | null = null;
+
+    const step = (time: number) => {
+      const delta = previousTime === null ? 0 : time - previousTime;
+      previousTime = time;
+
+      if (!isHovered.current && !isDragging.current && !document.hidden) {
+        baseX.current -= SPEED * (delta / 16.67);
+        if (baseX.current < -totalWidth * 2) baseX.current += totalWidth;
+        if (baseX.current > 0) baseX.current -= totalWidth;
+        x.set(baseX.current);
+      }
+      animationRef.current = requestAnimationFrame(step);
+    };
+
+    animationRef.current = requestAnimationFrame(step);
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [isInViewport, modalTestimonial, totalWidth, x]);
 
   const onDragEnd = useCallback(() => {
     setTimeout(() => {
@@ -225,6 +250,7 @@ const VideoTestimonialSwiper: React.FC<Props> = ({ data }) => {
       )}
 
       <div
+        ref={sectionRef}
         className="relative overflow-hidden"
         onMouseEnter={() => { isHovered.current = true; }}
         onMouseLeave={() => { isHovered.current = false; }}
