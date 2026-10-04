@@ -29,6 +29,14 @@ export default function PortfolioInfiniteGrid({
   limit,
   workType,
 }: PortfolioInfiniteGridProps) {
+  const itemsSignature = initialItems
+    .map(
+      (item, index) =>
+        item.id ??
+        [item.type, item.thumbnail, item.video_link, item.title, index].join("|"),
+    )
+    .join("||");
+
   const loadPage = useCallback(async (page: number) => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/works/website?type=${encodeURIComponent(workType)}&page=${page}&limit=${limit}`,
@@ -43,7 +51,7 @@ export default function PortfolioInfiniteGrid({
 
   return (
     <InfiniteScrollGrid
-      key={`${workType}-${currentPage}-${totalPages}`}
+      key={`${workType}-${currentPage}-${totalPages}-${itemsSignature}`}
       initialItems={initialItems}
       initialPage={currentPage}
       totalPages={totalPages}

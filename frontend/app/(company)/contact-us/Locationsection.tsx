@@ -41,7 +41,7 @@ const Locationsection = () => {
               House no 11, Road 24, 2 Modina Nagar, Avenue 5, Dhaka 1216
             </p>
             <a
-              href="https://wa.me/+8801786546949?text=Hi%20Montage%20Motion!%20I%20need%20guidance%20to%20reach%20your%20location."
+              href="https://wa.me/+12135755095?text=Hi%20Montage%20Motion!%20I%20need%20guidance%20to%20reach%20your%20location."
               target="_blank"
               rel="noopener noreferrer"
               className="text-[14px] font-semibold opensans md:text-[16px] text-(--text-primary) mt-5 md:mt-8 flex items-center cursor-pointer hover:text-[#2B6AB2] transition translate-all duration-300 ease-in-out hover:scale-105"

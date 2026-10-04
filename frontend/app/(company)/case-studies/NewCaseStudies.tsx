@@ -14,13 +14,7 @@ interface CaseStudyItem {
   description?: string | null;
   image_url?: string | null;
   image_alt?: string | null;
-  metrics?: Metric[];
   created_at?: string | null;
-}
-
-interface Metric {
-  label: string;
-  value: string;
 }
 
 function formatDate(iso?: string | null): string {
@@ -44,9 +38,6 @@ interface CaseStudyCardProps {
 }
 
 export default function CaseStudyCard({ item }: CaseStudyCardProps) {
-  const metrics = Array.isArray(item.metrics)
-    ? item.metrics.filter((metric) => metric?.label && metric?.value)
-    : [];
   const href = `/case-studies/${item.slug}`;
 
   return (
@@ -74,23 +65,6 @@ export default function CaseStudyCard({ item }: CaseStudyCardProps) {
         <p className="text-[13px] text-gray-500 leading-relaxed mb-4 line-clamp-3">
           {item.description}
         </p>
-
-        {/* Metrics */}
-        <div className="flex items-center gap-4 mb-4">
-          {metrics.map((m, i) => (
-            <div key={m.label} className="flex items-center gap-4">
-              {i !== 0 && <div className="w-px h-8 bg-gray-200" />}
-              <div className="flex flex-col gap-0.5">
-                <span className="text-[11px] text-gray-400 uppercase tracking-widest">
-                  {m.label}
-                </span>
-                <span className="text-lg font-semibold text-[#1FB5DD]">
-                  {m.value}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
 
         {/* Footer */}
         <div className="border-t border-gray-100 pt-3 flex items-center justify-between">

@@ -71,8 +71,11 @@ function PortfolioResults({
   activeWorkType: string;
   limit: number;
 }) {
-  const [items, setItems] = useState(initialItems);
-  const [totalPages, setTotalPages] = useState(initialTotalPages);
+  const isInitialWorkType = activeWorkType === initialWorkType;
+  const [items, setItems] = useState(isInitialWorkType ? initialItems : []);
+  const [totalPages, setTotalPages] = useState(
+    isInitialWorkType ? initialTotalPages : 1,
+  );
   const [isLoading, setIsLoading] = useState(activeWorkType !== initialWorkType);
 
   useEffect(() => {

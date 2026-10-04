@@ -32,7 +32,7 @@ const FirstSection = () => {
           data-aos-delay={400}
           className="text-sm md:text-base md:leading-[150%] font-normal text-center text-gray-600 mt-2 w-full xl:w-8/9 mx-auto "
         >
-         Tell us about your project. We will get back with a clear plan.
+          Tell us about your project. We will get back with a clear plan.
         </p>
         <style>{`
        .glass-card {
@@ -96,9 +96,9 @@ const FirstSection = () => {
               },
               {
                 title: "WhatsApp Us",
-                value: "+8801786546949",
+                value: "+1 (213) 5755095",
                 icon: "/assets/icon/whatsapp.png",
-                  href:"https://wa.me/8801786546949?text=Hello%21%20I%20visited%20your%20website%20and%20would%20like%20to%20know%20more.%20Could%20you%20please%20assist%20me%3F"
+                href: "https://wa.me/12135755095?text=Hello%21%20I%20visited%20your%20website%20and%20would%20like%20to%20know%20more.%20Could%20you%20please%20assist%20me%3F",
               },
               {
                 title: "Work at Montage Motion",
