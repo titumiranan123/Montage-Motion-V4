@@ -74,7 +74,7 @@ const ServicePage = async ({
         <PartnersSection data={data?.data?.our_clients} />
       )}
       {data?.data?.work && (
-        <Thumbnailworksection works={data?.data?.work} slug={slug} />
+        <Thumbnailworksection works={data?.data?.work} />
       )}
       {slug === "saas-explainer" && (
         <>

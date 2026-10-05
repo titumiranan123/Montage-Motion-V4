@@ -1,0 +1,171 @@
+.carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2.55;
+  perspective: 2000px;
+  touch-action: pan-y;
+}
+
+.slide {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(688px, calc((100% - 48px) * 0.589));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #111;
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+}
+
+/* A visible poster is rendered on the server; JS animates the side cards. */
+.slide:not([data-center="true"]) {
+  visibility: hidden;
+}
+
+.posterButton {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  color: white;
+  cursor: pointer;
+}
+
+.playIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgb(0 0 0 / 40%);
+  border: 1px solid rgb(255 255 255 / 65%);
+}
+
+.previewLabel {
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 65%);
+  font-size: 14px;
+}
+
+.mobileCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #111;
+}
+
+.mobileSwiper {
+  padding-bottom: 36px;
+  --swiper-pagination-color: #1c2c31;
+  --swiper-pagination-bullet-inactive-color: #1c2c31;
+  --swiper-pagination-bullet-inactive-opacity: 0.25;
+}
+
+.mobileSwiper :global(.swiper-pagination) {
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.mobileSwiper :global(.swiper-pagination-bullet) {
+  position: relative;
+  margin: 0 8px !important;
+  width: 8px;
+  height: 8px;
+}
+
+/* Keep the visual dots small but their touch targets comfortable. */
+.mobileSwiper :global(.swiper-pagination-bullet)::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+}
+
+.mobileSwiper :global(.swiper-pagination-bullet):focus-visible {
+  outline: 3px solid #1fb5dd;
+  outline-offset: 4px;
+}
+
+.error button,
+.error a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid rgb(28 44 49 / 20%);
+  border-radius: 12px;
+  background: white;
+}
+
+.posterButton:focus-visible,
+.error button:focus-visible,
+.error a:focus-visible {
+  outline: 3px solid #1fb5dd;
+  outline-offset: -4px;
+}
+
+.error {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: rgb(0 0 0 / 80%);
+  color: white;
+}
+
+.error p {
+  width: 100%;
+  text-align: center;
+}
+
+.error button,
+.error a {
+  padding: 8px 12px;
+  color: #1c2c31;
+}
+
+@media (max-width: 767px) {
+  .stage {
+    aspect-ratio: 16 / 10;
+  }
+
+  .slide {
+    width: 100%;
+  }
+
+  .side {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel *,
+  .carousel *::before,
+  .carousel *::after {
+    transition: none !important;
+  }
+}

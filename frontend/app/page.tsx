@@ -42,7 +42,10 @@ const HomePage = async () => {
         <Header data={data?.header ?? []} />
       </div>
       <PartnersSection data={data?.brand ?? []} />
-      <DeferredFeatureProjects header={data?.works} category={categoryRes?.data} />
+      <DeferredFeatureProjects
+        header={data?.works}
+        category={categoryRes?.data}
+      />
       <ServiceSections data={data?.services ?? []} />
       <DeferredTestimonials data={data?.testimonial ?? []} />
       <OurProcess data={data?.process ?? []} />

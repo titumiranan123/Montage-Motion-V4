@@ -37,13 +37,24 @@ export function VideoPlaybackProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    let focusCheck = 0;
+    const handleWindowBlur = () => {
+      cancelAnimationFrame(focusCheck);
+      focusCheck = requestAnimationFrame(() => {
+        // Focusing an embedded player blurs the parent window, but the
+        // document still has focus. Keep native YouTube controls usable.
+        if (!document.hasFocus()) pauseAll();
+      });
+    };
+
     document.addEventListener('visibilitychange', pauseAll);
-    window.addEventListener('blur', pauseAll);
+    window.addEventListener('blur', handleWindowBlur);
     window.addEventListener('pagehide', pauseAll);
 
     return () => {
+      cancelAnimationFrame(focusCheck);
       document.removeEventListener('visibilitychange', pauseAll);
-      window.removeEventListener('blur', pauseAll);
+      window.removeEventListener('blur', handleWindowBlur);
       window.removeEventListener('pagehide', pauseAll);
     };
   }, [pauseAll]);
